@@ -7,16 +7,18 @@ import { ExternalLink, Github, ArrowRight, Tag, X, ZoomIn, ZoomOut } from 'lucid
 import portfolioData from '@/data/portfolio.json';
 import { RevealOnScroll } from '@/components/ui/Animations';
 import { GlowingEffect } from '@/components/ui/glowing-effect';
-import { cn } from '@/lib/utils';
+import { cn, getAssetPath } from '@/lib/utils';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { useTheme } from '@/context/ThemeContext';
+import { useRouter } from 'next/navigation';
 
 const categories = ['All', 'AI/ML', 'Design', 'Frontend', 'Backend'];
 
 export function Projects() {
   const { projects } = portfolioData;
   const { isDark } = useTheme();
+  const router = useRouter();
   const [activeCategory, setActiveCategory] = useState('All');
   const [modalProject, setModalProject] = useState<typeof projects[0] | null>(null);
   const [markdownContent, setMarkdownContent] = useState<string | null>(null);
@@ -34,7 +36,7 @@ export function Projects() {
       const mdFile = (modalProject as any).markdownFile;
       if (mdFile) {
         setLoading(true);
-        fetch(mdFile)
+        fetch(getAssetPath(mdFile))
           .then(res => res.text())
           .then(text => {
             setMarkdownContent(text);
@@ -113,7 +115,7 @@ export function Projects() {
                   onClick={() => {
                     // If a dedicated site page exists for this project, navigate there.
                     if ((project as any).pageUrl) {
-                      window.location.href = (project as any).pageUrl;
+                      router.push((project as any).pageUrl);
                       return;
                     }
                     // Otherwise open the markdown modal
@@ -316,11 +318,13 @@ export function Projects() {
                         img: ({ src, alt }) => (
                           <div 
                             className="relative my-4 cursor-pointer group"
-                            onClick={() => src && handleImageClick(src)}
+                            onClick={() => src && handleImageClick(getAssetPath(src))}
                           >
-                            <img 
-                              src={src} 
+                            <Image 
+                              src={getAssetPath(src || '')} 
                               alt={alt || 'Image'} 
+                              width={1200}
+                              height={800}
                               className="w-full max-w-full h-auto rounded-lg border border-accent/30 transition-transform group-hover:scale-[1.02]"
                             />
                             <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/30 rounded-lg">
@@ -449,9 +453,11 @@ export function Projects() {
                 className="relative z-10 flex items-center justify-center w-full h-full p-4 overflow-hidden"
                 onClick={e => e.stopPropagation()}
               >
-                <img
+                <Image
                   src={imagePopup}
                   alt="Zoomed image"
+                  width={1920}
+                  height={1080}
                   className="max-w-full max-h-full object-contain transition-transform duration-200 ease-out cursor-grab active:cursor-grabbing"
                   style={{ transform: `scale(${zoom})` }}
                   draggable={false}
@@ -500,7 +506,7 @@ function ProjectCard({ project, onClick }: ProjectCardProps) {
       <div className="relative aspect-video overflow-hidden">
         {project.thumbnail ? (
           <Image
-            src={project.thumbnail}
+            src={getAssetPath(project.thumbnail)}
             alt={project.title}
             fill
             className="object-cover transition-transform duration-500 group-hover:scale-110"

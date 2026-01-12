@@ -1,11 +1,13 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 import { Heart, MapPin, Calendar } from 'lucide-react';
 import { useState } from 'react';
 import portfolioData from '@/data/portfolio.json';
 import { RevealOnScroll } from '@/components/ui/Animations';
 import { GlowingEffect } from '@/components/ui/glowing-effect';
+import { getAssetPath } from '@/lib/utils';
 
 export function Volunteering() {
   const { volunteering } = portfolioData;
@@ -54,9 +56,11 @@ export function Volunteering() {
                 <div className="relative mb-4">
                   {vol.logo && !imageErrors.has(vol.id) ? (
                     <div className="h-12 flex items-center justify-start overflow-hidden">
-                      <img
-                        src={vol.logo}
+                      <Image
+                        src={getAssetPath(vol.logo)}
                         alt={vol.organization}
+                        width={100}
+                        height={48}
                         className="h-full w-auto object-contain"
                         onError={() => handleImageError(vol.id)}
                       />

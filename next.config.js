@@ -2,10 +2,12 @@
 
 const nextConfig = {
   output: 'export',
+  basePath: '/Portfolio',
+  assetPrefix: '/Portfolio/',
+  trailingSlash: true,
   images: {
     unoptimized: true,
   },
-  // No basePath or assetPrefix needed for username.github.io root deployment
 };
 
 module.exports = nextConfig;

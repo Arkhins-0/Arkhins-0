@@ -2,11 +2,12 @@
 
 import { useRef, useState, useEffect } from 'react';
 import { motion, useInView } from 'framer-motion';
+import Image from 'next/image';
 import { Code, Palette, Database, Wrench } from 'lucide-react';
 import portfolioData from '@/data/portfolio.json';
 import { RevealOnScroll } from '@/components/ui/Animations';
 import { GlowingEffect } from '@/components/ui/glowing-effect';
-import { cn } from '@/lib/utils';
+import { cn, getAssetPath } from '@/lib/utils';
 import {
   RadarChart,
   Radar,
@@ -155,11 +156,12 @@ export function Skills() {
                   key={`${tech}-${index}`}
                   className="flex items-center justify-center gap-3 px-6 py-3 rounded-xl bg-card border border-border whitespace-nowrap"
                 >
-                  <img
-                    src={`/images/skills/${tech.replace(/\s|\+/g, '').toLowerCase()}.png`}
+                  <Image
+                    src={getAssetPath(`/images/skills/${tech.replace(/\s|\+/g, '').toLowerCase()}.png`)}
                     alt={`${tech} logo`}
-                    className="w-5 h-5 object-contain"
-                    onError={(e) => { e.currentTarget.style.display = 'none'; }}
+                    width={20}
+                    height={20}
+                    className="object-contain"
                   />
                   <span className="font-medium">{tech}</span>
                 </div>

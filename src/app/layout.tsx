@@ -22,17 +22,17 @@ export const metadata: Metadata = {
   keywords: portfolioData.meta.keywords,
   authors: [{ name: portfolioData.meta.author }],
   icons: {
-    icon: '/images/profile.jpg',
+    icon: '/Portfolio/images/profile.jpg',
   },
-  metadataBase: new URL('https://krishna-vijay-g.github.io'),
+  metadataBase: new URL('https://krishna-vijay-g.github.io/Portfolio'),
   openGraph: {
     title: portfolioData.meta.title,
     description: portfolioData.meta.description,
     type: 'website',
     images: [
       {
-        url: 'https://krishna-vijay-g.github.io/images/OpenGraph.png',
-        secureUrl: 'https://krishna-vijay-g.github.io/images/OG.png',
+        url: '/Portfolio/images/OpenGraph.png',
+        secureUrl: '/Portfolio/images/OG.png',
         alt: 'OpenGraph Thumbnail',
       },
     ],

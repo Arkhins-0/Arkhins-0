@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
 import { SettingsPanel } from '@/components/layout';
+import { getAssetPath } from '@/lib/utils';
 import { 
   Heart, 
   Droplets, 
@@ -76,42 +77,42 @@ const securityLayers = [
 const screenshots = [
   { 
     id: 'hero',
-    src: '/hygieia/Hero-compressed.png', 
+    src: getAssetPath('/hygieia/Hero-compressed.png'), 
     alt: 'Hero Section', 
     title: 'Landing Page',
     description: 'A welcoming, professional landing page that introduces users to Hygieia\'s capabilities with dynamic gradient backgrounds, clear value proposition, and quick access cards to all 5 diagnostic services.'
   },
   { 
     id: 'dashboard',
-    src: '/hygieia/Dashboard-compressed.png', 
+    src: getAssetPath('/hygieia/Dashboard-compressed.png'), 
     alt: 'Dashboard', 
     title: 'User Dashboard',
     description: 'Personalized dashboard providing quick access to all features, recent analyses, statistics, and activity timeline. Includes analysis quick cards for Heart Risk, Diabetes Risk, Skin Diagnosis, Breast Cancer Risk, and Breast Tissue Diagnosis.'
   },
   { 
     id: 'analysis',
-    src: '/hygieia/Analysis-compressed.png', 
+    src: getAssetPath('/hygieia/Analysis-compressed.png'), 
     alt: 'Analysis Interface', 
     title: 'Analysis Interface',
     description: 'Intuitive analysis forms with dynamic, context-aware input fields, real-time validation, helper text for medical parameters, image upload capability, and progress indicators during processing.'
   },
   { 
     id: 'chat',
-    src: '/hygieia/Chat-compressed.png', 
+    src: getAssetPath('/hygieia/Chat-compressed.png'), 
     alt: 'Dr. Hygieia Chat', 
     title: 'AI Health Assistant - Dr. Hygieia',
     description: 'Context-aware AI assistant that knows your analysis history, supports multiple concurrent conversations with streaming responses, session management, and direct integration with specific analysis results.'
   },
   { 
     id: 'blockchain',
-    src: '/hygieia/Block-compressed.png', 
+    src: getAssetPath('/hygieia/Block-compressed.png'), 
     alt: 'Blockchain Verification', 
     title: 'Blockchain Verification',
     description: 'Immutable record verification system with cryptographic hashing (SHA-256), complete audit trail, tamper detection, chain validation, and admin dashboard for complete oversight.'
   },
   { 
     id: 'auth',
-    src: '/hygieia/RegLog-compressed.png', 
+    src: getAssetPath('/hygieia/RegLog-compressed.png'), 
     alt: 'Authentication', 
     title: 'User Authentication',
     description: 'Secure, elegant authentication experience with clean minimal design, form validation, JWT authentication, remember me option, password strength indicator, and professional healthcare imagery.'
@@ -153,7 +154,7 @@ export default function HygieiaPage() {
             className="mb-8"
           >
             <Image
-              src="/hygieia/logo.svg"
+              src={getAssetPath('/hygieia/logo.svg')}
               alt="Hygieia Logo"
               width={120}
               height={120}
@@ -227,7 +228,7 @@ export default function HygieiaPage() {
             className="relative max-w-5xl mx-auto rounded-2xl overflow-hidden border border-border/50 shadow-2xl"
           >
             <Image
-              src="/hygieia/Cover-compressed.png"
+              src={getAssetPath('/hygieia/Cover-compressed.png')}
               alt="Hygieia Platform Cover"
               width={1920}
               height={1080}
@@ -624,7 +625,7 @@ export default function HygieiaPage() {
             viewport={{ once: true }}
           >
             <Image
-              src="/hygieia/logo.svg"
+              src={getAssetPath('/hygieia/logo.svg')}
               alt="Hygieia Logo"
               width={60}
               height={60}

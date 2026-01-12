@@ -9,6 +9,7 @@ import { SiGoogle } from 'react-icons/si';
 import { FaDiscord, FaTelegram } from 'react-icons/fa6';
 import portfolioData from '@/data/portfolio.json';
 import { RevealOnScroll } from '@/components/ui/Animations';
+import { getAssetPath } from '@/lib/utils';
 
 const socialIcons: Record<string, React.ReactNode> = {
   github: <FaGithub size={20} />,
@@ -168,7 +169,7 @@ export function Hero() {
                 {/* Image container */}
                 <div className="relative w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden border-4 border-accent/30 bg-gradient-to-br from-accent/20 to-transparent">
                   <Image
-                    src={basics.profilePicture}
+                    src={getAssetPath(basics.profilePicture)}
                     alt={basics.name}
                     fill
                     className="object-cover"

@@ -7,6 +7,7 @@ import { useState } from 'react';
 import portfolioData from '@/data/portfolio.json';
 import { RevealOnScroll } from '@/components/ui/Animations';
 import { GlowingEffect } from '@/components/ui/glowing-effect';
+import { getAssetPath } from '@/lib/utils';
 
 export function Certifications() {
   const { certifications } = portfolioData;
@@ -51,9 +52,11 @@ export function Certifications() {
                 <div className="relative mb-4">
                   {cert.badge && !imageErrors.has(cert.id) ? (
                     <div className="h-12 flex items-center justify-start overflow-hidden">
-                      <img
-                        src={cert.badge}
+                      <Image
+                        src={getAssetPath(cert.badge)}
                         alt={cert.name}
+                        width={100}
+                        height={48}
                         className="h-full w-auto object-contain"
                         onError={() => handleImageError(cert.id)}
                       />

@@ -2,11 +2,12 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import Image from 'next/image';
 import { Briefcase, Calendar, MapPin, ExternalLink, ChevronRight, ChevronDown } from 'lucide-react';
 import portfolioData from '@/data/portfolio.json';
 import { RevealOnScroll } from '@/components/ui/Animations';
 import { GlowingEffect } from '@/components/ui/glowing-effect';
-import { cn } from '@/lib/utils';
+import { cn, getAssetPath } from '@/lib/utils';
 
 export function Experience() {
   const { experience } = portfolioData;
@@ -94,11 +95,12 @@ export function Experience() {
                         {/* Company Logo */}
                         <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-accent/20 to-accent/5 flex items-center justify-center overflow-hidden">
                           {exp.logo ? (
-                            <img
-                              src={exp.logo}
+                            <Image
+                              src={getAssetPath(exp.logo)}
                               alt={exp.company + ' logo'}
-                              className="object-contain w-10 h-10"
-                              loading="lazy"
+                              width={40}
+                              height={40}
+                              className="object-contain"
                             />
                           ) : (
                             <Briefcase size={24} className="text-accent" />
