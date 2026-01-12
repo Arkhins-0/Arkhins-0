@@ -1,15 +1,16 @@
 'use client';
 
 import { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
 import { SettingsPanel } from '@/components/layout';
 import { getAssetPath } from '@/lib/utils';
+import hygieiaData from '@/data/hygieia.json';
 import { 
   Heart, 
   Droplets, 
-  Microscope, 
+  Scan, 
   Ribbon,
   Shield,
   MessageCircle,
@@ -42,14 +43,16 @@ const staggerContainer = {
   }
 };
 
-// Model data
-const models = [
-  { name: 'Heart Risk', icon: Heart, accuracy: '99.4%', color: 'from-red-500 to-red-600', params: '18 clinical parameters' },
-  { name: 'Diabetes Risk', icon: Droplets, accuracy: '98.1%', color: 'from-orange-500 to-orange-600', params: 'Symptom-based analysis' },
-  { name: 'Skin Diagnosis', icon: Microscope, accuracy: '96.8%', color: 'from-teal-500 to-teal-600', params: 'AI image analysis' },
-  { name: 'Breast Cancer', icon: Ribbon, accuracy: '81.3%', color: 'from-pink-500 to-pink-600', params: '10 risk factors' },
-  { name: 'Breast Tissue', icon: Ribbon, accuracy: '97.2%', color: 'from-purple-500 to-purple-600', params: '30 FNA measurements' },
-];
+// Icon mapping
+const iconMap = {
+  Heart,
+  Droplets,
+  Scan,
+  Ribbon,
+};
+
+// Process models data
+const models = hygieiaData.models.map(model => ({ ...model, icon: iconMap[model.icon as keyof typeof iconMap] }));
 
 // Features data
 const features = [
@@ -121,6 +124,19 @@ const screenshots = [
 
 export default function HygieiaPage() {
 
+  const [selectedImage, setSelectedImage] = useState<typeof screenshots[0] | null>(null);
+  const [expandedRows, setExpandedRows] = useState<Set<string>>(new Set());
+
+  const toggleRow = (modelName: string) => {
+    const newExpanded = new Set(expandedRows);
+    if (newExpanded.has(modelName)) {
+      newExpanded.delete(modelName);
+    } else {
+      newExpanded.add(modelName);
+    }
+    setExpandedRows(newExpanded);
+  };
+
   return (
     <div className="min-h-screen">
       <SettingsPanel />
@@ -156,8 +172,8 @@ export default function HygieiaPage() {
             <Image
               src={getAssetPath('/hygieia/logo.svg')}
               alt="Hygieia Logo"
-              width={120}
-              height={120}
+              width={300}
+              height={300}
               className="mx-auto"
             />
           </motion.div>
@@ -204,18 +220,18 @@ export default function HygieiaPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6 }}
-            className="flex flex-wrap justify-center gap-3 mb-12"
+            className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-12"
           >
-            <span className="px-4 py-2 rounded-full bg-green-500/20 text-green-400 text-sm font-medium">
+            <span className="px-3 py-2 rounded-full bg-green-500/20 text-green-400 text-sm font-medium">
               96%+ Average Accuracy
             </span>
-            <span className="px-4 py-2 rounded-full bg-blue-500/20 text-blue-400 text-sm font-medium">
+            <span className="px-3 py-2 rounded-full bg-blue-500/20 text-blue-400 text-sm font-medium">
               5 AI Models
             </span>
-            <span className="px-4 py-2 rounded-full bg-purple-500/20 text-purple-400 text-sm font-medium">
+            <span className="px-3 py-2 rounded-full bg-purple-500/20 text-purple-400 text-sm font-medium">
               Blockchain Verified
             </span>
-            <span className="px-4 py-2 rounded-full bg-orange-500/20 text-orange-400 text-sm font-medium">
+            <span className="px-3 py-2 rounded-full bg-orange-500/20 text-orange-400 text-sm font-medium">
               Dr. Hygieia AI Assistant
             </span>
           </motion.div>
@@ -242,7 +258,7 @@ export default function HygieiaPage() {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-display font-bold mb-4">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-display font-bold mt-8 mb-8">
               AI Models <span className="text-gradient">Portfolio</span>
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
@@ -265,13 +281,15 @@ export default function HygieiaPage() {
               >
                 <div className={`absolute inset-0 bg-gradient-to-br ${model.color} opacity-0 group-hover:opacity-10 transition-opacity`} />
                 <div className="relative">
-                  <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${model.color} flex items-center justify-center mb-4`}>
-                    <model.icon size={28} className="text-white" />
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${model.color} flex items-center justify-center`}>
+                      <model.icon size={50} className={model.iconColor} />
+                    </div>
+                    <h3 className="text-xl font-semibold text-right flex-1">{model.name}</h3>
                   </div>
-                  <h3 className="text-xl font-semibold mb-2">{model.name}</h3>
-                  <div className="flex items-baseline gap-2 mb-2">
+                  <div className="text-center mb-2">
                     <span className="text-3xl font-bold text-gradient">{model.accuracy}</span>
-                    <span className="text-sm text-muted-foreground">accuracy</span>
+                    <span className="text-sm text-muted-foreground block">accuracy</span>
                   </div>
                   <p className="text-sm text-muted-foreground">{model.params}</p>
                 </div>
@@ -284,56 +302,181 @@ export default function HygieiaPage() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="mt-12 overflow-x-auto"
+            className="mt-12"
           >
-            <table className="w-full rounded-xl overflow-hidden glass-card">
-              <thead>
-                <tr className="border-b border-border">
-                  <th className="px-6 py-4 text-left text-sm font-semibold">Model</th>
-                  <th className="px-6 py-4 text-left text-sm font-semibold">Accuracy</th>
-                  <th className="px-6 py-4 text-left text-sm font-semibold">ROC-AUC</th>
-                  <th className="px-6 py-4 text-left text-sm font-semibold">Samples</th>
-                  <th className="px-6 py-4 text-left text-sm font-semibold">Architecture</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr className="border-b border-border/50 hover:bg-muted/50">
-                  <td className="px-6 py-4 flex items-center gap-2"><Heart size={16} className="text-red-500" /> Heart Risk</td>
-                  <td className="px-6 py-4 font-semibold text-green-400">99.4%</td>
-                  <td className="px-6 py-4">99.9%</td>
-                  <td className="px-6 py-4">303</td>
-                  <td className="px-6 py-4 text-sm text-muted-foreground">Stacking Ensemble</td>
-                </tr>
-                <tr className="border-b border-border/50 hover:bg-muted/50">
-                  <td className="px-6 py-4 flex items-center gap-2"><Droplets size={16} className="text-orange-500" /> Diabetes Risk</td>
-                  <td className="px-6 py-4 font-semibold text-green-400">98.1%</td>
-                  <td className="px-6 py-4">99.6%</td>
-                  <td className="px-6 py-4">520</td>
-                  <td className="px-6 py-4 text-sm text-muted-foreground">Random Forest + XGBoost</td>
-                </tr>
-                <tr className="border-b border-border/50 hover:bg-muted/50">
-                  <td className="px-6 py-4 flex items-center gap-2"><Microscope size={16} className="text-teal-500" /> Skin Diagnosis</td>
-                  <td className="px-6 py-4 font-semibold text-green-400">96.8%</td>
-                  <td className="px-6 py-4">99.3%</td>
-                  <td className="px-6 py-4">10,015</td>
-                  <td className="px-6 py-4 text-sm text-muted-foreground">CNN + Derm Foundation</td>
-                </tr>
-                <tr className="border-b border-border/50 hover:bg-muted/50">
-                  <td className="px-6 py-4 flex items-center gap-2"><Ribbon size={16} className="text-pink-500" /> Breast Risk</td>
-                  <td className="px-6 py-4 font-semibold text-yellow-400">81.3%</td>
-                  <td className="px-6 py-4">86.2%</td>
-                  <td className="px-6 py-4">251,661</td>
-                  <td className="px-6 py-4 text-sm text-muted-foreground">Voting Ensemble</td>
-                </tr>
-                <tr className="hover:bg-muted/50">
-                  <td className="px-6 py-4 flex items-center gap-2"><Ribbon size={16} className="text-purple-500" /> Breast Diagnosis</td>
-                  <td className="px-6 py-4 font-semibold text-green-400">97.2%</td>
-                  <td className="px-6 py-4">99.7%</td>
-                  <td className="px-6 py-4">569</td>
-                  <td className="px-6 py-4 text-sm text-muted-foreground">Stacking Ensemble</td>
-                </tr>
-              </tbody>
-            </table>
+            {/* Mobile Table with Dropdown */}
+            <div className="md:hidden">
+              <table className="w-full rounded-xl overflow-hidden glass-card">
+                <thead>
+                  <tr className="border-b border-border">
+                    <th className="px-4 sm:px-6 py-4 text-center text-sm font-semibold">Model</th>
+                    <th className="px-4 sm:px-6 py-4 text-center text-sm font-semibold">Accuracy</th>
+                    <th className="px-4 sm:px-6 py-4 text-center text-sm font-semibold w-12"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {models.map((model, index) => (
+                    <>
+                      <tr 
+                        key={model.name} 
+                        className="border-b border-border/50 hover:bg-muted/50 cursor-pointer"
+                        onClick={() => toggleRow(model.name)}
+                      >
+                        <td className="px-2 sm:px-4 py-4 flex items-center justify-center gap-2">
+                          <model.icon size={16} className={model.iconColor} /> {model.name}
+                        </td>
+                        <td className={`px-4 sm:px-6 py-4 font-semibold text-center ${model.accuracyColor}`}>{model.accuracy}</td>
+                        <td className="px-4 sm:px-6 py-4">
+                          <ChevronDown 
+                            size={16} 
+                            className={`transition-transform ${expandedRows.has(model.name) ? 'rotate-180' : ''}`}
+                          />
+                        </td>
+                      </tr>
+                      <AnimatePresence>
+                        {expandedRows.has(model.name) && (
+                          <motion.tr 
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: "auto" }}
+                            exit={{ opacity: 0, height: 0 }}
+                            transition={{ duration: 0.4, ease: "easeInOut" }}
+                            className="bg-muted/30"
+                          >
+                            <td colSpan={3} className="px-4 sm:px-6 py-4">
+                              <motion.div
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                exit={{ opacity: 0 }}
+                                transition={{ delay: 0.2, duration: 0.2 }}
+                              >
+                                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
+                                  <div>
+                                    <span className="font-medium text-muted-foreground">ROC-AUC:</span>
+                                    <span className="ml-2">{model.rocAuc}</span>
+                                  </div>
+                                  <div>
+                                    <span className="font-medium text-muted-foreground">Samples:</span>
+                                    <span className="ml-2">{model.samples}</span>
+                                  </div>
+                                  <div>
+                                    <span className="font-medium text-muted-foreground">Architecture:</span>
+                                    <span className="ml-2">{model.architecture}</span>
+                                  </div>
+                                </div>
+                              </motion.div>
+                            </td>
+                          </motion.tr>
+                        )}
+                      </AnimatePresence>
+                    </>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            {/* Desktop Table with All Columns */}
+            <div className="hidden 2xl:block overflow-x-auto">
+              <table className="w-full rounded-xl overflow-hidden glass-card">
+                <thead>
+                  <tr className="border-b border-border">
+                    <th className="px-4 sm:px-6 py-4 text-center text-sm font-semibold">Model</th>
+                    <th className="px-4 sm:px-6 py-4 text-center text-sm font-semibold">Accuracy</th>
+                    <th className="px-4 sm:px-6 py-4 text-center text-sm font-semibold">ROC-AUC</th>
+                    <th className="px-4 sm:px-6 py-4 text-center text-sm font-semibold">Samples</th>
+                    <th className="px-4 sm:px-6 py-4 text-center text-sm font-semibold">Architecture</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {models.map((model, index) => (
+                    <tr key={model.name} className="border-b border-border/50 hover:bg-muted/50">
+                      <td className="px-2 sm:px-4 py-4 flex items-center justify-center gap-2">
+                        <model.icon size={16} className={model.iconColor} /> {model.name}
+                      </td>
+                      <td className={`px-4 sm:px-6 py-4 font-semibold text-center ${model.accuracyColor}`}>{model.accuracy}</td>
+                      <td className="px-4 sm:px-6 py-4 text-center">{model.rocAuc}</td>
+                      <td className="px-4 sm:px-6 py-4 text-center">{model.samples}</td>
+                      <td className="px-4 sm:px-6 py-4 text-center text-muted-foreground">{model.architecture}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            {/* Progressive Table - Shows as many columns as space allows */}
+            <div className="hidden md:block 2xl:hidden">
+              <table className="w-full rounded-xl overflow-hidden glass-card">
+                <thead>
+                  <tr className="border-b border-border">
+                    <th className="px-4 sm:px-6 py-4 text-center text-sm font-semibold">Model</th>
+                    <th className="px-4 sm:px-6 py-4 text-center text-sm font-semibold">Accuracy</th>
+                    <th className="px-4 sm:px-6 py-4 text-center text-sm font-semibold hidden lg:table-cell">ROC-AUC</th>
+                    <th className="px-4 sm:px-6 py-4 text-center text-sm font-semibold hidden xl:table-cell">Samples</th>
+                    <th className="px-4 sm:px-6 py-4 text-center text-sm font-semibold w-12"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {models.map((model, index) => (
+                    <>
+                      <tr key={model.name} className="border-b border-border/50 hover:bg-muted/50">
+                        <td className="px-2 sm:px-4 py-4 flex items-center justify-center gap-2">
+                          <model.icon size={16} className={model.iconColor} /> {model.name}
+                        </td>
+                        <td className={`px-4 sm:px-6 py-4 font-semibold text-center ${model.accuracyColor}`}>{model.accuracy}</td>
+                        <td className="px-4 sm:px-6 py-4 text-center hidden lg:table-cell">{model.rocAuc}</td>
+                        <td className="px-4 sm:px-6 py-4 text-center hidden xl:table-cell">{model.samples}</td>
+                        <td className="px-4 sm:px-6 py-4">
+                          <button 
+                            onClick={() => toggleRow(model.name)}
+                            className="p-1 hover:bg-muted/50 rounded transition-colors"
+                          >
+                            <ChevronDown 
+                              size={14} 
+                              className={`transition-transform ${expandedRows.has(model.name) ? 'rotate-180' : ''}`}
+                            />
+                          </button>
+                        </td>
+                      </tr>
+                      {/* Show dropdown for hidden columns */}
+                      <AnimatePresence>
+                        {expandedRows.has(model.name) && (
+                          <motion.tr 
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: "auto" }}
+                            exit={{ opacity: 0, height: 0 }}
+                            transition={{ duration: 0.4, ease: "easeInOut" }}
+                            className="bg-muted/30"
+                          >
+                            <td colSpan={5} className="px-4 sm:px-6 py-4">
+                              <motion.div
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                exit={{ opacity: 0 }}
+                                transition={{ delay: 0.2, duration: 0.2 }}
+                              >
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+                                  <div className="lg:hidden">
+                                    <span className="font-medium text-muted-foreground">ROC-AUC:</span>
+                                    <span className="ml-2">{model.rocAuc}</span>
+                                  </div>
+                                  <div className="xl:hidden">
+                                    <span className="font-medium text-muted-foreground">Samples:</span>
+                                    <span className="ml-2">{model.samples}</span>
+                                  </div>
+                                  <div className="col-span-2">
+                                    <span className="font-medium text-muted-foreground">Architecture:</span>
+                                    <span className="ml-2 text-muted-foreground">{model.architecture}</span>
+                                  </div>
+                                </div>
+                              </motion.div>
+                            </td>
+                          </motion.tr>
+                        )}
+                      </AnimatePresence>
+                    </>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </motion.div>
         </div>
       </section>
@@ -370,29 +513,29 @@ export default function HygieiaPage() {
                     className="relative"
                   >
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-center">
-                      {/* Image - Alternates left/right */}
-                      <div
-                        className={`relative ${isLeft ? 'order-1' : 'order-2'}`}
-                      >
+                      {/* Image - On mobile always first, on desktop alternates */}
+                      <div className={`relative order-1 ${isLeft ? 'md:order-1' : 'md:order-2'}`}>
                         {/* Bigger image container with zoom effect */}
                         <motion.div
                           className="relative overflow-hidden rounded-xl cursor-pointer group"
-                          whileHover={{ scale: 1.2 }}
+                          whileHover={{ scale: 1.05 }}
                           transition={{ duration: 0.3 }}
+                          onClick={() => setSelectedImage(screenshot)}
                         >
-                          <div className="relative w-full h-[50vh] md:h-[70vh] rounded-xl overflow-hidden bg-muted/50">
+                          <div className="relative w-full h-[30vh] sm:h-[35vh] md:h-[40vh] lg:h-[50vh] rounded-xl overflow-hidden bg-muted/50">
                             <Image
                               src={screenshot.src}
                               alt={screenshot.alt}
                               fill
-                              className="object-contain w-full h-full p-6"
+                              className="object-contain w-full h-full"
                             />
                           </div>
+
                         </motion.div>
                       </div>
 
-                      {/* Content - Alternates right/left */}
-                      <div className={`${isLeft ? 'order-2' : 'order-1'}`}>
+                      {/* Content - On mobile always second, on desktop alternates */}
+                      <div className={`order-2 ${isLeft ? 'md:order-2' : 'md:order-1'}`}>
                         <h3 className="text-2xl md:text-3xl font-semibold mb-3">{screenshot.title}</h3>
                         <p className="text-muted-foreground leading-relaxed">{screenshot.description}</p>
                       </div>
@@ -549,40 +692,40 @@ export default function HygieiaPage() {
             viewport={{ once: true }}
             className="p-8 rounded-2xl glass-card"
           >
-            <div className="flex flex-col lg:flex-row items-center gap-8">
+            <div className="flex flex-col lg:flex-row items-start gap-8">
               {/* Pipeline Steps */}
-              <div className="flex-1 space-y-4">
+              <div className="flex-1 w-full space-y-4">
                 <div className="flex items-center gap-4 p-4 rounded-xl bg-blue-500/10 border border-blue-500/20">
-                  <div className="w-10 h-10 rounded-lg bg-blue-500/20 flex items-center justify-center text-blue-400 font-bold">1</div>
-                  <div>
+                  <div className="w-10 h-10 rounded-lg bg-blue-500/20 flex items-center justify-center text-blue-400 font-bold flex-shrink-0">1</div>
+                  <div className="min-w-0">
                     <h4 className="font-semibold">Input Image</h4>
                     <p className="text-sm text-muted-foreground">Upload skin lesion image</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-4 p-4 rounded-xl bg-yellow-500/10 border border-yellow-500/20">
-                  <div className="w-10 h-10 rounded-lg bg-yellow-500/20 flex items-center justify-center text-yellow-400 font-bold">2</div>
-                  <div>
+                  <div className="w-10 h-10 rounded-lg bg-yellow-500/20 flex items-center justify-center text-yellow-400 font-bold flex-shrink-0">2</div>
+                  <div className="min-w-0">
                     <h4 className="font-semibold">Google Derm Foundation Model</h4>
                     <p className="text-sm text-muted-foreground">Pre-trained on clinical images</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-4 p-4 rounded-xl bg-purple-500/10 border border-purple-500/20">
-                  <div className="w-10 h-10 rounded-lg bg-purple-500/20 flex items-center justify-center text-purple-400 font-bold">3</div>
-                  <div>
+                  <div className="w-10 h-10 rounded-lg bg-purple-500/20 flex items-center justify-center text-purple-400 font-bold flex-shrink-0">3</div>
+                  <div className="min-w-0">
                     <h4 className="font-semibold">Feature Extraction</h4>
                     <p className="text-sm text-muted-foreground">6,144-dim Embeddings + 80 Engineered Features</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-4 p-4 rounded-xl bg-green-500/10 border border-green-500/20">
-                  <div className="w-10 h-10 rounded-lg bg-green-500/20 flex items-center justify-center text-green-400 font-bold">4</div>
-                  <div>
+                  <div className="w-10 h-10 rounded-lg bg-green-500/20 flex items-center justify-center text-green-400 font-bold flex-shrink-0">4</div>
+                  <div className="min-w-0">
                     <h4 className="font-semibold">Voting Ensemble</h4>
                     <p className="text-sm text-muted-foreground">XGBoost + Random Forest + Gradient Boosting + Extra Trees</p>
                   </div>
                 </div>
-                <div className="flex items-center gap-4 p-4 rounded-xl bg-accent/10 border border-accent/20">
-                  <div className="w-10 h-10 rounded-lg bg-accent/20 flex items-center justify-center text-accent font-bold">5</div>
-                  <div>
+                <div className="flex items-center gap-4 p-4 rounded-xl bg-red-500/10 border border-red-500/20">
+                  <div className="w-10 h-10 rounded-lg bg-red-500/20 flex items-center justify-center text-red-400 font-bold flex-shrink-0">5</div>
+                  <div className="min-w-0">
                     <h4 className="font-semibold">7-Class Output</h4>
                     <p className="text-sm text-muted-foreground">Skin condition classification with confidence</p>
                   </div>
@@ -590,9 +733,9 @@ export default function HygieiaPage() {
               </div>
 
               {/* Detectable Conditions */}
-              <div className="flex-1">
+              <div className="flex-1 w-full">
                 <h4 className="text-lg font-semibold mb-4">Detectable Conditions</h4>
-                <div className="space-y-2">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                   {[
                     'Actinic Keratoses',
                     'Basal Cell Carcinoma ⚠️',
@@ -603,10 +746,10 @@ export default function HygieiaPage() {
                     'Vascular Lesions'
                   ].map((condition, i) => (
                     <div key={condition} className="flex items-center gap-3 p-3 rounded-lg bg-muted/50">
-                      <span className="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm flex items-center justify-center">
+                      <span className="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm flex items-center justify-center flex-shrink-0">
                         {i + 1}
                       </span>
-                      <span className={condition.includes('⚠️') ? 'text-yellow-400' : ''}>{condition}</span>
+                      <span className={`text-sm ${condition.includes('⚠️') ? 'text-yellow-400' : ''}`}>{condition}</span>
                     </div>
                   ))}
                 </div>
@@ -627,8 +770,8 @@ export default function HygieiaPage() {
             <Image
               src={getAssetPath('/hygieia/logo.svg')}
               alt="Hygieia Logo"
-              width={60}
-              height={60}
+              width={200}
+              height={200}
               className="mx-auto mb-4"
             />
             <h3 className="text-2xl font-display font-bold mb-2">HYGIEIA</h3>
@@ -653,6 +796,49 @@ export default function HygieiaPage() {
           </motion.div>
         </div>
       </footer>
+
+      {/* Image Modal */}
+      <AnimatePresence>
+        {selectedImage && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm cursor-pointer"
+            onClick={() => setSelectedImage(null)}
+          >
+            <div className="flex items-center justify-center min-h-screen p-4">
+              <motion.div
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.8, opacity: 0 }}
+                className="relative max-w-5xl w-full cursor-default"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <button
+                  onClick={() => setSelectedImage(null)}
+                  className="absolute -top-12 right-0 text-white hover:text-accent transition-colors z-10 bg-black/50 rounded-full p-2"
+                  aria-label="Close modal"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                  </svg>
+                </button>
+                <div className="relative w-full h-[80vh] rounded-xl overflow-hidden bg-muted/50">
+                  <Image
+                    src={selectedImage.src}
+                    alt={selectedImage.alt}
+                    fill
+                    className="object-contain w-full h-full"
+                    quality={100}
+                  />
+                </div>
+              </motion.div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

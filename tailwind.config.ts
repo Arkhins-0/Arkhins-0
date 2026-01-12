@@ -77,6 +77,17 @@ const config: Config = {
     },
   },
   plugins: [],
+  safelist: [
+    // Hygieia model icon colors
+    'text-red-500',
+    'text-orange-500', 
+    'text-teal-500',
+    'text-pink-500',
+    'text-purple-500',
+    // Hygieia accuracy colors
+    'text-green-400',
+    'text-yellow-400',
+  ],
 };
 
 export default config;

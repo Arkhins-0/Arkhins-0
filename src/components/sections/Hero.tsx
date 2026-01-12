@@ -106,7 +106,7 @@ export function Hero() {
             <RevealOnScroll delay={1.25}>
               <p className="flex items-center justify-center lg:justify-start gap-2 text-muted-foreground mb-8">
                 <MapPin size={16} className="text-accent" />
-                {basics.location.city}, {basics.location.country}
+                {basics.location.city}, {basics.location.state}, {basics.location.country}
               </p>
             </RevealOnScroll>
 
@@ -125,6 +125,14 @@ export function Hero() {
                   className="inline-flex items-center gap-2 px-6 py-3 bg-muted text-foreground font-medium rounded-xl hover:bg-muted/80 transition-all border border-border"
                 >
                   Get In Touch
+                </a>
+                <a
+                  href={basics.resumeUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-muted text-foreground font-medium rounded-xl hover:bg-muted/80 transition-all border border-border"
+                >
+                  Resume
                 </a>
               </div>
             </RevealOnScroll>

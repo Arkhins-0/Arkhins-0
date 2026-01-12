@@ -17,7 +17,7 @@
       "country": "India"
     },
     "profilePicture": "/images/profile.jpg",
-    "resumeUrl": "/resume.pdf",
+    "resumeUrl": "https://rxresu.me/krishnavijay.gkv/krishna-vijay-1",
     "availability": "Open to Opportunities",
     "bio": "A skilled tech enthusiast with proven experience in user interface creation and a dedication to exploring diverse technological domains. Actively broadens expertise through workshops on cutting-edge advancements and is keenly focused on applying this knowledge to pioneering challenges in IoT Automation, Generative AI, and Game Design."
   },
@@ -183,16 +183,12 @@
   "projects": [
     {
       "id": "proj-1",
-      "title": "Hygieia - A HYBRID AI FRAMEWORK FOR MULTI DISEASE DIAGNOSIS",
+      "title": "HYGIEIA - MULTI DISEASE DIAGNOSIS FRAMEWORK",
       "description": "A Framework has been built with multiple models to predict variety of conditions with scalable features and high trustworthy accuracy.",
       "longDescription": "This Framework uses multiple AI models to diagnose. It has AI Chatting capabilities for the Healthcare and Blockchain integration. It integrates data from different sources to provide reliable health assessments.",
       "thumbnail": "/images/projects/hygieia.png",
       "images": [
-        "/images/projects/hygieia-1.png",
-        "/images/projects/hygieia-2.png",
-        "/images/projects/hygieia-3.png",
-        "/images/projects/hygieia-4.png",
-        "/images/projects/hygieia-5.png"
+        "/images/projects/placeholder-1.jpg"
       ],
       "markdownFile": "/images/projects/hygieia.md",
       "tags": ["Deep Learning", "AI", "TensorFlow", "Model Training"],
@@ -202,7 +198,7 @@
       "liveUrl": "",
       "pageUrl": "/hygieia",
       "featured": true,
-      "status": "In Progress"
+      "status": "Completed"
     },
     {
       "id": "proj-2",
@@ -211,7 +207,6 @@
       "longDescription": "A comprehensive stock prediction system using deep learning techniques including LSTM networks for time series forecasting. The project handles data preprocessing, time filtering, and timezone considerations.",
       "thumbnail": "/images/projects/stock-prediction.png",
       "images": [
-        "/images/projects/stock-prediction.png",
         "/images/projects/stock-prediction-1.png"
       ],
       "markdownFile": "/images/projects/stock_prediction.md",

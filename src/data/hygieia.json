@@ -1,0 +1,64 @@
+{
+  "models": [
+    {
+      "name": "Heart Risk",
+      "icon": "Heart",
+      "accuracy": "99.4%",
+      "color": "from-red-500 to-red-600",
+      "params": "18 clinical parameters",
+      "rocAuc": "99.9%",
+      "samples": "303",
+      "architecture": "Stacking Ensemble",
+      "iconColor": "text-red-500",
+      "accuracyColor": "text-green-400"
+    },
+    {
+      "name": "Diabetes Risk",
+      "icon": "Droplets",
+      "accuracy": "98.1%",
+      "color": "from-orange-500 to-orange-600",
+      "params": "Symptom-based analysis",
+      "rocAuc": "99.6%",
+      "samples": "520",
+      "architecture": "Random Forest + XGBoost",
+      "iconColor": "text-orange-500",
+      "accuracyColor": "text-green-400"
+    },
+    {
+      "name": "Skin Diagnosis",
+      "icon": "Scan",
+      "accuracy": "96.8%",
+      "color": "from-teal-500 to-teal-600",
+      "params": "AI image analysis",
+      "rocAuc": "99.3%",
+      "samples": "10,015",
+      "architecture": "CNN + Derm Foundation",
+      "iconColor": "text-teal-500",
+      "accuracyColor": "text-green-400"
+    },
+    {
+      "name": "Breast Cancer",
+      "icon": "Ribbon",
+      "accuracy": "81.3%",
+      "color": "from-pink-500 to-pink-600",
+      "params": "10 risk factors",
+      "rocAuc": "86.2%",
+      "samples": "251,661",
+      "architecture": "Voting Ensemble",
+      "iconColor": "text-pink-500",
+      "accuracyColor": "text-yellow-400"
+    },
+    {
+      "name": "Breast Tissue",
+      "icon": "Ribbon",
+      "accuracy": "97.2%",
+      "color": "from-purple-500 to-purple-600",
+      "params": "30 FNA measurements",
+      "rocAuc": "99.7%",
+      "samples": "569",
+      "architecture": "Stacking Ensemble",
+      "iconColor": "text-purple-500",
+      "accuracyColor": "text-green-400"
+    }
+  ]
+}

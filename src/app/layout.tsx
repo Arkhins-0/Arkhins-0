@@ -3,6 +3,7 @@ import { Inter, Space_Grotesk } from 'next/font/google';
 import './globals.css';
 import { ThemeProvider } from '@/context/ThemeContext';
 import portfolioData from '@/data/portfolio.json';
+import { getAssetPath } from '@/lib/utils';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -22,7 +23,7 @@ export const metadata: Metadata = {
   keywords: portfolioData.meta.keywords,
   authors: [{ name: portfolioData.meta.author }],
   icons: {
-    icon: '/images/profile.jpg',
+    icon: getAssetPath('/images/profile.jpg'),
   },
   metadataBase: new URL('https://krishna-vijay-g.github.io/Portfolio'),
   openGraph: {
@@ -31,8 +32,8 @@ export const metadata: Metadata = {
     type: 'website',
     images: [
       {
-        url: '/images/OG.png',
-        secureUrl: '/images/OG.png',
+        url: getAssetPath('/images/OG.png'),
+        secureUrl: getAssetPath('/images/OG.png'),
         alt: 'OpenGraph Thumbnail',
       },
     ],

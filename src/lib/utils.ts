@@ -2,7 +2,7 @@ import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
 // Base path for GitHub Pages deployment
-export const basePath = process.env.NODE_ENV === 'production' ? '/Portfolio' : '';
+export const basePath = '/Portfolio';
 
 // Helper function to prefix asset paths with basePath
 export function getAssetPath(path: string): string {
