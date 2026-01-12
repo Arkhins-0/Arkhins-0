@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   keywords: portfolioData.meta.keywords,
   authors: [{ name: portfolioData.meta.author }],
   icons: {
-    icon: '/Portfolio/images/profile.jpg',
+    icon: '/images/profile.jpg',
   },
   metadataBase: new URL('https://krishna-vijay-g.github.io/Portfolio'),
   openGraph: {
@@ -31,8 +31,8 @@ export const metadata: Metadata = {
     type: 'website',
     images: [
       {
-        url: '/Portfolio/images/OpenGraph.png',
-        secureUrl: '/Portfolio/images/OG.png',
+        url: '/images/OG.png',
+        secureUrl: '/images/OG.png',
         alt: 'OpenGraph Thumbnail',
       },
     ],
