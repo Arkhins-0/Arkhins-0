@@ -79,7 +79,7 @@ The system generates **6224 features** from the 6144-dimensional embedding:
 ### 2.1 Dataset
 
 **HAM10000 Dataset:**
-- **Total Images**: 10,015 dermatological images
+- **Total Images**: ISIC + HAM10000 dermatological images
 - **Available Images**: 8,039 (after filtering corrupted/missing files)
 - **Training Split**: 80% (6,431 images)
 - **Test Split**: 20% (1,608 images)

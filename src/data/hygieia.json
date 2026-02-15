@@ -31,7 +31,7 @@
       "color": "from-teal-500 to-teal-600",
       "params": "AI image analysis",
       "rocAuc": "99.3%",
-      "samples": "10,015",
+      "samples": "ISIC + HAM10000",
       "architecture": "CNN + Derm Foundation",
       "iconColor": "text-teal-500",
       "accuracyColor": "text-green-400"

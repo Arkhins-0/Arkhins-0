@@ -122,10 +122,91 @@ const screenshots = [
   },
 ];
 
+// Pipeline data for all 5 models
+const pipelineData: Record<string, { steps: { title: string; description: string; color: string }[]; details?: { title: string; items: string[] } }> = {
+  'Heart Risk': {
+    steps: [
+      { title: 'Clinical Input', description: '18 clinical parameters (age, cholesterol, BP, etc.)', color: 'red' },
+      { title: 'Feature Engineering', description: 'Normalization, encoding & feature selection', color: 'yellow' },
+      { title: 'Base Learners', description: 'Random Forest + XGBoost + Gradient Boosting', color: 'purple' },
+      { title: 'Meta-Learner', description: 'Logistic Regression stacking ensemble', color: 'blue' },
+      { title: 'Binary Output', description: 'Heart disease risk prediction with confidence', color: 'green' },
+    ],
+    details: {
+      title: 'Input Parameters',
+      items: ['Age', 'Sex', 'Chest Pain Type', 'Resting BP', 'Cholesterol', 'Fasting Blood Sugar', 'Resting ECG', 'Max Heart Rate', 'Exercise Angina', 'ST Depression', 'ST Slope', 'Major Vessels', 'Thalassemia'],
+    },
+  },
+  'Diabetes Risk': {
+    steps: [
+      { title: 'Symptom Input', description: 'Symptom-based questionnaire (16 symptoms)', color: 'orange' },
+      { title: 'Feature Processing', description: 'Binary encoding & symptom correlation analysis', color: 'yellow' },
+      { title: 'Ensemble Models', description: 'Random Forest + XGBoost parallel prediction', color: 'purple' },
+      { title: 'Aggregation', description: 'Weighted voting for final prediction', color: 'blue' },
+      { title: 'Risk Assessment', description: 'Positive/Negative diabetes risk classification', color: 'green' },
+    ],
+    details: {
+      title: 'Assessed Symptoms',
+      items: ['Polyuria', 'Polydipsia', 'Sudden Weight Loss', 'Weakness', 'Polyphagia', 'Genital Thrush', 'Visual Blurring', 'Itching', 'Irritability', 'Delayed Healing', 'Partial Paresis', 'Muscle Stiffness', 'Alopecia', 'Obesity'],
+    },
+  },
+  'Skin Diagnosis': {
+    steps: [
+      { title: 'Input Image', description: 'Upload skin lesion image', color: 'blue' },
+      { title: 'Google Derm Foundation', description: 'Pre-trained on clinical images', color: 'yellow' },
+      { title: 'Feature Extraction', description: '6,144-dim Embeddings + 80 Engineered Features', color: 'purple' },
+      { title: 'Voting Ensemble', description: 'XGBoost + Random Forest + Gradient Boosting + Extra Trees', color: 'green' },
+      { title: '7-Class Output', description: 'Skin condition classification with confidence', color: 'red' },
+    ],
+    details: {
+      title: 'Detectable Conditions',
+      items: ['Actinic Keratoses', 'Basal Cell Carcinoma ⚠️', 'Benign Keratosis', 'Dermatofibroma', 'Melanoma ⚠️', 'Melanocytic Nevus', 'Vascular Lesions'],
+    },
+  },
+  'Breast Cancer': {
+    steps: [
+      { title: 'Risk Factor Input', description: '10 lifestyle & demographic risk factors', color: 'pink' },
+      { title: 'Data Preprocessing', description: 'Label encoding, SMOTE oversampling & normalization', color: 'yellow' },
+      { title: 'Base Classifiers', description: 'Random Forest + XGBoost + Gradient Boosting', color: 'purple' },
+      { title: 'Voting Ensemble', description: 'Soft voting for probability aggregation', color: 'blue' },
+      { title: 'Risk Classification', description: 'Breast cancer risk level prediction', color: 'green' },
+    ],
+    details: {
+      title: 'Risk Factors Analyzed',
+      items: ['Age', 'Race', 'Marital Status', 'T Stage', 'N Stage', '6th Stage', 'Differentiation', 'Grade', 'Estrogen Status', 'Progesterone Status'],
+    },
+  },
+  'Breast Tissue': {
+    steps: [
+      { title: 'FNA Measurements', description: '30 fine-needle aspiration measurements', color: 'purple' },
+      { title: 'Feature Engineering', description: 'Mean, SE & worst values for 10 cell nuclei features', color: 'yellow' },
+      { title: 'Base Learners', description: 'SVM + Random Forest + XGBoost', color: 'blue' },
+      { title: 'Meta-Learner', description: 'Logistic Regression stacking ensemble', color: 'green' },
+      { title: 'Binary Output', description: 'Malignant vs Benign tissue classification', color: 'red' },
+    ],
+    details: {
+      title: 'Measured Features',
+      items: ['Radius', 'Texture', 'Perimeter', 'Area', 'Smoothness', 'Compactness', 'Concavity', 'Concave Points', 'Symmetry', 'Fractal Dimension'],
+    },
+  },
+};
+
+const stepColors: Record<string, { bg: string; border: string; text: string; numBg: string }> = {
+  red: { bg: 'bg-red-500/10', border: 'border-red-500/20', text: 'text-red-400', numBg: 'bg-red-500/20' },
+  orange: { bg: 'bg-orange-500/10', border: 'border-orange-500/20', text: 'text-orange-400', numBg: 'bg-orange-500/20' },
+  yellow: { bg: 'bg-yellow-500/10', border: 'border-yellow-500/20', text: 'text-yellow-400', numBg: 'bg-yellow-500/20' },
+  green: { bg: 'bg-green-500/10', border: 'border-green-500/20', text: 'text-green-400', numBg: 'bg-green-500/20' },
+  blue: { bg: 'bg-blue-500/10', border: 'border-blue-500/20', text: 'text-blue-400', numBg: 'bg-blue-500/20' },
+  purple: { bg: 'bg-purple-500/10', border: 'border-purple-500/20', text: 'text-purple-400', numBg: 'bg-purple-500/20' },
+  pink: { bg: 'bg-pink-500/10', border: 'border-pink-500/20', text: 'text-pink-400', numBg: 'bg-pink-500/20' },
+  teal: { bg: 'bg-teal-500/10', border: 'border-teal-500/20', text: 'text-teal-400', numBg: 'bg-teal-500/20' },
+};
+
 export default function HygieiaPage() {
 
   const [selectedImage, setSelectedImage] = useState<typeof screenshots[0] | null>(null);
   const [expandedRows, setExpandedRows] = useState<Set<string>>(new Set());
+  const [activePipeline, setActivePipeline] = useState('Heart Risk');
 
   const toggleRow = (modelName: string) => {
     const newExpanded = new Set(expandedRows);
@@ -669,93 +750,164 @@ export default function HygieiaPage() {
         </div>
       </section>
 
-      {/* Skin Diagnosis Pipeline */}
+      {/* Model Pipelines */}
       <section className="section-padding bg-muted/30">
         <div className="container-custom">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center mb-16"
+            className="text-center mb-12"
           >
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-display font-bold mb-4">
-              Skin Diagnosis <span className="text-gradient">Pipeline</span>
+              Model <span className="text-gradient">Pipelines</span>
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Advanced AI image analysis powered by Google Derm Foundation
+              Explore the architecture and data flow of each AI diagnostic model
             </p>
           </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="p-8 rounded-2xl glass-card"
-          >
-            <div className="flex flex-col lg:flex-row items-start gap-8">
-              {/* Pipeline Steps */}
-              <div className="flex-1 w-full space-y-4">
-                <div className="flex items-center gap-4 p-4 rounded-xl bg-blue-500/10 border border-blue-500/20">
-                  <div className="w-10 h-10 rounded-lg bg-blue-500/20 flex items-center justify-center text-blue-400 font-bold flex-shrink-0">1</div>
-                  <div className="min-w-0">
-                    <h4 className="font-semibold">Input Image</h4>
-                    <p className="text-sm text-muted-foreground">Upload skin lesion image</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-4 p-4 rounded-xl bg-yellow-500/10 border border-yellow-500/20">
-                  <div className="w-10 h-10 rounded-lg bg-yellow-500/20 flex items-center justify-center text-yellow-400 font-bold flex-shrink-0">2</div>
-                  <div className="min-w-0">
-                    <h4 className="font-semibold">Google Derm Foundation Model</h4>
-                    <p className="text-sm text-muted-foreground">Pre-trained on clinical images</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-4 p-4 rounded-xl bg-purple-500/10 border border-purple-500/20">
-                  <div className="w-10 h-10 rounded-lg bg-purple-500/20 flex items-center justify-center text-purple-400 font-bold flex-shrink-0">3</div>
-                  <div className="min-w-0">
-                    <h4 className="font-semibold">Feature Extraction</h4>
-                    <p className="text-sm text-muted-foreground">6,144-dim Embeddings + 80 Engineered Features</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-4 p-4 rounded-xl bg-green-500/10 border border-green-500/20">
-                  <div className="w-10 h-10 rounded-lg bg-green-500/20 flex items-center justify-center text-green-400 font-bold flex-shrink-0">4</div>
-                  <div className="min-w-0">
-                    <h4 className="font-semibold">Voting Ensemble</h4>
-                    <p className="text-sm text-muted-foreground">XGBoost + Random Forest + Gradient Boosting + Extra Trees</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-4 p-4 rounded-xl bg-red-500/10 border border-red-500/20">
-                  <div className="w-10 h-10 rounded-lg bg-red-500/20 flex items-center justify-center text-red-400 font-bold flex-shrink-0">5</div>
-                  <div className="min-w-0">
-                    <h4 className="font-semibold">7-Class Output</h4>
-                    <p className="text-sm text-muted-foreground">Skin condition classification with confidence</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Detectable Conditions */}
-              <div className="flex-1 w-full">
-                <h4 className="text-lg font-semibold mb-4">Detectable Conditions</h4>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                  {[
-                    'Actinic Keratoses',
-                    'Basal Cell Carcinoma ⚠️',
-                    'Benign Keratosis',
-                    'Dermatofibroma',
-                    'Melanoma ⚠️',
-                    'Melanocytic Nevus',
-                    'Vascular Lesions'
-                  ].map((condition, i) => (
-                    <div key={condition} className="flex items-center gap-3 p-3 rounded-lg bg-muted/50">
-                      <span className="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm flex items-center justify-center flex-shrink-0">
-                        {i + 1}
-                      </span>
-                      <span className={`text-sm ${condition.includes('⚠️') ? 'text-yellow-400' : ''}`}>{condition}</span>
-                    </div>
+          {/* Model Tabs - dropdown on mobile, tabs on desktop */}
+          <div className="mb-10">
+            {/* Mobile Dropdown */}
+            <div className="md:hidden">
+              <label htmlFor="model-select" className="block text-sm font-medium mb-2 text-muted-foreground">
+                Select Model
+              </label>
+              <div className="relative">
+                <select
+                  id="model-select"
+                  value={activePipeline}
+                  onChange={(e) => setActivePipeline(e.target.value)}
+                  className="w-full px-4 py-3 pr-10 rounded-xl glass-card border border-border appearance-none cursor-pointer focus:border-accent focus:ring-1 focus:ring-accent outline-none transition-all font-medium"
+                >
+                  {models.map((model) => (
+                    <option key={model.name} value={model.name}>
+                      {model.name}
+                    </option>
                   ))}
-                </div>
+                </select>
+                <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-muted-foreground" size={20} />
               </div>
             </div>
-          </motion.div>
+
+            {/* Desktop Tabs */}
+            <div className="hidden md:flex gap-2 sm:gap-3 justify-center flex-wrap px-1">
+              {models.map((model) => (
+                <button
+                  key={model.name}
+                  onClick={() => setActivePipeline(model.name)}
+                  className={`flex items-center gap-2 px-3 sm:px-5 py-2.5 rounded-xl text-sm font-medium transition-all whitespace-nowrap ${
+                    activePipeline === model.name
+                      ? 'bg-accent text-white shadow-lg shadow-accent/25 scale-105'
+                      : 'glass-card hover:bg-muted/80'
+                  }`}
+                >
+                  <model.icon size={16} className={activePipeline === model.name ? 'text-white' : model.iconColor} />
+                  <span>{model.name}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Active Pipeline Content */}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activePipeline}
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -15 }}
+              transition={{ duration: 0.3 }}
+              className="p-4 sm:p-8 rounded-2xl glass-card"
+            >
+              {/* Model header info */}
+              {(() => {
+                const activeModel = models.find(m => m.name === activePipeline);
+                const pipeline = pipelineData[activePipeline];
+                if (!activeModel || !pipeline) return null;
+                return (
+                  <>
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-8 pb-6 border-b border-border/50">
+                      <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${activeModel.color} flex items-center justify-center flex-shrink-0`}>
+                        <activeModel.icon size={24} className={activeModel.iconColor} />
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="text-xl sm:text-2xl font-bold">{activeModel.name}</h3>
+                        <p className="text-sm text-muted-foreground">{activeModel.params} &middot; {activeModel.architecture}</p>
+                      </div>
+                      <div className="flex gap-3 flex-wrap">
+                        <span className={`px-3 py-1.5 rounded-lg text-sm font-semibold ${activeModel.accuracyColor} bg-green-500/10`}>
+                          {activeModel.accuracy} Accuracy
+                        </span>
+                        <span className="px-3 py-1.5 rounded-lg text-sm font-medium text-blue-400 bg-blue-500/10">
+                          ROC-AUC: {activeModel.rocAuc}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="flex flex-col lg:flex-row items-start gap-8">
+                      {/* Pipeline Steps */}
+                      <div className="flex-1 w-full space-y-3">
+                        <h4 className="text-lg font-semibold mb-4">Pipeline Flow</h4>
+                        {pipeline.steps.map((step, i) => {
+                          const colors = stepColors[step.color] || stepColors.blue;
+                          return (
+                            <motion.div
+                              key={step.title}
+                              initial={{ opacity: 0, x: -20 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              transition={{ delay: i * 0.08 }}
+                              className={`flex items-center gap-4 p-3 sm:p-4 rounded-xl ${colors.bg} border ${colors.border}`}
+                            >
+                              <div className={`w-9 h-9 sm:w-10 sm:h-10 rounded-lg ${colors.numBg} flex items-center justify-center ${colors.text} font-bold flex-shrink-0 text-sm sm:text-base`}>
+                                {i + 1}
+                              </div>
+                              <div className="min-w-0">
+                                <h4 className="font-semibold text-sm sm:text-base">{step.title}</h4>
+                                <p className="text-xs sm:text-sm text-muted-foreground">{step.description}</p>
+                              </div>
+                            </motion.div>
+                          );
+                        })}
+                      </div>
+
+                      {/* Details panel */}
+                      {pipeline.details && (
+                        <div className="flex-1 w-full">
+                          <h4 className="text-lg font-semibold mb-4">{pipeline.details.title}</h4>
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                            {pipeline.details.items.map((item, i) => {
+                              const modelColor = activeModel.iconColor.replace('text-', '');
+                              const colorBase = modelColor.split('-')[0];
+                              return (
+                                <motion.div
+                                  key={item}
+                                  initial={{ opacity: 0, scale: 0.95 }}
+                                  animate={{ opacity: 1, scale: 1 }}
+                                  transition={{ delay: i * 0.03 }}
+                                  className="flex items-center gap-3 p-3 rounded-lg bg-muted/50"
+                                >
+                                  <span className={`w-6 h-6 rounded-full bg-${colorBase}-500/20 ${activeModel.iconColor} text-xs flex items-center justify-center flex-shrink-0`}>
+                                    {i + 1}
+                                  </span>
+                                  <span className={`text-sm ${item.includes('⚠️') ? 'text-yellow-400' : ''}`}>{item}</span>
+                                </motion.div>
+                              );
+                            })}
+                          </div>
+                          <div className="mt-6 p-4 rounded-xl bg-accent/5 border border-accent/10">
+                            <p className="text-sm text-muted-foreground">
+                              <span className="font-medium text-foreground">Training Samples:</span> {activeModel.samples}
+                            </p>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </>
+                );
+              })()}
+            </motion.div>
+          </AnimatePresence>
         </div>
       </section>
 
