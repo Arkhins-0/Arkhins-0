@@ -147,7 +147,7 @@ export default function HygieiaPage() {
       <motion.div 
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
-        className="fixed top-6 left-6 z-50"
+        className="fixed top-6 left-6 z-40"
       >
         <Link 
           href="/"

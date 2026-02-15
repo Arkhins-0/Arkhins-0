@@ -117,14 +117,14 @@ export function Hero() {
                   href="#projects"
                   className="group inline-flex items-center gap-2 px-6 py-3 bg-accent text-white font-medium rounded-xl hover:bg-accent-dark transition-all hover:shadow-lg hover:shadow-accent/25"
                 >
-                  View My Work
+                  My Work
                   <ArrowDown size={18} className="group-hover:translate-y-1 transition-transform" />
                 </a>
                 <a
                   href="#contact"
                   className="inline-flex items-center gap-2 px-6 py-3 bg-muted text-foreground font-medium rounded-xl hover:bg-muted/80 transition-all border border-border"
                 >
-                  Get In Touch
+                  Reach Out
                 </a>
                 <a
                   href={basics.resumeUrl}

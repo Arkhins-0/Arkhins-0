@@ -17,7 +17,7 @@
       "country": "India"
     },
     "profilePicture": "/images/profile.jpg",
-    "resumeUrl": "https://rxresu.me/krishnavijay.gkv/krishna-vijay-1",
+    "resumeUrl": "https://katb.in/gkvresume",
     "availability": "Open to Opportunities",
     "bio": "A skilled tech enthusiast with proven experience in user interface creation and a dedication to exploring diverse technological domains. Actively broadens expertise through workshops on cutting-edge advancements and is keenly focused on applying this knowledge to pioneering challenges in IoT Automation, Generative AI, and Game Design."
   },
@@ -183,7 +183,7 @@
   "projects": [
     {
       "id": "proj-1",
-      "title": "HYGIEIA - MULTI DISEASE DIAGNOSIS FRAMEWORK",
+      "title": "HYGIEIA: Multi Disease Diagnosis Framework",
       "description": "A Framework has been built with multiple models to predict variety of conditions with scalable features and high trustworthy accuracy.",
       "longDescription": "This Framework uses multiple AI models to diagnose. It has AI Chatting capabilities for the Healthcare and Blockchain integration. It integrates data from different sources to provide reliable health assessments.",
       "thumbnail": "/images/projects/hygieia.png",
@@ -202,6 +202,24 @@
     },
     {
       "id": "proj-2",
+      "title": "Chennai Turbo Riders - F4 Indian Championship",
+      "description": "Built the Website for the Chennai Turbo Riders, a team participating in the F4 Indian Championship, showcasing team information, driver profiles, and updates.",
+      "longDescription": "https://chennaiturboriders.racing. A comprehensive website for the Chennai Turbo Riders team participating in the F4 Indian Championship. The site showcases team information, driver profiles, and updates.",
+      "thumbnail": "/images/projects/ctr.png",
+      "images": [
+        "/images/projects/ctr.png"
+      ],
+      "markdownFile": "/images/projects/ctr.md",
+      "tags": ["Next.js", "React", "TailwindCSS", "Web Development"],
+      "category": "Frontend",
+      "date": "May 2025",
+      "githubUrl": "https://github.com/Krishna-Vijay-G/CTR.git",
+      "liveUrl": "https://chennaiturboriders.racing",
+      "featured": true,
+      "status": "Completed"
+    },
+    {
+      "id": "proj-3",
       "title": "Predicting Microsoft Stock Values",
       "description": "This project uses time series analysis and Keras to predict Microsoft stock values. The model was trained and evaluated, showing a Root Mean Squared Error (RMSE) of 16.94 (5.75% error) on data from 2020-2025.",
       "longDescription": "A comprehensive stock prediction system using deep learning techniques including LSTM networks for time series forecasting. The project handles data preprocessing, time filtering, and timezone considerations.",
