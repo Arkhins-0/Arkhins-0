@@ -10,7 +10,6 @@
     "headline": "Versatile Tech Fresher",
     "tagline": "Crafting Digital Experiences with Code & Design",
     "email": "krishnavijay.gkv@gmail.com",
-    "phone": "+917708204956",
     "location": {
       "city": "Chennai",
       "state": "Tamil Nadu",
@@ -125,7 +124,7 @@
     },
     {
       "id": "exp-1",
-      "company": "Tetron Infotech",
+      "company": "TT Infotech",
       "position": "Intern",
       "location": "Chennai, India",
       "startDate": "Jul 2023",
@@ -139,8 +138,8 @@
         "Prepared project presentations and reports to assist senior staff"
       ],
       "technologies": ["Data Analysis", "Team Collaboration", "Documentation"],
-      "logo": "/images/companies/tetron.png",
-      "url": "https://tetroninfotech.com/"
+      "logo": "/images/companies/tt.png",
+      "url": "https://ttinfotech.com/"
     },
     {
       "id": "exp-2",
@@ -548,9 +547,10 @@
   ],
   "languages": [
     { "id": "lang-1", "name": "Tamil", "proficiency": "Native", "level": 5 },
-    { "id": "lang-2", "name": "Kannada", "proficiency": "Bilingual", "level": 4 },
-    { "id": "lang-3", "name": "English", "proficiency": "Professional", "level": 4 },
-    { "id": "lang-4", "name": "Japanese", "proficiency": "JLPT N3", "level": 3 }
+    { "id": "lang-2", "name": "English", "proficiency": "Professional", "level": 4 },
+    { "id": "lang-3", "name": "Japanese", "proficiency": "JLPT N3", "level": 3 },
+    { "id": "lang-4", "name": "Kannada", "proficiency": "Bilingual", "level": 4 }
+
   ],
   "testimonials": [
     {
