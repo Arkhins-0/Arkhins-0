@@ -147,7 +147,7 @@ export function Projects() {
             className="group inline-flex items-center gap-2 px-6 py-3 bg-muted text-foreground font-medium rounded-xl hover:bg-accent hover:text-white transition-all"
           >
             View All Projects on GitHub
-            <ArrowRight size={18} className="text-accent group-hover:translate-x-1 transition-transform" />
+            <ArrowRight size={18} className="text-accent group-hover:translate-x-1 transition-transform group-hover:text-muted" />
           </a>
         </RevealOnScroll>
 
