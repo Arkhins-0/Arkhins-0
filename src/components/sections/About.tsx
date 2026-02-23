@@ -236,12 +236,13 @@ export function About() {
               </div>
               <div className="flex flex-wrap gap-2">
                 {interests.map((interest) => (
-                  <span
+                  <motion.span
+                    whileHover={{ y: -5 }}
                     key={interest.id}
                     className="px-3 py-1.5 text-sm rounded-lg bg-accent/10 text-accent border border-accent/20"
                   >
                     {interest.name}
-                  </span>
+                  </motion.span>
                 ))}
               </div>
             </motion.div>
