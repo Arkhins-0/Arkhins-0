@@ -201,6 +201,24 @@
     },
     {
       "id": "proj-2",
+      "title": "BidNest: Modern Chit Fund Management Platform",
+      "description": "A modern chit fund management platform which allows users to manage their chit funds efficiently, with features like real-time updates, payment tracking and Auction management. Built with Next.js and TailwindCSS, featuring a responsive design and intuitive user interface.",
+      "longDescription": "BidNest is a comprehensive chit fund management platform designed to streamline the administration of chit funds. It offers real-time updates, payment tracking, and auction management features, all built with Next.js and TailwindCSS for a responsive and user-friendly experience.",
+      "thumbnail": "/images/projects/BidNest.png",
+      "images": [
+        "/images/projects/BidNest-1.png"
+      ],
+      "markdownFile": "/images/projects/BidNest.md",
+      "tags": ["Next.js", "React", "TailwindCSS", "Web Development"],
+      "category": "Backend",
+      "date": "May 2025",
+      "githubUrl": "https://github.com/Krishna-Vijay-G/BidNest.git",
+      "liveUrl": "https://bid-nest-omega.vercel.app",
+      "featured": true,
+      "status": "Completed"
+    },
+    {
+      "id": "proj-3",
       "title": "Chennai Turbo Riders - F4 Indian Championship",
       "description": "Built the Website for the Chennai Turbo Riders, a team participating in the F4 Indian Championship, showcasing team information, driver profiles, and updates.",
       "longDescription": "https://chennaiturboriders.racing. A comprehensive website for the Chennai Turbo Riders team participating in the F4 Indian Championship. The site showcases team information, driver profiles, and updates.",
@@ -218,7 +236,7 @@
       "status": "Completed"
     },
     {
-      "id": "proj-3",
+      "id": "proj-4",
       "title": "Predicting Microsoft Stock Values",
       "description": "This project uses time series analysis and Keras to predict Microsoft stock values. The model was trained and evaluated, showing a Root Mean Squared Error (RMSE) of 16.94 (5.75% error) on data from 2020-2025.",
       "longDescription": "A comprehensive stock prediction system using deep learning techniques including LSTM networks for time series forecasting. The project handles data preprocessing, time filtering, and timezone considerations.",

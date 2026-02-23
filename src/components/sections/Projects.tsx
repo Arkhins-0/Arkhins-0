@@ -410,40 +410,7 @@ export function Projects() {
               onClick={() => setImagePopup(null)}
             >
               {/* Backdrop */}
-              <div className="absolute inset-0 bg-black/90" />
-              
-              {/* Zoom Controls */}
-              <div 
-                className="absolute top-4 right-4 z-10 flex gap-2"
-                onClick={e => e.stopPropagation()}
-              >
-                <button
-                  className="p-3 rounded-full bg-accent/20 hover:bg-accent text-white transition-all"
-                  onClick={() => setZoom(z => Math.min(z + 0.5, 4))}
-                  aria-label="Zoom in"
-                >
-                  <ZoomIn size={20} />
-                </button>
-                <button
-                  className="p-3 rounded-full bg-accent/20 hover:bg-accent text-white transition-all"
-                  onClick={() => setZoom(z => Math.max(z - 0.5, 0.5))}
-                  aria-label="Zoom out"
-                >
-                  <ZoomOut size={20} />
-                </button>
-                <button
-                  className="p-3 rounded-full bg-accent/20 hover:bg-accent text-white transition-all"
-                  onClick={() => setImagePopup(null)}
-                  aria-label="Close"
-                >
-                  <X size={20} />
-                </button>
-              </div>
-
-              {/* Zoom level indicator */}
-              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 px-4 py-2 rounded-full bg-accent/20 text-white text-sm">
-                {Math.round(zoom * 100)}%
-              </div>
+              <div className="absolute inset-0 bg-black/90" />             
 
               {/* Image Container - No scroll, just zoom */}
               <motion.div
@@ -463,12 +430,7 @@ export function Projects() {
                   draggable={false}
                   onClick={() => setImagePopup(null)}
                 />
-              </motion.div>
-
-              {/* Tap anywhere hint */}
-              <div className="absolute bottom-16 left-1/2 -translate-x-1/2 z-10 text-white/50 text-xs sm:text-sm">
-                Tap anywhere to close
-              </div>
+              </motion.div>           
             </motion.div>
           )}
         </AnimatePresence>
