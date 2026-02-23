@@ -114,22 +114,7 @@ export function Contact() {
                   </div>
                   <ArrowRight size={16} className="ml-auto text-accent flex-shrink-0" />
                 </motion.a>
-
-                <motion.a
-                  href={`tel:${basics.phone}`}
-                  whileHover={{ x: 5 }}
-                  className="flex items-center gap-3 sm:gap-4 p-3 sm:p-4 rounded-xl glass-card hover:border-accent/50 transition-colors overflow-hidden"
-                >
-                  <div className="p-2 sm:p-3 rounded-lg bg-accent/10 flex-shrink-0">
-                    <Phone size={18} className="text-accent sm:w-5 sm:h-5" />
-                  </div>
-                  <div className="min-w-0 flex-1 overflow-hidden">
-                    <p className="text-xs sm:text-sm text-muted-foreground">Phone</p>
-                    <p className="font-medium text-sm sm:text-base truncate">{basics.phone}</p>
-                  </div>
-                  <ArrowRight size={16} className="ml-auto text-accent flex-shrink-0" />
-                </motion.a>
-
+                
                 <motion.div
                   whileHover={{ x: 5 }}
                   className="flex items-center gap-3 sm:gap-4 p-3 sm:p-4 rounded-xl glass-card overflow-hidden"

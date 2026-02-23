@@ -13,10 +13,6 @@ const languageTexts: Record<string, { native: string; translation: string }> = {
     native: 'என் நெஞ்சில் குடியிருக்கும்...',
     translation: 'If you like this, we can be friends.😎'
   },
-  Kannada: {
-    native: 'ಮಾತನಾಡುವುದು ಮತ್ತು ಅರ್ಥಮಾಡಿಕೊಳ್ಳುವುದು ಮಾತ್ರ.',
-    translation: 'I can only Listen and Speak.😅'
-  },
   English: {
     native: "Isn't it obvious? I speak English.",
     translation: 'Professional working proficiency in English.☺️'
@@ -24,6 +20,10 @@ const languageTexts: Record<string, { native: string; translation: string }> = {
   Japanese: {
     native: '飛ばねぇ豚は、ただの豚だ。',
     translation: 'I used to watch with my eyes; now I watch with my mind. [JLPT-N3]😇'
+  },
+  Kannada: {
+    native: 'ಮಾತನಾಡುವುದು ಮತ್ತು ಅರ್ಥಮಾಡಿಕೊಳ್ಳುವುದು ಮಾತ್ರ.',
+    translation: 'I can only Listen and Speak.😅'
   }
 };
 
