@@ -1,4 +1,4 @@
-![BidNest — Modern Chit Fund Management](images/Projects/BidNest.png)
+![BidNest — Modern Chit Fund Management](images/projects/BidNest.png)
 
 https://bid-nest-omega.vercel.app
 
@@ -8,7 +8,7 @@ https://bid-nest-omega.vercel.app
 
 BidNest represents one of my most complex and rewarding projects as a developer - a comprehensive platform designed to modernize the traditional chit fund industry. By combining advanced financial algorithms with a clean, intuitive user interface, I've built a system that transforms group savings from a manual, trust-dependent process into a transparent, data-driven digital experience.
 
-![BidNest — dashboard](images/Projects/BidNest-1.png)
+![BidNest — dashboard](images/projects/BidNest-1.png)
 
 ## The Journey
 
