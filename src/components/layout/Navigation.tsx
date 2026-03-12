@@ -61,7 +61,7 @@ export function Navigation() {
             'relative flex items-center justify-between px-6 py-3 rounded-2xl transition-all duration-300',
             scrolled
               ? 'glass shadow-lg'
-              : 'bg-transparent'
+              : 'glass shadow-lg'
           )}
         >
           {/* Logo */}

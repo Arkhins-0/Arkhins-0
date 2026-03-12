@@ -1,15 +1,15 @@
 'use client';
 
-import Image from 'next/image';
+import { useEffect } from 'react';
 import { motion } from 'framer-motion';
 
-import { ArrowDown, Github, Linkedin, Mail, MapPin, Sparkles } from 'lucide-react';
+import { ArrowDown, Github, MapPin, Sparkles } from 'lucide-react';
 import { FaLinkedin, FaGithub, FaInstagram } from 'react-icons/fa';
 import { SiGoogle } from 'react-icons/si';
 import { FaDiscord, FaTelegram } from 'react-icons/fa6';
 import portfolioData from '@/data/portfolio.json';
 import { RevealOnScroll } from '@/components/ui/Animations';
-import { getAssetPath } from '@/lib/utils';
+import { useTheme } from '@/context/ThemeContext';
 
 const socialIcons: Record<string, React.ReactNode> = {
   github: <FaGithub size={20} />,
@@ -22,18 +22,60 @@ const socialIcons: Record<string, React.ReactNode> = {
 
 export function Hero() {
   const { basics, socialLinks } = portfolioData;
+  const { isDark } = useTheme();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const blur = Math.min((window.scrollY / window.innerHeight) * 8, 8);
+      document.documentElement.style.setProperty('--hero-video-blur', `${blur}px`);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const desktopVideo = isDark ? '/images/hero/hero_dark.mp4' : '/images/hero/hero_light.mp4';
+  const mobileVideo = isDark ? '/images/hero/hero_dark_mobile.mp4' : '/images/hero/hero_light_mobile.mp4';
 
   return (
     <section
       id="home"
       className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20 md:pt-32 pb-24 md:pb-16"
     >
-      {/* Animated background elements */}
+      {/* Fixed video background – stays pinned while page scrolls */}
+      <div
+        className="fixed inset-0 -z-10 overflow-hidden pointer-events-none"
+        style={{ filter: 'blur(var(--hero-video-blur, 0px))', willChange: 'filter' }}
+      >
+        {/* Desktop video */}
+        <video
+          key={`desktop-${isDark ? 'dark' : 'light'}`}
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover hidden md:block"
+        >
+          <source src={desktopVideo} type="video/mp4" />
+        </video>
+        {/* Mobile video */}
+        <video
+          key={`mobile-${isDark ? 'dark' : 'light'}`}
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover md:hidden"
+        >
+          <source src={mobileVideo} type="video/mp4" />
+        </video>
+      </div>
+
+      {/* Accent glow blobs */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <motion.div
           animate={{
             scale: [1, 1.2, 1],
-            opacity: [0.3, 0.5, 0.3],
+            opacity: [0.15, 0.28, 0.15],
           }}
           transition={{
             duration: 8,
@@ -45,7 +87,7 @@ export function Hero() {
         <motion.div
           animate={{
             scale: [1, 1.3, 1],
-            opacity: [0.2, 0.4, 0.2],
+            opacity: [0.1, 0.22, 0.1],
           }}
           transition={{
             duration: 10,
@@ -57,23 +99,22 @@ export function Hero() {
         />
       </div>
 
-      <div className="container-custom relative z-10">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-          {/* Content */}
-          <div className="text-center lg:text-left order-2 lg:order-1">
+      <div className="container-custom relative z-[1] w-full">
+        {/* Content — right-aligned */}
+        <div className="ml-auto w-full lg:w-1/2 text-center lg:text-right bg-border-accent">
             {/* Status Badge */}
             <RevealOnScroll delay={1.0}>
               <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 0.2 }}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/10 border border-accent/20 mb-6"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/10 border border-accent mb-6"
               >
                 <span className="relative flex h-2 w-2">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75" />
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-accent" />
                 </span>
-                <span className="text-sm font-medium text-accent">
+                <span className="text-sm font-medium text-foreground">
                   {basics.availability}
                 </span>
               </motion.div>
@@ -89,14 +130,14 @@ export function Hero() {
 
             {/* Headline */}
             <RevealOnScroll delay={1.1}>
-              <p className="text-xl sm:text-2xl lg:text-3xl text-muted-foreground font-light mb-6">
+              <p className="text-xl sm:text-2xl lg:text-3xl text-foreground font-light mb-6">
                 {basics.headline}
               </p>
             </RevealOnScroll>
 
             {/* Tagline */}
             <RevealOnScroll delay={1.2}>
-              <p className="text-lg text-muted-foreground/80 max-w-xl mx-auto lg:mx-0 mb-8 flex items-center justify-center lg:justify-start gap-2">
+              <p className="text-lg text-muted-foreground/80 max-w-xl mx-auto lg:ml-auto lg:mr-0 mb-8 flex items-center justify-center lg:justify-end gap-2">
                 <Sparkles size={18} className="text-accent" />
                 {basics.tagline}
               </p>
@@ -104,7 +145,7 @@ export function Hero() {
 
             {/* Location */}
             <RevealOnScroll delay={1.25}>
-              <p className="flex items-center justify-center lg:justify-start gap-2 text-muted-foreground mb-8">
+              <p className="flex items-center justify-center lg:justify-end gap-2 text-foreground mb-8">
                 <MapPin size={16} className="text-accent" />
                 {basics.location.city}, {basics.location.state}, {basics.location.country}
               </p>
@@ -112,7 +153,7 @@ export function Hero() {
 
             {/* CTA Buttons */}
             <RevealOnScroll delay={1.3}>
-              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 mb-8">
+              <div className="flex flex-wrap items-center justify-center lg:justify-end gap-4 mb-8">
                 <a
                   href="#projects"
                   className="group inline-flex items-center gap-2 px-6 py-3 bg-accent text-white font-medium rounded-xl hover:bg-accent-dark transition-all hover:shadow-lg hover:shadow-accent/25"
@@ -139,7 +180,7 @@ export function Hero() {
 
             {/* Social Links */}
             <RevealOnScroll delay={1.4}>
-              <div className="flex items-center justify-center lg:justify-start gap-3 mb-16 md:mb-0">
+              <div className="flex items-center justify-center lg:justify-end gap-3 mb-16 md:mb-0">
                 {socialLinks.slice(0, 4).map((social) => (
                   <motion.a
                     key={social.id}
@@ -148,7 +189,7 @@ export function Hero() {
                     rel="noopener noreferrer"
                     whileHover={{ scale: 1.1, y: -2 }}
                     whileTap={{ scale: 0.95 }}
-                    className="p-3 rounded-xl bg-accent/10 text-accent hover:bg-accent hover:text-white transition-colors"
+                    className="p-3 rounded-xl bg-accent/10 text-foreground hover:bg-accent hover:text-white transition-colors"
                     aria-label={social.name}
                   >
                     {socialIcons[social.icon] || <Github size={20} />}
@@ -156,53 +197,6 @@ export function Hero() {
                 ))}
               </div>
             </RevealOnScroll>
-          </div>
-
-          {/* Profile Image */}
-          <div className="order-1 lg:order-2 flex justify-center">
-            <RevealOnScroll delay={0} direction="left">
-              <motion.div
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0, duration: 0.5 }}
-                className="relative"
-              >
-                {/* Decorative rings */}
-                <div className="absolute inset-0 -m-4 rounded-full border-2 border-dashed border-accent/20 animate-spin-slow" style={{ animationDuration: '20s' }} />
-                <div className="absolute inset-0 -m-8 rounded-full border border-accent/10" />
-                
-                {/* Glow effect */}
-                <div className="absolute inset-0 rounded-full bg-accent/20 blur-3xl" />
-                
-                {/* Image container */}
-                <div className="relative w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden border-4 border-accent/30 bg-gradient-to-br from-accent/20 to-transparent">
-                  <Image
-                    src={getAssetPath(basics.profilePicture)}
-                    alt={basics.name}
-                    fill
-                    className="object-cover"
-                    priority
-                  />
-                </div>
-
-                {/* Floating badges */}
-                <motion.div
-                  animate={{ y: [0, -10, 0] }}
-                  transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
-                  className="absolute -top-4 -right-4 px-4 py-2 glass rounded-xl"
-                >
-                  <span className="text-sm font-medium">🎨 UI/UX</span>
-                </motion.div>
-                <motion.div
-                  animate={{ y: [0, 10, 0] }}
-                  transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
-                  className="absolute -bottom-4 -left-4 px-4 py-2 glass rounded-xl"
-                >
-                  <span className="text-sm font-medium">💻 Developer</span>
-                </motion.div>
-              </motion.div>
-            </RevealOnScroll>
-          </div>
         </div>
 
         {/* Scroll indicator */}

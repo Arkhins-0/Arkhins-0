@@ -71,7 +71,7 @@ export const lightTheme = {
   card: '#f8fafc',
   cardForeground: '#1e293b',
   muted: '#f1f5f9',
-  mutedForeground: '#64748b',
+  mutedForeground: '#cccccc',
   border: '#cbd5e1',
 };
 
@@ -81,7 +81,7 @@ export const darkTheme = {
   card: '#151520',
   cardForeground: '#e2e8f0',
   muted: '#1e1e2e',
-  mutedForeground: '#94a3b8',
+  mutedForeground: '#cccccc',
   border: '#2d2d3d',
 };
 

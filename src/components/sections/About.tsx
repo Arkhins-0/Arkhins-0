@@ -1,12 +1,16 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
-import { User, GraduationCap, Award, Languages, Calendar } from 'lucide-react';
+import { GraduationCap, Calendar, Languages, Award } from 'lucide-react';
 import portfolioData from '@/data/portfolio.json';
-import { RevealOnScroll, StaggerContainer, staggerItem } from '@/components/ui/Animations';
-import { GlowingEffect } from '@/components/ui/glowing-effect';
-import { cn } from '@/lib/utils';
+import { RevealOnScroll } from '@/components/ui/Animations';
+import { BsExclamation } from 'react-icons/bs';
+import { BiQuestionMark } from 'react-icons/bi';
+import { FaUserCircle } from 'react-icons/fa';
+import { MdPerson, MdPerson2, MdPerson3, MdPerson4, MdPersonOutline } from 'react-icons/md';
+import { IoPersonCircleOutline, IoPersonCircleSharp } from 'react-icons/io5';
 
 const languageTexts: Record<string, { native: string; translation: string }> = {
   Tamil: {
@@ -28,18 +32,16 @@ const languageTexts: Record<string, { native: string; translation: string }> = {
 };
 
 export function About() {
-  const { basics, education, certifications, languages, interests } = portfolioData;
+  const { basics, education, languages, interests } = portfolioData;
   const [currentIndex, setCurrentIndex] = useState(0);
   const [displayedText, setDisplayedText] = useState('');
   const [displayedTranslation, setDisplayedTranslation] = useState('');
-  const [isTyping, setIsTyping] = useState(true);
-  const [isTypingTranslation, setIsTypingTranslation] = useState(false);
   const [showTranslation, setShowTranslation] = useState(false);
-  const [isExiting, setIsExiting] = useState(false);
 
   const currentLang = languages[currentIndex];
   const currentTexts = languageTexts[currentLang.name];
 
+  // Language typewriter effect
   useEffect(() => {
     if (!currentTexts) return;
 
@@ -48,37 +50,25 @@ export function About() {
     let currentCharIndex = 0;
     setDisplayedText('');
     setDisplayedTranslation('');
-    setIsTyping(true);
-    setIsTypingTranslation(false);
     setShowTranslation(false);
-    setIsExiting(false);
 
-    // Phase 1: Type out native text
     const typeInterval = setInterval(() => {
       if (currentCharIndex < nativeText.length) {
         setDisplayedText(nativeText.slice(0, currentCharIndex + 1));
         currentCharIndex++;
       } else {
         clearInterval(typeInterval);
-        setIsTyping(false);
         setShowTranslation(true);
 
-        // Phase 2: Type out translation
         let transCharIndex = 0;
-        setIsTypingTranslation(true);
         const typeTransInterval = setInterval(() => {
           if (transCharIndex < translationText.length) {
             setDisplayedTranslation(translationText.slice(0, transCharIndex + 1));
             transCharIndex++;
           } else {
             clearInterval(typeTransInterval);
-            setIsTypingTranslation(false);
 
-            // Phase 3: After showing both for 3 seconds, start exiting
             setTimeout(() => {
-              setIsExiting(true);
-
-              // Phase 4: Reverse type translation first
               let reverseTransIndex = translationText.length;
               const reverseTransInterval = setInterval(() => {
                 if (reverseTransIndex > 0) {
@@ -88,7 +78,6 @@ export function About() {
                   clearInterval(reverseTransInterval);
                   setShowTranslation(false);
 
-                  // Phase 5: Then reverse type native text
                   let reverseCharIndex = nativeText.length;
                   const reverseInterval = setInterval(() => {
                     if (reverseCharIndex > 0) {
@@ -96,23 +85,18 @@ export function About() {
                       setDisplayedText(nativeText.slice(0, reverseCharIndex));
                     } else {
                       clearInterval(reverseInterval);
-                      setIsExiting(false);
-                      // Add 1 second delay before starting next language
                       setTimeout(() => {
                         setCurrentIndex((prev) => (prev + 1) % languages.length);
                       }, 1000);
                     }
                   }, 80);
-
                   return () => clearInterval(reverseInterval);
                 }
               }, 80);
-
               return () => clearInterval(reverseTransInterval);
             }, 3000);
           }
         }, 80);
-
         return () => clearInterval(typeTransInterval);
       }
     }, 80);
@@ -133,146 +117,99 @@ export function About() {
           </p>
         </RevealOnScroll>
 
-        {/* Bento Grid Layout */}
-        <div className="bento-grid">
-          {/* Bio Card - Large */}
-          <RevealOnScroll className="col-span-4 lg:col-span-2 row-span-2">
-            <motion.div
-              whileHover={{ y: -5 }}
-              className="relative h-full p-6 lg:p-8 rounded-2xl glass-card gradient-border"
-            >
-              <GlowingEffect
-                spread={40}
-                glow={true}
-                disabled={false}
-                proximity={64}
-                inactiveZone={0.01}
-                borderWidth={2}
-              />
-              <div className="flex items-center gap-3 mb-4">
-                <div className="p-2 rounded-lg bg-accent/10">
-                  <User size={20} className="text-accent" />
-                </div>
-                <h3 className="text-lg font-semibold">Who I Am</h3>
+        {/* ─── Row 1: About Text (left) + Profile Image (right) ─── */}
+        <RevealOnScroll>
+          <div className="flex flex-col lg:flex-row items-center gap-10 mb-20">
+            {/* Profile image – square with 3 rounded corners */}
+            <div className="flex-shrink-0">
+              <div
+                className="w-64 h-64 lg:w-80 lg:h-80 overflow-hidden transition-transform duration-300 hover:scale-105"
+                style={{ borderRadius: '1.5rem 1.5rem 1.5rem 0' }}
+              >
+                <Image
+                  src={basics.profilePicture}
+                  alt={basics.name}
+                  width={320}
+                  height={320}
+                  className="w-full h-full object-cover duration-200"
+                />
               </div>
-              <p className="text-muted-foreground leading-relaxed mb-6">
+            </div>
+            {/* Bio text */}
+            <div className="flex-1">
+              <div className="flex items-center gap-3 mb-5">
+                <div className="p-1 rounded-lg bg-accent/10">
+                  <MdPersonOutline size={35} className="text-accent" />
+                </div>
+                <h3 className="text-2xl font-semibold">Who <span className="text-gradient">I Am</span></h3>
+              </div>
+              <p className="text-foreground leading-relaxed text-lg">
                 {basics.bio}
               </p>
-              <div className="grid grid-cols-2 gap-4">
-                <div className="p-4 rounded-xl bg-muted/50">
-                  <span className="text-2xl font-bold text-accent">2+</span>
-                  <p className="text-sm text-muted-foreground">Years Learning</p>
-                </div>
-                <div className="p-4 rounded-xl bg-muted/50">
-                  <span className="text-2xl font-bold text-accent">{certifications.length}+</span>
-                  <p className="text-sm text-muted-foreground">Certifications</p>
-                </div>
-              </div>
-            </motion.div>
-          </RevealOnScroll>
+            </div>
+          </div>
+        </RevealOnScroll>
 
-          {/* Education Card */}
-          <RevealOnScroll className="col-span-4 lg:col-span-2 row-span-2" delay={0.1}>
-            <motion.div
-              whileHover={{ y: -5 }}
-              className="relative h-full p-6 lg:p-8 rounded-2xl glass-card gradient-border"
-            >
-              <GlowingEffect
-                spread={40}
-                glow={true}
-                disabled={false}
-                proximity={64}
-                inactiveZone={0.01}
-                borderWidth={2}
-              />
-              <div className="flex items-center gap-3 mb-4">
-                <div className="p-2 rounded-lg bg-accent/10">
-                  <GraduationCap size={20} className="text-accent" />
-                </div>
-                <h3 className="text-lg font-semibold">Education</h3>
-              </div>
-              <div className="space-y-4">
-                {education.slice(0, 3).map((edu, index) => (
-                  <div
-                    key={edu.id}
-                    className={cn(
-                      'relative pl-4 border-l-2',
-                      index === 0 ? 'border-accent' : 'border-border'
-                    )}
-                  >
-                    <div className="absolute -left-[5px] top-0 w-2 h-2 rounded-full bg-accent" />
-                    <h4 className="font-medium text-sm">{edu.degree}</h4>
-                    <p className="text-sm text-muted-foreground">{edu.institution}</p>
-                    <div className="flex items-center gap-2 mt-1 text-xs text-muted-foreground">
-                      <Calendar size={12} />
-                      {edu.startDate} - {edu.current ? 'Present' : edu.endDate}
-                      <span className="text-accent font-medium">{edu.score}</span>
+        {/* ─── Row 2: Education Horizontal Cards ─── */}
+        <RevealOnScroll className="mb-20">
+          <div className="flex items-center gap-3 mb-5">
+            <div className="p-2 rounded-lg bg-accent/10">
+              <GraduationCap size={30} className="text-accent" />
+            </div>
+            <h3 className="text-2xl font-semibold">Education</h3>
+          </div>
+
+          {/* Horizontal scrolling cards */}
+          <div className="flex overflow-x-auto gap-12 p-5 scrollbar-hide">
+            {education.map((edu) => (
+              <motion.div
+                key={edu.id}
+                whileHover={{ scale: 1.1 }}
+                className="relative flex-shrink-0 w-80 p-5 rounded-2xl border border-accent bg-muted/20 backdrop-blur-sm"
+              >
+                <div className="flex items-start gap-4">
+                  {/* Logo from JSON */}
+                  <div className="flex-shrink-0 w-14 h-14 rounded-xl overflow-hidden bg-muted/30">
+                    <Image
+                      src={edu.logo}
+                      alt={edu.institution}
+                      width={56}
+                      height={56}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <h4 className="font-semibold text-sm leading-tight">{edu.degree}</h4>
+                    <p className="text-xs text-muted-foreground mt-1 truncate">{edu.institution}</p>
+                    <div className="flex items-center gap-2 mt-2">
+                      <span className="text-xs text-muted-foreground flex items-center gap-1">
+                        <Calendar size={11} />
+                        {edu.startDate} – {edu.current ? 'Present' : edu.endDate}
+                      </span>
+                      <span className="text-xs font-medium text-foreground bg-accent rounded-md px-0.5">{edu.score}</span>
                     </div>
                   </div>
-                ))}
-              </div>
-            </motion.div>
-          </RevealOnScroll>
-
-          {/* Interests Card */}
-          <RevealOnScroll className="col-span-4 lg:col-span-2" delay={0.2}>
-            <motion.div
-              whileHover={{ y: -5 }}
-              className="relative h-full p-6 rounded-2xl glass-card gradient-border"
-            >
-              <GlowingEffect
-                spread={40}
-                glow={true}
-                disabled={false}
-                proximity={64}
-                inactiveZone={0.01}
-                borderWidth={2}
-              />
-              <div className="flex items-center gap-3 mb-4">
-                <div className="p-2 rounded-lg bg-accent/10">
-                  <Award size={20} className="text-accent" />
                 </div>
-                <h3 className="text-lg font-semibold">Interests</h3>
-              </div>
-              <div className="flex flex-wrap gap-2">
-                {interests.map((interest) => (
-                  <motion.span
-                    whileHover={{ y: -5 }}
-                    key={interest.id}
-                    className="px-3 py-1.5 text-sm rounded-lg bg-accent/10 text-accent border border-accent/20"
-                  >
-                    {interest.name}
-                  </motion.span>
-                ))}
-              </div>
-            </motion.div>
-          </RevealOnScroll>
+              </motion.div>
+            ))}
+          </div>
+        </RevealOnScroll>
 
-          {/* Languages Card */}
-          <RevealOnScroll className="col-span-4 lg:col-span-2" delay={0.3}>
-            <motion.div
-              whileHover={{ y: -5 }}
-              className="relative h-full p-6 rounded-2xl glass-card gradient-border"
-            >
-              <GlowingEffect
-                spread={40}
-                glow={true}
-                disabled={false}
-                proximity={64}
-                inactiveZone={0.01}
-                borderWidth={2}
-              />
-              <div className="flex items-center gap-3 mb-4">
+        {/* ─── Row 3: Languages (left) + Interests (right) ─── */}
+        <RevealOnScroll>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {/* Language animation */}
+            <div className="p-6 min-h-[280px] flex flex-col justify-center">
+              <div className="flex items-center gap-3 mb-5">
                 <div className="p-2 rounded-lg bg-accent/10">
-                  <Languages size={20} className="text-accent" />
+                  <Languages size={30} className="text-accent" />
                 </div>
-                <h3 className="text-lg font-semibold">Languages</h3>
+                <h3 className="text-lg font-semibold m-0">Languages</h3>
               </div>
-              
               {/* Typewriter Display */}
               <div className="space-y-4 mb-6 min-h-[120px] flex flex-col justify-center">
-                <div className="min-h-[60px] flex items-center justify-center">
-                  <h4 className="text-2xl font-bold text-center">
+                <div className="min-h-[60px] flex items-center">
+                  <h4 className="text-2xl font-bold">
                     {displayedText}
                     {!showTranslation && (
                       <motion.span
@@ -283,8 +220,8 @@ export function About() {
                     )}
                   </h4>
                 </div>
-                
-                <div className="min-h-[40px] flex items-center justify-center">
+
+                <div className="min-h-[40px] flex items-center">
                   <AnimatePresence mode="wait">
                     {showTranslation && currentTexts && (
                       <motion.p
@@ -293,7 +230,7 @@ export function About() {
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         transition={{ duration: 0.3 }}
-                        className="text-sm text-muted-foreground text-center"
+                        className="text-sm text-muted-foreground"
                       >
                         {displayedTranslation}
                         <motion.span
@@ -308,13 +245,13 @@ export function About() {
               </div>
 
               {/* Language Buttons */}
-              <div className="flex flex-wrap gap-2 justify-center select-none">
+              <div className="flex flex-wrap gap-2 select-none">
                 {languages.map((lang, index) => (
                   <span
                     key={lang.id}
                     className={`px-3 py-1.5 text-xs font-medium rounded-lg transition-all cursor-default ${
                       index === currentIndex
-                        ? 'text-accent bg-accent/10 border border-accent/20'
+                        ? 'text-accent bg-white border border-accent/20'
                         : 'text-muted-foreground bg-muted/50'
                     }`}
                   >
@@ -322,9 +259,30 @@ export function About() {
                   </span>
                 ))}
               </div>
-            </motion.div>
-          </RevealOnScroll>
-        </div>
+            </div>
+
+            {/* Interests – static badges */}
+            <div className="p-6 min-h-[280px] flex flex-col">
+              <div className="flex items-center gap-3 mb-5">
+                <div className="p-2 rounded-lg bg-accent/10">
+                  <Award size={30} className="text-accent" />
+                </div>
+                <h3 className="text-lg font-semibold m-0">Interests</h3>
+              </div>
+              <div className="flex flex-wrap gap-2 px-3 py-1.5">
+                {interests.map((interest) => (
+                  <motion.span
+                    whileHover={{ y: -3 } }
+                    key={interest.id}
+                    className="px-3 py-1.5 text-sm rounded-lg bg-accent/10 text-foreground border border-accent/20 transition-colors duration-200 hover:bg-accent hover:text-white hover:border-accent cursor-pointer"
+                  >
+                    {interest.name}
+                  </motion.span>
+                ))}
+              </div>
+            </div>
+          </div>
+        </RevealOnScroll>
       </div>
     </section>
   );

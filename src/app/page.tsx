@@ -16,13 +16,19 @@ export default function Home() {
       <Navigation />
       <main>
         <Hero />
-        <About />
-        <Projects />
-        <Experience />
-        <Skills />
-        <Certifications />
-        <Volunteering />
-        <Contact />
+        {/* About has no background – hero blur shows through */}
+        <div className="relative z-10">
+          <About />
+        </div>
+        {/* Remaining sections have a solid background to cover the fixed video */}
+        <div className="relative z-10 bg-background">
+          <Projects />
+          <Experience />
+          <Skills />
+          <Certifications />
+          <Volunteering />
+          <Contact />
+        </div>
       </main>
       <Footer />
       <SettingsPanel />

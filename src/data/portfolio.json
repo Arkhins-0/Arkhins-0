@@ -75,7 +75,7 @@
       "endDate": "2026",
       "current": true,
       "description": "Pursuing the Field of Computers and delving deep into AI with a specialization.",
-      "logo": "/images/education/bharath.png"
+      "logo": "/images/education/Bharath.png"
     },
     {
       "id": "edu-2",
@@ -87,7 +87,7 @@
       "endDate": "2022",
       "current": false,
       "description": "Finished schooling with Computer Science group.",
-      "logo": "/images/education/ssv.png"
+      "logo": "/images/education/SSV.png"
     },
     {
       "id": "edu-3",
@@ -99,7 +99,7 @@
       "endDate": "2020",
       "current": false,
       "description": "Finished the 10th Board Exam with distinction.",
-      "logo": "/images/education/ssv.png"
+      "logo": "/images/education/SSV.png"
     }
   ],
   "experience": [
