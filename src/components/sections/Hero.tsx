@@ -8,7 +8,6 @@ import { FaLinkedin, FaGithub, FaInstagram } from 'react-icons/fa';
 import { SiGoogle } from 'react-icons/si';
 import { FaDiscord, FaTelegram } from 'react-icons/fa6';
 import portfolioData from '@/data/portfolio.json';
-import { RevealOnScroll } from '@/components/ui/Animations';
 import { useTheme } from '@/context/ThemeContext';
 
 const socialIcons: Record<string, React.ReactNode> = {
@@ -103,11 +102,15 @@ export function Hero() {
         {/* Content — right-aligned */}
         <div className="ml-auto w-full lg:w-1/2 text-center lg:text-right bg-border-accent">
             {/* Status Badge */}
-            <RevealOnScroll delay={1.0}>
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 1.0, ease: [0.25, 0.1, 0.25, 1] }}
+            >
               <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.2 }}
+                transition={{ delay: 1.0 }}
                 className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/10 border border-accent mb-6"
               >
                 <span className="relative flex h-2 w-2">
@@ -118,41 +121,61 @@ export function Hero() {
                   {basics.availability}
                 </span>
               </motion.div>
-            </RevealOnScroll>
+            </motion.div>
 
             {/* Name */}
-            <RevealOnScroll delay={0.8}>
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
+            >
               <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-display font-bold tracking-tight mb-4">
                 <span className="block text-foreground">Hi, I&apos;m</span>
                 <span className="text-gradient">{basics.name}</span>
               </h1>
-            </RevealOnScroll>
+            </motion.div>
 
             {/* Headline */}
-            <RevealOnScroll delay={1.1}>
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 1.1, ease: [0.25, 0.1, 0.25, 1] }}
+            >
               <p className="text-xl sm:text-2xl lg:text-3xl text-foreground font-light mb-6">
                 {basics.headline}
               </p>
-            </RevealOnScroll>
+            </motion.div>
 
             {/* Tagline */}
-            <RevealOnScroll delay={1.2}>
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 1.2, ease: [0.25, 0.1, 0.25, 1] }}
+            >
               <p className="text-lg text-muted-foreground/80 max-w-xl mx-auto lg:ml-auto lg:mr-0 mb-8 flex items-center justify-center lg:justify-end gap-2">
                 <Sparkles size={18} className="text-accent" />
                 {basics.tagline}
               </p>
-            </RevealOnScroll>
+            </motion.div>
 
             {/* Location */}
-            <RevealOnScroll delay={1.25}>
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 1.25, ease: [0.25, 0.1, 0.25, 1] }}
+            >
               <p className="flex items-center justify-center lg:justify-end gap-2 text-foreground mb-8">
                 <MapPin size={16} className="text-accent" />
                 {basics.location.city}, {basics.location.state}, {basics.location.country}
               </p>
-            </RevealOnScroll>
+            </motion.div>
 
             {/* CTA Buttons */}
-            <RevealOnScroll delay={1.3}>
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 1.3, ease: [0.25, 0.1, 0.25, 1] }}
+            >
               <div className="flex flex-wrap items-center justify-center lg:justify-end gap-4 mb-8">
                 <a
                   href="#projects"
@@ -176,10 +199,14 @@ export function Hero() {
                   Resume
                 </a>
               </div>
-            </RevealOnScroll>
+            </motion.div>
 
             {/* Social Links */}
-            <RevealOnScroll delay={1.4}>
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 1.4, ease: [0.25, 0.1, 0.25, 1] }}
+            >
               <div className="flex items-center justify-center lg:justify-end gap-3 mb-16 md:mb-0">
                 {socialLinks.slice(0, 4).map((social) => (
                   <motion.a
@@ -196,7 +223,7 @@ export function Hero() {
                   </motion.a>
                 ))}
               </div>
-            </RevealOnScroll>
+            </motion.div>
         </div>
 
         {/* Scroll indicator */}
