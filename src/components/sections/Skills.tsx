@@ -1,7 +1,7 @@
 ﻿'use client';
 
 import { useRef, useState, useEffect } from 'react';
-import { motion, useInView } from 'framer-motion';
+import { motion, useInView, useMotionValue, useTransform, useSpring } from 'framer-motion';
 import Image from 'next/image';
 import { Code, Palette, Database, Wrench } from 'lucide-react';
 import portfolioData from '@/data/portfolio.json';
@@ -163,7 +163,7 @@ function SkillCategoryRow({ category, index }: { category: SkillCategory; index:
             {category.skills.map(skill => (
               <span
                 key={skill.name}
-                className="px-3 py-1 text-xs rounded-full bg-accent/10 text-accent border border-accent/20 font-medium"
+                className="px-3 py-1 text-xs rounded-full bg-accent/10 text-accent border bg-muted border-accent font-medium"
               >
                 {skill.name}
               </span>
@@ -210,6 +210,17 @@ function SkillItem({ skill, delay = 0 }: SkillItemProps) {
 
   const strokeDashoffset = circumference - (progress / 100) * circumference;
 
+  const iconX = useMotionValue(0);
+  const iconY = useMotionValue(0);
+  const iconRotateX = useSpring(useTransform(iconY, [-30, 30], [-20, 20]), { stiffness: 300, damping: 18 });
+  const iconRotateY = useSpring(useTransform(iconX, [-30, 30], [20, -20]), { stiffness: 300, damping: 18 });
+  const handleIconMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    iconX.set(e.clientX - (rect.left + rect.width / 2));
+    iconY.set(e.clientY - (rect.top + rect.height / 2));
+  };
+  const handleIconMouseLeave = () => { iconX.set(0); iconY.set(0); };
+
   return (
     <motion.div
       ref={ref}
@@ -242,8 +253,11 @@ function SkillItem({ skill, delay = 0 }: SkillItemProps) {
         </svg>
         <motion.div
           className="absolute inset-2 rounded-full bg-accent/5 flex items-center justify-center"
+          style={{ rotateX: iconRotateX, rotateY: iconRotateY, transformPerspective: '300px' } as React.CSSProperties}
           whileHover={{ scale: 3 }}
           transition={{ type: 'spring', stiffness: 340, damping: 18 }}
+          onMouseMove={handleIconMouseMove}
+          onMouseLeave={handleIconMouseLeave}
         >
           <Image
             src={getAssetPath(`/images/skills/${skill.icon}.png`)}
@@ -255,8 +269,8 @@ function SkillItem({ skill, delay = 0 }: SkillItemProps) {
         </motion.div>
       </div>
 
-      <span className="text-xs font-semibold text-center leading-tight">{skill.name}</span>
-      <span className="text-xs text-accent font-bold">{skill.level}%</span>
+      <span className="text-sm font-semibold text-center leading-tight">{skill.name}</span>
+      <span className="text-sm text-accent font-bold">{skill.level}%</span>
     </motion.div>
   );
 }
