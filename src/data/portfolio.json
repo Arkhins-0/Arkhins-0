@@ -292,26 +292,27 @@
     "categories": [
       {
         "name": "Frontend Development",
+        "description": "Building responsive and interactive interfaces with modern web technologies.",
         "skills": [
-          { "name": "HTML5", "icon": "html5", "level": 90 },
-          { "name": "CSS3", "icon": "css3", "level": 85 },
-          { "name": "JavaScript", "icon": "javascript", "level": 80 },
-          { "name": "React", "icon": "react", "level": 75 },
-          { "name": "Next.js", "icon": "nextjs", "level": 70 }
+          { "name": "Next.js", "icon": "nextjs", "level": 85 },
+          { "name": "React", "icon": "react", "level": 88 },
+          { "name": "JavaScript", "icon": "javascript", "level": 90 },
+          { "name": "Angular", "icon": "angular", "level": 75 }
         ]
       },
       {
-        "name": "Programming Languages",
+        "name": "Backend Development",
+        "description": "Server-side frameworks and languages for building scalable APIs and services.",
         "skills": [
+          { "name": "Node.js", "icon": "nodejs", "level": 80 },
+          { "name": "NestJS", "icon": "nestjs", "level": 72 },
           { "name": "Python", "icon": "python", "level": 90 },
-          { "name": "SQL", "icon": "sql", "level": 80 },
-          { "name": "Java", "icon": "java", "level": 70 },          
-          { "name": "C", "icon": "c", "level": 75 },
-          { "name": "C++", "icon": "cplusplus", "level": 70 }
+          { "name": "Java", "icon": "java", "level": 75 }
         ]
       },
       {
         "name": "UI/UX Design",
+        "description": "Crafting intuitive, accessible, and beautiful user experiences.",
         "skills": [
           { "name": "Figma", "icon": "figma", "level": 85 },
           { "name": "Adobe XD", "icon": "adobexd", "level": 75 },
@@ -320,21 +321,23 @@
         ]
       },
       {
-        "name": "Data & AI",
+        "name": "Data Management",
+        "description": "Relational and non-relational databases for modern data-driven applications.",
         "skills": [
-          { "name": "Machine Learning", "icon": "ml", "level": 75 },
-          { "name": "TensorFlow", "icon": "tensorflow", "level": 70 },
-          { "name": "Data Analysis", "icon": "data", "level": 80 },
-          { "name": "Power BI", "icon": "powerbi", "level": 75 }
+          { "name": "MongoDB", "icon": "mongodb", "level": 80 },
+          { "name": "NeonDB", "icon": "neondb", "level": 72 },
+          { "name": "Firebase", "icon": "firebase", "level": 85 },
+          { "name": "MySQL", "icon": "mysql", "level": 78 }
         ]
       },
       {
         "name": "Tools & Platforms",
+        "description": "Development tools, version control, and deployment platforms.",
         "skills": [
-          { "name": "Git", "icon": "git", "level": 80 },
-          { "name": "VS Code", "icon": "vscode", "level": 90 },
-          { "name": "Android Studio", "icon": "android", "level": 70 },
-          { "name": "Microsoft Office", "icon": "office", "level": 85 }
+          { "name": "Supabase", "icon": "supabase", "level": 75 },
+          { "name": "Git", "icon": "git", "level": 88 },
+          { "name": "VS Code", "icon": "vscode", "level": 95 },
+          { "name": "Vercel", "icon": "vercel", "level": 82 }
         ]
       }
     ],

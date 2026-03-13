@@ -24,10 +24,10 @@ export default function Home() {
           <About />
           <Projects />
           <Experience />
+          <Skills />
         </div>
         {/* Remaining sections have a solid background to cover the fixed video */}
         <div className="relative z-10 bg-background">
-          <Skills />
           <Certifications />
           <Volunteering />
           <Contact />
