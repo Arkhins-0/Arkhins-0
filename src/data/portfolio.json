@@ -342,9 +342,35 @@
       }
     ],
     "techStack": [
-      "HTML5", "CSS3", "JavaScript", "Python", "Java", "C++", "Kotlin",
-      "React", "Next.js", "Angular", "TailwindCSS", "Figma", "Git", "TensorFlow",
-      "Power BI", "Android", "Firebase"
+      { "name": "Next.js",     "icon": "/images/skills/nextjs.png" },
+      { "name": "React",       "icon": "/images/skills/react.png" },
+      { "name": "JavaScript",  "icon": "/images/skills/javascript.png" },
+      { "name": "Angular",     "icon": "/images/skills/angular.png" },
+      { "name": "HTML5",       "icon": "/images/skills/html5.png" },
+      { "name": "CSS3",        "icon": "/images/skills/css3.png" },
+      { "name": "Node.js",     "icon": "/images/skills/nodejs.png" },
+      { "name": "NestJS",      "icon": "/images/skills/nestjs.png" },
+      { "name": "Python",      "icon": "/images/skills/python.png" },
+      { "name": "Java",        "icon": "/images/skills/java.png" },
+      { "name": "Next.js",     "icon": "/images/skills/nextjs.png" },
+      { "name": "C++",         "icon": "/images/skills/cpp.png" },
+      { "name": "Kotlin",      "icon": "/images/skills/kotlin.png" },
+      { "name": "Figma",       "icon": "/images/skills/figma.png" },
+      { "name": "TailwindCSS", "icon": "/images/skills/tailwindcss.png" },
+      { "name": "Git",         "icon": "/images/skills/git.png" },
+      { "name": "MongoDB",     "icon": "/images/skills/mongodb.png" },
+      { "name": "NeonDB",      "icon": "/images/skills/neondb.png" },
+      { "name": "TensorFlow",  "icon": "/images/skills/tensorflow.png" },
+      { "name": "Firebase",    "icon": "/images/skills/firebase.png" },
+      { "name": "MySQL",       "icon": "/images/skills/mysql.png" },
+      { "name": "Supabase",    "icon": "/images/skills/supabase.png" },
+      { "name": "Vercel",      "icon": "/images/skills/vercel.png" },
+      { "name": "VS Code",     "icon": "/images/skills/vscode.png" },
+      { "name": "Adobe XD",    "icon": "/images/skills/adobexd.png" },
+      { "name": "Photoshop",   "icon": "/images/skills/photoshop.png" },
+      { "name": "Illustrator", "icon": "/images/skills/illustrator.png" },
+      { "name": "Power BI",    "icon": "/images/skills/powerbi.png" },
+      { "name": "Android",     "icon": "/images/skills/android.png" }
     ]
   },
   "certifications": [

@@ -77,16 +77,20 @@ export function Skills() {
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-display font-bold mb-4">
             Skills & <span className="text-gradient">Technologies</span>
           </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-foreground max-w-2xl mx-auto">
             The tools and technologies I use to bring ideas to life
           </p>
         </RevealOnScroll>
 
         {/* Tech Stack Marquee */}
         <RevealOnScroll delay={0.1} className="mb-20">
-          <div className="relative overflow-hidden py-4">
-            <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
-            <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
+          <div
+            className="relative overflow-hidden py-4"
+            style={{
+              WebkitMaskImage: 'linear-gradient(to right, transparent, black 80px, black calc(100% - 80px), transparent)',
+              maskImage: 'linear-gradient(to right, transparent, black 80px, black calc(100% - 80px), transparent)',
+            }}
+          >
             <div
               ref={marqueeRef}
               className="flex gap-4 shrink-0 overflow-x-auto cursor-grab px-2"
@@ -98,17 +102,17 @@ export function Skills() {
             >
               {[...skills.techStack, ...skills.techStack, ...skills.techStack].map((tech, index) => (
                 <div
-                  key={`${tech}-${index}`}
-                  className="flex items-center gap-2.5 px-5 py-2.5 rounded-xl bg-card border border-border whitespace-nowrap flex-shrink-0"
+                  key={`${tech.name}-${index}`}
+                  className="flex items-center gap-2.5 px-5 py-2.5 rounded-xl border border-accent whitespace-nowrap flex-shrink-0"
                 >
                   <Image
-                    src={getAssetPath(`/images/skills/${tech.replace(/\s|\+/g, '').toLowerCase()}.png`)}
-                    alt={`${tech} logo`}
-                    width={18}
-                    height={18}
+                    src={getAssetPath(tech.icon)}
+                    alt={`${tech.name} logo`}
+                    width={25}
+                    height={25}
                     className="object-contain"
                   />
-                  <span className="text-sm font-medium">{tech}</span>
+                  <span className="text-lg font-medium">{tech.name}</span>
                 </div>
               ))}
             </div>
