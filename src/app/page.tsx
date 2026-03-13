@@ -22,11 +22,11 @@ export default function Home() {
         {/* About has no background – hero blur shows through */}
         <div className="relative z-10">
           <About />
+          <Projects />
+          <Experience />
         </div>
         {/* Remaining sections have a solid background to cover the fixed video */}
         <div className="relative z-10 bg-background">
-          <Projects />
-          <Experience />
           <Skills />
           <Certifications />
           <Volunteering />

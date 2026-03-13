@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useMotionValue, useTransform, useSpring } from 'framer-motion';
 import { ExternalLink, Github, ArrowRight, Tag, X, ZoomIn, ZoomOut } from 'lucide-react';
 import portfolioData from '@/data/portfolio.json';
 import { RevealOnScroll } from '@/components/ui/Animations';
@@ -68,7 +68,7 @@ export function Projects() {
   };
 
   return (
-    <section id="projects" className="section-padding bg-muted/30">
+    <section id="projects" className="section-padding">
       <div className="container-custom">
         {/* Section Header */}
         <RevealOnScroll className="text-center mb-12">
@@ -98,34 +98,33 @@ export function Projects() {
           ))}
         </RevealOnScroll>
 
-        {/* Projects Grid */}
-        <motion.div layout className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* Projects List — alternating image/content layout */}
+        <div className="flex flex-col gap-16 md:gap-24">
           <AnimatePresence mode="popLayout">
             {filteredProjects.map((project, index) => (
               <motion.div
                 key={project.id}
                 layout
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                transition={{ duration: 0.3, delay: index * 0.1 }}
+                initial={{ opacity: 0, y: 40 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.4, delay: index * 0.08 }}
               >
                 <ProjectCard
                   project={project}
+                  index={index}
                   onClick={() => {
-                    // If a dedicated site page exists for this project, navigate there.
                     if ((project as any).pageUrl) {
                       router.push((project as any).pageUrl);
                       return;
                     }
-                    // Otherwise open the markdown modal
                     setModalProject(project);
                   }}
                 />
               </motion.div>
             ))}
           </AnimatePresence>
-        </motion.div>
+        </div>
 
         {/* Empty State */}
         {filteredProjects.length === 0 && (
@@ -441,119 +440,128 @@ export function Projects() {
 
 interface ProjectCardProps {
   project: typeof portfolioData.projects[0];
+  index: number;
   onClick?: () => void;
 }
 
-function ProjectCard({ project, onClick }: ProjectCardProps) {
-  const [isHovered, setIsHovered] = useState(false);
+function ProjectCard({ project, index, onClick }: ProjectCardProps) {
+  const isReversed = index % 2 !== 0;
+
+  // Tilt (imbalance) effect on the image
+  const mx = useMotionValue(0);
+  const my = useMotionValue(0);
+  const rotateX = useSpring(useTransform(my, [-100, 100], [8, -8]), { stiffness: 250, damping: 22 });
+  const rotateY = useSpring(useTransform(mx, [-100, 100], [-8, 8]), { stiffness: 250, damping: 22 });
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    mx.set(e.clientX - (rect.left + rect.width / 2));
+    my.set(e.clientY - (rect.top + rect.height / 2));
+  };
+
+  const handleMouseLeave = () => {
+    mx.set(0);
+    my.set(0);
+  };
 
   return (
-    <motion.div
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      whileHover={{ y: -5 }}
-      className="relative h-full w-full max-w-full rounded-2xl overflow-hidden glass-card gradient-border"
-      onClick={onClick}
-      style={{ cursor: onClick ? 'pointer' : 'default' }}
-    >
-      <GlowingEffect
-        spread={40}
-        glow={true}
-        disabled={false}
-        proximity={64}
-        inactiveZone={0.01}
-        borderWidth={2}
-      />
-      {/* Thumbnail */}
-      <div className="relative aspect-video overflow-hidden">
-        {project.thumbnail ? (
-          <Image
-            src={getAssetPath(project.thumbnail)}
-            alt={project.title}
-            fill
-            className="object-cover transition-transform duration-500 group-hover:scale-110"
-          />
-        ) : (
-          <div className="absolute inset-0 bg-gradient-to-br from-gray-700 to-gray-900 flex items-center justify-center">
-            <span className="text-6xl opacity-30">🚀</span>
-          </div>
-        )}
-        
-        {/* Overlay - Always visible with icons */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex items-end justify-start p-4">
-          {/* Icons - Always visible in bottom left */}
-          <div className="flex gap-2">
-            {project.githubUrl && (
-              <a
-                href={project.githubUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2 rounded-lg bg-accent/20 backdrop-blur-sm text-accent hover:bg-accent hover:text-white transition-colors"
-                aria-label="View on GitHub"
-                onClick={e => e.stopPropagation()}
-              >
-                <Github size={18} />
-              </a>
-            )}
-            {project.liveUrl && (
-              <a
-                href={project.liveUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2 rounded-lg bg-accent/20 backdrop-blur-sm text-accent hover:bg-accent hover:text-white transition-colors"
-                aria-label="View live demo"
-                onClick={e => e.stopPropagation()}
-              >
-                <ExternalLink size={18} />
-              </a>
-            )}
-          </div>
-        </div>
+    <div className={`flex flex-col ${isReversed ? 'md:flex-row-reverse' : 'md:flex-row'} items-center gap-8 md:gap-12`}>
 
-        {/* Featured Badge */}
-        {project.featured && (
-          <div className="absolute top-3 right-3 px-2 py-1 bg-accent/90 text-white text-xs font-medium rounded-full">
-            Featured
+      {/* Image with tilt */}
+      <motion.div
+        className="w-full md:w-1/2 rounded-2xl overflow-hidden relative cursor-pointer flex-shrink-0"
+        style={{ rotateX, rotateY, transformPerspective: '1000px' } as React.CSSProperties}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+        onClick={onClick}
+        whileHover={{ scale: 1.02 }}
+        transition={{ duration: 0.2 }}
+      >
+        <div className="relative aspect-video rounded-2xl overflow-hidden">
+          {project.thumbnail ? (
+            <Image
+              src={getAssetPath(project.thumbnail)}
+              alt={project.title}
+              fill
+              className="object-cover"
+            />
+          ) : (
+            <div className="absolute inset-0 bg-gradient-to-br from-gray-700 to-gray-900 flex items-center justify-center">
+              <span className="text-6xl opacity-30">🚀</span>
+            </div>
+          )}
+          {/* Overlay with action icons */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent flex items-end p-4">
+            <div className="flex gap-2">
+              {project.githubUrl && (
+                <a
+                  href={project.githubUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-2 rounded-lg bg-accent/20 backdrop-blur-sm text-white hover:bg-accent transition-colors"
+                  aria-label="View on GitHub"
+                  onClick={e => e.stopPropagation()}
+                >
+                  <Github size={18} />
+                </a>
+              )}
+              {project.liveUrl && (
+                <a
+                  href={project.liveUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-2 rounded-lg bg-accent/20 backdrop-blur-sm text-white hover:bg-accent transition-colors"
+                  aria-label="View live demo"
+                  onClick={e => e.stopPropagation()}
+                >
+                  <ExternalLink size={18} />
+                </a>
+              )}
+            </div>
           </div>
-        )}
-      </div>
+          {project.featured && (
+            <div className="absolute top-3 right-3 px-2 py-1 bg-accent/90 text-white text-xs font-medium rounded-full">
+              Featured
+            </div>
+          )}
+        </div>
+      </motion.div>
 
       {/* Content */}
-      <div className="p-5">
-        {/* Category & Date */}
-        <div className="flex items-center justify-between mb-2">
-          <span className="text-xs font-medium text-accent">{project.category}</span>
-          <span className="text-xs text-muted-foreground">{project.date}</span>
+      <div className={`w-full md:w-1/2 ${isReversed ? 'md:text-right' : ''}`}>
+        <div className={`flex items-center gap-3 mb-3 ${isReversed ? 'md:justify-end' : ''}`}>
+          <span className="text-xs font-semibold uppercase tracking-wider border rounded-md p-1 bg-white border-white text-accent">{project.category}</span>
+          <span className="text-xs text-foreground">{project.date}</span>
         </div>
 
-        {/* Title */}
-        <h3 className="text-lg font-semibold mb-2 group-hover:text-accent transition-colors">
-          {project.title}
-        </h3>
+        <h3 className="text-2xl md:text-3xl font-bold mb-3">{project.title}</h3>
+        <p className="text-foreground leading-relaxed mb-5">{project.description}</p>
 
-        {/* Description */}
-        <p className="text-sm text-muted-foreground line-clamp-2 mb-4">
-          {project.description}
-        </p>
-
-        {/* Tags */}
-        <div className="flex flex-wrap gap-1.5">
-          {project.tags.slice(0, 3).map((tag) => (
+        <div className={`flex flex-wrap gap-2 mb-6 ${isReversed ? 'md:justify-end' : ''}`}>
+          {project.tags.slice(0, 5).map((tag) => (
             <span
               key={tag}
-              className="inline-flex items-center gap-1 px-2 py-0.5 text-xs rounded-md bg-muted text-muted-foreground"
+              className="inline-flex items-center gap-1 px-2.5 py-1 text-xs  hover:bg-accent hover:text-foreground rounded-lg bg-accent/10 text-foreground border border-accent/20"
             >
               <Tag size={10} />
               {tag}
             </span>
           ))}
-          {project.tags.length > 3 && (
-            <span className="px-2 py-0.5 text-xs rounded-md bg-muted text-muted-foreground">
-              +{project.tags.length - 3}
+          {project.tags.length > 5 && (
+            <span className="px-2.5 py-1 text-xs rounded-lg bg-muted text-muted-foreground">
+              +{project.tags.length - 5}
             </span>
           )}
         </div>
+
+        <button
+          onClick={onClick}
+          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-accent/10 text-accent border border-accent/30 hover:bg-accent hover:text-white transition-colors text-sm font-medium"
+        >
+          View Details
+          <ArrowRight size={16} />
+        </button>
       </div>
-    </motion.div>
+    </div>
   );
 }
