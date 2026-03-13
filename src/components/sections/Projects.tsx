@@ -530,7 +530,7 @@ function ProjectCard({ project, index, onClick }: ProjectCardProps) {
       {/* Content */}
       <div className={`w-full md:w-1/2 ${isReversed ? 'md:text-right' : ''}`}>
         <div className={`flex items-center gap-3 mb-3 ${isReversed ? 'md:justify-end' : ''}`}>
-          <span className="text-xs font-semibold uppercase tracking-wider border rounded-md p-1 bg-white border-white text-accent">{project.category}</span>
+          <span className="text-xs font-semibold uppercase tracking-wider border rounded-md p-1 bg-muted border-accent text-accent">{project.category}</span>
           <span className="text-xs text-foreground">{project.date}</span>
         </div>
 

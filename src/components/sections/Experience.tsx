@@ -109,7 +109,7 @@ export function Experience() {
                         
                         <div className={cn('flex-1', index % 2 === 0 ? 'md:text-right' : '')}>
                           <h3 className="text-lg font-semibold">{exp.position}</h3>
-                          <p className="text-accent font-medium">{exp.company}</p>
+                          <div className="text-accent font-medium">{exp.company}</div>
                         </div>
 
                         {/* Expand/Collapse Icon */}
@@ -123,7 +123,7 @@ export function Experience() {
 
                       {/* Meta - Always Visible */}
                       <div className={cn(
-                        'flex flex-wrap items-center gap-4 mt-4 text-sm text-muted-foreground',
+                        'flex flex-wrap items-center gap-4 mt-4 text-sm text-foreground',
                         index % 2 === 0 ? 'md:justify-end' : ''
                       )}>
                         <span className="flex items-center gap-1">
@@ -134,7 +134,7 @@ export function Experience() {
                           <MapPin size={14} />
                           {exp.location}
                         </span>
-                        <span className="px-2 py-0.5 rounded-full bg-accent/10 text-accent text-xs">
+                        <span className="px-2 py-0.5 border rounded-md bg-muted border-accent text-accent text-xs">
                           {exp.type}
                         </span>
                       </div>
@@ -150,7 +150,7 @@ export function Experience() {
                             className="overflow-hidden"
                           >
                             {/* Description */}
-                            <p className="mt-4 text-sm text-muted-foreground">
+                            <p className="mt-4 text-sm text-foreground">
                               {exp.description}
                             </p>
 
@@ -159,7 +159,7 @@ export function Experience() {
                               {exp.highlights.map((highlight, i) => (
                                 <li
                                   key={i}
-                                  className="flex items-start gap-2 text-sm text-muted-foreground"
+                                  className="flex items-start gap-2 text-sm text-foreground"
                                 >
                                   <ChevronRight size={14} className="flex-shrink-0 mt-1 text-accent" />
                                   {highlight}
@@ -172,7 +172,7 @@ export function Experience() {
                               {exp.technologies.map((tech) => (
                                 <span
                                   key={tech}
-                                  className="px-2 py-1 text-xs rounded-md bg-muted text-muted-foreground"
+                                  className="px-2 py-1 text-xs rounded-md bg-muted text-foreground border border-accent"
                                 >
                                   {tech}
                                 </span>

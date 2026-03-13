@@ -18,12 +18,12 @@ export const accentColors: Record<AccentColor, ThemeColors> = {
 };
 
 export const lightTheme = {
-  background: '#ffffff',
+  background: '#f0f4f8',
   foreground: '#0f172a',
-  card: '#f8fafc',
+  card: '#ffffff',
   cardForeground: '#1e293b',
-  muted: '#f1f5f9',
-  mutedForeground: '#cccccc',
+  muted: '#e2e8f0',
+  mutedForeground: '#64748b',
   border: '#cbd5e1',
 };
 
