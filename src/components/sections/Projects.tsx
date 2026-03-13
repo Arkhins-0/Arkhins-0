@@ -450,8 +450,8 @@ function ProjectCard({ project, index, onClick }: ProjectCardProps) {
   // Tilt (imbalance) effect on the image
   const mx = useMotionValue(0);
   const my = useMotionValue(0);
-  const rotateX = useSpring(useTransform(my, [-100, 100], [8, -8]), { stiffness: 250, damping: 22 });
-  const rotateY = useSpring(useTransform(mx, [-100, 100], [-8, 8]), { stiffness: 250, damping: 22 });
+  const rotateX = useSpring(useTransform(my, [-100, 100], [-8, 8]), { stiffness: 250, damping: 22 });
+  const rotateY = useSpring(useTransform(mx, [-100, 100], [8, -8]), { stiffness: 250, damping: 22 });
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();

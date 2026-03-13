@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useMotionValue, useTransform, useSpring } from 'framer-motion';
 import { GraduationCap, Calendar, Languages, Award, UserRound } from 'lucide-react';
 import portfolioData from '@/data/portfolio.json';
 import { RevealOnScroll } from '@/components/ui/Animations';
@@ -35,6 +35,18 @@ export function About() {
 
   const currentLang = languages[currentIndex];
   const currentTexts = languageTexts[currentLang.name];
+
+  // Tilt effect for profile image
+  const picX = useMotionValue(0);
+  const picY = useMotionValue(0);
+  const picRotateX = useSpring(useTransform(picY, [-80, 80], [-10, 10]), { stiffness: 250, damping: 22 });
+  const picRotateY = useSpring(useTransform(picX, [-80, 80], [10, -10]), { stiffness: 250, damping: 22 });
+  const handlePicMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    picX.set(e.clientX - (rect.left + rect.width / 2));
+    picY.set(e.clientY - (rect.top + rect.height / 2));
+  };
+  const handlePicMouseLeave = () => { picX.set(0); picY.set(0); };
 
   // Language typewriter effect
   useEffect(() => {
@@ -117,18 +129,27 @@ export function About() {
           <div className="flex flex-col lg:flex-row items-center gap-10 mb-20">
             {/* Profile image – square with 3 rounded corners */}
             <div className="flex-shrink-0">
-              <div
-                className="w-64 h-64 lg:w-80 lg:h-80 overflow-hidden transition-transform duration-300 hover:scale-105"
-                style={{ borderRadius: '1.5rem 1.5rem 1.5rem 0' }}
+              <motion.div
+                className="w-64 h-64 lg:w-80 lg:h-80 cursor-pointer"
+                style={{ rotateX: picRotateX, rotateY: picRotateY, transformPerspective: '900px' } as React.CSSProperties}
+                onMouseMove={handlePicMouseMove}
+                onMouseLeave={handlePicMouseLeave}
+                whileHover={{ scale: 1.04 }}
+                transition={{ duration: 0.2 }}
               >
-                <Image
-                  src={basics.profilePicture}
-                  alt={basics.name}
-                  width={320}
-                  height={320}
-                  className="w-full h-full object-cover duration-200"
-                />
-              </div>
+                <div
+                  className="w-full h-full overflow-hidden"
+                  style={{ borderRadius: '1.5rem 1.5rem 1.5rem 0' }}
+                >
+                  <Image
+                    src={basics.profilePicture}
+                    alt={basics.name}
+                    width={320}
+                    height={320}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              </motion.div>
             </div>
             {/* Bio text */}
             <div className="flex-1">
@@ -138,7 +159,7 @@ export function About() {
                 </div>
                 <h3 className="text-2xl font-semibold">Who <span className="text-gradient">I Am</span></h3>
               </div>
-              <p className="text-foreground leading-relaxed text-lg">
+              <p className="text-foreground text-justify leading-relaxed text-lg">
                 {basics.bio}
               </p>
             </div>
