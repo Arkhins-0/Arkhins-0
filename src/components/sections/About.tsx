@@ -3,14 +3,9 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
-import { GraduationCap, Calendar, Languages, Award } from 'lucide-react';
+import { GraduationCap, Calendar, Languages, Award, UserRound } from 'lucide-react';
 import portfolioData from '@/data/portfolio.json';
 import { RevealOnScroll } from '@/components/ui/Animations';
-import { BsExclamation } from 'react-icons/bs';
-import { BiQuestionMark } from 'react-icons/bi';
-import { FaUserCircle } from 'react-icons/fa';
-import { MdPerson, MdPerson2, MdPerson3, MdPerson4, MdPersonOutline } from 'react-icons/md';
-import { IoPersonCircleOutline, IoPersonCircleSharp } from 'react-icons/io5';
 
 const languageTexts: Record<string, { native: string; translation: string }> = {
   Tamil: {
@@ -112,7 +107,7 @@ export function About() {
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-display font-bold mb-4">
             About <span className="text-gradient">Me</span>
           </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-bold text-foreground max-w-2xl mx-auto">
             Get to know more about my background, education, and what drives me
           </p>
         </RevealOnScroll>
@@ -139,7 +134,7 @@ export function About() {
             <div className="flex-1">
               <div className="flex items-center gap-3 mb-5">
                 <div className="p-1 rounded-lg bg-accent/10">
-                  <MdPersonOutline size={35} className="text-accent" />
+                  <UserRound size={30} className="text-accent" />
                 </div>
                 <h3 className="text-2xl font-semibold">Who <span className="text-gradient">I Am</span></h3>
               </div>
@@ -180,9 +175,9 @@ export function About() {
                   </div>
                   <div className="flex-1 min-w-0">
                     <h4 className="font-semibold text-sm leading-tight">{edu.degree}</h4>
-                    <p className="text-xs text-muted-foreground mt-1 truncate">{edu.institution}</p>
+                    <p className="text-xs text-foreground mt-1 wrap">{edu.institution}</p>
                     <div className="flex items-center gap-2 mt-2">
-                      <span className="text-xs text-muted-foreground flex items-center gap-1">
+                      <span className="text-xs text-foreground flex items-center gap-1">
                         <Calendar size={11} />
                         {edu.startDate} – {edu.current ? 'Present' : edu.endDate}
                       </span>
@@ -204,7 +199,7 @@ export function About() {
                 <div className="p-2 rounded-lg bg-accent/10">
                   <Languages size={30} className="text-accent" />
                 </div>
-                <h3 className="text-lg font-semibold m-0">Languages</h3>
+                <h3 className="text-2xl font-semibold">Languages</h3>
               </div>
               {/* Typewriter Display */}
               <div className="space-y-4 mb-6 min-h-[120px] flex flex-col justify-center">
@@ -230,7 +225,7 @@ export function About() {
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         transition={{ duration: 0.3 }}
-                        className="text-sm text-muted-foreground"
+                        className="text-sm font-bold text-foreground"
                       >
                         {displayedTranslation}
                         <motion.span
@@ -251,8 +246,8 @@ export function About() {
                     key={lang.id}
                     className={`px-3 py-1.5 text-xs font-medium rounded-lg transition-all cursor-default ${
                       index === currentIndex
-                        ? 'text-accent bg-white border border-accent/20'
-                        : 'text-muted-foreground bg-muted/50'
+                        ? 'text-accent font-semibold bg-white border border-accent'
+                        : 'text-foreground bg-muted/50'
                     }`}
                   >
                     {lang.name}
@@ -267,7 +262,7 @@ export function About() {
                 <div className="p-2 rounded-lg bg-accent/10">
                   <Award size={30} className="text-accent" />
                 </div>
-                <h3 className="text-lg font-semibold m-0">Interests</h3>
+                <h3 className="text-2xl font-semibold">Interests</h3>
               </div>
               <div className="flex flex-wrap gap-2 px-3 py-1.5">
                 {interests.map((interest) => (

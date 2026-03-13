@@ -5,4 +5,4 @@ export {
   TextReveal,
 } from './Animations';
 export { GlowingEffect } from './glowing-effect';
-export { GlowingEffectDemo } from './glowing-effect-demo';
+export { SplashScreen } from './SplashScreen';

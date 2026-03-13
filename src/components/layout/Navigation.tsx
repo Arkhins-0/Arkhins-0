@@ -3,8 +3,9 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
-import { Menu, X, Home, User, Briefcase, Code, Award, Trophy, Heart, Mail } from 'lucide-react';
+import { Menu, X, Home, User, Briefcase, Code, Award, Trophy, Heart, Mail, Sun, Moon } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useTheme } from '@/context/ThemeContext';
 import portfolioData from '@/data/portfolio.json';
 
 const navLinks = [
@@ -22,6 +23,7 @@ export function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
+  const { isDark, toggleTheme } = useTheme();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -61,7 +63,7 @@ export function Navigation() {
             'relative flex items-center justify-between px-6 py-3 rounded-2xl transition-all duration-300',
             scrolled
               ? 'glass shadow-lg'
-              : 'glass shadow-lg'
+              : 'bg-transparent'
           )}
         >
           {/* Logo */}
@@ -93,7 +95,7 @@ export function Navigation() {
                       'relative flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg',
                       isActive
                         ? 'text-accent'
-                        : 'text-muted-foreground hover:text-foreground'
+                        : 'text-foreground hover:text-muted-foreground'
                     )}
                   >
                     <motion.div
@@ -122,13 +124,22 @@ export function Navigation() {
             })}
           </ul>
 
-          {/* CTA Button */}
-          <Link
-            href="#contact"
-            className="hidden md:inline-flex items-center gap-2 px-5 py-2.5 bg-accent text-white text-sm font-medium rounded-xl hover:bg-accent-dark transition-colors"
-          >
-            Let&apos;s Talk
-          </Link>
+          {/* Theme toggle + CTA Button */}
+          <div className="hidden md:flex items-center gap-3">
+            <button
+              onClick={toggleTheme}
+              className="p-2.5 rounded-xl text-foreground hover:text-accent hover:bg-muted/60 transition-colors"
+              aria-label="Toggle theme"
+            >
+              {isDark ? <Sun size={18} /> : <Moon size={18} />}
+            </button>
+            <Link
+              href="#contact"
+              className="inline-flex items-center gap-2 px-5 py-2.5 bg-accent text-white text-sm font-medium rounded-xl hover:bg-accent-dark transition-colors"
+            >
+              Let&apos;s Talk
+            </Link>
+          </div>
 
           {/* Mobile Menu Button */}
           <button
@@ -140,6 +151,22 @@ export function Navigation() {
           </button>
         </nav>
 
+        {/* Backdrop – closes mobile menu when tapping outside */}
+        <AnimatePresence>
+          {isOpen && (
+            <motion.div
+              key="backdrop"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.15 }}
+              className="fixed inset-0 z-40"
+              onClick={() => setIsOpen(false)}
+              aria-hidden="true"
+            />
+          )}
+        </AnimatePresence>
+
         {/* Mobile Navigation */}
         <AnimatePresence>
           {isOpen && (
@@ -148,7 +175,7 @@ export function Navigation() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.2 }}
-              className="absolute top-full left-4 right-4 mt-2 p-4 glass rounded-2xl md:hidden"
+              className="absolute top-full left-4 right-4 mt-2 p-4 glass rounded-2xl md:hidden z-50"
             >
               <ul className="flex flex-col gap-1">
                 {navLinks.map((link) => (
@@ -168,13 +195,22 @@ export function Navigation() {
                   </li>
                 ))}
                 <li className="mt-2 pt-2 border-t border-border">
-                  <Link
-                    href="#contact"
-                    onClick={() => setIsOpen(false)}
-                    className="block px-4 py-3 bg-accent text-white text-sm font-medium text-center rounded-xl"
-                  >
-                    Let&apos;s Talk
-                  </Link>
+                  <div className="flex items-center gap-2">
+                    <Link
+                      href="#contact"
+                      onClick={() => setIsOpen(false)}
+                      className="flex-1 px-4 py-3 bg-accent text-white text-sm font-medium text-center rounded-xl"
+                    >
+                      Let&apos;s Talk
+                    </Link>
+                    <button
+                      onClick={toggleTheme}
+                      className="p-3 rounded-xl text-foreground hover:text-accent hover:bg-muted/60 transition-colors flex-shrink-0"
+                      aria-label="Toggle theme"
+                    >
+                      {isDark ? <Sun size={18} /> : <Moon size={18} />}
+                    </button>
+                  </div>
                 </li>
               </ul>
             </motion.div>

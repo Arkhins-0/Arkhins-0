@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
-import { SettingsPanel } from '@/components/layout';
 import { getAssetPath } from '@/lib/utils';
 import hygieiaData from '@/data/hygieia.json';
 import { 
@@ -220,7 +219,6 @@ export default function HygieiaPage() {
 
   return (
     <div className="min-h-screen">
-      <SettingsPanel />
       {/* Mesh gradient background */}
       <div className="mesh-gradient" />
       

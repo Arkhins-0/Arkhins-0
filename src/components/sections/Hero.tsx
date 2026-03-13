@@ -105,14 +105,9 @@ export function Hero() {
             <motion.div
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 1.0, ease: [0.25, 0.1, 0.25, 1] }}
+              transition={{ duration: 0.55, delay: 1.0, ease: [0.25, 0.1, 0.25, 1] }}
             >
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 1.0 }}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/10 border border-accent mb-6"
-              >
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/10 border border-accent mb-6">
                 <span className="relative flex h-2 w-2">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75" />
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-accent" />
@@ -120,14 +115,14 @@ export function Hero() {
                 <span className="text-sm font-medium text-foreground">
                   {basics.availability}
                 </span>
-              </motion.div>
+              </div>
             </motion.div>
 
             {/* Name */}
             <motion.div
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
+              transition={{ duration: 0.55, delay: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
             >
               <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-display font-bold tracking-tight mb-4">
                 <span className="block text-foreground">Hi, I&apos;m</span>
@@ -139,7 +134,7 @@ export function Hero() {
             <motion.div
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 1.1, ease: [0.25, 0.1, 0.25, 1] }}
+              transition={{ duration: 0.55, delay: 1.1, ease: [0.25, 0.1, 0.25, 1] }}
             >
               <p className="text-xl sm:text-2xl lg:text-3xl text-foreground font-light mb-6">
                 {basics.headline}
@@ -150,7 +145,7 @@ export function Hero() {
             <motion.div
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 1.2, ease: [0.25, 0.1, 0.25, 1] }}
+              transition={{ duration: 0.55, delay: 1.2, ease: [0.25, 0.1, 0.25, 1] }}
             >
               <p className="text-lg text-muted-foreground/80 max-w-xl mx-auto lg:ml-auto lg:mr-0 mb-8 flex items-center justify-center lg:justify-end gap-2">
                 <Sparkles size={18} className="text-accent" />
@@ -162,7 +157,7 @@ export function Hero() {
             <motion.div
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 1.25, ease: [0.25, 0.1, 0.25, 1] }}
+              transition={{ duration: 0.55, delay: 1.25, ease: [0.25, 0.1, 0.25, 1] }}
             >
               <p className="flex items-center justify-center lg:justify-end gap-2 text-foreground mb-8">
                 <MapPin size={16} className="text-accent" />
@@ -174,7 +169,7 @@ export function Hero() {
             <motion.div
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 1.3, ease: [0.25, 0.1, 0.25, 1] }}
+              transition={{ duration: 0.55, delay: 1.3, ease: [0.25, 0.1, 0.25, 1] }}
             >
               <div className="flex flex-wrap items-center justify-center lg:justify-end gap-4 mb-8">
                 <a
@@ -205,7 +200,7 @@ export function Hero() {
             <motion.div
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 1.4, ease: [0.25, 0.1, 0.25, 1] }}
+              transition={{ duration: 0.55, delay: 1.4, ease: [0.25, 0.1, 0.25, 1] }}
             >
               <div className="flex items-center justify-center lg:justify-end gap-3 mb-16 md:mb-0">
                 {socialLinks.slice(0, 4).map((social) => (

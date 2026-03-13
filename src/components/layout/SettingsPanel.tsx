@@ -1,28 +1,14 @@
-'use client';
+﻿'use client';
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Settings, Sun, Moon, X, Palette } from 'lucide-react';
 import { useTheme } from '@/context/ThemeContext';
-import { AccentColor, accentColors } from '@/config/theme';
 import { cn } from '@/lib/utils';
-import portfolioData from '@/data/portfolio.json';
-
-const accentOptions: { color: AccentColor; label: string }[] = [
-  { color: 'blue', label: 'Blue' },
-  { color: 'purple', label: 'Purple' },
-  { color: 'emerald', label: 'Emerald' },
-  { color: 'rose', label: 'Rose' },
-  { color: 'amber', label: 'Amber' },
-  { color: 'cyan', label: 'Cyan' },
-  { color: 'teal', label: 'Teal' },
-  { color: 'fuchsia', label: 'Fuchsia' },
-  { color: 'indigo', label: 'Indigo' },
-];
 
 export function SettingsPanel() {
   const [isOpen, setIsOpen] = useState(false);
-  const { isDark, toggleTheme, accentColor, setAccentColor } = useTheme();
+  const { isDark, toggleTheme } = useTheme();
 
   return (
     <>
@@ -77,7 +63,6 @@ export function SettingsPanel() {
 
                 {/* Content */}
                 <div className="flex-1 overflow-y-auto p-6 space-y-8">
-                  {/* Theme Toggle */}
                   <div>
                     <h3 className="text-sm font-medium text-muted-foreground mb-3">
                       Appearance
@@ -107,53 +92,6 @@ export function SettingsPanel() {
                         <Moon size={18} />
                         Dark
                       </button>
-                    </div>
-                  </div>
-
-                  {/* Accent Color */}
-                  <div>
-                    <h3 className="text-sm font-medium text-muted-foreground mb-3">
-                      Accent Color
-                    </h3>
-                    <div className="grid grid-cols-3 gap-3">
-                      {accentOptions.map(({ color, label }) => (
-                        <button
-                          key={color}
-                          onClick={() => setAccentColor(color)}
-                          className={cn(
-                            'flex flex-col items-center gap-2 p-3 rounded-xl border-2 transition-all',
-                            accentColor === color
-                              ? 'border-accent bg-accent/10'
-                              : 'border-border hover:border-muted-foreground'
-                          )}
-                        >
-                          <span
-                            className={
-                              `w-8 h-8 rounded-full ring-2 ring-offset-2 ring-offset-card ` +
-                              (accentColor === color ? 'ring-accent' : 'ring-transparent')
-                            }
-                            style={{
-                              backgroundColor: accentColors[color].accent,
-                            }}
-                          />
-                          <span className="text-xs font-medium">{label}</span>
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Preview */}
-                  <div>
-                    <h3 className="text-sm font-medium text-muted-foreground mb-3">
-                      Preview
-                    </h3>
-                    <div className="p-6 rounded-xl bg-muted">
-                      <h1 className="text-2xl font-bold text-gradient mb-2">
-                        You can customize me!
-                      </h1>
-                      <p className="text-sm text-muted-foreground">
-                        I hope you like the new look!
-                      </p>
                     </div>
                   </div>
                 </div>

@@ -26,15 +26,10 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     setMounted(true);
-    // Load saved preferences
+    // Load saved theme preference
     const savedTheme = localStorage.getItem('theme');
-    const savedAccent = localStorage.getItem('accent') as AccentColor;
-
     if (savedTheme) {
       setIsDark(savedTheme === 'dark');
-    }
-    if (savedAccent && accentColors[savedAccent]) {
-      setAccentColor(savedAccent);
     }
   }, []);
 

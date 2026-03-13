@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Inter, Space_Grotesk } from 'next/font/google';
 import './globals.css';
 import { ThemeProvider } from '@/context/ThemeContext';
+import { SplashScreen } from '@/components/ui/SplashScreen';
 import portfolioData from '@/data/portfolio.json';
 import { getAssetPath } from '@/lib/utils';
 
@@ -25,7 +26,7 @@ export const metadata: Metadata = {
   icons: {
     icon: getAssetPath('/images/profile.jpg'),
   },
-  metadataBase: new URL('https://krishna-vijay-g.github.io/Portfolio'),
+  metadataBase: new URL('https://krishnavijayg.vercel.app'),
   openGraph: {
     title: portfolioData.meta.title,
     description: portfolioData.meta.description,
@@ -55,6 +56,7 @@ export default function RootLayout({
     <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable}`} suppressHydrationWarning>
       <body className="bg-background text-foreground antialiased overflow-x-hidden">
         <ThemeProvider>
+          <SplashScreen />
           <div className="mesh-gradient" />
           <div className="w-full max-w-full overflow-x-hidden">
             {children}
