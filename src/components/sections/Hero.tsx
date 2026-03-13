@@ -100,7 +100,10 @@ export function Hero() {
 
       <div className="container-custom relative z-[1] w-full">
         {/* Content — right-aligned */}
-        <div className="ml-auto w-full lg:w-1/2 text-center lg:text-right bg-border-accent">
+        <div className="ml-auto w-full lg:w-1/2 text-center lg:text-right flex flex-col justify-end min-h-[calc(100svh-5rem)] sm:block sm:min-h-0">
+
+          {/* Top group: status badge + name */}
+          <div className="sm:block">
             {/* Status Badge */}
             <motion.div
               initial={{ opacity: 0, y: 40 }}
@@ -129,8 +132,10 @@ export function Hero() {
                 <span className="text-gradient">{basics.name}</span>
               </h1>
             </motion.div>
+          </div>
 
-            {/* Headline */}
+          {/* Bottom group: headline → socials (anchored to bottom on mobile) */}
+          <div className="pb-6 sm:pb-0">
             <motion.div
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
@@ -219,7 +224,8 @@ export function Hero() {
                 ))}
               </div>
             </motion.div>
-        </div>
+          </div>{/* end bottom group */}
+        </div>{/* end content wrapper */}
 
         {/* Scroll indicator */}
         <motion.div
@@ -233,8 +239,8 @@ export function Hero() {
             transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
             className="flex flex-col items-center gap-2 text-muted-foreground"
           >
-            <span className="text-xs uppercase tracking-widest">Scroll</span>
-            <ArrowDown size={16} />
+            <span className="text-xs uppercase tracking-widest text-foreground">Scroll</span>
+            <ArrowDown size={16} className="text-foreground" />
           </motion.div>
         </motion.div>
       </div>

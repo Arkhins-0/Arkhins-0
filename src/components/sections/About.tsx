@@ -181,7 +181,7 @@ export function About() {
                         <Calendar size={11} />
                         {edu.startDate} – {edu.current ? 'Present' : edu.endDate}
                       </span>
-                      <span className="text-xs font-medium text-foreground bg-accent rounded-md px-0.5">{edu.score}</span>
+                      <span className="text-xs font-medium text-foreground bg-accent rounded-md px-1 py-0.5">{edu.score}</span>
                     </div>
                   </div>
                 </div>
