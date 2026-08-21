@@ -4,15 +4,10 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  async headers() {
+  async redirects() {
     return [
-      {
-        source: '/sw.js',
-        headers: [
-          { key: 'Service-Worker-Allowed', value: '/' },
-          { key: 'Cache-Control', value: 'no-cache, no-store, must-revalidate' },
-        ],
-      },
+      // The case study moved under /projects so more can be added beside it.
+      { source: '/hygieia', destination: '/projects/hygieia', permanent: true },
     ];
   },
 };

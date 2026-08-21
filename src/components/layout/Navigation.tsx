@@ -1,222 +1,314 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { Menu, X, Home, User, Briefcase, Code, Award, Trophy, Heart, Mail, Sun, Moon } from 'lucide-react';
+import { AnimatePresence, motion } from 'framer-motion';
+import { Sparkles, Zap, ZapOff } from 'lucide-react';
+import { ACCENTS, ACCENT_SWATCH, useUI } from '@/context/UIContext';
+import { NeonButton } from '@/components/fx';
 import { cn } from '@/lib/utils';
-import { useTheme } from '@/context/ThemeContext';
 import portfolioData from '@/data/portfolio.json';
 
-const navLinks = [
-  { href: '#home', label: 'Home', icon: Home },
-  { href: '#about', label: 'About', icon: User },
-  { href: '#projects', label: 'Projects', icon: Briefcase },
-  { href: '#experience', label: 'Experience', icon: Code },
-  { href: '#skills', label: 'Skills', icon: Award },
-  { href: '#certifications', label: 'Certifications', icon: Trophy },
-  { href: '#volunteering', label: 'Volunteering', icon: Heart },
-  { href: '#contact', label: 'Contact', icon: Mail },
-];
+export const SECTIONS = [
+  { id: 'home', label: 'Index' },
+  { id: 'about', label: 'About' },
+  { id: 'work', label: 'Work' },
+  { id: 'path', label: 'Path' },
+  { id: 'stack', label: 'Stack' },
+  { id: 'proof', label: 'Proof' },
+  { id: 'beyond', label: 'Beyond' },
+  { id: 'contact', label: 'Contact' },
+] as const;
 
-export function Navigation() {
-  const [isOpen, setIsOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-  const [activeSection, setActiveSection] = useState('home');
-  const { isDark, toggleTheme } = useTheme();
+const FIRST = portfolioData.basics.name.split(' ')[0];
+const MONOGRAM = portfolioData.basics.name
+  .split(' ')
+  .map((w) => w[0])
+  .join('')
+  .slice(0, 2);
+
+/** Watches every section and reports whichever owns the upper third. */
+function useActiveSection() {
+  const [active, setActive] = useState<string>('home');
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
+    const nodes = SECTIONS.map((s) => document.getElementById(s.id)).filter(
+      Boolean
+    ) as HTMLElement[];
+    if (!nodes.length) return;
 
-      // Update active section based on scroll position
-      const sections = navLinks.map(link => link.href.replace('#', ''));
-      for (const section of sections.reverse()) {
-        const element = document.getElementById(section);
-        if (element) {
-          const rect = element.getBoundingClientRect();
-          if (rect.top <= 150) {
-            setActiveSection(section);
-            break;
-          }
-        }
-      }
-    };
+    const io = new IntersectionObserver(
+      (entries) => {
+        const hit = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (hit) setActive(hit.target.id);
+      },
+      { rootMargin: '-30% 0px -55% 0px', threshold: [0, 0.2, 0.6] }
+    );
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    nodes.forEach((n) => io.observe(n));
+    return () => io.disconnect();
   }, []);
 
+  return active;
+}
+
+function Controls({ compact = false }: { compact?: boolean }) {
+  const { accent, setAccent, fx, toggleFx } = useUI();
   return (
-    <motion.header
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.5 }}
-      className={cn(
-        'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
-        scrolled ? 'py-3' : 'py-5'
-      )}
-    >
-      <div className="container-custom">
+    <div className={cn('flex items-center', compact ? 'gap-4' : 'gap-3')}>
+      <div className="flex items-center gap-1.5" role="group" aria-label="Accent colour">
+        {ACCENTS.map((a) => (
+          <button
+            key={a}
+            onClick={() => setAccent(a)}
+            aria-label={`${a} accent`}
+            aria-pressed={accent === a}
+            className={cn(
+              'h-2.5 w-2.5 rotate-45 transition-all duration-300',
+              accent === a ? 'scale-[1.7]' : 'opacity-45 hover:opacity-90'
+            )}
+            style={{
+              background: ACCENT_SWATCH[a],
+              boxShadow:
+                accent === a ? `0 0 12px ${ACCENT_SWATCH[a]}` : undefined,
+            }}
+          />
+        ))}
+      </div>
+      <span className="h-4 w-px bg-white/12" />
+      <button
+        onClick={toggleFx}
+        aria-label={fx ? 'Reduce motion and effects' : 'Enable effects'}
+        title={fx ? 'Effects: on' : 'Effects: off'}
+        className="text-ink-faint transition-colors hover:text-accent"
+      >
+        {fx ? <Zap size={15} /> : <ZapOff size={15} />}
+      </button>
+    </div>
+  );
+}
+
+export function Navigation() {
+  const [open, setOpen] = useState(false);
+  const [condensed, setCondensed] = useState(false);
+  const active = useActiveSection();
+
+  useEffect(() => {
+    const onScroll = () => setCondensed(window.scrollY > 80);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  useEffect(() => {
+    document.body.style.overflow = open ? 'hidden' : '';
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [open]);
+
+  return (
+    <>
+      {/* ------------------------------------------------ top bar */}
+      {/* While the sheet is open the header has to outrank it, otherwise the
+          close button is buried and the menu can only be dismissed by
+          navigating. */}
+      <header
+        className={cn(
+          'fixed inset-x-0 top-0 px-4 pt-4 md:px-8 md:pt-6',
+          open ? 'z-[90]' : 'z-[60]'
+        )}
+      >
         <nav
           className={cn(
-            'relative flex items-center justify-between px-6 py-3 rounded-2xl transition-all duration-300',
-            scrolled
-              ? 'glass shadow-lg'
-              : 'bg-transparent'
+            'mx-auto flex max-w-[84rem] items-center justify-between transition-all duration-500 ease-swift',
+            condensed
+              ? 'glass notch-diag px-4 py-2.5 md:px-6'
+              : 'border border-transparent px-0 py-2'
           )}
+          style={{ ['--notch' as string]: '14px' }}
         >
-          {/* Logo */}
+          {/* wordmark */}
           <Link
-            href="#home"
-            className="relative z-10 font-display text-xl font-bold tracking-tight"
+            href="/#home"
+            className="group flex items-center gap-3"
+            aria-label={`${portfolioData.basics.name} — home`}
           >
-            <span className="text-gradient">{portfolioData.basics.name.split(' ')[0]}</span>
-            <span className="text-foreground/80">.</span>
+            <span
+              className="neon-fill notch-br grid h-9 w-9 place-items-center font-display text-sm font-extrabold"
+              style={{ ['--notch' as string]: '8px' }}
+            >
+              {MONOGRAM}
+            </span>
+            <span className="hidden font-display text-base font-bold tracking-tight sm:block">
+              {FIRST}
+              <span className="neon-text">.</span>
+            </span>
           </Link>
 
-          {/* Desktop Navigation */}
-          <ul className="hidden md:flex items-center gap-1">
-            {navLinks.map((link) => {
-              const Icon = link.icon;
-              const isActive = activeSection === link.href.replace('#', '');
+          {/* desktop links */}
+          <ul className="hidden items-center gap-0.5 lg:flex">
+            {SECTIONS.map((s, i) => {
+              const on = active === s.id;
               return (
-                <li key={link.href} className="relative">
-                  {isActive && (
-                    <motion.span
-                      layoutId="activeSection"
-                      className="absolute inset-0 bg-accent/10 rounded-lg"
-                      transition={{ type: 'spring', stiffness: 380, damping: 30 }}
-                    />
-                  )}
+                <li key={s.id}>
                   <Link
-                    href={link.href}
+                    href={`/#${s.id}`}
                     className={cn(
-                      'relative flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg',
-                      isActive
-                        ? 'text-accent'
-                        : 'text-foreground hover:text-muted-foreground'
+                      'group relative flex items-baseline gap-1.5 px-3 py-2 font-mono text-[0.68rem] uppercase tracking-[0.16em] transition-colors',
+                      on ? 'text-accent' : 'text-ink-faint hover:text-ink'
                     )}
                   >
-                    <motion.div
-                      animate={{ scale: isActive ? 1.2 : 1 }}
-                      transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-                    >
-                      <Icon size={20} />
-                    </motion.div>
-                    <AnimatePresence>
-                      {isActive && (
-                        <motion.span
-                          key="label"
-                          initial={{ opacity: 0, width: 0, marginLeft: 0 }}
-                          animate={{ opacity: 1, width: 'auto', marginLeft: 8 }}
-                          exit={{ opacity: 0, width: 0, marginLeft: 0 }}
-                          transition={{ duration: 0.2 }}
-                          className="overflow-hidden whitespace-nowrap"
-                        >
-                          {link.label}
-                        </motion.span>
+                    <span
+                      className={cn(
+                        'text-[0.58rem] transition-opacity',
+                        on ? 'opacity-100' : 'opacity-40'
                       )}
-                    </AnimatePresence>
+                    >
+                      {String(i + 1).padStart(2, '0')}
+                    </span>
+                    {s.label}
+                    <span
+                      className={cn(
+                        'absolute inset-x-3 bottom-1 h-px origin-left bg-accent transition-transform duration-300 ease-swift',
+                        on ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
+                      )}
+                    />
                   </Link>
                 </li>
               );
             })}
           </ul>
 
-          {/* Theme toggle + CTA Button */}
-          <div className="hidden md:flex items-center gap-3">
+          {/* right cluster */}
+          <div className="flex items-center gap-4">
+            <div className="hidden md:block">
+              <Controls />
+            </div>
+            <div className="hidden lg:block">
+              <NeonButton
+                href="/#contact"
+                variant="ghost"
+                className="!px-4 !py-2.5"
+                magnetic={false}
+                icon={<Sparkles size={13} />}
+              >
+                Hire me
+              </NeonButton>
+            </div>
+
+            {/* burger */}
             <button
-              onClick={toggleTheme}
-              className="p-2.5 rounded-xl text-foreground hover:text-accent hover:bg-muted/60 transition-colors"
-              aria-label="Toggle theme"
+              onClick={() => setOpen((v) => !v)}
+              aria-label={open ? 'Close menu' : 'Open menu'}
+              aria-expanded={open}
+              className="relative flex h-9 w-9 flex-col items-center justify-center gap-[5px] lg:hidden"
             >
-              {isDark ? <Sun size={18} /> : <Moon size={18} />}
+              <span
+                className={cn(
+                  'h-px w-6 bg-ink transition-all duration-300 ease-swift',
+                  open && 'translate-y-[3px] rotate-45 bg-accent'
+                )}
+              />
+              <span
+                className={cn(
+                  'h-px w-6 bg-ink transition-all duration-300 ease-swift',
+                  open && '-translate-y-[3px] -rotate-45 bg-accent'
+                )}
+              />
             </button>
-            <Link
-              href="#contact"
-              className="inline-flex items-center gap-2 px-5 py-2.5 bg-accent text-white text-sm font-medium rounded-xl hover:bg-accent-dark transition-colors"
-            >
-              Let&apos;s Talk
-            </Link>
           </div>
-
-          {/* Mobile Menu Button */}
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden relative z-10 p-2 text-foreground"
-            aria-label="Toggle menu"
-          >
-            {isOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
         </nav>
+      </header>
 
-        {/* Backdrop – closes mobile menu when tapping outside */}
-        <AnimatePresence>
-          {isOpen && (
+      {/* ------------------------------------------------ scroll spine */}
+      <div className="pointer-events-none fixed right-5 top-1/2 z-[55] hidden -translate-y-1/2 flex-col items-end gap-3 2xl:flex">
+        {SECTIONS.map((s, i) => {
+          const on = active === s.id;
+          return (
+            <Link
+              key={s.id}
+              href={`/#${s.id}`}
+              className="pointer-events-auto group flex items-center justify-end gap-2"
+              aria-label={s.label}
+            >
+              <span
+                className={cn(
+                  'hud translate-x-2 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100',
+                  on ? 'text-accent' : 'text-ink-faint'
+                )}
+              >
+                {String(i + 1).padStart(2, '0')} {s.label}
+              </span>
+              <span
+                className={cn(
+                  'block h-px transition-all duration-300 ease-swift',
+                  on
+                    ? 'w-8 bg-accent shadow-[0_0_10px_rgb(var(--accent-rgb)/0.9)]'
+                    : 'w-4 bg-white/25 group-hover:w-6 group-hover:bg-white/60'
+                )}
+              />
+            </Link>
+          );
+        })}
+      </div>
+
+      {/* ------------------------------------------------ mobile menu */}
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            key="menu"
+            initial={{ clipPath: 'inset(0 0 100% 0)' }}
+            animate={{ clipPath: 'inset(0 0 0% 0)' }}
+            exit={{ clipPath: 'inset(0 0 100% 0)' }}
+            transition={{ duration: 0.55, ease: [0.76, 0, 0.24, 1] }}
+            className="fixed inset-0 z-[80] flex flex-col justify-between bg-[#04050acc] px-6 pb-10 pt-24 backdrop-blur-2xl lg:hidden"
+          >
+            <ul className="flex flex-col">
+              {SECTIONS.map((s, i) => (
+                <motion.li
+                  key={s.id}
+                  initial={{ opacity: 0, y: 22 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.14 + i * 0.045, duration: 0.4 }}
+                  className="border-b border-white/8"
+                >
+                  <Link
+                    href={`/#${s.id}`}
+                    onClick={() => setOpen(false)}
+                    className={cn(
+                      'flex items-baseline justify-between py-3.5 font-display text-3xl font-bold tracking-tight transition-colors',
+                      active === s.id ? 'neon-text' : 'text-ink'
+                    )}
+                  >
+                    {s.label}
+                    <span className="hud text-ink-faint">
+                      {String(i + 1).padStart(2, '0')}
+                    </span>
+                  </Link>
+                </motion.li>
+              ))}
+            </ul>
+
             <motion.div
-              key="backdrop"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.15 }}
-              className="fixed inset-0 z-40"
-              onClick={() => setIsOpen(false)}
-              aria-hidden="true"
-            />
-          )}
-        </AnimatePresence>
-
-        {/* Mobile Navigation */}
-        <AnimatePresence>
-          {isOpen && (
-            <motion.div
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.2 }}
-              className="absolute top-full left-4 right-4 mt-2 p-4 glass rounded-2xl md:hidden z-50"
+              transition={{ delay: 0.45 }}
+              className="flex items-center justify-between gap-4 pt-8"
             >
-              <ul className="flex flex-col gap-1">
-                {navLinks.map((link) => (
-                  <li key={link.href}>
-                    <Link
-                      href={link.href}
-                      onClick={() => setIsOpen(false)}
-                      className={cn(
-                        'block px-4 py-3 text-sm font-medium rounded-xl transition-colors',
-                        activeSection === link.href.replace('#', '')
-                          ? 'bg-accent/10 text-accent'
-                          : 'text-muted-foreground hover:bg-muted hover:text-foreground'
-                      )}
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
-                <li className="mt-2 pt-2 border-t border-border">
-                  <div className="flex items-center gap-2">
-                    <Link
-                      href="#contact"
-                      onClick={() => setIsOpen(false)}
-                      className="flex-1 px-4 py-3 bg-accent text-white text-sm font-medium text-center rounded-xl"
-                    >
-                      Let&apos;s Talk
-                    </Link>
-                    <button
-                      onClick={toggleTheme}
-                      className="p-3 rounded-xl text-foreground hover:text-accent hover:bg-muted/60 transition-colors flex-shrink-0"
-                      aria-label="Toggle theme"
-                    >
-                      {isDark ? <Sun size={18} /> : <Moon size={18} />}
-                    </button>
-                  </div>
-                </li>
-              </ul>
+              <Controls compact />
+              <a
+                href={`mailto:${portfolioData.basics.email}`}
+                className="hud text-accent underline underline-offset-4"
+              >
+                Say hello
+              </a>
             </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
-    </motion.header>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 }

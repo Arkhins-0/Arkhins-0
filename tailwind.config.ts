@@ -1,93 +1,84 @@
-import type { Config } from "tailwindcss";
+import type { Config } from 'tailwindcss';
+
+/** rgb() channel token -> Tailwind colour with working /opacity modifiers */
+const ch = (name: string) => `rgb(var(${name}) / <alpha-value>)`;
 
 const config: Config = {
-  content: [
-    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
-  ],
-  darkMode: "class",
+  content: ['./src/**/*.{js,ts,jsx,tsx,mdx}'],
   theme: {
     extend: {
       colors: {
-        accent: {
-          DEFAULT: "var(--accent)",
-          light: "var(--accent-light)",
-          dark: "var(--accent-dark)",
-        },
-        background: "var(--background)",
-        foreground: "var(--foreground)",
-        card: "var(--card)",
-        "card-foreground": "var(--card-foreground)",
-        muted: "var(--muted)",
-        "muted-foreground": "var(--muted-foreground)",
-        border: "var(--border)",
+        bg: 'var(--bg)',
+        'bg-raise': 'var(--bg-raise)',
+        'bg-sink': 'var(--bg-sink)',
+        ink: 'var(--fg)',
+        'ink-dim': 'var(--fg-dim)',
+        'ink-faint': 'var(--fg-faint)',
+
+        accent: ch('--accent-rgb'),
+        accent2: ch('--accent-2-rgb'),
+        rose: ch('--n-rose-rgb'),
+        cyan: ch('--n-cyan-rgb'),
+        lime: ch('--n-lime-rgb'),
+        violet: ch('--n-violet-rgb'),
+
+        // legacy aliases still referenced by a few shared bits
+        background: 'var(--bg)',
+        foreground: 'var(--fg)',
+        muted: 'var(--muted)',
+        'muted-foreground': 'var(--fg-dim)',
+        border: 'var(--border)',
       },
       fontFamily: {
-        sans: ["var(--font-inter)", "system-ui", "sans-serif"],
-        display: ["var(--font-display)", "system-ui", "sans-serif"],
+        sans: ['var(--font-sans)', 'system-ui', 'sans-serif'],
+        display: ['var(--font-display)', 'system-ui', 'sans-serif'],
+        mono: ['var(--font-mono)', 'ui-monospace', 'monospace'],
+      },
+      letterSpacing: {
+        tightest: '-0.055em',
+      },
+      // finer steps so /8 /12 /14 style colour-opacity modifiers resolve
+      opacity: {
+        3: '0.03',
+        4: '0.04',
+        6: '0.06',
+        8: '0.08',
+        12: '0.12',
+        14: '0.14',
+        15: '0.15',
+        16: '0.16',
+        18: '0.18',
+        22: '0.22',
+        35: '0.35',
+        45: '0.45',
+        55: '0.55',
+        65: '0.65',
+        85: '0.85',
+      },
+      screens: {
+        xs: '420px',
       },
       animation: {
-        "fade-in": "fadeIn 0.5s ease-in-out",
-        "slide-up": "slideUp 0.5s ease-out",
-        "slide-in-right": "slideInRight 0.5s ease-out",
-        marquee: "marquee 25s linear infinite",
-        "marquee-reverse": "marquee-reverse 25s linear infinite",
-        float: "float 6s ease-in-out infinite",
-        glow: "glow 2s ease-in-out infinite alternate",
+        'drift-a': 'drift-a 26s ease-in-out infinite',
+        'drift-b': 'drift-b 34s ease-in-out infinite',
+        'sweep-y': 'sweep-y 5.5s cubic-bezier(.5,0,.5,1) infinite',
+        'rail-run': 'rail-run 3.2s linear infinite',
+        ticker: 'ticker var(--ticker-dur, 38s) linear infinite',
+        'pulse-ring': 'pulse-ring 2.4s cubic-bezier(0,0,.2,1) infinite',
+        flicker: 'flicker 7s linear infinite',
+        'grid-slide': 'grid-slide 3.6s linear infinite',
+        'orbit-slow': 'rotate360 26s linear infinite',
+        'orbit-rev': 'rotate360 60s linear infinite reverse',
       },
-      keyframes: {
-        fadeIn: {
-          "0%": { opacity: "0" },
-          "100%": { opacity: "1" },
-        },
-        slideUp: {
-          "0%": { opacity: "0", transform: "translateY(20px)" },
-          "100%": { opacity: "1", transform: "translateY(0)" },
-        },
-        slideInRight: {
-          "0%": { opacity: "0", transform: "translateX(-20px)" },
-          "100%": { opacity: "1", transform: "translateX(0)" },
-        },
-        marquee: {
-          "0%": { transform: "translateX(0%)" },
-          "100%": { transform: "translateX(-100%)" },
-        },
-        "marquee-reverse": {
-          "0%": { transform: "translateX(-100%)" },
-          "100%": { transform: "translateX(0%)" },
-        },
-        float: {
-          "0%, 100%": { transform: "translateY(0px)" },
-          "50%": { transform: "translateY(-20px)" },
-        },
-        glow: {
-          "0%": { boxShadow: "0 0 20px var(--accent)" },
-          "100%": { boxShadow: "0 0 40px var(--accent), 0 0 60px var(--accent)" },
-        },
-      },
-      backgroundImage: {
-        "mesh-gradient":
-          "radial-gradient(at 40% 20%, var(--accent-light) 0px, transparent 50%), radial-gradient(at 80% 0%, var(--accent) 0px, transparent 50%), radial-gradient(at 0% 50%, var(--accent-light) 0px, transparent 50%)",
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
+      transitionTimingFunction: {
+        swift: 'cubic-bezier(0.22, 1, 0.36, 1)',
       },
       backdropBlur: {
-        xs: "2px",
+        xs: '2px',
       },
     },
   },
   plugins: [],
-  safelist: [
-    // Hygieia model icon colors
-    'text-red-500',
-    'text-orange-500', 
-    'text-teal-500',
-    'text-pink-500',
-    'text-purple-500',
-    // Hygieia accuracy colors
-    'text-green-400',
-    'text-yellow-400',
-  ],
 };
 
 export default config;

@@ -1,0 +1,404 @@
+{
+  "meta": {
+    "slug": "hygieia",
+    "name": "HYGIEIA",
+    "title": "Multi-Disease Diagnosis Framework",
+    "tagline": "Clinical-grade prediction, an AI health assistant, and a blockchain audit trail — in one platform.",
+    "role": "Design + ML + Full-stack",
+    "year": "2025",
+    "date": "November 2025",
+    "status": "Completed",
+    "logo": "/projects/hygieia/logo.svg",
+    "cover": "/projects/hygieia/cover.png",
+    "repo": "https://github.com/Krishna-Vijay-G/Hygieia.git",
+    "live": "",
+    "badges": [
+      { "label": "96%+ avg accuracy", "tone": "accent" },
+      { "label": "5 AI models", "tone": "muted" },
+      { "label": "Blockchain verified", "tone": "muted" },
+      { "label": "Dr. Hygieia assistant", "tone": "muted" }
+    ]
+  },
+  "stats": [
+    { "value": "5", "label": "Diagnostic models" },
+    { "value": "96%+", "label": "Average accuracy" },
+    { "value": "253K", "label": "Training samples" },
+    { "value": "4", "label": "Security layers" }
+  ],
+  "overview": [
+    "Hygieia bundles five independently trained diagnostic models behind one interface, so a clinician or a curious patient can move between a heart-risk questionnaire and a dermatology image scan without changing tools.",
+    "Every prediction is written to an append-only chain with a SHA-256 hash, which means a result can be re-verified later and any tampering shows up as a broken chain. On top of that sits Dr. Hygieia, a context-aware assistant that can read your own analysis history when it answers."
+  ],
+  "models": [
+    {
+      "name": "Heart Risk",
+      "icon": "Heart",
+      "accuracy": "99.4%",
+      "params": "18 clinical parameters",
+      "rocAuc": "99.9%",
+      "samples": "303",
+      "architecture": "Stacking Ensemble",
+      "hue": "#ef4444"
+    },
+    {
+      "name": "Diabetes Risk",
+      "icon": "Droplets",
+      "accuracy": "98.1%",
+      "params": "Symptom-based analysis",
+      "rocAuc": "99.6%",
+      "samples": "520",
+      "architecture": "Random Forest + XGBoost",
+      "hue": "#f97316"
+    },
+    {
+      "name": "Skin Diagnosis",
+      "icon": "Scan",
+      "accuracy": "96.8%",
+      "params": "AI image analysis",
+      "rocAuc": "99.3%",
+      "samples": "ISIC + HAM10000",
+      "architecture": "CNN + Derm Foundation",
+      "hue": "#14b8a6"
+    },
+    {
+      "name": "Breast Cancer",
+      "icon": "Ribbon",
+      "accuracy": "81.3%",
+      "params": "10 risk factors",
+      "rocAuc": "86.2%",
+      "samples": "251,661",
+      "architecture": "Voting Ensemble",
+      "hue": "#ec4899"
+    },
+    {
+      "name": "Breast Tissue",
+      "icon": "Ribbon",
+      "accuracy": "97.2%",
+      "params": "30 FNA measurements",
+      "rocAuc": "99.7%",
+      "samples": "569",
+      "architecture": "Stacking Ensemble",
+      "hue": "#a855f7"
+    }
+  ],
+  "features": [
+    {
+      "title": "5 AI models",
+      "description": "Specialised diagnostic and predictive models, each trained and tuned separately.",
+      "icon": "Cpu"
+    },
+    {
+      "title": "96%+ accuracy",
+      "description": "Clinical-grade predictions validated with ROC-AUC alongside raw accuracy.",
+      "icon": "CheckCircle"
+    },
+    {
+      "title": "Blockchain verified",
+      "description": "Every analysis is hashed and chained, so records can be re-verified later.",
+      "icon": "Link2"
+    },
+    {
+      "title": "AI health assistant",
+      "description": "Dr. Hygieia answers with your analysis history in context, not in a vacuum.",
+      "icon": "MessageCircle"
+    },
+    {
+      "title": "Dark / light mode",
+      "description": "A calm, accessible interface built for long clinical sessions.",
+      "icon": "Palette"
+    },
+    {
+      "title": "Responsive by default",
+      "description": "The same flows work on a ward tablet and on a phone in a waiting room.",
+      "icon": "Monitor"
+    }
+  ],
+  "screens": [
+    {
+      "id": "landing",
+      "src": "/projects/hygieia/screen-landing.png",
+      "title": "Landing page",
+      "description": "Introduces the platform with a clear value proposition and quick-access cards into all five diagnostic services."
+    },
+    {
+      "id": "dashboard",
+      "src": "/projects/hygieia/screen-dashboard.png",
+      "title": "User dashboard",
+      "description": "Recent analyses, statistics and an activity timeline, with quick cards for every diagnostic flow."
+    },
+    {
+      "id": "analysis",
+      "src": "/projects/hygieia/screen-analysis.png",
+      "title": "Analysis interface",
+      "description": "Context-aware input fields with real-time validation, helper text for medical parameters, image upload and progress states."
+    },
+    {
+      "id": "chat",
+      "src": "/projects/hygieia/screen-chat.png",
+      "title": "Dr. Hygieia",
+      "description": "Multiple concurrent conversations with streaming responses, session management and direct links into specific analysis results."
+    },
+    {
+      "id": "blockchain",
+      "src": "/projects/hygieia/screen-blockchain.png",
+      "title": "Blockchain verification",
+      "description": "SHA-256 record hashing with a complete audit trail, tamper detection, chain validation and an admin oversight dashboard."
+    },
+    {
+      "id": "auth",
+      "src": "/projects/hygieia/screen-auth.png",
+      "title": "Authentication",
+      "description": "Clean sign-in and registration with form validation, JWT auth, remember-me and a password strength indicator."
+    }
+  ],
+  "stack": [
+    {
+      "layer": "Frontend",
+      "runtime": "Next.js 14",
+      "icon": "Monitor",
+      "items": [
+        "Next.js 14",
+        "TypeScript",
+        "Tailwind CSS",
+        "Framer Motion",
+        "TanStack Query",
+        "Zustand"
+      ]
+    },
+    {
+      "layer": "Backend",
+      "runtime": "Flask",
+      "icon": "Server",
+      "items": [
+        "Flask",
+        "SQLAlchemy",
+        "JWT",
+        "scikit-learn",
+        "TensorFlow",
+        "Google Derm Foundation"
+      ]
+    }
+  ],
+  "security": [
+    {
+      "title": "Authentication",
+      "items": [
+        "JWT token-based auth",
+        "Bcrypt password hashing",
+        "Session management"
+      ]
+    },
+    {
+      "title": "Authorization",
+      "items": [
+        "Role-based access control",
+        "Admin / user separation",
+        "Resource ownership validation"
+      ]
+    },
+    {
+      "title": "Data protection",
+      "items": [
+        "Input validation & sanitisation",
+        "SQL injection prevention",
+        "XSS protection"
+      ]
+    },
+    {
+      "title": "Blockchain",
+      "items": [
+        "SHA-256 cryptographic hashing",
+        "Immutable audit trail",
+        "Chain integrity validation"
+      ]
+    }
+  ],
+  "pipelines": {
+    "Heart Risk": {
+      "steps": [
+        {
+          "title": "Clinical input",
+          "description": "18 clinical parameters — age, cholesterol, blood pressure and more"
+        },
+        {
+          "title": "Feature engineering",
+          "description": "Normalisation, encoding and feature selection"
+        },
+        {
+          "title": "Base learners",
+          "description": "Random Forest + XGBoost + Gradient Boosting"
+        },
+        {
+          "title": "Meta-learner",
+          "description": "Logistic regression stacking ensemble"
+        },
+        {
+          "title": "Binary output",
+          "description": "Heart disease risk prediction with a confidence score"
+        }
+      ],
+      "detailsTitle": "Input parameters",
+      "details": [
+        "Age",
+        "Sex",
+        "Chest pain type",
+        "Resting BP",
+        "Cholesterol",
+        "Fasting blood sugar",
+        "Resting ECG",
+        "Max heart rate",
+        "Exercise angina",
+        "ST depression",
+        "ST slope",
+        "Major vessels",
+        "Thalassemia"
+      ]
+    },
+    "Diabetes Risk": {
+      "steps": [
+        {
+          "title": "Symptom input",
+          "description": "Symptom-based questionnaire covering 16 symptoms"
+        },
+        {
+          "title": "Feature processing",
+          "description": "Binary encoding and symptom correlation analysis"
+        },
+        {
+          "title": "Ensemble models",
+          "description": "Random Forest + XGBoost predicting in parallel"
+        },
+        {
+          "title": "Aggregation",
+          "description": "Weighted voting for the final prediction"
+        },
+        {
+          "title": "Risk assessment",
+          "description": "Positive / negative diabetes risk classification"
+        }
+      ],
+      "detailsTitle": "Assessed symptoms",
+      "details": [
+        "Polyuria",
+        "Polydipsia",
+        "Sudden weight loss",
+        "Weakness",
+        "Polyphagia",
+        "Genital thrush",
+        "Visual blurring",
+        "Itching",
+        "Irritability",
+        "Delayed healing",
+        "Partial paresis",
+        "Muscle stiffness",
+        "Alopecia",
+        "Obesity"
+      ]
+    },
+    "Skin Diagnosis": {
+      "steps": [
+        { "title": "Input image", "description": "Upload a skin lesion image" },
+        {
+          "title": "Google Derm Foundation",
+          "description": "Pre-trained on clinical dermatology images"
+        },
+        {
+          "title": "Feature extraction",
+          "description": "6,144-dim embeddings + 80 engineered features"
+        },
+        {
+          "title": "Voting ensemble",
+          "description": "XGBoost + Random Forest + Gradient Boosting + Extra Trees"
+        },
+        {
+          "title": "7-class output",
+          "description": "Skin condition classification with confidence"
+        }
+      ],
+      "detailsTitle": "Detectable conditions",
+      "details": [
+        "Actinic keratoses",
+        "Basal cell carcinoma ⚠",
+        "Benign keratosis",
+        "Dermatofibroma",
+        "Melanoma ⚠",
+        "Melanocytic nevus",
+        "Vascular lesions"
+      ]
+    },
+    "Breast Cancer": {
+      "steps": [
+        {
+          "title": "Risk factor input",
+          "description": "10 lifestyle and demographic risk factors"
+        },
+        {
+          "title": "Data preprocessing",
+          "description": "Label encoding, SMOTE oversampling and normalisation"
+        },
+        {
+          "title": "Base classifiers",
+          "description": "Random Forest + XGBoost + Gradient Boosting"
+        },
+        {
+          "title": "Voting ensemble",
+          "description": "Soft voting for probability aggregation"
+        },
+        {
+          "title": "Risk classification",
+          "description": "Breast cancer risk level prediction"
+        }
+      ],
+      "detailsTitle": "Risk factors analysed",
+      "details": [
+        "Age",
+        "Race",
+        "Marital status",
+        "T stage",
+        "N stage",
+        "6th stage",
+        "Differentiation",
+        "Grade",
+        "Estrogen status",
+        "Progesterone status"
+      ]
+    },
+    "Breast Tissue": {
+      "steps": [
+        {
+          "title": "FNA measurements",
+          "description": "30 fine-needle aspiration measurements"
+        },
+        {
+          "title": "Feature engineering",
+          "description": "Mean, SE and worst values for 10 cell nuclei features"
+        },
+        {
+          "title": "Base learners",
+          "description": "SVM + Random Forest + XGBoost"
+        },
+        {
+          "title": "Meta-learner",
+          "description": "Logistic regression stacking ensemble"
+        },
+        {
+          "title": "Binary output",
+          "description": "Malignant vs benign tissue classification"
+        }
+      ],
+      "detailsTitle": "Measured features",
+      "details": [
+        "Radius",
+        "Texture",
+        "Perimeter",
+        "Area",
+        "Smoothness",
+        "Compactness",
+        "Concavity",
+        "Concave points",
+        "Symmetry",
+        "Fractal dimension"
+      ]
+    }
+  }
+}

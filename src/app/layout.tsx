@@ -1,50 +1,62 @@
-import type { Metadata } from 'next';
-import { Inter, Space_Grotesk } from 'next/font/google';
+import type { Metadata, Viewport } from 'next';
+import { Syne, Space_Grotesk, JetBrains_Mono } from 'next/font/google';
 import './globals.css';
-import { ThemeProvider } from '@/context/ThemeContext';
-import { SplashScreen } from '@/components/ui/SplashScreen';
+import { UIProvider } from '@/context/UIContext';
+import { Backdrop, Cursor, ScrollRail } from '@/components/fx';
+import { Boot } from '@/components/layout/Boot';
 import portfolioData from '@/data/portfolio.json';
-import { getAssetPath } from '@/lib/utils';
 
-const inter = Inter({
+const display = Syne({
   subsets: ['latin'],
-  variable: '--font-inter',
-  display: 'swap',
-});
-
-const spaceGrotesk = Space_Grotesk({
-  subsets: ['latin'],
+  weight: ['600', '700', '800'],
   variable: '--font-display',
   display: 'swap',
 });
 
+const sans = Space_Grotesk({
+  subsets: ['latin'],
+  variable: '--font-sans',
+  display: 'swap',
+});
+
+const mono = JetBrains_Mono({
+  subsets: ['latin'],
+  weight: ['400', '500', '700'],
+  variable: '--font-mono',
+  display: 'swap',
+});
+
+const { meta, basics } = portfolioData;
+
 export const metadata: Metadata = {
-  title: portfolioData.meta.title,
-  description: portfolioData.meta.description,
-  keywords: portfolioData.meta.keywords,
-  authors: [{ name: portfolioData.meta.author }],
-  icons: {
-    icon: getAssetPath('/images/profile.jpg'),
-  },
   metadataBase: new URL('https://krishnavijayg.vercel.app'),
+  title: {
+    default: meta.title,
+    template: `%s — ${basics.name}`,
+  },
+  description: meta.description,
+  keywords: meta.keywords,
+  authors: [{ name: meta.author }],
+  icons: { icon: '/images/profile.jpg' },
   openGraph: {
-    title: portfolioData.meta.title,
-    description: portfolioData.meta.description,
+    title: meta.title,
+    description: meta.description,
     type: 'website',
-    images: [
-      {
-        url: getAssetPath('/images/OG.png'),
-        secureUrl: getAssetPath('/images/OG.png'),
-        alt: 'OpenGraph Thumbnail',
-      },
-    ],
+    images: [{ url: '/images/OG.png', alt: `${basics.name} — portfolio` }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: meta.title,
+    description: meta.description,
+    images: ['/images/OG.png'],
   },
 };
 
-export const viewport = {
-  themeColor: '#f43f5e',
+export const viewport: Viewport = {
+  themeColor: '#ff2d6f',
   width: 'device-width',
   initialScale: 1,
+  colorScheme: 'dark',
 };
 
 export default function RootLayout({
@@ -53,15 +65,21 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable}`} suppressHydrationWarning>
-      <body className="bg-background text-foreground antialiased overflow-x-hidden">
-        <ThemeProvider>
-          <SplashScreen />
-          <div className="mesh-gradient" />
-          <div className="w-full max-w-full overflow-x-hidden">
-            {children}
-          </div>
-        </ThemeProvider>
+    <html
+      lang="en"
+      data-accent="rose"
+      data-fx="on"
+      className={`${display.variable} ${sans.variable} ${mono.variable}`}
+      suppressHydrationWarning
+    >
+      <body className="min-h-screen overflow-x-hidden bg-bg text-ink antialiased">
+        <UIProvider>
+          <Backdrop />
+          <ScrollRail />
+          <Cursor />
+          <Boot />
+          {children}
+        </UIProvider>
       </body>
     </html>
   );

@@ -2,269 +2,589 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ============================================================
+   NEON GLASS DESIGN SYSTEM
+   Dark-only. Four neon hues; one is promoted to --accent at a
+   time via [data-accent] on <html> (see PaletteContext).
+   ============================================================ */
+
 :root {
-  --background: #0a0a0f;
-  --foreground: #f8fafc;
-  --card: #151520;
-  --card-foreground: #e2e8f0;
-  --muted: #1e1e2e;
-  --muted-foreground: #94a3b8;
-  --border: #2d2d3d;
-  --accent: #f43f5e;
-  --accent-light: #fb7185;
-  --accent-dark: #e11d48;
-  --accent-rgb: 244, 63, 94;
+  /* Ground */
+  --bg: #04050a;
+  --bg-raise: #080a12;
+  --bg-sink: #010104;
+
+  /* Ink */
+  --fg: #e9edfb;
+  --fg-dim: #a2abc6;
+  --fg-faint: #6b7391;
+
+  /* Neon spectrum — every section owns one */
+  --n-rose: #ff2d6f;
+  --n-rose-rgb: 255 45 111;
+  --n-cyan: #00f0ff;
+  --n-cyan-rgb: 0 240 255;
+  --n-lime: #c6ff3d;
+  --n-lime-rgb: 198 255 61;
+  --n-violet: #a855f7;
+  --n-violet-rgb: 168 85 247;
+
+  /* Active accent (overridden by [data-accent]) */
+  --accent: var(--n-rose);
+  --accent-rgb: var(--n-rose-rgb);
+  --accent-2: var(--n-cyan);
+  --accent-2-rgb: var(--n-cyan-rgb);
+
+  /* Glass */
+  --glass-bg: rgba(255, 255, 255, 0.028);
+  --glass-bg-2: rgba(255, 255, 255, 0.05);
+  --glass-line: rgba(255, 255, 255, 0.09);
+  --glass-line-hot: rgba(255, 255, 255, 0.16);
+
+  /* Geometry */
+  --notch: 16px;
+  --rail: 1px;
+
+  /* Effects intensity — dialled down by the FX toggle */
+  --fx: 1;
+
+  /* Tailwind bridge (legacy token names) */
+  --background: var(--bg);
+  --foreground: var(--fg);
+  --card: var(--bg-raise);
+  --card-foreground: var(--fg);
+  --muted: #101422;
+  --muted-foreground: var(--fg-dim);
+  --border: var(--glass-line);
 }
+
+[data-accent='cyan'] {
+  --accent: var(--n-cyan);
+  --accent-rgb: var(--n-cyan-rgb);
+  --accent-2: var(--n-violet);
+  --accent-2-rgb: var(--n-violet-rgb);
+}
+[data-accent='lime'] {
+  --accent: var(--n-lime);
+  --accent-rgb: var(--n-lime-rgb);
+  --accent-2: var(--n-cyan);
+  --accent-2-rgb: var(--n-cyan-rgb);
+}
+[data-accent='violet'] {
+  --accent: var(--n-violet);
+  --accent-rgb: var(--n-violet-rgb);
+  --accent-2: var(--n-rose);
+  --accent-2-rgb: var(--n-rose-rgb);
+}
+
+[data-fx='off'] {
+  --fx: 0;
+}
+
+/* ------------------------------------------------------------ base */
 
 * {
   box-sizing: border-box;
-  padding: 0;
   margin: 0;
+  padding: 0;
+  min-width: 0;
 }
 
 html {
+  /* framer-motion measures scroll offsets against the scroll container; a
+     static <html> makes those measurements unreliable (and warns in dev). */
+  position: relative;
   scroll-behavior: smooth;
   overflow-x: hidden;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
-  background-color: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-inter), system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-sans), system-ui, sans-serif;
   overflow-x: hidden;
-  max-width: 100vw;
+  font-synthesis-weight: none;
+  text-rendering: optimizeLegibility;
 }
 
-/* Hide scrollbar globally while keeping scroll functionality */
+::selection {
+  background: rgb(var(--accent-rgb) / 0.85);
+  color: #04050a;
+}
+
 ::-webkit-scrollbar {
+  width: 0;
+  height: 0;
   display: none;
 }
-
 * {
   scrollbar-width: none;
 }
 
-/* Selection */
-::selection {
-  background-color: rgba(var(--accent-rgb), 0.3);
-  color: var(--foreground);
-}
-
-/* Glass morphism utility */
-.glass {
-  background: rgba(var(--accent-rgb), 0.05);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(var(--accent-rgb), 0.1);
-}
-
-.glass-card {
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid var(--border);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
-}
-
-.dark .glass-card {
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.05) 0%,
-    rgba(255, 255, 255, 0.02) 100%
-  );
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-}
-
-/* Mesh gradient background */
-.mesh-gradient {
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  opacity: 0.4;
-  background: 
-    radial-gradient(at 40% 20%, rgba(var(--accent-rgb), 0.3) 0px, transparent 50%),
-    radial-gradient(at 80% 0%, rgba(var(--accent-rgb), 0.2) 0px, transparent 50%),
-    radial-gradient(at 0% 50%, rgba(var(--accent-rgb), 0.2) 0px, transparent 50%),
-    radial-gradient(at 80% 50%, rgba(var(--accent-rgb), 0.15) 0px, transparent 50%),
-    radial-gradient(at 0% 100%, rgba(var(--accent-rgb), 0.2) 0px, transparent 50%);
-  pointer-events: none;
-}
-
-/* Animated gradient border */
-.gradient-border {
-  position: relative;
-  border-radius: 1rem;
-  isolation: isolate;
-}
-
-.gradient-border::before {
-  content: '';
-  position: absolute;
-  inset: -2px;
-  border-radius: inherit;
-  padding: 2px;
-  background: linear-gradient(
-    135deg,
-    var(--accent),
-    var(--accent-light),
-    var(--accent-dark)
-  );
-  -webkit-mask: 
-    linear-gradient(#fff 0 0) content-box, 
-    linear-gradient(#fff 0 0);
-  mask: 
-    linear-gradient(#fff 0 0) content-box, 
-    linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  opacity: 0.5;
-  transition: opacity 0.3s ease;
-  z-index: -1;
-}
-
-.gradient-border:hover::before {
-  opacity: 1;
-}
-
-/* Glow effect */
-.glow {
-  box-shadow: 
-    0 0 20px rgba(var(--accent-rgb), 0.3),
-    0 0 40px rgba(var(--accent-rgb), 0.1);
-}
-
-.glow-text {
-  text-shadow: 0 0 20px rgba(var(--accent-rgb), 0.5);
-}
-
-/* Bento grid */
-.bento-grid {
-  display: grid;
-  gap: 1rem;
-  grid-template-columns: repeat(4, 1fr);
-  grid-auto-rows: minmax(100px, auto);
-}
-
-@media (max-width: 1024px) {
-  .bento-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 640px) {
-  .bento-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* Section padding */
-
-.section-padding {
-  padding-left: 1rem;
-  padding-right: 1rem;
-  padding-top: 4rem;
-  padding-bottom: 4rem;
-}
-@media (min-width: 640px) {
-  .section-padding {
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
-    padding-top: 5rem;
-    padding-bottom: 5rem;
-  }
-}
-@media (min-width: 1024px) {
-  .section-padding {
-    padding-left: 2rem;
-    padding-right: 2rem;
-    padding-top: 6rem;
-    padding-bottom: 6rem;
-  }
-}
-
-/* Container */
-.container-custom {
-  max-width: 80rem;
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 1rem;
-  padding-right: 1rem;
-}
-@media (min-width: 640px) {
-  .container-custom {
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
-  }
-}
-@media (min-width: 1024px) {
-  .container-custom {
-    padding-left: 2rem;
-    padding-right: 2rem;
-  }
-}
-
-/* Text gradient */
-.text-gradient {
-  background: linear-gradient(135deg, var(--accent), var(--accent-light));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* Marquee animation pause on hover */
-.marquee-container:hover .animate-marquee,
-.marquee-container:hover .animate-marquee-reverse {
-  animation-play-state: paused;
-}
-
-/* Focus visible */
 *:focus-visible {
   outline: 2px solid var(--accent);
-  outline-offset: 2px;
+  outline-offset: 3px;
+  border-radius: 2px;
 }
 
-/* Prevent focus outline/box on Recharts SVG/chart elements (click selection) */
-.recharts-wrapper:focus,
-.recharts-surface:focus,
-.recharts-wrapper :focus,
-.recharts-surface :focus {
-  outline: none !important;
-  box-shadow: none !important;
+img,
+svg,
+video {
+  display: block;
+  max-width: 100%;
 }
 
-/* Also ensure SVGs inside charts don't show browser focus outlines */
-.recharts-surface svg:focus,
-.recharts-surface svg:focus-visible {
-  outline: none !important;
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --fx: 0;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
-/* Hide scrollbar for marquee */
-.hide-scrollbar,
-.scrollbar-hide {
-  -ms-overflow-style: none;
+/* ------------------------------------------------------------ layout */
+
+@layer components {
+  .shell {
+    width: 100%;
+    max-width: 84rem;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+  @media (min-width: 768px) {
+    .shell {
+      padding-inline: 2rem;
+    }
+  }
+  @media (min-width: 1280px) {
+    .shell {
+      padding-inline: 3rem;
+    }
+  }
+
+  .band {
+    position: relative;
+    padding-block: 5.5rem 4rem;
+  }
+  @media (min-width: 768px) {
+    .band {
+      padding-block: 8rem 5rem;
+    }
+  }
+
+  /* ---------------------------------------------------------- glass */
+
+  .glass {
+    background: linear-gradient(168deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.015)),
+      rgba(5, 7, 14, 0.6);
+    backdrop-filter: blur(18px) saturate(150%);
+    -webkit-backdrop-filter: blur(18px) saturate(150%);
+    border: 1px solid var(--glass-line);
+  }
+
+  /* Frosted slab with a light-catching top edge, the way real glass reads */
+  .slab {
+    position: relative;
+    background: linear-gradient(
+      168deg,
+      rgba(255, 255, 255, 0.062) 0%,
+      rgba(255, 255, 255, 0.018) 38%,
+      rgba(255, 255, 255, 0.008) 100%
+    );
+    backdrop-filter: blur(22px) saturate(160%);
+    -webkit-backdrop-filter: blur(22px) saturate(160%);
+    border: 1px solid var(--glass-line);
+    box-shadow:
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.09),
+      inset 0 -1px 0 0 rgba(0, 0, 0, 0.35),
+      0 24px 60px -30px rgba(0, 0, 0, 0.9);
+  }
+
+  .slab-hot {
+    border-color: rgb(var(--accent-rgb) / 0.34);
+    box-shadow:
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.12),
+      0 0 0 1px rgb(var(--accent-rgb) / 0.08),
+      0 0 42px -12px rgb(var(--accent-rgb) / calc(0.55 * var(--fx))),
+      0 24px 60px -30px rgba(0, 0, 0, 0.9);
+  }
+
+  /* ------------------------------------------------------- chamfers */
+
+  .notch-br {
+    clip-path: polygon(
+      0 0,
+      100% 0,
+      100% calc(100% - var(--notch)),
+      calc(100% - var(--notch)) 100%,
+      0 100%
+    );
+  }
+  .notch-tl {
+    clip-path: polygon(
+      var(--notch) 0,
+      100% 0,
+      100% 100%,
+      0 100%,
+      0 var(--notch)
+    );
+  }
+  .notch-diag {
+    clip-path: polygon(
+      var(--notch) 0,
+      100% 0,
+      100% calc(100% - var(--notch)),
+      calc(100% - var(--notch)) 100%,
+      0 100%,
+      0 var(--notch)
+    );
+  }
+
+  /* ----------------------------------------------------------- neon */
+
+  .neon-text {
+    color: var(--accent);
+    text-shadow:
+      0 0 calc(14px * var(--fx)) rgb(var(--accent-rgb) / 0.75),
+      0 0 calc(46px * var(--fx)) rgb(var(--accent-rgb) / 0.32);
+  }
+
+  .neon-line {
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgb(var(--accent-rgb) / 0.85) 22%,
+      rgb(var(--accent-2-rgb) / 0.85) 78%,
+      transparent
+    );
+    box-shadow: 0 0 calc(18px * var(--fx)) rgb(var(--accent-rgb) / 0.6);
+  }
+
+  .neon-fill {
+    background: linear-gradient(
+      104deg,
+      var(--accent) 0%,
+      color-mix(in oklab, var(--accent) 62%, var(--accent-2)) 100%
+    );
+    color: #05060b;
+  }
+
+  /* Outlined display type — the hero/footer wordmark treatment */
+  .stroke-text {
+    color: transparent;
+    -webkit-text-stroke: 1px rgb(var(--accent-rgb) / 0.55);
+    paint-order: stroke fill;
+  }
+
+  .grad-text {
+    background: linear-gradient(
+      100deg,
+      var(--fg) 0%,
+      var(--accent) 46%,
+      var(--accent-2) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+
+  /* ---------------------------------------------------------- meta */
+
+  .eyebrow {
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: 0.6875rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--fg-faint);
+  }
+
+  .hud {
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: 0.6875rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  /* Diagonal hazard stripes — used on section rails and edges */
+  .hazard {
+    background-image: repeating-linear-gradient(
+      -45deg,
+      rgb(var(--accent-rgb) / 0.5) 0 2px,
+      transparent 2px 7px
+    );
+  }
+
+  .scanlines::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.028) 0 1px,
+      transparent 1px 3px
+    );
+    opacity: var(--fx);
+    mix-blend-mode: overlay;
+  }
+}
+
+/* ------------------------------------------------------------ motion */
+
+@keyframes drift-a {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  33% {
+    transform: translate3d(6%, -8%, 0) scale(1.14);
+  }
+  66% {
+    transform: translate3d(-5%, 5%, 0) scale(0.94);
+  }
+}
+
+@keyframes drift-b {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1.05);
+  }
+  40% {
+    transform: translate3d(-9%, 6%, 0) scale(0.9);
+  }
+  75% {
+    transform: translate3d(7%, 9%, 0) scale(1.2);
+  }
+}
+
+@keyframes sweep-y {
+  0% {
+    transform: translateY(-120%);
+  }
+  100% {
+    transform: translateY(520%);
+  }
+}
+
+@keyframes rail-run {
+  0% {
+    background-position: 0% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+@keyframes ticker {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@keyframes pulse-ring {
+  0% {
+    opacity: 0.7;
+    transform: scale(0.85);
+  }
+  70%,
+  100% {
+    opacity: 0;
+    transform: scale(2.1);
+  }
+}
+
+@keyframes flicker {
+  0%,
+  92%,
+  100% {
+    opacity: 1;
+  }
+  93% {
+    opacity: 0.42;
+  }
+  95% {
+    opacity: 0.92;
+  }
+  97% {
+    opacity: 0.55;
+  }
+}
+
+@keyframes rotate360 {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes grid-slide {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 0 44px;
+  }
+}
+
+/* ------------------------------------------------------- markdown */
+
+.prose-neon {
+  color: var(--fg-dim);
+  line-height: 1.75;
+}
+.prose-neon h1,
+.prose-neon h2,
+.prose-neon h3 {
+  font-family: var(--font-display), sans-serif;
+  color: var(--fg);
+  letter-spacing: -0.02em;
+  margin: 1.6em 0 0.6em;
+}
+.prose-neon h1 {
+  font-size: 1.6rem;
+}
+.prose-neon h2 {
+  font-size: 1.3rem;
+}
+.prose-neon h3 {
+  font-size: 1.08rem;
+}
+.prose-neon p {
+  margin-bottom: 1em;
+}
+.prose-neon a {
+  color: var(--accent);
+  text-underline-offset: 3px;
+  text-decoration: underline;
+}
+.prose-neon ul,
+.prose-neon ol {
+  margin: 0 0 1em 1.15em;
+}
+.prose-neon li {
+  margin-bottom: 0.4em;
+}
+.prose-neon code {
+  font-family: var(--font-mono), monospace;
+  font-size: 0.85em;
+  padding: 0.15em 0.42em;
+  border-radius: 4px;
+  background: rgb(var(--accent-rgb) / 0.12);
+  color: var(--accent);
+}
+.prose-neon pre {
+  overflow-x: auto;
+  padding: 1rem;
+  margin-bottom: 1em;
+  background: var(--bg-sink);
+  border: 1px solid var(--glass-line);
+}
+.prose-neon pre code {
+  background: none;
+  color: var(--fg-dim);
+  padding: 0;
+}
+.prose-neon blockquote {
+  border-left: 2px solid var(--accent);
+  padding-left: 1rem;
+  color: var(--fg-faint);
+  margin-bottom: 1em;
+}
+.prose-neon table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1em;
+  font-size: 0.9em;
+}
+.prose-neon th,
+.prose-neon td {
+  border: 1px solid var(--glass-line);
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+}
+.prose-neon img {
+  border: 1px solid var(--glass-line);
+  margin-bottom: 1em;
+}
+
+/* Below lg the portrait sits behind the headline as a ghost rather than
+   consuming a whole screen above it. */
+@media (max-width: 1023px) {
+  .portrait-ghost {
+    opacity: 0.3;
+    -webkit-mask-image: linear-gradient(to top, transparent 3%, #000 30%);
+    mask-image: linear-gradient(to top, transparent 3%, #000 30%);
+  }
+}
+
+/* While the custom cursor is live, suppress every native cursor — including
+   the UA pointer on links and the text caret over copy. */
+.cursor-hidden,
+.cursor-hidden * {
+  cursor: none !important;
+}
+
+/* Any element that should scroll on its own without a visible bar */
+.rail-scroll {
+  overflow-x: auto;
   scrollbar-width: none;
+  -ms-overflow-style: none;
 }
-
-.hide-scrollbar::-webkit-scrollbar,
-.scrollbar-hide::-webkit-scrollbar {
+.rail-scroll::-webkit-scrollbar {
   display: none;
 }
 
-/* Thin scrollbar for markdown viewer */
-.markdown-content::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+/* Glass fill without a border — used inside <Panel>, whose 1px gradient
+   parent already draws the edge. */
+.glass-fill {
+  background:
+    linear-gradient(
+      168deg,
+      rgba(255, 255, 255, 0.07) 0%,
+      rgba(255, 255, 255, 0.02) 46%,
+      rgba(255, 255, 255, 0.008) 100%
+    ),
+    rgba(5, 7, 14, 0.84);
+  backdrop-filter: blur(22px) saturate(160%);
+  -webkit-backdrop-filter: blur(22px) saturate(160%);
 }
 
-.markdown-content::-webkit-scrollbar-track {
-  background: transparent;
+.glass-fill-solid {
+  background:
+    linear-gradient(
+      168deg,
+      rgba(255, 255, 255, 0.06) 0%,
+      rgba(255, 255, 255, 0.015) 100%
+    ),
+    rgba(5, 7, 14, 0.95);
+  backdrop-filter: blur(22px) saturate(160%);
+  -webkit-backdrop-filter: blur(22px) saturate(160%);
 }
 
-.markdown-content::-webkit-scrollbar-thumb {
-  background: rgba(var(--accent-rgb), 0.4);
-  border-radius: 3px;
+/* Pointer-tracked highlight; <Panel spotlight> sets --mx/--my in px. */
+.spotlight::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  background: radial-gradient(
+    220px circle at var(--mx, 50%) var(--my, 50%),
+    rgb(var(--accent-rgb) / 0.16),
+    transparent 70%
+  );
 }
-
-.markdown-content::-webkit-scrollbar-thumb:hover {
-  background: rgba(var(--accent-rgb), 0.6);
+.spotlight:hover::before {
+  opacity: calc(1 * var(--fx));
 }

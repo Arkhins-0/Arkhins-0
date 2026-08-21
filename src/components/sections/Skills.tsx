@@ -1,276 +1,209 @@
-﻿'use client';
+'use client';
 
-import { useRef, useState, useEffect } from 'react';
-import { motion, useInView, useMotionValue, useTransform, useSpring } from 'framer-motion';
+import { useState } from 'react';
 import Image from 'next/image';
-import { Code, Palette, Database, Wrench } from 'lucide-react';
+import { AnimatePresence, motion } from 'framer-motion';
 import portfolioData from '@/data/portfolio.json';
-import { RevealOnScroll } from '@/components/ui/Animations';
-import { GlowingEffect } from '@/components/ui/glowing-effect';
-import { getAssetPath } from '@/lib/utils';
+import { Panel, Reveal, SectionHead, Ticker } from '@/components/fx';
+import { cn } from '@/lib/utils';
 
-const categoryIcons: Record<string, React.ReactNode> = {
-  'Frontend Development': <Code size={36} />,
-  'Backend Development': <Code size={36} />,
-  'UI/UX Design': <Palette size={36} />,
-  'Data Management': <Database size={36} />,
-  'Tools & Platforms': <Wrench size={36} />,
+const { categories, techStack } = portfolioData.skills as unknown as {
+  categories: {
+    name: string;
+    description: string;
+    skills: { name: string; icon: string; level: number }[];
+  }[];
+  techStack: { name: string; icon: string }[];
 };
 
+/* Two lanes running opposite directions; split so neither repeats the other. */
+const LANE_A = techStack.filter((_, i) => i % 2 === 0);
+const LANE_B = techStack.filter((_, i) => i % 2 === 1);
+
+/** Circular meter drawn as a stroked arc — animates in whenever it mounts. */
+function Meter({ level, icon, name }: { level: number; icon: string; name: string }) {
+  return (
+    <div className="relative h-16 w-16 shrink-0">
+      <svg viewBox="0 0 40 40" className="absolute inset-0 -rotate-90">
+        <circle
+          cx="20"
+          cy="20"
+          r="18"
+          fill="none"
+          stroke="rgba(255,255,255,0.08)"
+          strokeWidth="1.6"
+        />
+        <motion.circle
+          cx="20"
+          cy="20"
+          r="18"
+          fill="none"
+          stroke="var(--accent)"
+          strokeWidth="1.6"
+          strokeLinecap="round"
+          initial={{ pathLength: 0 }}
+          animate={{ pathLength: level / 100 }}
+          transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
+          style={{
+            filter: 'drop-shadow(0 0 5px rgb(var(--accent-rgb) / 0.8))',
+          }}
+        />
+      </svg>
+      <span className="absolute inset-[26%]">
+        <Image
+          src={`/images/skills/${icon}.png`}
+          alt={name}
+          fill
+          sizes="34px"
+          className="object-contain"
+        />
+      </span>
+    </div>
+  );
+}
+
 export function Skills() {
-  const { skills } = portfolioData;
-  const marqueeRef = useRef<HTMLDivElement>(null);
-  const [isDragging, setIsDragging] = useState(false);
-  const [startX, setStartX] = useState(0);
-  const [scrollLeft, setScrollLeft] = useState(0);
-  const [autoScroll, setAutoScroll] = useState(true);
-
-  useEffect(() => {
-    const marquee = marqueeRef.current;
-    if (marquee && marquee.scrollWidth > 0) marquee.scrollLeft = 0;
-  }, []);
-
-  useEffect(() => {
-    if (!autoScroll || isDragging) return;
-    const marquee = marqueeRef.current;
-    if (!marquee) return;
-    let frame: number;
-    const scroll = () => {
-      const maxScroll = marquee.scrollWidth - marquee.clientWidth;
-      const singleSetWidth = maxScroll / 2;
-      marquee.scrollLeft += 1;
-      if (marquee.scrollLeft >= singleSetWidth) marquee.scrollLeft = 0;
-      frame = requestAnimationFrame(scroll);
-    };
-    frame = requestAnimationFrame(scroll);
-    return () => cancelAnimationFrame(frame);
-  }, [autoScroll, isDragging]);
-
-  const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
-    setIsDragging(true);
-    setAutoScroll(false);
-    setStartX(e.clientX);
-    setScrollLeft(marqueeRef.current?.scrollLeft || 0);
-  };
-
-  const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
-    if (!isDragging || !marqueeRef.current) return;
-    const marquee = marqueeRef.current;
-    const walk = (e.clientX - startX) * 2;
-    let newScroll = scrollLeft - walk;
-    const singleSetWidth = (marquee.scrollWidth - marquee.clientWidth) / 2;
-    while (newScroll < 0) newScroll += singleSetWidth;
-    while (newScroll > singleSetWidth) newScroll -= singleSetWidth;
-    marquee.scrollLeft = newScroll;
-  };
-
-  const handlePointerUp = () => {
-    setIsDragging(false);
-    setTimeout(() => setAutoScroll(true), 500);
-  };
+  const [active, setActive] = useState(0);
+  const category = categories[active];
 
   return (
-    <section id="skills" className="section-padding">
-      <div className="container-custom">
-        {/* Section Header */}
-        <RevealOnScroll className="text-center mb-16">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-display font-bold mb-4">
-            Skills & <span className="text-gradient">Technologies</span>
-          </h2>
-          <p className="text-foreground max-w-2xl mx-auto">
-            The tools and technologies I use to bring ideas to life
-          </p>
-        </RevealOnScroll>
+    <section id="stack" className="band">
+      <div className="shell">
+        <SectionHead
+          index="05"
+          label="Toolkit"
+          title="What I build"
+          accentWord="with"
+        />
 
-        {/* Tech Stack Marquee */}
-        <RevealOnScroll delay={0.1} className="mb-20">
-          <div
-            className="relative overflow-hidden py-4"
-            style={{
-              WebkitMaskImage: 'linear-gradient(to right, transparent, black 80px, black calc(100% - 80px), transparent)',
-              maskImage: 'linear-gradient(to right, transparent, black 80px, black calc(100% - 80px), transparent)',
-            }}
-          >
-            <div
-              ref={marqueeRef}
-              className="flex gap-4 shrink-0 overflow-x-auto cursor-grab px-2"
-              style={{ userSelect: isDragging ? 'none' : 'auto', scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-              onPointerDown={handlePointerDown}
-              onPointerMove={handlePointerMove}
-              onPointerUp={handlePointerUp}
-              onPointerLeave={handlePointerUp}
-            >
-              {[...skills.techStack, ...skills.techStack, ...skills.techStack].map((tech, index) => (
-                <div
-                  key={`${tech.name}-${index}`}
-                  className="flex items-center gap-2.5 px-5 py-2.5 rounded-xl border border-accent whitespace-nowrap flex-shrink-0"
-                >
-                  <Image
-                    src={getAssetPath(tech.icon)}
-                    alt={`${tech.name} logo`}
-                    width={25}
-                    height={25}
-                    className="object-contain"
-                  />
-                  <span className="text-lg font-medium">{tech.name}</span>
-                </div>
-              ))}
-            </div>
+        <div className="mt-14 grid gap-10 lg:grid-cols-[minmax(0,22rem)_1fr] lg:gap-16">
+          {/* -------------------------------------------- category list */}
+          <Reveal dir="right">
+            <ul className="flex flex-col gap-1">
+              {categories.map((c, i) => {
+                const on = i === active;
+                return (
+                  <li key={c.name}>
+                    <button
+                      onMouseEnter={() => setActive(i)}
+                      onFocus={() => setActive(i)}
+                      onClick={() => setActive(i)}
+                      aria-pressed={on}
+                      className="group flex w-full items-center gap-3 py-2 text-left"
+                    >
+                      <span
+                        className={cn(
+                          'hud shrink-0 transition-colors',
+                          on ? 'text-accent' : 'text-ink-faint'
+                        )}
+                      >
+                        {String(i + 1).padStart(2, '0')}
+                      </span>
+                      <span
+                        className={cn(
+                          'font-display text-[clamp(1.25rem,2.6vw,1.9rem)] font-bold leading-tight tracking-tight transition-all duration-400',
+                          on
+                            ? 'neon-text translate-x-1'
+                            : 'stroke-text opacity-70 group-hover:opacity-100'
+                        )}
+                      >
+                        {c.name}
+                      </span>
+                    </button>
+                  </li>
+                );
+              })}
+            </ul>
+
+            <AnimatePresence mode="wait">
+              <motion.p
+                key={category.name}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ duration: 0.3 }}
+                className="mt-6 max-w-sm border-l border-accent/40 pl-4 text-sm leading-relaxed text-ink-dim"
+              >
+                {category.description}
+              </motion.p>
+            </AnimatePresence>
+          </Reveal>
+
+          {/* -------------------------------------------- skill tiles */}
+          <div className="relative">
+            <AnimatePresence mode="wait">
+              <motion.ul
+                key={category.name}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.25 }}
+                className="grid gap-4 sm:grid-cols-2"
+              >
+                {category.skills.map((s, i) => (
+                  <motion.li
+                    key={s.name}
+                    initial={{ opacity: 0, y: 24, filter: 'blur(6px)' }}
+                    animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                    transition={{
+                      delay: i * 0.07,
+                      duration: 0.5,
+                      ease: [0.22, 1, 0.36, 1],
+                    }}
+                  >
+                    <Panel cut={18} spotlight className="h-full">
+                      <div className="flex h-full items-center gap-4 p-5">
+                        <Meter level={s.level} icon={s.icon} name={s.name} />
+                        <div className="min-w-0">
+                          <p className="font-display text-lg font-bold leading-tight">
+                            {s.name}
+                          </p>
+                          <p className="hud mt-1 text-ink-faint">
+                            <span className="text-accent">{s.level}</span> / 100
+                          </p>
+                        </div>
+                      </div>
+                    </Panel>
+                  </motion.li>
+                ))}
+              </motion.ul>
+            </AnimatePresence>
           </div>
-        </RevealOnScroll>
-
-        {/* Categories – alternating layout */}
-        <div className="flex flex-col gap-20 md:gap-28">
-          {skills.categories.map((category, index) => (
-            <SkillCategoryRow key={category.name} category={category} index={index} />
-          ))}
         </div>
+      </div>
+
+      {/* ------------------------------------------------ tech ticker */}
+      <div className="relative mt-20 space-y-3 border-y border-white/8 bg-black/20 py-8">
+        <Ticker duration={52}>
+          {LANE_A.map((t, i) => (
+            <TechChip key={`${t.name}-${i}`} {...t} />
+          ))}
+        </Ticker>
+        <Ticker duration={46} reverse>
+          {LANE_B.map((t, i) => (
+            <TechChip key={`${t.name}-${i}`} {...t} />
+          ))}
+        </Ticker>
       </div>
     </section>
   );
 }
 
-type SkillCategory = typeof portfolioData.skills.categories[0];
-
-function SkillCategoryRow({ category, index }: { category: SkillCategory; index: number }) {
-  const isReversed = index % 2 !== 0;
-  const icon = categoryIcons[category.name] ?? <Code size={36} />;
-  const avgLevel = Math.round(
-    category.skills.reduce((sum, s) => sum + s.level, 0) / category.skills.length
-  );
-
+function TechChip({ name, icon }: { name: string; icon: string }) {
   return (
-    <RevealOnScroll delay={0.1}>
-      <div className={`flex flex-col ${isReversed ? 'md:flex-row-reverse' : 'md:flex-row'} items-center gap-10 md:gap-14`}>
-
-        {/* Category info */}
-        <div className={`w-full md:w-2/5 ${isReversed ? 'md:text-right' : ''}`}>
-          <div className={`flex items-center gap-4 mb-4 ${isReversed ? 'md:flex-row-reverse' : ''}`}>
-            <div className="w-14 h-14 rounded-2xl bg-accent/10 flex items-center justify-center text-accent flex-shrink-0">
-              {icon}
-            </div>
-            <div>
-              <h3 className="text-2xl md:text-3xl font-bold leading-tight">{category.name}</h3>
-              <p className="text-sm text-accent font-semibold mt-0.5">
-                {category.skills.length} skills &middot; {avgLevel}% avg
-              </p>
-            </div>
-          </div>
-
-          <p className="text-foreground leading-relaxed mb-6 text-base">{category.description}</p>
-
-          <div className={`flex flex-wrap gap-2 ${isReversed ? 'md:justify-end' : ''}`}>
-            {category.skills.map(skill => (
-              <span
-                key={skill.name}
-                className="px-3 py-1 text-xs rounded-full bg-accent/10 text-accent border bg-muted border-accent font-medium"
-              >
-                {skill.name}
-              </span>
-            ))}
-          </div>
-        </div>
-
-        {/* Skills grid – no tilt */}
-        <div className="w-full md:w-3/5 relative rounded-2xl glass-card gradient-border p-6 md:p-8">
-          <GlowingEffect spread={40} glow={true} disabled={false} proximity={64} inactiveZone={0.01} borderWidth={2} />
-          <div
-            className="grid gap-6 justify-items-center"
-            style={{ gridTemplateColumns: `repeat(${Math.min(category.skills.length, 4)}, 1fr)` }}
-          >
-            {category.skills.map((skill, skillIndex) => (
-              <SkillItem key={skill.name} skill={skill} delay={skillIndex * 0.1} />
-            ))}
-          </div>
-        </div>
-
-      </div>
-    </RevealOnScroll>
-  );
-}
-
-interface SkillItemProps {
-  skill: { name: string; icon: string; level: number };
-  delay?: number;
-}
-
-function SkillItem({ skill, delay = 0 }: SkillItemProps) {
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true });
-  const [progress, setProgress] = useState(0);
-
-  const radius = 22;
-  const circumference = 2 * Math.PI * radius;
-
-  useEffect(() => {
-    if (!isInView) return;
-    const timer = setTimeout(() => setProgress(skill.level), delay * 1000 + 400);
-    return () => clearTimeout(timer);
-  }, [isInView, skill.level, delay]);
-
-  const strokeDashoffset = circumference - (progress / 100) * circumference;
-
-  const iconX = useMotionValue(0);
-  const iconY = useMotionValue(0);
-  const iconRotateX = useSpring(useTransform(iconY, [-30, 30], [-20, 20]), { stiffness: 300, damping: 18 });
-  const iconRotateY = useSpring(useTransform(iconX, [-30, 30], [20, -20]), { stiffness: 300, damping: 18 });
-  const handleIconMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    iconX.set(e.clientX - (rect.left + rect.width / 2));
-    iconY.set(e.clientY - (rect.top + rect.height / 2));
-  };
-  const handleIconMouseLeave = () => { iconX.set(0); iconY.set(0); };
-
-  return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 16 }}
-      animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.4, delay }}
-      className="flex flex-col items-center gap-2"
-    >
-      {/* Circular progress ring + icon — icon pops on hover */}
-      <div className="relative w-16 h-16">
-        <svg
-          className="absolute inset-0 w-full h-full"
-          style={{ transform: 'rotate(-90deg)' }}
-          viewBox="0 0 52 52"
-        >
-          <circle
-            cx="26" cy="26" r={radius}
-            fill="none" strokeWidth="2.5"
-            className="stroke-accent/15"
-          />
-          <circle
-            cx="26" cy="26" r={radius}
-            fill="none" strokeWidth="2.5"
-            stroke="var(--accent)"
-            strokeLinecap="round"
-            strokeDasharray={circumference}
-            strokeDashoffset={strokeDashoffset}
-            style={{ transition: 'stroke-dashoffset 1.2s cubic-bezier(0.4,0,0.2,1)' }}
-          />
-        </svg>
-        <motion.div
-          className="absolute inset-2 rounded-full bg-accent/5 flex items-center justify-center"
-          style={{ rotateX: iconRotateX, rotateY: iconRotateY, transformPerspective: '300px' } as React.CSSProperties}
-          whileHover={{ scale: 3 }}
-          transition={{ type: 'spring', stiffness: 340, damping: 18 }}
-          onMouseMove={handleIconMouseMove}
-          onMouseLeave={handleIconMouseLeave}
-        >
-          <Image
-            src={getAssetPath(`/images/skills/${skill.icon}.png`)}
-            alt={skill.name}
-            width={28}
-            height={28}
-            className="object-contain group-hover:scale-110 transition-transform duration-200"
-          />
-        </motion.div>
-      </div>
-
-      <span className="text-sm font-semibold text-center leading-tight">{skill.name}</span>
-      <span className="text-sm text-accent font-bold">{skill.level}%</span>
-    </motion.div>
+    <span className="group mx-2 inline-flex items-center gap-2.5 border border-white/8 px-4 py-2.5 transition-colors duration-300 hover:border-accent/45">
+      <span className="relative h-5 w-5 shrink-0">
+        <Image
+          src={icon}
+          alt=""
+          fill
+          sizes="20px"
+          className="object-contain opacity-70 transition-opacity duration-300 group-hover:opacity-100"
+        />
+      </span>
+      <span className="hud whitespace-nowrap text-ink-faint transition-colors duration-300 group-hover:text-ink">
+        {name}
+      </span>
+    </span>
   );
 }

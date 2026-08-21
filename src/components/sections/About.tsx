@@ -1,304 +1,292 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
-import { motion, AnimatePresence, useMotionValue, useTransform, useSpring } from 'framer-motion';
-import { GraduationCap, Calendar, Languages, Award, UserRound } from 'lucide-react';
+import { motion } from 'framer-motion';
 import portfolioData from '@/data/portfolio.json';
-import { RevealOnScroll } from '@/components/ui/Animations';
+import { Panel, Reveal, SectionHead, Stack, stackChild } from '@/components/fx';
+import { cn } from '@/lib/utils';
 
-const languageTexts: Record<string, { native: string; translation: string }> = {
-  Tamil: {
-    native: 'என் நெஞ்சில் குடியிருக்கும்...',
-    translation: 'If you like this, we can be friends.😎'
-  },
-  English: {
-    native: "Isn't it obvious? I speak English.",
-    translation: 'Professional working proficiency in English.☺️'
-  },
-  Japanese: {
-    native: '飛ばねぇ豚は、ただの豚だ。',
-    translation: 'I used to watch with my eyes; now I watch with my mind. [JLPT-N3]😇'
-  },
-  Kannada: {
-    native: 'ಮಾತನಾಡುವುದು ಮತ್ತು ಅರ್ಥಮಾಡಿಕೊಳ್ಳುವುದು ಮಾತ್ರ.',
-    translation: 'I can only Listen and Speak.😅'
-  }
-};
+const { basics, education, languages, interests } = portfolioData;
+
+/* Phrases lifted out of the bio and set in accent — the paragraph reads as
+   edited copy rather than a dumped JSON string. */
+const HIGHLIGHTS = [
+  'IoT Automation',
+  'Generative AI',
+  'Web Development',
+  'user interfaces',
+  'real-world problems',
+];
+
+function markUp(text: string) {
+  const pattern = new RegExp(`(${HIGHLIGHTS.join('|')})`, 'gi');
+  return text.split(pattern).map((chunk, i) =>
+    HIGHLIGHTS.some((h) => h.toLowerCase() === chunk.toLowerCase()) ? (
+      <em key={i} className="not-italic text-ink">
+        <span className="neon-text">{chunk}</span>
+      </em>
+    ) : (
+      <span key={i}>{chunk}</span>
+    )
+  );
+}
+
+/** Datasheet row: mono key on the left, content on the right, lights on hover. */
+function SpecRow({
+  k,
+  children,
+  index,
+}: {
+  k: string;
+  children: React.ReactNode;
+  index: number;
+}) {
+  return (
+    <motion.div
+      variants={stackChild}
+      className="group relative grid grid-cols-[auto_1fr] gap-4 border-b border-white/8 py-5 transition-colors sm:grid-cols-[9rem_1fr] sm:gap-8"
+    >
+      <span
+        aria-hidden="true"
+        className="absolute -left-4 top-0 h-full w-px origin-top scale-y-0 bg-accent transition-transform duration-500 ease-swift group-hover:scale-y-100 sm:-left-6"
+      />
+      <div className="flex items-baseline gap-2">
+        <span className="hud text-accent/60">
+          {String(index).padStart(2, '0')}
+        </span>
+        <span className="hud text-ink-faint transition-colors group-hover:text-ink">
+          {k}
+        </span>
+      </div>
+      <div className="min-w-0">{children}</div>
+    </motion.div>
+  );
+}
+
+function IstClock() {
+  const [time, setTime] = useState<string | null>(null);
+  useEffect(() => {
+    const fmt = () =>
+      new Intl.DateTimeFormat('en-GB', {
+        timeZone: 'Asia/Kolkata',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: false,
+      }).format(new Date());
+    setTime(fmt());
+    const t = setInterval(() => setTime(fmt()), 1000);
+    return () => clearInterval(t);
+  }, []);
+  return (
+    <span className="tabular-nums text-ink">{time ?? '--:--:--'}</span>
+  );
+}
+
+/** Five chamfered ticks; filled ones show proficiency. */
+function LevelBar({ level }: { level: number }) {
+  return (
+    <span className="inline-flex gap-1" aria-hidden="true">
+      {Array.from({ length: 5 }, (_, i) => (
+        <span
+          key={i}
+          className={cn(
+            'h-3 w-1.5 -skew-x-12',
+            i < level ? 'bg-accent' : 'bg-white/12'
+          )}
+          style={
+            i < level
+              ? { boxShadow: '0 0 8px rgb(var(--accent-rgb) / 0.7)' }
+              : undefined
+          }
+        />
+      ))}
+    </span>
+  );
+}
 
 export function About() {
-  const { basics, education, languages, interests } = portfolioData;
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [displayedText, setDisplayedText] = useState('');
-  const [displayedTranslation, setDisplayedTranslation] = useState('');
-  const [showTranslation, setShowTranslation] = useState(false);
-
-  const currentLang = languages[currentIndex];
-  const currentTexts = languageTexts[currentLang.name];
-
-  // Tilt effect for profile image
-  const picX = useMotionValue(0);
-  const picY = useMotionValue(0);
-  const picRotateX = useSpring(useTransform(picY, [-80, 80], [-10, 10]), { stiffness: 250, damping: 22 });
-  const picRotateY = useSpring(useTransform(picX, [-80, 80], [10, -10]), { stiffness: 250, damping: 22 });
-  const handlePicMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    picX.set(e.clientX - (rect.left + rect.width / 2));
-    picY.set(e.clientY - (rect.top + rect.height / 2));
-  };
-  const handlePicMouseLeave = () => { picX.set(0); picY.set(0); };
-
-  // Language typewriter effect
-  useEffect(() => {
-    if (!currentTexts) return;
-
-    const nativeText = currentTexts.native;
-    const translationText = currentTexts.translation;
-    let currentCharIndex = 0;
-    setDisplayedText('');
-    setDisplayedTranslation('');
-    setShowTranslation(false);
-
-    const typeInterval = setInterval(() => {
-      if (currentCharIndex < nativeText.length) {
-        setDisplayedText(nativeText.slice(0, currentCharIndex + 1));
-        currentCharIndex++;
-      } else {
-        clearInterval(typeInterval);
-        setShowTranslation(true);
-
-        let transCharIndex = 0;
-        const typeTransInterval = setInterval(() => {
-          if (transCharIndex < translationText.length) {
-            setDisplayedTranslation(translationText.slice(0, transCharIndex + 1));
-            transCharIndex++;
-          } else {
-            clearInterval(typeTransInterval);
-
-            setTimeout(() => {
-              let reverseTransIndex = translationText.length;
-              const reverseTransInterval = setInterval(() => {
-                if (reverseTransIndex > 0) {
-                  reverseTransIndex--;
-                  setDisplayedTranslation(translationText.slice(0, reverseTransIndex));
-                } else {
-                  clearInterval(reverseTransInterval);
-                  setShowTranslation(false);
-
-                  let reverseCharIndex = nativeText.length;
-                  const reverseInterval = setInterval(() => {
-                    if (reverseCharIndex > 0) {
-                      reverseCharIndex--;
-                      setDisplayedText(nativeText.slice(0, reverseCharIndex));
-                    } else {
-                      clearInterval(reverseInterval);
-                      setTimeout(() => {
-                        setCurrentIndex((prev) => (prev + 1) % languages.length);
-                      }, 1000);
-                    }
-                  }, 80);
-                  return () => clearInterval(reverseInterval);
-                }
-              }, 80);
-              return () => clearInterval(reverseTransInterval);
-            }, 3000);
-          }
-        }, 80);
-        return () => clearInterval(typeTransInterval);
-      }
-    }, 80);
-
-    return () => clearInterval(typeInterval);
-  }, [currentIndex, languages.length, currentTexts]);
-
   return (
-    <section id="about" className="section-padding">
-      <div className="container-custom">
-        {/* Section Header */}
-        <RevealOnScroll className="text-center mb-16">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-display font-bold mb-4">
-            About <span className="text-gradient">Me</span>
-          </h2>
-          <p className="text-bold text-foreground max-w-2xl mx-auto">
-            Get to know more about my background, education, and what drives me
-          </p>
-        </RevealOnScroll>
+    <section id="about" className="band">
+      <div className="shell">
+        <SectionHead
+          index="02"
+          label="Dossier"
+          title="The human"
+          accentWord="behind it"
+        />
 
-        {/* ─── Row 1: About Text (left) + Profile Image (right) ─── */}
-        <RevealOnScroll>
-          <div className="flex flex-col lg:flex-row items-center gap-10 mb-20">
-            {/* Profile image – square with 3 rounded corners */}
-            <div className="flex-shrink-0">
-              <motion.div
-                className="w-64 h-64 lg:w-80 lg:h-80 cursor-pointer"
-                style={{ rotateX: picRotateX, rotateY: picRotateY, transformPerspective: '900px' } as React.CSSProperties}
-                onMouseMove={handlePicMouseMove}
-                onMouseLeave={handlePicMouseLeave}
-                whileHover={{ scale: 1.04 }}
-                transition={{ duration: 0.2 }}
-              >
-                <div
-                  className="w-full h-full overflow-hidden"
-                  style={{ borderRadius: '1.5rem 1.5rem 1.5rem 0' }}
-                >
+        <div className="mt-14 grid gap-10 lg:grid-cols-[20rem_1fr] lg:gap-16">
+          {/* ------------------------------------------------ ID card */}
+          <Reveal dir="right" className="lg:sticky lg:top-28 lg:self-start">
+            <Panel hot cut={22} spotlight className="w-full">
+              <div className="p-5">
+                <div className="flex items-center justify-between">
+                  <span className="hud text-accent">ID / 2026</span>
+                  <span className="hazard h-3 w-12 opacity-70" />
+                </div>
+
+                <div className="relative mt-4 aspect-[4/5] w-full overflow-hidden">
                   <Image
                     src={basics.profilePicture}
                     alt={basics.name}
-                    width={320}
-                    height={320}
-                    className="w-full h-full object-cover"
+                    fill
+                    sizes="320px"
+                    className="object-cover grayscale transition-all duration-700 hover:grayscale-0"
+                  />
+                  <div
+                    className="pointer-events-none absolute inset-0 mix-blend-color opacity-[calc(0.55*var(--fx))]"
+                    style={{
+                      background:
+                        'linear-gradient(160deg, rgb(var(--accent-rgb) / 0.9), rgb(var(--accent-2-rgb) / 0.6))',
+                    }}
+                  />
+                  <div
+                    className="pointer-events-none absolute inset-0 opacity-[calc(0.35*var(--fx))] mix-blend-overlay"
+                    style={{
+                      backgroundImage:
+                        'repeating-linear-gradient(to bottom, rgba(255,255,255,0.5) 0 1px, transparent 1px 4px)',
+                    }}
                   />
                 </div>
-              </motion.div>
-            </div>
-            {/* Bio text */}
-            <div className="flex-1">
-              <div className="flex items-center gap-3 mb-5">
-                <div className="p-1 rounded-lg bg-accent/10">
-                  <UserRound size={30} className="text-accent" />
-                </div>
-                <h3 className="text-2xl font-semibold">Who <span className="text-gradient">I Am</span></h3>
+
+                <h3 className="mt-4 font-display text-xl font-bold leading-tight">
+                  {basics.name}
+                </h3>
+                <p className="hud mt-1 text-ink-faint">{basics.headline}</p>
+
+                <dl className="mt-5 space-y-2 border-t border-white/8 pt-4 font-mono text-[0.7rem]">
+                  <div className="flex justify-between">
+                    <dt className="text-ink-faint">LOCAL TIME</dt>
+                    <dd>
+                      <IstClock />
+                      <span className="ml-1 text-ink-faint">IST</span>
+                    </dd>
+                  </div>
+                  <div className="flex justify-between">
+                    <dt className="text-ink-faint">BASE</dt>
+                    <dd className="text-ink">{basics.location.city}</dd>
+                  </div>
+                  <div className="flex justify-between">
+                    <dt className="text-ink-faint">STATUS</dt>
+                    <dd className="text-accent">Open</dd>
+                  </div>
+                </dl>
+
+                {/* pseudo-barcode */}
+                <div
+                  className="mt-5 h-8 w-full opacity-70"
+                  aria-hidden="true"
+                  style={{
+                    backgroundImage:
+                      'repeating-linear-gradient(90deg, rgba(233,237,251,0.85) 0 1px, transparent 1px 3px, rgba(233,237,251,0.85) 3px 5px, transparent 5px 9px)',
+                    maskImage:
+                      'linear-gradient(90deg, #000, #000 88%, transparent)',
+                    WebkitMaskImage:
+                      'linear-gradient(90deg, #000, #000 88%, transparent)',
+                  }}
+                />
               </div>
-              <p className="text-foreground text-justify leading-relaxed text-lg">
-                {basics.bio}
+            </Panel>
+          </Reveal>
+
+          {/* ------------------------------------------------ datasheet */}
+          <div>
+            <Reveal>
+              <p className="max-w-3xl font-display text-[clamp(1.15rem,2.3vw,1.65rem)] font-semibold leading-[1.5] tracking-tight text-ink-dim">
+                {markUp(basics.bio)}
               </p>
-            </div>
-          </div>
-        </RevealOnScroll>
+            </Reveal>
 
-        {/* ─── Row 2: Education Horizontal Cards ─── */}
-        <RevealOnScroll className="mb-20">
-          <div className="flex items-center gap-3 mb-5">
-            <div className="p-2 rounded-lg bg-accent/10">
-              <GraduationCap size={30} className="text-accent" />
-            </div>
-            <h3 className="text-2xl font-semibold">Education</h3>
-          </div>
-
-          {/* Horizontal scrolling cards */}
-          <div className="flex overflow-x-auto gap-12 p-5 scrollbar-hide">
-            {education.map((edu) => (
-              <motion.div
-                key={edu.id}
-                whileHover={{ scale: 1.1 }}
-                className="relative flex-shrink-0 w-80 p-5 rounded-2xl border border-accent bg-muted/20 backdrop-blur-sm"
-              >
-                <div className="flex items-start gap-4">
-                  {/* Logo from JSON */}
-                  <div className="flex-shrink-0 w-14 h-14 rounded-xl overflow-hidden bg-muted/30">
-                    <Image
-                      src={edu.logo}
-                      alt={edu.institution}
-                      width={56}
-                      height={56}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <h4 className="font-semibold text-sm leading-tight">{edu.degree}</h4>
-                    <p className="text-xs text-foreground mt-1 wrap">{edu.institution}</p>
-                    <div className="flex items-center gap-2 mt-2">
-                      <span className="text-xs text-foreground flex items-center gap-1">
-                        <Calendar size={11} />
-                        {edu.startDate} – {edu.current ? 'Present' : edu.endDate}
-                      </span>
-                      <span className="text-xs font-medium text-foreground bg-accent rounded-md px-1 py-0.5">{edu.score}</span>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </RevealOnScroll>
-
-        {/* ─── Row 3: Languages (left) + Interests (right) ─── */}
-        <RevealOnScroll>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {/* Language animation */}
-            <div className="p-6 min-h-[280px] flex flex-col justify-center">
-              <div className="flex items-center gap-3 mb-5">
-                <div className="p-2 rounded-lg bg-accent/10">
-                  <Languages size={30} className="text-accent" />
-                </div>
-                <h3 className="text-2xl font-semibold">Languages</h3>
-              </div>
-              {/* Typewriter Display */}
-              <div className="space-y-4 mb-6 min-h-[120px] flex flex-col justify-center">
-                <div className="min-h-[60px] flex items-center">
-                  <h4 className="text-2xl font-bold">
-                    {displayedText}
-                    {!showTranslation && (
-                      <motion.span
-                        animate={{ opacity: [1, 0] }}
-                        transition={{ duration: 0.8, repeat: Infinity }}
-                        className="inline-block w-0.5 h-6 bg-accent ml-1 align-middle"
-                      />
-                    )}
-                  </h4>
-                </div>
-
-                <div className="min-h-[40px] flex items-center">
-                  <AnimatePresence mode="wait">
-                    {showTranslation && currentTexts && (
-                      <motion.p
-                        key={`trans-${currentIndex}`}
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 0.3 }}
-                        className="text-sm font-bold text-foreground"
-                      >
-                        {displayedTranslation}
-                        <motion.span
-                          animate={{ opacity: [1, 0] }}
-                          transition={{ duration: 0.8, repeat: Infinity }}
-                          className="inline-block w-0.5 h-4 bg-accent ml-1 align-middle"
+            <Stack className="mt-12">
+              <SpecRow k="Education" index={1}>
+                <ul className="space-y-4">
+                  {education.map((e) => (
+                    <li key={e.id} className="flex items-start gap-3">
+                      <span className="relative mt-0.5 h-9 w-9 shrink-0 overflow-hidden border border-white/12 bg-white/5">
+                        <Image
+                          src={e.logo}
+                          alt=""
+                          fill
+                          sizes="36px"
+                          className="object-contain p-1"
                         />
-                      </motion.p>
-                    )}
-                  </AnimatePresence>
-                </div>
-              </div>
+                      </span>
+                      <div className="min-w-0">
+                        <p className="text-sm font-medium leading-snug">
+                          {e.degree}
+                          <span className="text-ink-faint"> · </span>
+                          <span className="text-ink-dim">{e.field}</span>
+                        </p>
+                        <p className="mt-0.5 font-mono text-[0.68rem] text-ink-faint">
+                          {e.institution} — {e.startDate}–{e.endDate}
+                          <span className="text-accent"> · {e.score}</span>
+                        </p>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </SpecRow>
 
-              {/* Language Buttons */}
-              <div className="flex flex-wrap gap-2 select-none">
-                {languages.map((lang, index) => (
-                  <span
-                    key={lang.id}
-                    className={`px-3 py-1.5 text-xs font-medium rounded-lg transition-all cursor-default ${
-                      index === currentIndex
-                        ? 'text-accent font-semibold bg-white border border-accent'
-                        : 'text-foreground bg-muted/50'
-                    }`}
+              <SpecRow k="Languages" index={2}>
+                <ul className="grid gap-3 sm:grid-cols-2">
+                  {languages.map((l) => (
+                    <li key={l.id} className="flex items-center justify-between gap-3">
+                      <span className="text-sm">
+                        {l.name}
+                        <span className="ml-2 font-mono text-[0.65rem] text-ink-faint">
+                          {l.proficiency}
+                        </span>
+                      </span>
+                      <LevelBar level={l.level} />
+                    </li>
+                  ))}
+                </ul>
+              </SpecRow>
+
+              <SpecRow k="Contact" index={3}>
+                <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm">
+                  <a
+                    href={`mailto:${basics.email}`}
+                    className="underline decoration-accent/40 underline-offset-4 transition-colors hover:text-accent"
                   >
-                    {lang.name}
+                    {basics.email}
+                  </a>
+                  <span className="font-mono text-[0.68rem] text-ink-faint">
+                    {basics.location.city}, {basics.location.state},{' '}
+                    {basics.location.country}
                   </span>
-                ))}
-              </div>
-            </div>
-
-            {/* Interests – static badges */}
-            <div className="p-6 min-h-[280px] flex flex-col">
-              <div className="flex items-center gap-3 mb-5">
-                <div className="p-2 rounded-lg bg-accent/10">
-                  <Award size={30} className="text-accent" />
                 </div>
-                <h3 className="text-2xl font-semibold">Interests</h3>
-              </div>
-              <div className="flex flex-wrap gap-2 px-3 py-1.5">
-                {interests.map((interest) => (
-                  <motion.span
-                    whileHover={{ y: -3 } }
-                    key={interest.id}
-                    className="px-3 py-1.5 text-sm rounded-lg bg-accent/10 text-foreground border border-accent/20 transition-colors duration-200 hover:bg-accent hover:text-white hover:border-accent cursor-pointer"
-                  >
-                    {interest.name}
-                  </motion.span>
+              </SpecRow>
+            </Stack>
+
+            {/* ------------------------------------------ interest field */}
+            <Reveal delay={0.1} className="mt-12">
+              <p className="eyebrow mb-5">Orbiting interests</p>
+              <ul className="flex flex-wrap gap-2">
+                {interests.map((it, i) => (
+                  <li key={it.id}>
+                    <span
+                      title={it.description}
+                      className={cn(
+                        'inline-block cursor-default border px-3 py-1.5 font-mono text-[0.72rem] transition-all duration-300',
+                        i % 5 === 0
+                          ? 'border-accent/45 text-accent hover:bg-accent/10'
+                          : 'border-white/10 text-ink-dim hover:border-white/30 hover:text-ink'
+                      )}
+                      style={{
+                        transform: `rotate(${((i * 37) % 5) - 2}deg)`,
+                      }}
+                    >
+                      {it.name}
+                    </span>
+                  </li>
                 ))}
-              </div>
-            </div>
+              </ul>
+            </Reveal>
           </div>
-        </RevealOnScroll>
+        </div>
       </div>
     </section>
   );

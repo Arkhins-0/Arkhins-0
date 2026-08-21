@@ -2,7 +2,14 @@
   "meta": {
     "title": "Krishna Vijay G | Portfolio",
     "description": "Versatile Tech Fresher specializing in UI/UX Design, AI/ML, and Full-Stack Development",
-    "keywords": ["developer", "designer", "portfolio", "AI", "ML", "UX"],
+    "keywords": [
+      "developer",
+      "designer",
+      "portfolio",
+      "AI",
+      "ML",
+      "UX"
+    ],
     "author": "Krishna Vijay G"
   },
   "basics": {
@@ -18,7 +25,14 @@
     "profilePicture": "/images/profile.jpg",
     "resumeUrl": "https://katb.in/gkvresume",
     "availability": "Open to Opportunities",
-    "bio": "A skilled and curious tech enthusiast with hands-on experience in designing and developing user interfaces and a strong interest in exploring diverse areas of technology. Continuously stays updated with emerging trends by participating in workshops and technical learning opportunities, while actively experimenting with new tools and frameworks. Driven by a passion for solving real-world problems through technology, with a growing focus on fields such as IoT Automation, Generative AI, and Web Development. Dedicated to building innovative, efficient, and user-friendly digital solutions while constantly expanding technical knowledge and practical experience."
+    "bio": "A skilled and curious tech enthusiast with hands-on experience in designing and developing user interfaces and a strong interest in exploring diverse areas of technology. Continuously stays updated with emerging trends by participating in workshops and technical learning opportunities, while actively experimenting with new tools and frameworks. Driven by a passion for solving real-world problems through technology, with a growing focus on fields such as IoT Automation, Generative AI, and Web Development. Dedicated to building innovative, efficient, and user-friendly digital solutions while constantly expanding technical knowledge and practical experience.",
+    "portrait": "/images/hero/portrait.png",
+    "roles": [
+      "UI/UX Designer",
+      "Full-Stack Developer",
+      "AI/ML Practitioner",
+      "IoT Tinkerer"
+    ]
   },
   "socialLinks": [
     {
@@ -118,7 +132,11 @@
         "Collaborated with students and faculty to grow the developer community",
         "Supported peers in learning new technologies and Google developer tools"
       ],
-      "technologies": ["Community", "Event Management", "Google Technologies"],
+      "technologies": [
+        "Community",
+        "Event Management",
+        "Google Technologies"
+      ],
       "logo": "/images/companies/gdsc.png",
       "url": "https://gdsc.community.dev/"
     },
@@ -137,7 +155,11 @@
         "Sorted and organized files, spreadsheets, and reports",
         "Prepared project presentations and reports to assist senior staff"
       ],
-      "technologies": ["Data Analysis", "Team Collaboration", "Documentation"],
+      "technologies": [
+        "Data Analysis",
+        "Team Collaboration",
+        "Documentation"
+      ],
       "logo": "/images/companies/tt.png",
       "url": "https://ttinfotech.com/"
     },
@@ -156,7 +178,11 @@
         "Modeled predictions with feature selection algorithms",
         "Proven ability to learn quickly and adapt to new situations"
       ],
-      "technologies": ["Python", "Data Science", "Machine Learning"],
+      "technologies": [
+        "Python",
+        "Data Science",
+        "Machine Learning"
+      ],
       "logo": "/images/companies/teachnook.png",
       "url": "https://teachnook.com/"
     },
@@ -174,7 +200,10 @@
         "Key achievement or responsibility 1",
         "Key achievement or responsibility 2"
       ],
-      "technologies": ["Tech 1", "Tech 2"],
+      "technologies": [
+        "Tech 1",
+        "Tech 2"
+      ],
       "logo": "/images/companies/placeholder.png",
       "url": "https://company-website.com"
     }
@@ -185,19 +214,27 @@
       "title": "HYGIEIA: Multi Disease Diagnosis Framework",
       "description": "A Framework has been built with multiple models to predict variety of conditions with scalable features and high trustworthy accuracy.",
       "longDescription": "This Framework uses multiple AI models to diagnose. It has AI Chatting capabilities for the Healthcare and Blockchain integration. It integrates data from different sources to provide reliable health assessments.",
-      "thumbnail": "/images/projects/hygieia.png",
+      "thumbnail": "/projects/hygieia/thumbnail.png",
       "images": [
-        "/images/projects/placeholder-1.jpg"
+        "/projects/hygieia/cover.png"
       ],
-      "markdownFile": "/images/projects/hygieia.md",
-      "tags": ["Deep Learning", "AI", "TensorFlow", "Model Training"],
+      "markdownFile": "/projects/hygieia/case-study.md",
+      "tags": [
+        "Deep Learning",
+        "AI",
+        "TensorFlow",
+        "Model Training"
+      ],
       "category": "AI/ML",
       "date": "November 2025",
       "githubUrl": "https://github.com/Krishna-Vijay-G/Hygieia.git",
       "liveUrl": "",
-      "pageUrl": "/hygieia",
+      "pageUrl": "/projects/hygieia",
       "featured": true,
-      "status": "Completed"
+      "status": "Completed",
+      "slug": "hygieia",
+      "role": "Design + ML + Full-stack",
+      "year": "2025"
     },
     {
       "id": "proj-2",
@@ -209,13 +246,21 @@
         "/images/projects/BidNest-1.png"
       ],
       "markdownFile": "/images/projects/BidNest.md",
-      "tags": ["Next.js", "React", "TailwindCSS", "Web Development"],
+      "tags": [
+        "Next.js",
+        "React",
+        "TailwindCSS",
+        "Web Development"
+      ],
       "category": "Backend",
       "date": "May 2025",
       "githubUrl": "https://github.com/Krishna-Vijay-G/BidNest.git",
-      "liveUrl": "https://bid-nest-omega.vercel.app",
+      "liveUrl": "https://bidnest-omega.vercel.app",
       "featured": true,
-      "status": "Completed"
+      "status": "Completed",
+      "slug": "bidnest",
+      "role": "Product + Frontend",
+      "year": "2025"
     },
     {
       "id": "proj-3",
@@ -227,13 +272,21 @@
         "/images/projects/ctr.png"
       ],
       "markdownFile": "/images/projects/ctr.md",
-      "tags": ["Next.js", "React", "TailwindCSS", "Web Development"],
+      "tags": [
+        "Next.js",
+        "React",
+        "TailwindCSS",
+        "Web Development"
+      ],
       "category": "Frontend",
       "date": "May 2025",
       "githubUrl": "https://github.com/Krishna-Vijay-G/CTR.git",
       "liveUrl": "https://chennaiturboriders.racing",
       "featured": true,
-      "status": "Completed"
+      "status": "Completed",
+      "slug": "ctr",
+      "role": "Design + Frontend",
+      "year": "2025"
     },
     {
       "id": "proj-4",
@@ -245,13 +298,21 @@
         "/images/projects/stock-prediction-1.png"
       ],
       "markdownFile": "/images/projects/stock_prediction.md",
-      "tags": ["Machine Learning", "Python", "Keras", "Data Science"],
+      "tags": [
+        "Machine Learning",
+        "Python",
+        "Keras",
+        "Data Science"
+      ],
       "category": "AI/ML",
       "date": "May 2025",
       "githubUrl": "https://github.com/Krishna-Vijay-G/Predicting-the-Stocks-Values-of-Microsoft.git",
       "liveUrl": "",
       "featured": false,
-      "status": "Completed"
+      "status": "Completed",
+      "slug": "msft-stock",
+      "role": "Data Science",
+      "year": "2025"
     },
     {
       "id": "proj-placeholder-1",
@@ -263,7 +324,11 @@
         "/images/projects/placeholder-1.jpg",
         "/images/projects/placeholder-2.jpg"
       ],
-      "tags": ["Tag 1", "Tag 2", "Tag 3"],
+      "tags": [
+        "Tag 1",
+        "Tag 2",
+        "Tag 3"
+      ],
       "category": "Category",
       "date": "Month Year",
       "githubUrl": "https://github.com/username/repo",
@@ -278,7 +343,11 @@
       "longDescription": "This case study covers the entire design process from user research, wireframing, prototyping, to final high-fidelity designs.",
       "thumbnail": "/images/projects/placeholder.jpg",
       "images": [],
-      "tags": ["Design", "UI/UX", "Figma"],
+      "tags": [
+        "Design",
+        "UI/UX",
+        "Figma"
+      ],
       "category": "Design",
       "date": "Month Year",
       "githubUrl": "",
@@ -294,83 +363,250 @@
         "name": "Frontend Development",
         "description": "Building responsive and interactive interfaces with modern web technologies.",
         "skills": [
-          { "name": "Next.js", "icon": "nextjs", "level": 85 },
-          { "name": "React", "icon": "react", "level": 88 },
-          { "name": "JavaScript", "icon": "javascript", "level": 90 },
-          { "name": "Angular", "icon": "angular", "level": 75 }
+          {
+            "name": "Next.js",
+            "icon": "nextjs",
+            "level": 85
+          },
+          {
+            "name": "React",
+            "icon": "react",
+            "level": 88
+          },
+          {
+            "name": "JavaScript",
+            "icon": "javascript",
+            "level": 90
+          },
+          {
+            "name": "Angular",
+            "icon": "angular",
+            "level": 75
+          }
         ]
       },
       {
         "name": "Backend Development",
         "description": "Server-side frameworks and languages for building scalable APIs and services.",
         "skills": [
-          { "name": "Node.js", "icon": "nodejs", "level": 80 },
-          { "name": "NestJS", "icon": "nestjs", "level": 72 },
-          { "name": "Python", "icon": "python", "level": 90 },
-          { "name": "Java", "icon": "java", "level": 75 }
+          {
+            "name": "Node.js",
+            "icon": "nodejs",
+            "level": 80
+          },
+          {
+            "name": "NestJS",
+            "icon": "nestjs",
+            "level": 72
+          },
+          {
+            "name": "Python",
+            "icon": "python",
+            "level": 90
+          },
+          {
+            "name": "Java",
+            "icon": "java",
+            "level": 75
+          }
         ]
       },
       {
         "name": "UI/UX Design",
         "description": "Crafting intuitive, accessible, and beautiful user experiences.",
         "skills": [
-          { "name": "Figma", "icon": "figma", "level": 85 },
-          { "name": "Adobe XD", "icon": "adobexd", "level": 75 },
-          { "name": "Photoshop", "icon": "photoshop", "level": 75 },
-          { "name": "Illustrator", "icon": "illustrator", "level": 80 }
+          {
+            "name": "Figma",
+            "icon": "figma",
+            "level": 85
+          },
+          {
+            "name": "Adobe XD",
+            "icon": "adobexd",
+            "level": 75
+          },
+          {
+            "name": "Photoshop",
+            "icon": "photoshop",
+            "level": 75
+          },
+          {
+            "name": "Illustrator",
+            "icon": "illustrator",
+            "level": 80
+          }
         ]
       },
       {
         "name": "Data Management",
         "description": "Relational and non-relational databases for modern data-driven applications.",
         "skills": [
-          { "name": "MongoDB", "icon": "mongodb", "level": 80 },
-          { "name": "NeonDB", "icon": "neondb", "level": 72 },
-          { "name": "Firebase", "icon": "firebase", "level": 85 },
-          { "name": "MySQL", "icon": "mysql", "level": 78 }
+          {
+            "name": "MongoDB",
+            "icon": "mongodb",
+            "level": 80
+          },
+          {
+            "name": "NeonDB",
+            "icon": "neondb",
+            "level": 72
+          },
+          {
+            "name": "Firebase",
+            "icon": "firebase",
+            "level": 85
+          },
+          {
+            "name": "MySQL",
+            "icon": "mysql",
+            "level": 78
+          }
         ]
       },
       {
         "name": "Tools & Platforms",
         "description": "Development tools, version control, and deployment platforms.",
         "skills": [
-          { "name": "Supabase", "icon": "supabase", "level": 75 },
-          { "name": "Git", "icon": "git", "level": 88 },
-          { "name": "VS Code", "icon": "vscode", "level": 95 },
-          { "name": "Vercel", "icon": "vercel", "level": 82 }
+          {
+            "name": "Supabase",
+            "icon": "supabase",
+            "level": 75
+          },
+          {
+            "name": "Git",
+            "icon": "git",
+            "level": 88
+          },
+          {
+            "name": "VS Code",
+            "icon": "vscode",
+            "level": 95
+          },
+          {
+            "name": "Vercel",
+            "icon": "vercel",
+            "level": 82
+          }
         ]
       }
     ],
     "techStack": [
-      { "name": "Next.js",     "icon": "/images/skills/nextjs.png" },
-      { "name": "React",       "icon": "/images/skills/react.png" },
-      { "name": "JavaScript",  "icon": "/images/skills/javascript.png" },
-      { "name": "Angular",     "icon": "/images/skills/angular.png" },
-      { "name": "HTML5",       "icon": "/images/skills/html5.png" },
-      { "name": "CSS3",        "icon": "/images/skills/css3.png" },
-      { "name": "Node.js",     "icon": "/images/skills/nodejs.png" },
-      { "name": "NestJS",      "icon": "/images/skills/nestjs.png" },
-      { "name": "Python",      "icon": "/images/skills/python.png" },
-      { "name": "Java",        "icon": "/images/skills/java.png" },
-      { "name": "Next.js",     "icon": "/images/skills/nextjs.png" },
-      { "name": "C++",         "icon": "/images/skills/cpp.png" },
-      { "name": "Kotlin",      "icon": "/images/skills/kotlin.png" },
-      { "name": "Figma",       "icon": "/images/skills/figma.png" },
-      { "name": "TailwindCSS", "icon": "/images/skills/tailwindcss.png" },
-      { "name": "Git",         "icon": "/images/skills/git.png" },
-      { "name": "MongoDB",     "icon": "/images/skills/mongodb.png" },
-      { "name": "NeonDB",      "icon": "/images/skills/neondb.png" },
-      { "name": "TensorFlow",  "icon": "/images/skills/tensorflow.png" },
-      { "name": "Firebase",    "icon": "/images/skills/firebase.png" },
-      { "name": "MySQL",       "icon": "/images/skills/mysql.png" },
-      { "name": "Supabase",    "icon": "/images/skills/supabase.png" },
-      { "name": "Vercel",      "icon": "/images/skills/vercel.png" },
-      { "name": "VS Code",     "icon": "/images/skills/vscode.png" },
-      { "name": "Adobe XD",    "icon": "/images/skills/adobexd.png" },
-      { "name": "Photoshop",   "icon": "/images/skills/photoshop.png" },
-      { "name": "Illustrator", "icon": "/images/skills/illustrator.png" },
-      { "name": "Power BI",    "icon": "/images/skills/powerbi.png" },
-      { "name": "Android",     "icon": "/images/skills/android.png" }
+      {
+        "name": "Next.js",
+        "icon": "/images/skills/nextjs.png"
+      },
+      {
+        "name": "React",
+        "icon": "/images/skills/react.png"
+      },
+      {
+        "name": "JavaScript",
+        "icon": "/images/skills/javascript.png"
+      },
+      {
+        "name": "Angular",
+        "icon": "/images/skills/angular.png"
+      },
+      {
+        "name": "HTML5",
+        "icon": "/images/skills/html5.png"
+      },
+      {
+        "name": "CSS3",
+        "icon": "/images/skills/css3.png"
+      },
+      {
+        "name": "Node.js",
+        "icon": "/images/skills/nodejs.png"
+      },
+      {
+        "name": "NestJS",
+        "icon": "/images/skills/nestjs.png"
+      },
+      {
+        "name": "Python",
+        "icon": "/images/skills/python.png"
+      },
+      {
+        "name": "Java",
+        "icon": "/images/skills/java.png"
+      },
+      {
+        "name": "Next.js",
+        "icon": "/images/skills/nextjs.png"
+      },
+      {
+        "name": "C++",
+        "icon": "/images/skills/cpp.png"
+      },
+      {
+        "name": "Kotlin",
+        "icon": "/images/skills/kotlin.png"
+      },
+      {
+        "name": "Figma",
+        "icon": "/images/skills/figma.png"
+      },
+      {
+        "name": "TailwindCSS",
+        "icon": "/images/skills/tailwindcss.png"
+      },
+      {
+        "name": "Git",
+        "icon": "/images/skills/git.png"
+      },
+      {
+        "name": "MongoDB",
+        "icon": "/images/skills/mongodb.png"
+      },
+      {
+        "name": "NeonDB",
+        "icon": "/images/skills/neondb.png"
+      },
+      {
+        "name": "TensorFlow",
+        "icon": "/images/skills/tensorflow.png"
+      },
+      {
+        "name": "Firebase",
+        "icon": "/images/skills/firebase.png"
+      },
+      {
+        "name": "MySQL",
+        "icon": "/images/skills/mysql.png"
+      },
+      {
+        "name": "Supabase",
+        "icon": "/images/skills/supabase.png"
+      },
+      {
+        "name": "Vercel",
+        "icon": "/images/skills/vercel.png"
+      },
+      {
+        "name": "VS Code",
+        "icon": "/images/skills/vscode.png"
+      },
+      {
+        "name": "Adobe XD",
+        "icon": "/images/skills/adobexd.png"
+      },
+      {
+        "name": "Photoshop",
+        "icon": "/images/skills/photoshop.png"
+      },
+      {
+        "name": "Illustrator",
+        "icon": "/images/skills/illustrator.png"
+      },
+      {
+        "name": "Power BI",
+        "icon": "/images/skills/powerbi.png"
+      },
+      {
+        "name": "Android",
+        "icon": "/images/skills/android.png"
+      }
     ]
   },
   "certifications": [
@@ -463,11 +699,18 @@
       "title": "Publication Title",
       "journal": "Journal/Conference Name",
       "date": "Month Year",
-      "authors": ["Krishna Vijay G", "Co-author Name"],
+      "authors": [
+        "Krishna Vijay G",
+        "Co-author Name"
+      ],
       "abstract": "Brief abstract or summary of the publication.",
       "doi": "10.xxxx/xxxxx",
       "url": "https://publication-link.com",
-      "tags": ["AI", "Machine Learning", "Research"]
+      "tags": [
+        "AI",
+        "Machine Learning",
+        "Research"
+      ]
     }
   ],
   "volunteering": [
@@ -593,11 +836,30 @@
     }
   ],
   "languages": [
-    { "id": "lang-1", "name": "Tamil", "proficiency": "Native", "level": 5 },
-    { "id": "lang-2", "name": "English", "proficiency": "Professional", "level": 4 },
-    { "id": "lang-3", "name": "Japanese", "proficiency": "JLPT N3", "level": 3 },
-    { "id": "lang-4", "name": "Kannada", "proficiency": "Bilingual", "level": 4 }
-
+    {
+      "id": "lang-1",
+      "name": "Tamil",
+      "proficiency": "Native",
+      "level": 5
+    },
+    {
+      "id": "lang-2",
+      "name": "English",
+      "proficiency": "Professional",
+      "level": 4
+    },
+    {
+      "id": "lang-3",
+      "name": "Japanese",
+      "proficiency": "JLPT N3",
+      "level": 3
+    },
+    {
+      "id": "lang-4",
+      "name": "Kannada",
+      "proficiency": "Bilingual",
+      "level": 4
+    }
   ],
   "testimonials": [
     {

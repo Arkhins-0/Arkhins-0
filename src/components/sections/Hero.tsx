@@ -1,249 +1,481 @@
 'use client';
 
-import { useEffect } from 'react';
-import { motion } from 'framer-motion';
-
-import { ArrowDown, Github, MapPin, Sparkles } from 'lucide-react';
-import { FaLinkedin, FaGithub, FaInstagram } from 'react-icons/fa';
+import { useEffect, useRef, useState } from 'react';
+import {
+  AnimatePresence,
+  motion,
+  useMotionValue,
+  useSpring,
+  useTransform,
+} from 'framer-motion';
+import { ArrowUpRight, MapPin, MoveDown } from 'lucide-react';
+import { FaGithub, FaInstagram, FaLinkedin, FaTelegram } from 'react-icons/fa6';
+import { FaDiscord } from 'react-icons/fa';
 import { SiGoogle } from 'react-icons/si';
-import { FaDiscord, FaTelegram } from 'react-icons/fa6';
 import portfolioData from '@/data/portfolio.json';
-import { useTheme } from '@/context/ThemeContext';
+import { NeonButton, Ticker } from '@/components/fx';
+import { useUI } from '@/context/UIContext';
+import { cn } from '@/lib/utils';
 
-const socialIcons: Record<string, React.ReactNode> = {
-  github: <FaGithub size={20} />,
-  linkedin: <FaLinkedin size={20} />,
-  google: <SiGoogle size={20} />,
-  instagram: <FaInstagram size={20} />,
-  discord: <FaDiscord size={20} />,
-  telegram: <FaTelegram size={20} />,
+const { basics, socialLinks } = portfolioData;
+const [FIRST, ...REST] = basics.name.split(' ');
+const SURNAME = REST.join(' ');
+
+const SOCIAL_ICON: Record<string, React.ReactNode> = {
+  github: <FaGithub />,
+  linkedin: <FaLinkedin />,
+  instagram: <FaInstagram />,
+  google: <SiGoogle />,
+  discord: <FaDiscord />,
+  telegram: <FaTelegram />,
 };
 
-export function Hero() {
-  const { basics, socialLinks } = portfolioData;
-  const { isDark } = useTheme();
+const MARQUEE = [
+  basics.availability,
+  `${basics.location.city} · ${basics.location.country}`,
+  'UI/UX Design',
+  'AI / ML',
+  'Full-Stack',
+  'IoT Automation',
+  'Generative AI',
+];
 
+/* -------------------------------------------------------------- portrait */
+
+/**
+ * The transparent PNG gets three passes: a blurred duotone echo offset behind
+ * it (masked by the same file), the photo itself with an accent rim glow, and
+ * a scan sweep clipped to the silhouette.
+ */
+function Portrait({ src, tilt }: { src: string; tilt: { rx: any; ry: any } }) {
+  const [failed, setFailed] = useState(false);
+  const imgRef = useRef<HTMLImageElement>(null);
+
+  // If the request already failed before hydration, onError will never fire.
   useEffect(() => {
-    const handleScroll = () => {
-      const blur = Math.min((window.scrollY / window.innerHeight) * 8, 8);
-      document.documentElement.style.setProperty('--hero-video-blur', `${blur}px`);
-    };
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    const img = imgRef.current;
+    if (img?.complete && img.naturalWidth === 0) setFailed(true);
   }, []);
 
-  const desktopVideo = isDark ? '/images/hero/hero_dark.mp4' : '/images/hero/hero_light.mp4';
-  const mobileVideo = isDark ? '/images/hero/hero_dark_mobile.mp4' : '/images/hero/hero_light_mobile.mp4';
+  const maskProps = {
+    WebkitMaskImage: `url(${src})`,
+    maskImage: `url(${src})`,
+    WebkitMaskSize: 'contain',
+    maskSize: 'contain',
+    WebkitMaskRepeat: 'no-repeat',
+    maskRepeat: 'no-repeat',
+    WebkitMaskPosition: 'bottom center',
+    maskPosition: 'bottom center',
+  } as React.CSSProperties;
+
+  if (failed) {
+    return (
+      <div className="relative mx-auto flex aspect-[3/4] w-full max-w-[26rem] items-end justify-center">
+        <div
+          className="notch-diag absolute inset-0 border border-dashed border-accent/35"
+          style={{ ['--notch' as string]: '28px' }}
+        />
+        <div className="relative z-10 mb-10 px-6 text-center">
+          <p className="hud text-accent">Portrait slot</p>
+          <p className="mt-2 font-mono text-[0.7rem] leading-relaxed text-ink-faint">
+            drop a cut-out PNG at
+            <br />
+            <span className="text-ink">public{src}</span>
+          </p>
+        </div>
+        <div
+          className="absolute inset-x-8 bottom-6 h-24 rounded-[50%] blur-2xl"
+          style={{
+            background:
+              'radial-gradient(ellipse at center, rgb(var(--accent-rgb) / 0.4), transparent 70%)',
+          }}
+        />
+      </div>
+    );
+  }
+
+  return (
+    <motion.div
+      style={{ rotateX: tilt.rx, rotateY: tilt.ry, transformPerspective: 1200 }}
+      className="relative mx-auto w-full max-w-[30rem]"
+    >
+      {/* pedestal glow under the subject */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-x-4 bottom-2 h-28 rounded-[50%] opacity-[calc(0.9*var(--fx))] blur-[38px]"
+        style={{
+          background:
+            'radial-gradient(ellipse at center, rgb(var(--accent-rgb) / 0.55), transparent 72%)',
+        }}
+      />
+
+      {/* duotone echo, offset and blurred */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 translate-x-4 translate-y-1 opacity-[calc(0.75*var(--fx))] blur-[3px]"
+        style={{
+          ...maskProps,
+          background:
+            'linear-gradient(170deg, rgb(var(--accent-rgb) / 0.95), rgb(var(--accent-2-rgb) / 0.55) 65%, transparent)',
+        }}
+      />
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 -translate-x-3 opacity-[calc(0.5*var(--fx))] blur-[5px]"
+        style={{
+          ...maskProps,
+          background: 'rgb(var(--accent-2-rgb) / 0.8)',
+        }}
+      />
+
+      {/* the photo */}
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        ref={imgRef}
+        src={src}
+        alt={`${basics.name}, ${basics.headline}`}
+        onError={() => setFailed(true)}
+        className="relative z-10 w-full select-none object-contain"
+        style={{
+          filter:
+            'drop-shadow(0 0 34px rgb(var(--accent-rgb) / calc(0.45 * var(--fx)))) drop-shadow(0 22px 44px rgba(0,0,0,0.65))',
+        }}
+        draggable={false}
+      />
+
+      {/* scan sweep, clipped to the silhouette */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 z-20 overflow-hidden opacity-[calc(1*var(--fx))]"
+        style={maskProps}
+      >
+        <div
+          className="h-1/4 w-full animate-sweep-y"
+          style={{
+            background:
+              'linear-gradient(to bottom, transparent, rgb(var(--accent-rgb) / 0.55), transparent)',
+            filter: 'blur(2px)',
+          }}
+        />
+      </div>
+
+      {/* fine horizontal scanlines over the subject */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 z-20 opacity-[calc(0.4*var(--fx))] mix-blend-overlay"
+        style={{
+          ...maskProps,
+          backgroundImage:
+            'repeating-linear-gradient(to bottom, rgba(255,255,255,0.5) 0 1px, transparent 1px 4px)',
+        }}
+      />
+    </motion.div>
+  );
+}
+
+/* ---------------------------------------------------------------- roller */
+
+function RoleRoller({ roles }: { roles: string[] }) {
+  const [i, setI] = useState(0);
+  useEffect(() => {
+    const t = setInterval(() => setI((v) => (v + 1) % roles.length), 2600);
+    return () => clearInterval(t);
+  }, [roles.length]);
+
+  // A hidden sizer holds the width of the longest role so the brackets never
+  // jump, and the slots overlap instead of leaving a gap between them.
+  const widest = roles.reduce((a, b) => (b.length > a.length ? b : a), '');
+
+  return (
+    <span className="relative inline-flex h-[1.5em] items-center overflow-hidden align-bottom">
+      <span aria-hidden="true" className="invisible whitespace-nowrap">
+        {widest}
+      </span>
+      <AnimatePresence initial={false}>
+        <motion.span
+          key={roles[i]}
+          initial={{ y: '105%', opacity: 0 }}
+          animate={{ y: '0%', opacity: 1 }}
+          exit={{ y: '-105%', opacity: 0 }}
+          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          className="absolute inset-0 flex items-center whitespace-nowrap text-accent"
+        >
+          {roles[i]}
+        </motion.span>
+      </AnimatePresence>
+    </span>
+  );
+}
+
+/* ------------------------------------------------------------------ hero */
+
+export function Hero() {
+  const { fx } = useUI();
+
+  const px = useMotionValue(0);
+  const py = useMotionValue(0);
+  const sx = useSpring(px, { stiffness: 90, damping: 20 });
+  const sy = useSpring(py, { stiffness: 90, damping: 20 });
+
+  const rx = useTransform(sy, [-0.5, 0.5], [7, -7]);
+  const ry = useTransform(sx, [-0.5, 0.5], [-9, 9]);
+  const haloX = useTransform(sx, [-0.5, 0.5], [26, -26]);
+  const haloY = useTransform(sy, [-0.5, 0.5], [18, -18]);
+
+  useEffect(() => {
+    if (!fx) return;
+    const onMove = (e: PointerEvent) => {
+      if (e.pointerType !== 'mouse') return;
+      px.set(e.clientX / window.innerWidth - 0.5);
+      py.set(e.clientY / window.innerHeight - 0.5);
+    };
+    window.addEventListener('pointermove', onMove, { passive: true });
+    return () => window.removeEventListener('pointermove', onMove);
+  }, [fx, px, py]);
 
   return (
     <section
       id="home"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20 md:pt-32 pb-24 md:pb-16"
+      className="relative flex min-h-[100svh] flex-col justify-between overflow-hidden pb-0 pt-28 md:pt-36"
     >
-      {/* Fixed video background – stays pinned while page scrolls */}
+      {/* ---------------------------------------------- local visuals */}
+
+      {/* perspective grid floor */}
       <div
-        className="fixed inset-0 -z-10 overflow-hidden pointer-events-none"
-        style={{ filter: 'blur(var(--hero-video-blur, 0px))', willChange: 'filter' }}
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-[42vh] opacity-[calc(0.8*var(--fx))]"
+        style={{ perspective: '240px', perspectiveOrigin: '50% 0%' }}
       >
-        {/* Desktop video */}
-        <video
-          key={`desktop-${isDark ? 'dark' : 'light'}`}
-          autoPlay
-          muted
-          loop
-          playsInline
-          className="absolute inset-0 w-full h-full object-cover hidden md:block"
-        >
-          <source src={desktopVideo} type="video/mp4" />
-        </video>
-        {/* Mobile video */}
-        <video
-          key={`mobile-${isDark ? 'dark' : 'light'}`}
-          autoPlay
-          muted
-          loop
-          playsInline
-          className="absolute inset-0 w-full h-full object-cover md:hidden"
-        >
-          <source src={mobileVideo} type="video/mp4" />
-        </video>
-      </div>
-
-      {/* Accent glow blobs */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <motion.div
-          animate={{
-            scale: [1, 1.2, 1],
-            opacity: [0.15, 0.28, 0.15],
+        <div
+          className="absolute inset-0 origin-bottom animate-grid-slide"
+          style={{
+            transform: 'rotateX(74deg)',
+            backgroundImage:
+              'linear-gradient(rgb(var(--accent-rgb) / 0.38) 1px, transparent 1px), linear-gradient(90deg, rgb(var(--accent-rgb) / 0.22) 1px, transparent 1px)',
+            backgroundSize: '44px 44px',
+            maskImage: 'linear-gradient(to top, #000 5%, transparent 78%)',
+            WebkitMaskImage:
+              'linear-gradient(to top, #000 5%, transparent 78%)',
           }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: 'easeInOut',
-          }}
-          className="absolute -top-1/4 -right-1/4 w-1/2 h-1/2 rounded-full bg-accent/20 blur-[100px]"
-        />
-        <motion.div
-          animate={{
-            scale: [1, 1.3, 1],
-            opacity: [0.1, 0.22, 0.1],
-          }}
-          transition={{
-            duration: 10,
-            repeat: Infinity,
-            ease: 'easeInOut',
-            delay: 1,
-          }}
-          className="absolute -bottom-1/4 -left-1/4 w-1/2 h-1/2 rounded-full bg-accent/20 blur-[100px]"
         />
       </div>
 
-      <div className="container-custom relative z-[1] w-full">
-        {/* Content — right-aligned */}
-        <div className="ml-auto w-full lg:w-1/2 text-center lg:text-right flex flex-col justify-end min-h-[calc(100svh-5rem)] sm:block sm:min-h-0">
+      {/* rotating halo behind the subject */}
+      <motion.div
+        aria-hidden="true"
+        style={{ x: haloX, y: haloY }}
+        className="pointer-events-none absolute right-[6%] top-[16%] hidden h-[34rem] w-[34rem] lg:block xl:right-[10%]"
+      >
+        <div
+          className="absolute inset-0 animate-orbit-slow rounded-full opacity-[calc(0.4*var(--fx))] blur-[2px]"
+          style={{
+            background:
+              'conic-gradient(from 0deg, transparent 0deg, rgb(var(--accent-rgb) / 0.55) 40deg, transparent 120deg, rgb(var(--accent-2-rgb) / 0.4) 220deg, transparent 300deg)',
+            maskImage:
+              'radial-gradient(circle, transparent 61%, #000 62%, #000 66%, transparent 67%)',
+            WebkitMaskImage:
+              'radial-gradient(circle, transparent 61%, #000 62%, #000 66%, transparent 67%)',
+          }}
+        />
+        <div className="absolute inset-[9%] rounded-full border border-white/8" />
+        <div
+          className="absolute inset-[16%] animate-orbit-rev rounded-full border border-dashed border-accent/25"
+        />
+      </motion.div>
 
-          {/* Top group: status badge + name */}
-          <div className="sm:block">
-            {/* Status Badge */}
+      {/* ---------------------------------------------- content */}
+      <div className="shell relative z-10 flex-1">
+        <div className="relative grid items-center gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-6">
+          {/* --- type stack --- */}
+          <div className="relative z-10 order-1 lg:order-1">
+            {/* availability chip */}
             <motion.div
-              initial={{ opacity: 0, y: 40 }}
+              initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.55, delay: 1.0, ease: [0.25, 0.1, 0.25, 1] }}
+              transition={{ delay: 0.15, duration: 0.6 }}
+              className="inline-flex items-center gap-2.5 border border-accent/35 bg-accent/8 px-3 py-1.5 notch-br"
+              style={{ ['--notch' as string]: '9px' }}
             >
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/10 border border-accent mb-6">
-                <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75" />
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-accent" />
-                </span>
-                <span className="text-sm font-medium text-foreground">
-                  {basics.availability}
-                </span>
-              </div>
+              <span className="relative flex h-1.5 w-1.5">
+                <span className="absolute inline-flex h-full w-full rounded-full bg-accent animate-pulse-ring" />
+                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-accent" />
+              </span>
+              <span className="hud text-accent">{basics.availability}</span>
             </motion.div>
 
-            {/* Name */}
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
+            {/* name */}
+            <motion.h1
+              initial={{ opacity: 0, y: 26 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.55, delay: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
+              transition={{ delay: 0.24, duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
+              className="mt-6 font-display text-[clamp(2.9rem,9.5vw,7.2rem)] font-extrabold leading-[0.86] tracking-tightest"
             >
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-display font-bold tracking-tight mb-4">
-                <span className="block text-foreground">Hi, I&apos;m</span>
-                <span className="text-gradient">{basics.name}</span>
-              </h1>
-            </motion.div>
-          </div>
+              <span className="block">{FIRST.toUpperCase()}</span>
+              <span className="stroke-text block whitespace-nowrap animate-flicker">
+                {SURNAME.toUpperCase()}
+              </span>
+            </motion.h1>
 
-          {/* Bottom group: headline → socials (anchored to bottom on mobile) */}
-          <div className="pb-6 sm:pb-0">
+            {/* role roller */}
             <motion.div
-              initial={{ opacity: 0, y: 40 }}
+              initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.55, delay: 1.1, ease: [0.25, 0.1, 0.25, 1] }}
+              transition={{ delay: 0.4, duration: 0.6 }}
+              className="mt-6 flex items-center gap-3 font-mono text-sm tracking-tight sm:text-base"
             >
-              <p className="text-xl sm:text-2xl lg:text-3xl text-foreground font-light mb-6">
-                {basics.headline}
-              </p>
-            </motion.div>
-
-            {/* Tagline */}
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.55, delay: 1.2, ease: [0.25, 0.1, 0.25, 1] }}
-            >
-              <p className="text-lg text-muted-foreground/80 max-w-xl mx-auto lg:ml-auto lg:mr-0 mb-8 flex items-center justify-center lg:justify-end gap-2">
-                <Sparkles size={18} className="text-accent" />
-                {basics.tagline}
-              </p>
+              <span className="text-ink-faint">{'{'}</span>
+              <RoleRoller roles={basics.roles} />
+              <span className="text-ink-faint">{'}'}</span>
             </motion.div>
 
-            {/* Location */}
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
+            <motion.p
+              initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.55, delay: 1.25, ease: [0.25, 0.1, 0.25, 1] }}
+              transition={{ delay: 0.48, duration: 0.6 }}
+              className="mt-5 max-w-md text-[0.98rem] leading-relaxed text-ink-dim"
             >
-              <p className="flex items-center justify-center lg:justify-end gap-2 text-foreground mb-8">
-                <MapPin size={16} className="text-accent" />
-                {basics.location.city}, {basics.location.state}, {basics.location.country}
-              </p>
+              {basics.tagline}. Building things that sit at the seam of
+              interface, intelligence and hardware — from Chennai, for anywhere.
+            </motion.p>
+
+            {/* actions */}
+            <motion.div
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.56, duration: 0.6 }}
+              className="mt-9 flex flex-wrap items-center gap-3"
+            >
+              <NeonButton href="/#work" icon={<ArrowUpRight size={15} />}>
+                See the work
+              </NeonButton>
+              <NeonButton
+                href={basics.resumeUrl}
+                external
+                variant="ghost"
+                icon={<ArrowUpRight size={15} />}
+              >
+                Résumé
+              </NeonButton>
             </motion.div>
 
-            {/* CTA Buttons */}
+            {/* meta strip */}
             <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.55, delay: 1.3, ease: [0.25, 0.1, 0.25, 1] }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.7, duration: 0.6 }}
+              className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-white/8 pt-5"
             >
-              <div className="flex flex-wrap items-center justify-center lg:justify-end gap-4 mb-8">
-                <a
-                  href="#projects"
-                  className="group inline-flex items-center gap-2 px-6 py-3 bg-accent text-white font-medium rounded-xl hover:bg-accent-dark transition-all hover:shadow-lg hover:shadow-accent/25"
-                >
-                  My Work
-                  <ArrowDown size={18} className="group-hover:translate-y-1 transition-transform" />
-                </a>
-                <a
-                  href="#contact"
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-muted text-foreground font-medium rounded-xl hover:bg-muted/80 transition-all border border-border"
-                >
-                  Reach Out
-                </a>
-                <a
-                  href={basics.resumeUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-muted text-foreground font-medium rounded-xl hover:bg-muted/80 transition-all border border-border"
-                >
-                  Resume
-                </a>
-              </div>
-            </motion.div>
-
-            {/* Social Links */}
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.55, delay: 1.4, ease: [0.25, 0.1, 0.25, 1] }}
-            >
-              <div className="flex items-center justify-center lg:justify-end gap-3 mb-16 md:mb-0">
-                {socialLinks.slice(0, 4).map((social) => (
-                  <motion.a
-                    key={social.id}
-                    href={social.url}
+              <span className="hud flex items-center gap-2 text-ink-faint">
+                <MapPin size={12} className="text-accent" />
+                {basics.location.city}, {basics.location.state}
+              </span>
+              <span className="hud text-ink-faint">
+                B.Tech CSE<span className="text-accent"> · </span>AI
+              </span>
+              <div className="flex items-center gap-1">
+                {socialLinks.map((s) => (
+                  <a
+                    key={s.id}
+                    href={s.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    whileHover={{ scale: 1.1, y: -2 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="p-3 rounded-xl bg-accent/10 text-foreground hover:bg-accent hover:text-white transition-colors"
-                    aria-label={social.name}
+                    aria-label={s.name}
+                    className="grid h-8 w-8 place-items-center text-ink-faint transition-all duration-300 hover:-translate-y-0.5 hover:text-accent"
                   >
-                    {socialIcons[social.icon] || <Github size={20} />}
-                  </motion.a>
+                    {SOCIAL_ICON[s.icon] ?? null}
+                  </a>
                 ))}
               </div>
             </motion.div>
-          </div>{/* end bottom group */}
-        </div>{/* end content wrapper */}
+          </div>
 
-        {/* Scroll indicator */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1 }}
-          className="absolute bottom-4 md:bottom-8 left-1/2 -translate-x-1/2"
-        >
+          {/* --- portrait --- */}
           <motion.div
-            animate={{ y: [0, 10, 0] }}
-            transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-            className="flex flex-col items-center gap-2 text-muted-foreground"
+            initial={{ opacity: 0, scale: 0.94, y: 24 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ delay: 0.3, duration: 0.95, ease: [0.22, 1, 0.36, 1] }}
+            className="pointer-events-none absolute inset-x-0 bottom-0 z-0 order-2 mx-auto w-[88%] max-w-sm lg:pointer-events-auto lg:relative lg:inset-auto lg:mx-0 lg:w-auto lg:max-w-none"
           >
-            <span className="text-xs uppercase tracking-widest text-foreground">Scroll</span>
-            <ArrowDown size={16} className="text-foreground" />
+            <div className="portrait-ghost">
+              <Portrait src={basics.portrait} tilt={{ rx, ry }} />
+            </div>
+
+            {/* floating HUD chips */}
+            <HudChip
+              className="right-0 top-[6%] hidden sm:flex"
+              delay={0.9}
+              k="focus"
+              v="Design × AI"
+            />
+            <HudChip
+              className="-right-2 top-[46%] hidden sm:flex md:-right-8"
+              delay={1.05}
+              k="stack"
+              v="Next · Python"
+            />
+            <HudChip
+              className="bottom-[10%] -left-2 hidden md:flex md:-left-6"
+              delay={1.2}
+              k="status"
+              v="Final year"
+            />
           </motion.div>
-        </motion.div>
+        </div>
+      </div>
+
+      {/* ---------------------------------------------- bottom rail */}
+      <div className="relative z-10 mt-12">
+        <div className="border-y border-white/8 bg-black/25 py-3 backdrop-blur-sm">
+          <Ticker duration={44} fade>
+            {MARQUEE.map((item, i) => (
+              <span key={i} className="flex items-center">
+                <span className="hud px-6 text-ink-dim">{item}</span>
+                <span className="text-accent">✦</span>
+              </span>
+            ))}
+          </Ticker>
+        </div>
+
+        <a
+          href="#about"
+          className="group mx-auto flex w-fit items-center gap-2 py-5 text-ink-faint transition-colors hover:text-accent"
+        >
+          <span className="hud">Scroll</span>
+          <MoveDown
+            size={13}
+            className="transition-transform duration-500 group-hover:translate-y-1"
+          />
+        </a>
       </div>
     </section>
+  );
+}
+
+function HudChip({
+  k,
+  v,
+  className,
+  delay,
+}: {
+  k: string;
+  v: string;
+  className?: string;
+  delay: number;
+}) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ delay, duration: 0.5 }}
+      className={cn(
+        'glass notch-br absolute z-20 items-center gap-2 px-3 py-2',
+        className
+      )}
+      style={{ ['--notch' as string]: '8px' }}
+    >
+      <span className="hud text-ink-faint">{k}</span>
+      <span className="h-3 w-px bg-accent/50" />
+      <span className="hud text-ink">{v}</span>
+    </motion.div>
   );
 }
