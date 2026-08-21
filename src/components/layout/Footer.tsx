@@ -1,14 +1,21 @@
 'use client';
 
+import { useState } from 'react';
 import Link from 'next/link';
+import { AnimatePresence, motion } from 'framer-motion';
 import { ArrowUp } from 'lucide-react';
 import { FaGithub, FaInstagram, FaLinkedin, FaTelegram } from 'react-icons/fa6';
 import { FaDiscord } from 'react-icons/fa';
 import { SiGoogle } from 'react-icons/si';
 import portfolioData from '@/data/portfolio.json';
+import content from '@/data/content.json';
+import { Anagram } from '@/components/fx';
+import { fill } from '@/lib/utils';
 import { SECTIONS } from './Navigation';
 
 const { basics, socialLinks } = portfolioData;
+const { footer, brand } = content;
+const MARK = brand.footerMark;
 
 const SOCIAL_ICON: Record<string, React.ReactNode> = {
   github: <FaGithub size={16} />,
@@ -21,6 +28,7 @@ const SOCIAL_ICON: Record<string, React.ReactNode> = {
 
 export function Footer() {
   const year = new Date().getFullYear();
+  const [mark, setMark] = useState(0);
 
   return (
     <footer className="relative overflow-hidden border-t border-white/8 pt-16">
@@ -28,10 +36,11 @@ export function Footer() {
         {/* --------------------------------------------- columns */}
         <div className="grid gap-10 pb-14 md:grid-cols-[1.4fr_1fr_1fr]">
           <div>
-            <p className="eyebrow">Currently</p>
+            <p className="eyebrow">{footer.currentlyLabel}</p>
             <p className="mt-4 max-w-sm font-display text-xl font-bold leading-snug">
-              {basics.availability} — for internships, junior roles and
-              freelance builds.
+              {fill(footer.currentlyCopy, {
+                availability: basics.availability,
+              })}
             </p>
             <a
               href={`mailto:${basics.email}`}
@@ -41,8 +50,8 @@ export function Footer() {
             </a>
           </div>
 
-          <nav aria-label="Footer">
-            <p className="eyebrow">Sections</p>
+          <nav aria-label={content.nav.footerNavLabel}>
+            <p className="eyebrow">{footer.sectionsLabel}</p>
             <ul className="mt-4 grid grid-cols-2 gap-x-4 gap-y-2">
               {SECTIONS.map((s, i) => (
                 <li key={s.id}>
@@ -61,7 +70,7 @@ export function Footer() {
           </nav>
 
           <div>
-            <p className="eyebrow">Elsewhere</p>
+            <p className="eyebrow">{footer.elsewhereLabel}</p>
             <ul className="mt-4 space-y-2">
               {socialLinks.map((s) => (
                 <li key={s.id}>
@@ -76,7 +85,8 @@ export function Footer() {
                     </span>
                     {s.name}
                     <span className="hud ml-auto text-ink-faint">
-                      @{s.username}
+                      {footer.usernamePrefix}
+                      {s.username}
                     </span>
                   </a>
                 </li>
@@ -86,64 +96,58 @@ export function Footer() {
         </div>
 
         {/* --------------------------------------------- wordmark
-            Hovering swaps the display name for the handle — the same seven
-            letters, rearranged. Drawn as SVG with an explicit textLength so it
-            fits the column exactly at every viewport width. */}
-        <div className="group relative select-none">
-          <svg
-            viewBox="0 0 1000 150"
-            className="w-full"
-            role="img"
-            aria-label="Krishna — also known as Arkhins"
-          >
-            <text
-              x="500"
-              y="122"
-              textAnchor="middle"
-              textLength="990"
-              lengthAdjust="spacingAndGlyphs"
-              fontSize="150"
-              fontWeight="800"
-              className="font-display transition-opacity duration-500 ease-swift group-hover:opacity-0"
-              fill="rgba(255,255,255,0.07)"
-            >
-              KRISHNA
-            </text>
-            <text
-              x="500"
-              y="122"
-              textAnchor="middle"
-              textLength="990"
-              lengthAdjust="spacingAndGlyphs"
-              fontSize="150"
-              fontWeight="800"
-              className="font-display opacity-0 transition-opacity duration-500 ease-swift group-hover:opacity-100"
-              fill="none"
-              stroke="rgb(var(--accent-rgb) / 0.6)"
-              strokeWidth="1.5"
-            >
-              ARKHINS
-            </text>
-          </svg>
-          <p className="hud -mt-1 text-center text-ink-faint opacity-0 transition-opacity duration-500 group-hover:opacity-100">
-            same seven letters
-          </p>
+            The two words are rearrangements of one another, cycling on the same
+            beat as the intro. `fit` sizes it to the column, so it never
+            overruns the shell however wide the viewport gets. */}
+        <div className="relative select-none">
+          <Anagram
+            words={MARK.words}
+            hold={3000}
+            fit
+            label={MARK.ariaLabel}
+            letterClass={(i) =>
+              i === 0
+                ? 'font-display font-extrabold leading-[0.82] tracking-tightest text-white/[0.07]'
+                : 'stroke-text font-display font-extrabold leading-[0.82] tracking-tightest opacity-[0.28]'
+            }
+            onChange={({ index }) => setMark(index)}
+          />
+
+          <div className="relative mt-1 h-4 overflow-hidden">
+            <AnimatePresence mode="wait">
+              <motion.p
+                key={mark}
+                initial={{ y: 14, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                exit={{ y: -14, opacity: 0 }}
+                transition={{ duration: 0.3 }}
+                className="eyebrow text-center"
+              >
+                {MARK.captions[mark] ?? MARK.captions[0]}
+              </motion.p>
+            </AnimatePresence>
+          </div>
         </div>
 
         {/* --------------------------------------------- bottom bar */}
         <div className="mt-8 flex flex-col-reverse items-center justify-between gap-4 border-t border-white/8 py-6 sm:flex-row">
           <p className="hud text-ink-faint">
-            © {year} {basics.name} · arkhins.com
+            {fill(footer.copyright, {
+              year,
+              name: basics.name,
+              domain: brand.domain,
+            })}
           </p>
 
           <div className="flex items-center gap-5">
             <p className="hud text-ink-faint">
-              Built with Next.js<span className="text-accent"> · </span>
-              hand-rolled CSS
+              {footer.colophon}
+              <span className="text-accent"> · </span>
+              {footer.colophonDetail}
             </p>
             <Link
-              href="/#home"
-              aria-label="Back to top"
+              href={`/#${SECTIONS[0].id}`}
+              aria-label={footer.backToTop}
               className="group flex h-9 w-9 items-center justify-center border border-white/12 transition-colors hover:border-accent hover:text-accent"
             >
               <ArrowUp

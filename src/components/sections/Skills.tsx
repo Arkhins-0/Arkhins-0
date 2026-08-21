@@ -4,8 +4,11 @@ import { useState } from 'react';
 import Image from 'next/image';
 import { AnimatePresence, motion } from 'framer-motion';
 import portfolioData from '@/data/portfolio.json';
+import content from '@/data/content.json';
 import { Panel, Reveal, SectionHead, Ticker } from '@/components/fx';
-import { cn } from '@/lib/utils';
+import { cn, fill } from '@/lib/utils';
+
+const COPY = content.stack;
 
 const { categories, techStack } = portfolioData.skills as unknown as {
   categories: {
@@ -51,7 +54,7 @@ function Meter({ level, icon, name }: { level: number; icon: string; name: strin
       </svg>
       <span className="absolute inset-[26%]">
         <Image
-          src={`/images/skills/${icon}.png`}
+          src={fill(COPY.iconPathTemplate, { icon })}
           alt={name}
           fill
           sizes="34px"
@@ -69,12 +72,7 @@ export function Skills() {
   return (
     <section id="stack" className="band">
       <div className="shell">
-        <SectionHead
-          index="05"
-          label="Toolkit"
-          title="What I build"
-          accentWord="with"
-        />
+        <SectionHead {...COPY.head} />
 
         <div className="mt-14 grid gap-10 lg:grid-cols-[minmax(0,22rem)_1fr] lg:gap-16">
           {/* -------------------------------------------- category list */}
@@ -159,7 +157,8 @@ export function Skills() {
                             {s.name}
                           </p>
                           <p className="hud mt-1 text-ink-faint">
-                            <span className="text-accent">{s.level}</span> / 100
+                            <span className="text-accent">{s.level}</span>{' '}
+                            {COPY.levelSuffix}
                           </p>
                         </div>
                       </div>

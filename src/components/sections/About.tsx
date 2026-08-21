@@ -4,20 +4,16 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import portfolioData from '@/data/portfolio.json';
+import content from '@/data/content.json';
 import { Panel, Reveal, SectionHead, Stack, stackChild } from '@/components/fx';
-import { cn } from '@/lib/utils';
+import { cn, fill } from '@/lib/utils';
 
 const { basics, education, languages, interests } = portfolioData;
+const COPY = content.about;
 
-/* Phrases lifted out of the bio and set in accent — the paragraph reads as
-   edited copy rather than a dumped JSON string. */
-const HIGHLIGHTS = [
-  'IoT Automation',
-  'Generative AI',
-  'Web Development',
-  'user interfaces',
-  'real-world problems',
-];
+/* Phrases the content file marks for emphasis, so the bio reads as edited copy
+   rather than a dumped data string. */
+const HIGHLIGHTS = COPY.highlights;
 
 function markUp(text: string) {
   const pattern = new RegExp(`(${HIGHLIGHTS.join('|')})`, 'gi');
@@ -69,7 +65,7 @@ function IstClock() {
   useEffect(() => {
     const fmt = () =>
       new Intl.DateTimeFormat('en-GB', {
-        timeZone: 'Asia/Kolkata',
+        timeZone: COPY.idCard.timezone,
         hour: '2-digit',
         minute: '2-digit',
         second: '2-digit',
@@ -80,7 +76,9 @@ function IstClock() {
     return () => clearInterval(t);
   }, []);
   return (
-    <span className="tabular-nums text-ink">{time ?? '--:--:--'}</span>
+    <span className="tabular-nums text-ink">
+      {time ?? COPY.idCard.timePlaceholder}
+    </span>
   );
 }
 
@@ -110,12 +108,7 @@ export function About() {
   return (
     <section id="about" className="band">
       <div className="shell">
-        <SectionHead
-          index="02"
-          label="Dossier"
-          title="The human"
-          accentWord="behind it"
-        />
+        <SectionHead {...COPY.head} />
 
         <div className="mt-14 grid gap-10 lg:grid-cols-[20rem_1fr] lg:gap-16">
           {/* ------------------------------------------------ ID card */}
@@ -123,7 +116,11 @@ export function About() {
             <Panel hot cut={22} spotlight className="w-full">
               <div className="p-5">
                 <div className="flex items-center justify-between">
-                  <span className="hud text-accent">ID / 2026</span>
+                  <span className="hud text-accent">
+                    {fill(COPY.idCard.badge, {
+                      year: new Date().getFullYear(),
+                    })}
+                  </span>
                   <span className="hazard h-3 w-12 opacity-70" />
                 </div>
 
@@ -158,19 +155,21 @@ export function About() {
 
                 <dl className="mt-5 space-y-2 border-t border-white/8 pt-4 font-mono text-[0.7rem]">
                   <div className="flex justify-between">
-                    <dt className="text-ink-faint">LOCAL TIME</dt>
+                    <dt className="text-ink-faint">{COPY.idCard.localTime}</dt>
                     <dd>
                       <IstClock />
-                      <span className="ml-1 text-ink-faint">IST</span>
+                      <span className="ml-1 text-ink-faint">
+                        {COPY.idCard.timezoneLabel}
+                      </span>
                     </dd>
                   </div>
                   <div className="flex justify-between">
-                    <dt className="text-ink-faint">BASE</dt>
+                    <dt className="text-ink-faint">{COPY.idCard.base}</dt>
                     <dd className="text-ink">{basics.location.city}</dd>
                   </div>
                   <div className="flex justify-between">
-                    <dt className="text-ink-faint">STATUS</dt>
-                    <dd className="text-accent">Open</dd>
+                    <dt className="text-ink-faint">{COPY.idCard.status}</dt>
+                    <dd className="text-accent">{COPY.idCard.statusValue}</dd>
                   </div>
                 </dl>
 
@@ -200,7 +199,7 @@ export function About() {
             </Reveal>
 
             <Stack className="mt-12">
-              <SpecRow k="Education" index={1}>
+              <SpecRow k={COPY.specRows.education} index={1}>
                 <ul className="space-y-4">
                   {education.map((e) => (
                     <li key={e.id} className="flex items-start gap-3">
@@ -229,7 +228,7 @@ export function About() {
                 </ul>
               </SpecRow>
 
-              <SpecRow k="Languages" index={2}>
+              <SpecRow k={COPY.specRows.languages} index={2}>
                 <ul className="grid gap-3 sm:grid-cols-2">
                   {languages.map((l) => (
                     <li key={l.id} className="flex items-center justify-between gap-3">
@@ -245,7 +244,7 @@ export function About() {
                 </ul>
               </SpecRow>
 
-              <SpecRow k="Contact" index={3}>
+              <SpecRow k={COPY.specRows.contact} index={3}>
                 <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm">
                   <a
                     href={`mailto:${basics.email}`}
@@ -263,7 +262,7 @@ export function About() {
 
             {/* ------------------------------------------ interest field */}
             <Reveal delay={0.1} className="mt-12">
-              <p className="eyebrow mb-5">Orbiting interests</p>
+              <p className="eyebrow mb-5">{COPY.interestsLabel}</p>
               <ul className="flex flex-wrap gap-2">
                 {interests.map((it, i) => (
                   <li key={it.id}>

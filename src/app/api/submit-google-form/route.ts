@@ -1,43 +1,53 @@
 import { NextResponse } from 'next/server';
+import content from '@/data/content.json';
 
-// Server-side API route that forwards form data to a Google Form
+const ENTRY = content.contact.formEntries;
+
+/**
+ * Relays a contact submission to the form endpoint configured in the
+ * environment. Field ids come from the content file, so the client form and
+ * this route can never drift apart.
+ */
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-
-    // Expect these fields from the client
     const { name, email, subject, message } = body || {};
 
     const formUrl = process.env.GOOGLE_FORM_ACTION;
     if (!formUrl) {
-      return NextResponse.json({ success: false, error: 'GOOGLE_FORM_ACTION not configured' }, { status: 500 });
+      return NextResponse.json(
+        { success: false, error: 'GOOGLE_FORM_ACTION not configured' },
+        { status: 500 }
+      );
     }
 
     const params = new URLSearchParams();
-    // Map your form fields to Google Form entry IDs
-    params.append('entry.1444212408', name || '');
-    params.append('entry.12430413', email || '');
-    params.append('entry.1777991339', subject || '');
-    params.append('entry.445717152', message || '');
+    params.append(ENTRY.name, name || '');
+    params.append(ENTRY.email, email || '');
+    params.append(ENTRY.subject, subject || '');
+    params.append(ENTRY.message, message || '');
 
-    // Post to Google Forms endpoint
     const resp = await fetch(formUrl, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: params.toString(),
-      // Google may redirect; do not follow automatically so we can inspect status
-      redirect: 'manual' as RequestRedirect
+      // The endpoint answers with a redirect; do not follow it so the status
+      // stays inspectable.
+      redirect: 'manual' as RequestRedirect,
     });
 
-    // Treat 200 and 302 (redirect) as success
     if (resp.ok || resp.status === 302) {
       return NextResponse.json({ success: true });
     }
 
-    return NextResponse.json({ success: false, status: resp.status }, { status: 502 });
+    return NextResponse.json(
+      { success: false, status: resp.status },
+      { status: 502 }
+    );
   } catch (err) {
-    return NextResponse.json({ success: false, error: String(err) }, { status: 500 });
+    return NextResponse.json(
+      { success: false, error: String(err) },
+      { status: 500 }
+    );
   }
 }

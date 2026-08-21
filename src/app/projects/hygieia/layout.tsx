@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default function HygieiaLayout({
+export default function ProjectLayout({
   children,
 }: {
   children: React.ReactNode;

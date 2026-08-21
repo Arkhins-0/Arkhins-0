@@ -365,15 +365,6 @@ video {
   }
 }
 
-@keyframes sweep-y {
-  0% {
-    transform: translateY(-120%);
-  }
-  100% {
-    transform: translateY(520%);
-  }
-}
-
 @keyframes rail-run {
   0% {
     background-position: 0% 0;
@@ -521,7 +512,7 @@ video {
    consuming a whole screen above it. */
 @media (max-width: 1023px) {
   .portrait-ghost {
-    opacity: 0.3;
+    opacity: 0.42;
     -webkit-mask-image: linear-gradient(to top, transparent 3%, #000 30%);
     mask-image: linear-gradient(to top, transparent 3%, #000 30%);
   }

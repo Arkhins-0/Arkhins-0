@@ -3,14 +3,16 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowUpRight, Github } from 'lucide-react';
 import portfolioData from '@/data/portfolio.json';
+import content from '@/data/content.json';
 import { ProjectBar } from '@/components/layout/ProjectBar';
 import { Footer } from '@/components/layout';
 import { Panel, Reveal } from '@/components/fx';
 
+const COPY = content.projectsIndex;
+
 export const metadata: Metadata = {
-  title: 'Work',
-  description:
-    'Case studies and shipped projects by Krishna Vijay G — AI/ML, full-stack and interface design.',
+  title: COPY.metaTitle,
+  description: COPY.metaDescription,
 };
 
 type Project = (typeof portfolioData.projects)[number] & {
@@ -26,7 +28,12 @@ const PROJECTS = portfolioData.projects.filter(
 export default function ProjectsIndex() {
   return (
     <>
-      <ProjectBar name="All projects" kind="archive" backHref="/" backLabel="Home" />
+      <ProjectBar
+        name={COPY.barName}
+        kind={COPY.barKind}
+        backHref={COPY.barBackHref}
+        backLabel={COPY.barBackLabel}
+      />
 
       <main>
         <section className="pb-16 pt-32 md:pt-40">
@@ -37,24 +44,22 @@ export default function ProjectsIndex() {
                   {String(PROJECTS.length).padStart(2, '0')}
                 </span>
                 <span className="hazard h-3 w-10 opacity-70" />
-                <span className="eyebrow">Archive</span>
+                <span className="eyebrow">{COPY.eyebrow}</span>
                 <span className="neon-line h-px flex-1 opacity-60" />
               </div>
             </Reveal>
 
             <Reveal delay={0.06}>
               <h1 className="mt-6 font-display text-[clamp(2.6rem,8vw,6rem)] font-extrabold leading-[0.88] tracking-tightest">
-                Selected
+                {COPY.title}
                 <br />
-                <span className="stroke-text">work</span>
+                <span className="stroke-text">{COPY.accentWord}</span>
               </h1>
             </Reveal>
 
             <Reveal delay={0.14}>
               <p className="mt-6 max-w-xl leading-relaxed text-ink-dim">
-                Everything below shipped, broke, or taught me something. Case
-                studies get their own page; the rest link straight to the live
-                build or the repo.
+                {COPY.lede}
               </p>
             </Reveal>
           </div>
@@ -97,7 +102,7 @@ export default function ProjectsIndex() {
                           <div className="absolute inset-0 bg-gradient-to-t from-bg/85 via-bg/10 to-transparent" />
                           {internal && (
                             <span className="hud absolute left-4 top-4 border border-accent/50 bg-black/50 px-2 py-1 text-accent backdrop-blur-sm">
-                              Case study
+                              {COPY.caseStudyBadge}
                             </span>
                           )}
                         </div>
@@ -144,7 +149,7 @@ export default function ProjectsIndex() {
 
             <Reveal className="mt-12 flex flex-wrap items-center justify-between gap-5 border-t border-white/8 pt-8">
               <p className="text-sm text-ink-dim">
-                More half-finished ideas live on GitHub.
+                {COPY.outroCopy}
               </p>
               <a
                 href={
@@ -155,7 +160,7 @@ export default function ProjectsIndex() {
                 className="group hud inline-flex items-center gap-2 text-ink-faint transition-colors hover:text-accent"
               >
                 <Github size={14} />
-                Browse the repos
+                {COPY.outroAction}
                 <ArrowUpRight
                   size={13}
                   className="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"

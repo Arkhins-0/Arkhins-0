@@ -19,8 +19,9 @@ npm run build    # production build
 
 ## Add your portrait
 
-The hero composites a **transparent cut-out PNG** of you — rim glow, duotone echo
-and a scan sweep are all masked from that same file.
+The hero composites a **transparent cut-out PNG** of you — the rim glow and the
+duotone echo behind you are both masked from that same file, and the bottom
+dissolves into a gradient so the crop never reads as a hard cut.
 
 ```
 public/images/hero/portrait.png
@@ -59,11 +60,45 @@ src/
     sections/                     Hero, About, Projects, Experience,
                                   Skills, Certifications, Beyond, Contact
   context/UIContext.tsx           accent palette + effects toggle
-  data/portfolio.json             all site content
+  data/portfolio.json             who you are: bio, roles, projects, skills…
+  data/content.json               every word the interface says
 public/
   projects/<slug>/                per-project assets, co-located
   images/                         shared assets (skills, certs, logos, hero)
 ```
+
+### Where copy lives
+
+No component contains a rendered string. Two files hold everything:
+
+- **`src/data/portfolio.json`** — your data. Bio, education, experience,
+  projects, skills, certifications, links, plus `meta` (title, description,
+  `siteUrl`, OG image).
+- **`src/data/content.json`** — the interface's own words. Section headings,
+  button labels, aria-labels, form fields and placeholders, status messages,
+  the accent palette, storage keys, and the glyph alphabets the scramble
+  effects churn through.
+
+A project page keeps its own copy beside it: `src/app/projects/<slug>/<slug>.json`
+holds that project's `sections` (headings) and `labels` alongside its data.
+
+Strings that need a value spliced in use `{token}` placeholders resolved by
+`fill()` in `src/lib/utils.ts` — for example
+`"homeAria": "{name} — home"`. To reword anything on the site, edit JSON; you
+should never need to open a `.tsx` file.
+
+The contact form's upstream field ids live in `content.contact.formEntries` and
+are read by both the client form and the API route, so the two cannot drift.
+
+### Long-form write-ups
+
+A project with a `markdownFile` gets a **Case notes** action on its card, which
+opens a slide-over reader. The file is fetched on open rather than bundled, so
+the notes cost nothing until someone asks for them. Images inside the markdown
+may use paths relative to `public/` — the reader rewrites them to root-absolute.
+
+Use `markdownFile` for a quick write-up and `pageUrl` for a full designed case
+study; a project can have both.
 
 ### Adding a project
 
@@ -129,8 +164,8 @@ Submissions relay to a Google Form. Two paths, picked automatically:
 - A direct browser POST into a hidden iframe when `NEXT_PUBLIC_GOOGLE_FORM_DIRECT=true`,
   for static hosting.
 
-Entry IDs live in both `src/app/api/submit-google-form/route.ts` and
-`src/components/sections/Contact.tsx` — keep them in sync.
+Field ids live once, in `contact.formEntries` in `src/data/content.json`; the
+client form and the API route both read them.
 
 `.env`:
 

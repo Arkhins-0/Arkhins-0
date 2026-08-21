@@ -4,32 +4,23 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Sparkles, Zap, ZapOff } from 'lucide-react';
-import { ACCENTS, ACCENT_SWATCH, useUI } from '@/context/UIContext';
+import { ACCENTS, useUI } from '@/context/UIContext';
 import { NeonButton } from '@/components/fx';
-import { cn } from '@/lib/utils';
+import { cn, fill, getInitials } from '@/lib/utils';
 import portfolioData from '@/data/portfolio.json';
+import content from '@/data/content.json';
 
-export const SECTIONS = [
-  { id: 'home', label: 'Index' },
-  { id: 'about', label: 'About' },
-  { id: 'work', label: 'Work' },
-  { id: 'path', label: 'Path' },
-  { id: 'stack', label: 'Stack' },
-  { id: 'proof', label: 'Proof' },
-  { id: 'beyond', label: 'Beyond' },
-  { id: 'contact', label: 'Contact' },
-] as const;
+const { basics } = portfolioData;
+const { nav, brand, theme } = content;
 
-const FIRST = portfolioData.basics.name.split(' ')[0];
-const MONOGRAM = portfolioData.basics.name
-  .split(' ')
-  .map((w) => w[0])
-  .join('')
-  .slice(0, 2);
+export const SECTIONS = nav.sections;
+
+const FIRST = basics.name.split(' ')[0];
+const MONOGRAM = getInitials(basics.name, brand.monogramLength);
 
 /** Watches every section and reports whichever owns the upper third. */
 function useActiveSection() {
-  const [active, setActive] = useState<string>('home');
+  const [active, setActive] = useState<string>(SECTIONS[0].id);
 
   useEffect(() => {
     const nodes = SECTIONS.map((s) => document.getElementById(s.id)).filter(
@@ -58,21 +49,24 @@ function Controls({ compact = false }: { compact?: boolean }) {
   const { accent, setAccent, fx, toggleFx } = useUI();
   return (
     <div className={cn('flex items-center', compact ? 'gap-4' : 'gap-3')}>
-      <div className="flex items-center gap-1.5" role="group" aria-label="Accent colour">
+      <div
+        className="flex items-center gap-1.5"
+        role="group"
+        aria-label={theme.accentGroupLabel}
+      >
         {ACCENTS.map((a) => (
           <button
-            key={a}
-            onClick={() => setAccent(a)}
-            aria-label={`${a} accent`}
-            aria-pressed={accent === a}
+            key={a.id}
+            onClick={() => setAccent(a.id)}
+            aria-label={fill(theme.accentOptionLabel, { label: a.label })}
+            aria-pressed={accent === a.id}
             className={cn(
               'h-2.5 w-2.5 rotate-45 transition-all duration-300',
-              accent === a ? 'scale-[1.7]' : 'opacity-45 hover:opacity-90'
+              accent === a.id ? 'scale-[1.7]' : 'opacity-45 hover:opacity-90'
             )}
             style={{
-              background: ACCENT_SWATCH[a],
-              boxShadow:
-                accent === a ? `0 0 12px ${ACCENT_SWATCH[a]}` : undefined,
+              background: a.swatch,
+              boxShadow: accent === a.id ? `0 0 12px ${a.swatch}` : undefined,
             }}
           />
         ))}
@@ -80,8 +74,8 @@ function Controls({ compact = false }: { compact?: boolean }) {
       <span className="h-4 w-px bg-white/12" />
       <button
         onClick={toggleFx}
-        aria-label={fx ? 'Reduce motion and effects' : 'Enable effects'}
-        title={fx ? 'Effects: on' : 'Effects: off'}
+        aria-label={fx ? theme.effectsDisableLabel : theme.effectsEnableLabel}
+        title={fx ? theme.effectsOn : theme.effectsOff}
         className="text-ink-faint transition-colors hover:text-accent"
       >
         {fx ? <Zap size={15} /> : <ZapOff size={15} />}
@@ -111,7 +105,6 @@ export function Navigation() {
 
   return (
     <>
-      {/* ------------------------------------------------ top bar */}
       {/* While the sheet is open the header has to outrank it, otherwise the
           close button is buried and the menu can only be dismissed by
           navigating. */}
@@ -132,9 +125,9 @@ export function Navigation() {
         >
           {/* wordmark */}
           <Link
-            href="/#home"
+            href={`/#${SECTIONS[0].id}`}
             className="group flex items-center gap-3"
-            aria-label={`${portfolioData.basics.name} — home`}
+            aria-label={fill(nav.homeAria, { name: basics.name })}
           >
             <span
               className="neon-fill notch-br grid h-9 w-9 place-items-center font-display text-sm font-extrabold"
@@ -144,7 +137,7 @@ export function Navigation() {
             </span>
             <span className="hidden font-display text-base font-bold tracking-tight sm:block">
               {FIRST}
-              <span className="neon-text">.</span>
+              <span className="neon-text">{brand.wordmarkSuffix}</span>
             </span>
           </Link>
 
@@ -189,20 +182,20 @@ export function Navigation() {
             </div>
             <div className="hidden lg:block">
               <NeonButton
-                href="/#contact"
+                href={`/#${SECTIONS[SECTIONS.length - 1].id}`}
                 variant="ghost"
                 className="!px-4 !py-2.5"
                 magnetic={false}
                 icon={<Sparkles size={13} />}
               >
-                Hire me
+                {nav.cta}
               </NeonButton>
             </div>
 
             {/* burger */}
             <button
               onClick={() => setOpen((v) => !v)}
-              aria-label={open ? 'Close menu' : 'Open menu'}
+              aria-label={open ? nav.closeMenu : nav.openMenu}
               aria-expanded={open}
               className="relative flex h-9 w-9 flex-col items-center justify-center gap-[5px] lg:hidden"
             >
@@ -300,10 +293,10 @@ export function Navigation() {
             >
               <Controls compact />
               <a
-                href={`mailto:${portfolioData.basics.email}`}
+                href={`mailto:${basics.email}`}
                 className="hud text-accent underline underline-offset-4"
               >
-                Say hello
+                {nav.menuAction}
               </a>
             </motion.div>
           </motion.div>

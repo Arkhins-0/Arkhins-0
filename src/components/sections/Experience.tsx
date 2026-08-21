@@ -5,9 +5,11 @@ import Image from 'next/image';
 import { motion, useScroll, useSpring } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
 import portfolioData from '@/data/portfolio.json';
+import content from '@/data/content.json';
 import { Panel, Reveal, SectionHead } from '@/components/fx';
 import { cn } from '@/lib/utils';
 
+const COPY = content.path;
 const ROLES = portfolioData.experience.filter(
   (e) => !e.id.includes('placeholder')
 );
@@ -68,7 +70,7 @@ function Entry({ role, n }: { role: (typeof ROLES)[number]; n: number }) {
                 </h3>
                 {role.current && (
                   <span className="hud border border-accent/45 px-1.5 py-0.5 text-accent">
-                    Now
+                    {COPY.currentLabel}
                   </span>
                 )}
               </div>
@@ -137,13 +139,7 @@ export function Experience() {
   return (
     <section id="path" className="band">
       <div className="shell">
-        <SectionHead
-          index="04"
-          label="Trajectory"
-          title="Where I've"
-          accentWord="plugged in"
-          lede="Internships, a student developer community, and the habit of volunteering for the job nobody has done yet."
-        />
+        <SectionHead {...COPY.head} />
 
         <div ref={track} className="relative mt-14">
           {/* rail: dim base + scroll-linked neon fill */}

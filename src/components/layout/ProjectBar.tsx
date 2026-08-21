@@ -4,14 +4,17 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { ArrowLeft } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import content from '@/data/content.json';
 
-/** Slim chrome for a case-study page: back to the index, project name, scroll
- *  state. Deliberately lighter than the site nav so the case study leads. */
+const COPY = content.projectPage;
+
+/** Slim chrome for a project page: back to the index, project name, scroll
+ *  state. Deliberately lighter than the site nav so the work leads. */
 export function ProjectBar({
   name,
-  kind = 'case study',
-  backHref = '/#work',
-  backLabel = 'All work',
+  kind = COPY.kindLabel,
+  backHref = COPY.backHref,
+  backLabel = COPY.backLabel,
 }: {
   name: string;
   kind?: string;

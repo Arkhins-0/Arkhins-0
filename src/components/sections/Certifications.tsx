@@ -4,7 +4,11 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { ExternalLink, ShieldCheck } from 'lucide-react';
 import portfolioData from '@/data/portfolio.json';
+import content from '@/data/content.json';
+import { fill } from '@/lib/utils';
 import { Panel, SectionHead, Stack, stackChild } from '@/components/fx';
+
+const COPY = content.proof;
 
 const CERTS = portfolioData.certifications.filter(
   (c) => !c.id.includes('placeholder')
@@ -35,7 +39,7 @@ function Stub({ cert }: { cert: (typeof CERTS)[number] }) {
           className="hud whitespace-nowrap text-ink-faint"
           style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
         >
-          {verified ? 'Verified' : 'On file'} · {year}
+          {verified ? COPY.verifiedLabel : COPY.unverifiedLabel} · {year}
         </span>
         <ShieldCheck
           size={14}
@@ -71,12 +75,12 @@ function Stub({ cert }: { cert: (typeof CERTS)[number] }) {
           <span className="hud text-ink-faint">{cert.date}</span>
           {verified ? (
             <span className="hud inline-flex items-center gap-1.5 text-accent transition-transform duration-300 group-hover/stub:translate-x-0.5">
-              Verify
+              {COPY.verifyAction}
               <ExternalLink size={11} />
             </span>
           ) : (
             <span className="hud text-ink-faint">
-              {cert.credentialId ?? '—'}
+              {cert.credentialId ?? COPY.emptyCredential}
             </span>
           )}
         </div>
@@ -93,7 +97,7 @@ function Stub({ cert }: { cert: (typeof CERTS)[number] }) {
             target="_blank"
             rel="noopener noreferrer"
             className="block h-full"
-            aria-label={`Verify ${cert.name}`}
+            aria-label={fill(COPY.verifyAria, { name: cert.name })}
           >
             {body}
           </a>
@@ -109,13 +113,7 @@ export function Certifications() {
   return (
     <section id="proof" className="band">
       <div className="shell">
-        <SectionHead
-          index="06"
-          label="Receipts"
-          title="Certified,"
-          accentWord="not claimed"
-          lede="Every badge below links out to its issuer where a public verification page exists."
-        />
+        <SectionHead {...COPY.head} />
 
         <Stack className="mt-14">
           <ul className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">

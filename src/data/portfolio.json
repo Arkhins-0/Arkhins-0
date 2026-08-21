@@ -10,7 +10,10 @@
       "ML",
       "UX"
     ],
-    "author": "Krishna Vijay G"
+    "author": "Krishna Vijay G",
+    "siteUrl": "https://arkhins.com",
+    "ogImage": "/images/OG.png",
+    "ogAlt": "Krishna Vijay G — portfolio"
   },
   "basics": {
     "name": "Krishna Vijay G",

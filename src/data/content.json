@@ -1,0 +1,344 @@
+{
+  "brand": {
+    "domain": "arkhins.com",
+    "monogramLength": 2,
+    "wordmarkSuffix": ".",
+    "footerMark": {
+      "words": [
+        "KRISHNA",
+        "ARKHINS"
+      ],
+      "captions": [
+        "Krishna Vijay G",
+        "arkhins.com"
+      ],
+      "ariaLabel": "Krishna — also known as Arkhins"
+    },
+    "boot": {
+      "words": [
+        "ARKHINS",
+        "KRISHNA"
+      ],
+      "captions": [
+        "arkhins.com",
+        "Krishna Vijay G"
+      ],
+      "ariaLabel": "Arkhins, an anagram of Krishna",
+      "readyLabel": "OK",
+      "waitingLabel": "···"
+    }
+  },
+  "fx": {
+    "scrambleGlyphs": "/\\<>()[]{}#*+=~^:;.,·ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",
+    "anagramNoiseGlyphs": "#@%&$*/\\<>[]{}=+~"
+  },
+  "theme": {
+    "accents": [
+      {
+        "id": "rose",
+        "swatch": "#ff2d6f",
+        "label": "Rose"
+      },
+      {
+        "id": "cyan",
+        "swatch": "#00f0ff",
+        "label": "Cyan"
+      },
+      {
+        "id": "lime",
+        "swatch": "#c6ff3d",
+        "label": "Lime"
+      },
+      {
+        "id": "violet",
+        "swatch": "#a855f7",
+        "label": "Violet"
+      }
+    ],
+    "accentGroupLabel": "Accent colour",
+    "accentOptionLabel": "{label} accent",
+    "effectsOn": "Effects: on",
+    "effectsOff": "Effects: off",
+    "effectsDisableLabel": "Reduce motion and effects",
+    "effectsEnableLabel": "Enable effects"
+  },
+  "nav": {
+    "sections": [
+      {
+        "id": "home",
+        "label": "Index"
+      },
+      {
+        "id": "about",
+        "label": "About"
+      },
+      {
+        "id": "work",
+        "label": "Work"
+      },
+      {
+        "id": "path",
+        "label": "Path"
+      },
+      {
+        "id": "stack",
+        "label": "Stack"
+      },
+      {
+        "id": "proof",
+        "label": "Proof"
+      },
+      {
+        "id": "beyond",
+        "label": "Beyond"
+      },
+      {
+        "id": "contact",
+        "label": "Contact"
+      }
+    ],
+    "homeAria": "{name} — home",
+    "cta": "Hire me",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "menuAction": "Say hello",
+    "footerNavLabel": "Footer"
+  },
+  "hero": {
+    "blurb": "{tagline}. Building things that sit at the seam of interface, intelligence and hardware — from {city}, for anywhere.",
+    "portraitAlt": "{name}, {headline}",
+    "primaryAction": "See the work",
+    "primaryHref": "/#work",
+    "secondaryAction": "Résumé",
+    "qualification": "B.Tech CSE",
+    "qualificationDetail": "AI",
+    "scrollLabel": "Scroll",
+    "scrollHref": "#about",
+    "chips": [
+      {
+        "key": "focus",
+        "value": "Design × AI"
+      },
+      {
+        "key": "stack",
+        "value": "Next · Python"
+      },
+      {
+        "key": "status",
+        "value": "Graduate"
+      }
+    ],
+    "marquee": [
+      "UI/UX Design",
+      "AI / ML",
+      "Full-Stack",
+      "IoT Automation",
+      "Generative AI"
+    ],
+    "marqueeSeparator": "✦",
+    "portraitSlot": {
+      "title": "Portrait slot",
+      "hint": "drop a cut-out PNG at",
+      "pathPrefix": "public"
+    }
+  },
+  "about": {
+    "head": {
+      "index": "02",
+      "label": "Dossier",
+      "title": "The human",
+      "accentWord": "behind it"
+    },
+    "highlights": [
+      "IoT Automation",
+      "Generative AI",
+      "Web Development",
+      "user interfaces",
+      "real-world problems"
+    ],
+    "idCard": {
+      "badge": "ID / {year}",
+      "localTime": "LOCAL TIME",
+      "timezoneLabel": "IST",
+      "timezone": "Asia/Kolkata",
+      "timePlaceholder": "--:--:--",
+      "base": "BASE",
+      "status": "STATUS",
+      "statusValue": "Open"
+    },
+    "specRows": {
+      "education": "Education",
+      "languages": "Languages",
+      "contact": "Contact"
+    },
+    "interestsLabel": "Orbiting interests"
+  },
+  "work": {
+    "head": {
+      "index": "03",
+      "label": "Selected work",
+      "title": "Things I have",
+      "accentWord": "shipped",
+      "lede": "A case study, a few products, and the experiments in between. Each one taught me something the tutorial didn't."
+    },
+    "featuredBadge": "★ Featured",
+    "caseStudyAction": "Case study",
+    "sourceAction": "Source",
+    "indexLabel": "Index",
+    "allFilter": "All",
+    "emptyState": "Nothing filed under “{filter}” yet.",
+    "outroCopy": "More experiments, half-finished ideas and commit history live on GitHub.",
+    "outroAction": "Browse the repos",
+    "notesAction": "Case notes",
+    "liveAction": "Live",
+    "reader": {
+      "eyebrow": "Case notes",
+      "loading": "Loading case notes…",
+      "error": "Could not load the notes for this project.",
+      "close": "Close notes",
+      "aria": "{title} — case notes",
+      "openAria": "Read case notes for {title}"
+    }
+  },
+  "path": {
+    "head": {
+      "index": "04",
+      "label": "Trajectory",
+      "title": "Where I've",
+      "accentWord": "plugged in",
+      "lede": "Internships, a student developer community, and the habit of volunteering for the job nobody has done yet."
+    },
+    "currentLabel": "Now"
+  },
+  "stack": {
+    "head": {
+      "index": "05",
+      "label": "Toolkit",
+      "title": "What I build",
+      "accentWord": "with"
+    },
+    "levelSuffix": "/ 100",
+    "iconPathTemplate": "/images/skills/{icon}.png"
+  },
+  "proof": {
+    "head": {
+      "index": "06",
+      "label": "Receipts",
+      "title": "Certified,",
+      "accentWord": "not claimed",
+      "lede": "Every badge below links out to its issuer where a public verification page exists."
+    },
+    "verifiedLabel": "Verified",
+    "unverifiedLabel": "On file",
+    "verifyAction": "Verify",
+    "verifyAria": "Verify {name}",
+    "emptyCredential": "—"
+  },
+  "beyond": {
+    "head": {
+      "index": "07",
+      "label": "Off the clock",
+      "title": "Outside the",
+      "accentWord": "editor",
+      "lede": "Track marshalling, workshops, and the community work that keeps the learning honest."
+    },
+    "volunteeringLabel": "Volunteering",
+    "workshopsLabel": "Workshops attended",
+    "roleJoiner": " @ "
+  },
+  "contact": {
+    "head": {
+      "index": "08",
+      "label": "Open channel",
+      "title": "Let's make",
+      "accentWord": "contact"
+    },
+    "blurb": "I'm finishing my B.Tech and looking for a team where design and engineering aren't separate desks. Freelance, full-time, or a half-formed idea you want a second opinion on — all welcome.",
+    "emailLabel": "Email",
+    "copyAria": "Copy email address",
+    "locationLabel": "Based in",
+    "statusLabel": "Status",
+    "elsewhereLabel": "Elsewhere",
+    "console": {
+      "title": "message",
+      "titleSuffix": "compose",
+      "directMode": "gform",
+      "apiMode": "api",
+      "iframeTitle": "form target",
+      "iframeName": "gform_sink",
+      "prompt": ">"
+    },
+    "fields": [
+      {
+        "name": "name",
+        "label": "your name",
+        "type": "text",
+        "placeholder": "Ada Lovelace"
+      },
+      {
+        "name": "email",
+        "label": "reply-to",
+        "type": "email",
+        "placeholder": "you@domain.com"
+      },
+      {
+        "name": "subject",
+        "label": "subject",
+        "type": "text",
+        "placeholder": "A project, a role, a hello"
+      }
+    ],
+    "messageField": {
+      "name": "message",
+      "label": "message",
+      "placeholder": "What are you building?"
+    },
+    "submitLabel": "Send message",
+    "sendingLabel": "Transmitting",
+    "successLabel": "Delivered — talk soon",
+    "errorLabel": "Failed. Email me directly?",
+    "endpoint": "/api/submit-google-form",
+    "formEntries": {
+      "name": "entry.1444212408",
+      "email": "entry.12430413",
+      "subject": "entry.1777991339",
+      "message": "entry.445717152"
+    }
+  },
+  "footer": {
+    "currentlyLabel": "Currently",
+    "currentlyCopy": "{availability} — for internships, junior roles and freelance builds.",
+    "sectionsLabel": "Sections",
+    "elsewhereLabel": "Elsewhere",
+    "usernamePrefix": "@",
+    "copyright": "© {year} {name} · {domain}",
+    "colophon": "Built with Next.js",
+    "colophonDetail": "hand-rolled CSS",
+    "backToTop": "Back to top"
+  },
+  "projectsIndex": {
+    "metaTitle": "Work",
+    "metaDescription": "Case studies and shipped projects by Krishna Vijay G — AI/ML, full-stack and interface design.",
+    "eyebrow": "Archive",
+    "title": "Selected",
+    "accentWord": "work",
+    "lede": "Everything below shipped, broke, or taught me something. Case studies get their own page; the rest link straight to the live build or the repo.",
+    "caseStudyBadge": "Case study",
+    "outroCopy": "More half-finished ideas live on GitHub.",
+    "outroAction": "Browse the repos",
+    "barName": "All projects",
+    "barKind": "archive",
+    "barBackHref": "/",
+    "barBackLabel": "Home"
+  },
+  "projectPage": {
+    "backHref": "/#work",
+    "backLabel": "All work",
+    "kindLabel": "case study"
+  },
+  "storage": {
+    "accent": "ui:accent",
+    "effects": "ui:effects",
+    "introSeen": "ui:intro-seen"
+  }
+}

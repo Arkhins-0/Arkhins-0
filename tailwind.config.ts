@@ -61,7 +61,6 @@ const config: Config = {
       animation: {
         'drift-a': 'drift-a 26s ease-in-out infinite',
         'drift-b': 'drift-b 34s ease-in-out infinite',
-        'sweep-y': 'sweep-y 5.5s cubic-bezier(.5,0,.5,1) infinite',
         'rail-run': 'rail-run 3.2s linear infinite',
         ticker: 'ticker var(--ticker-dur, 38s) linear infinite',
         'pulse-ring': 'pulse-ring 2.4s cubic-bezier(0,0,.2,1) infinite',

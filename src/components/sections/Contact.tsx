@@ -12,10 +12,12 @@ import { FaGithub, FaInstagram, FaLinkedin, FaTelegram } from 'react-icons/fa6';
 import { FaDiscord } from 'react-icons/fa';
 import { SiGoogle } from 'react-icons/si';
 import portfolioData from '@/data/portfolio.json';
+import content from '@/data/content.json';
 import { NeonButton, Panel, Reveal, SectionHead } from '@/components/fx';
 import { cn } from '@/lib/utils';
 
 const { basics, socialLinks } = portfolioData;
+const COPY = content.contact;
 
 const SOCIAL_ICON: Record<string, React.ReactNode> = {
   github: <FaGithub size={17} />,
@@ -26,29 +28,23 @@ const SOCIAL_ICON: Record<string, React.ReactNode> = {
   telegram: <FaTelegram size={17} />,
 };
 
-/* Google Form entry ids — keep in sync with the API route. */
-const ENTRY = {
-  name: 'entry.1444212408',
-  email: 'entry.12430413',
-  subject: 'entry.1777991339',
-  message: 'entry.445717152',
-};
+/* Field ids for the upstream form live in the content file, so the client and
+   the API route read one source. */
+const ENTRY = COPY.formEntries;
+const FIELDS = COPY.fields;
 
-const FIELDS = [
-  { name: 'name', label: 'your name', type: 'text', placeholder: 'Ada Lovelace' },
-  { name: 'email', label: 'reply-to', type: 'email', placeholder: 'you@domain.com' },
-  { name: 'subject', label: 'subject', type: 'text', placeholder: 'A project, a role, a hello' },
-] as const;
+type FormState = Record<string, string>;
+
+/** Blank state derived from the declared fields, so adding one to the content
+ *  file is the only edit needed. */
+const EMPTY_FORM: FormState = Object.fromEntries(
+  [...FIELDS.map((f) => f.name), COPY.messageField.name].map((n) => [n, ''])
+);
 
 type Status = 'idle' | 'sending' | 'success' | 'error';
 
 export function Contact() {
-  const [form, setForm] = useState({
-    name: '',
-    email: '',
-    subject: '',
-    message: '',
-  });
+  const [form, setForm] = useState<FormState>(EMPTY_FORM);
   const [status, setStatus] = useState<Status>('idle');
   const [copied, setCopied] = useState(false);
   const submitted = useRef(false);
@@ -72,14 +68,14 @@ export function Contact() {
     e.preventDefault();
     setStatus('sending');
     try {
-      const res = await fetch('/api/submit-google-form', {
+      const res = await fetch(COPY.endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form),
       });
       const json = await res.json();
       if (res.ok && json.success) {
-        setForm({ name: '', email: '', subject: '', message: '' });
+        setForm(EMPTY_FORM);
         reset('success');
       } else {
         reset('error');
@@ -99,7 +95,7 @@ export function Contact() {
   const onIframeLoad = () => {
     if (!submitted.current) return;
     submitted.current = false;
-    setForm({ name: '', email: '', subject: '', message: '' });
+    setForm(EMPTY_FORM);
     reset('success');
   };
 
@@ -116,7 +112,7 @@ export function Contact() {
   return (
     <section id="contact" className="band overflow-hidden">
       <div className="shell">
-        <SectionHead index="08" label="Open channel" title="Let's make" accentWord="contact" />
+        <SectionHead {...COPY.head} />
 
         {/* ------------------------------------------- giant mailto */}
         <Reveal className="mt-10">
@@ -136,21 +132,19 @@ export function Contact() {
           <div className="space-y-8">
             <Reveal dir="right">
               <p className="max-w-md text-[0.98rem] leading-relaxed text-ink-dim">
-                I&apos;m finishing my B.Tech and looking for a team where design
-                and engineering aren&apos;t separate desks. Freelance, full-time,
-                or a half-formed idea you want a second opinion on — all welcome.
+                {COPY.blurb}
               </p>
             </Reveal>
 
             <Reveal dir="right" delay={0.08}>
               <dl className="space-y-0 border-t border-white/8">
                 <div className="flex items-center justify-between gap-4 border-b border-white/8 py-4">
-                  <dt className="hud text-ink-faint">Email</dt>
+                  <dt className="hud text-ink-faint">{COPY.emailLabel}</dt>
                   <dd className="flex items-center gap-3">
                     <span className="truncate text-sm">{basics.email}</span>
                     <button
                       onClick={copyEmail}
-                      aria-label="Copy email address"
+                      aria-label={COPY.copyAria}
                       className="text-ink-faint transition-colors hover:text-accent"
                     >
                       {copied ? (
@@ -162,14 +156,14 @@ export function Contact() {
                   </dd>
                 </div>
                 <div className="flex items-center justify-between gap-4 border-b border-white/8 py-4">
-                  <dt className="hud text-ink-faint">Based in</dt>
+                  <dt className="hud text-ink-faint">{COPY.locationLabel}</dt>
                   <dd className="flex items-center gap-2 text-sm">
                     <MapPin size={13} className="text-accent" />
                     {basics.location.city}, {basics.location.country}
                   </dd>
                 </div>
                 <div className="flex items-center justify-between gap-4 border-b border-white/8 py-4">
-                  <dt className="hud text-ink-faint">Status</dt>
+                  <dt className="hud text-ink-faint">{COPY.statusLabel}</dt>
                   <dd className="flex items-center gap-2 text-sm text-accent">
                     <span className="relative flex h-1.5 w-1.5">
                       <span className="absolute h-full w-full rounded-full bg-accent animate-pulse-ring" />
@@ -182,7 +176,7 @@ export function Contact() {
             </Reveal>
 
             <Reveal dir="right" delay={0.14}>
-              <p className="eyebrow mb-4">Elsewhere</p>
+              <p className="eyebrow mb-4">{COPY.elsewhereLabel}</p>
               <ul className="flex flex-wrap gap-2">
                 {socialLinks.map((s) => (
                   <li key={s.id}>
@@ -214,7 +208,7 @@ export function Contact() {
                   ? {
                       action: ACTION,
                       method: 'POST' as const,
-                      target: 'gform_sink',
+                      target: COPY.console.iframeName,
                       onSubmit: submitDirect,
                     }
                   : { onSubmit: submitViaApi })}
@@ -224,25 +218,32 @@ export function Contact() {
                 <div className="mb-7 flex items-center gap-2 border-b border-white/8 pb-4">
                   <span className="h-2 w-2 rotate-45 bg-accent" />
                   <span className="hud text-ink-faint">
-                    message<span className="text-accent">.</span>compose
+                    {COPY.console.title}
+                    <span className="text-accent">.</span>
+                    {COPY.console.titleSuffix}
                   </span>
                   <span className="ml-auto hud text-ink-faint">
-                    {DIRECT ? 'gform' : 'api'}
+                    {DIRECT ? COPY.console.directMode : COPY.console.apiMode}
                   </span>
                 </div>
 
                 {DIRECT && (
                   <>
                     <iframe
-                      name="gform_sink"
-                      title="form target"
+                      name={COPY.console.iframeName}
+                      title={COPY.console.iframeTitle}
                       onLoad={onIframeLoad}
                       className="hidden"
                     />
-                    <input type="hidden" name={ENTRY.name} value={form.name} readOnly />
-                    <input type="hidden" name={ENTRY.email} value={form.email} readOnly />
-                    <input type="hidden" name={ENTRY.subject} value={form.subject} readOnly />
-                    <input type="hidden" name={ENTRY.message} value={form.message} readOnly />
+                    {Object.entries(ENTRY).map(([key, id]) => (
+                      <input
+                        key={id}
+                        type="hidden"
+                        name={id}
+                        value={form[key] ?? ''}
+                        readOnly
+                      />
+                    ))}
                   </>
                 )}
 
@@ -251,22 +252,23 @@ export function Contact() {
                     <Field
                       key={f.name}
                       {...f}
-                      value={form[f.name]}
+                      value={form[f.name] ?? ''}
                       onChange={change}
                     />
                   ))}
 
                   <label className="block">
                     <span className="hud mb-2 flex items-center gap-2 text-ink-faint">
-                      <span className="text-accent">{'>'}</span> message
+                      <span className="text-accent">{COPY.console.prompt}</span>{' '}
+                      {COPY.messageField.label}
                     </span>
                     <textarea
-                      name="message"
+                      name={COPY.messageField.name}
                       rows={5}
                       required
-                      value={form.message}
+                      value={form[COPY.messageField.name] ?? ''}
                       onChange={change}
-                      placeholder="What are you building?"
+                      placeholder={COPY.messageField.placeholder}
                       className="w-full resize-none border-b border-white/12 bg-transparent pb-2 font-mono text-sm text-ink outline-none transition-colors placeholder:text-ink-faint/60 focus:border-accent"
                     />
                   </label>
@@ -279,7 +281,7 @@ export function Contact() {
                     magnetic={false}
                     icon={<Send size={14} />}
                   >
-                    {status === 'sending' ? 'Transmitting' : 'Send message'}
+                    {status === 'sending' ? COPY.sendingLabel : COPY.submitLabel}
                   </NeonButton>
 
                   <span
@@ -294,15 +296,13 @@ export function Contact() {
                     {status === 'success' && (
                       <>
                         <CheckCircle2 size={13} className="text-accent" />
-                        <span className="text-accent">Delivered — talk soon</span>
+                        <span className="text-accent">{COPY.successLabel}</span>
                       </>
                     )}
                     {status === 'error' && (
                       <>
                         <AlertCircle size={13} className="text-rose" />
-                        <span className="text-rose">
-                          Failed. Email me directly?
-                        </span>
+                        <span className="text-rose">{COPY.errorLabel}</span>
                       </>
                     )}
                   </span>
@@ -315,6 +315,8 @@ export function Contact() {
     </section>
   );
 }
+
+const PROMPT = COPY.console.prompt;
 
 function Field({
   name,
@@ -334,7 +336,7 @@ function Field({
   return (
     <label className="block">
       <span className="hud mb-2 flex items-center gap-2 text-ink-faint">
-        <span className="text-accent">{'>'}</span> {label}
+        <span className="text-accent">{PROMPT}</span> {label}
       </span>
       <input
         type={type}

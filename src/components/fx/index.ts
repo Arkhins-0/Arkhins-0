@@ -1,3 +1,5 @@
+export { Anagram } from './Anagram';
+export type { AnagramPhase } from './Anagram';
 export { Backdrop } from './Backdrop';
 export { FlowField } from './FlowField';
 export { Panel } from './Panel';

@@ -5,6 +5,7 @@ import { UIProvider } from '@/context/UIContext';
 import { Backdrop, Cursor, ScrollRail } from '@/components/fx';
 import { Boot } from '@/components/layout/Boot';
 import portfolioData from '@/data/portfolio.json';
+import content from '@/data/content.json';
 
 const display = Syne({
   subsets: ['latin'],
@@ -29,7 +30,7 @@ const mono = JetBrains_Mono({
 const { meta, basics } = portfolioData;
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://krishnavijayg.vercel.app'),
+  metadataBase: new URL(meta.siteUrl),
   title: {
     default: meta.title,
     template: `%s — ${basics.name}`,
@@ -37,23 +38,23 @@ export const metadata: Metadata = {
   description: meta.description,
   keywords: meta.keywords,
   authors: [{ name: meta.author }],
-  icons: { icon: '/images/profile.jpg' },
+  icons: { icon: basics.profilePicture },
   openGraph: {
     title: meta.title,
     description: meta.description,
     type: 'website',
-    images: [{ url: '/images/OG.png', alt: `${basics.name} — portfolio` }],
+    images: [{ url: meta.ogImage, alt: meta.ogAlt }],
   },
   twitter: {
     card: 'summary_large_image',
     title: meta.title,
     description: meta.description,
-    images: ['/images/OG.png'],
+    images: [meta.ogImage],
   },
 };
 
 export const viewport: Viewport = {
-  themeColor: '#ff2d6f',
+  themeColor: content.theme.accents[0].swatch,
   width: 'device-width',
   initialScale: 1,
   colorScheme: 'dark',
@@ -67,7 +68,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      data-accent="rose"
+      data-accent={content.theme.accents[0].id}
       data-fx="on"
       className={`${display.variable} ${sans.variable} ${mono.variable}`}
       suppressHydrationWarning

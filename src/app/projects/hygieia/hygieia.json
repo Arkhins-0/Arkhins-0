@@ -13,17 +13,41 @@
     "repo": "https://github.com/Krishna-Vijay-G/Hygieia.git",
     "live": "",
     "badges": [
-      { "label": "96%+ avg accuracy", "tone": "accent" },
-      { "label": "5 AI models", "tone": "muted" },
-      { "label": "Blockchain verified", "tone": "muted" },
-      { "label": "Dr. Hygieia assistant", "tone": "muted" }
+      {
+        "label": "96%+ avg accuracy",
+        "tone": "accent"
+      },
+      {
+        "label": "5 AI models",
+        "tone": "muted"
+      },
+      {
+        "label": "Blockchain verified",
+        "tone": "muted"
+      },
+      {
+        "label": "Dr. Hygieia assistant",
+        "tone": "muted"
+      }
     ]
   },
   "stats": [
-    { "value": "5", "label": "Diagnostic models" },
-    { "value": "96%+", "label": "Average accuracy" },
-    { "value": "253K", "label": "Training samples" },
-    { "value": "4", "label": "Security layers" }
+    {
+      "value": "5",
+      "label": "Diagnostic models"
+    },
+    {
+      "value": "96%+",
+      "label": "Average accuracy"
+    },
+    {
+      "value": "253K",
+      "label": "Training samples"
+    },
+    {
+      "value": "4",
+      "label": "Security layers"
+    }
   ],
   "overview": [
     "Hygieia bundles five independently trained diagnostic models behind one interface, so a clinician or a curious patient can move between a heart-risk questionnaire and a dermatology image scan without changing tools.",
@@ -297,7 +321,10 @@
     },
     "Skin Diagnosis": {
       "steps": [
-        { "title": "Input image", "description": "Upload a skin lesion image" },
+        {
+          "title": "Input image",
+          "description": "Upload a skin lesion image"
+        },
         {
           "title": "Google Derm Foundation",
           "description": "Pre-trained on clinical dermatology images"
@@ -400,5 +427,68 @@
         "Fractal dimension"
       ]
     }
+  },
+  "sections": {
+    "overview": {
+      "index": "01",
+      "label": "The gist",
+      "title": "What it",
+      "accentWord": "does"
+    },
+    "models": {
+      "index": "02",
+      "label": "Model portfolio",
+      "title": "Five models,",
+      "accentWord": "one interface",
+      "lede": "Each model was trained, tuned and scored on its own dataset. Accuracy alone hides class imbalance, so ROC-AUC is reported next to it."
+    },
+    "pipelines": {
+      "index": "03",
+      "label": "Under the hood",
+      "title": "How a prediction",
+      "accentWord": "is made"
+    },
+    "screens": {
+      "index": "04",
+      "label": "Interface",
+      "title": "Every screen,",
+      "accentWord": "in context",
+      "lede": "Click any frame to open it full size."
+    },
+    "architecture": {
+      "index": "05",
+      "label": "Architecture",
+      "title": "Built on",
+      "accentWord": "two halves"
+    },
+    "security": {
+      "index": "06",
+      "label": "Trust model",
+      "title": "Four layers of",
+      "accentWord": "defence"
+    }
+  },
+  "labels": {
+    "rocAuc": "ROC-AUC",
+    "samplesSuffix": "samples",
+    "pipelineFlow": "Pipeline flow",
+    "expandHint": "Expand",
+    "lightboxAria": "Open {title} full size",
+    "tableHeaders": [
+      "Model",
+      "Accuracy",
+      "ROC-AUC",
+      "Samples",
+      "Architecture"
+    ],
+    "sourceAction": "View source",
+    "otherProjectsAction": "Other projects",
+    "outroEyebrow": "End of case study",
+    "outroTitle": "Want the code, or the",
+    "outroAccent": "next one?",
+    "outroRepoAction": "Repository",
+    "outroBackAction": "Back to work",
+    "backHref": "/#work",
+    "closeLabel": "Close"
   }
 }

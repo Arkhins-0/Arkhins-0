@@ -25,10 +25,21 @@ import data from './hygieia.json';
 import { ProjectBar } from '@/components/layout/ProjectBar';
 import { Footer } from '@/components/layout';
 import { NeonButton, Panel, Reveal, SectionHead, Stack, stackChild } from '@/components/fx';
-import { cn } from '@/lib/utils';
+import { cn, fill } from '@/lib/utils';
 
-const { meta, stats, overview, models, features, screens, stack, security, pipelines } =
-  data;
+const {
+  meta,
+  stats,
+  overview,
+  models,
+  features,
+  screens,
+  stack,
+  security,
+  pipelines,
+  sections,
+  labels,
+} = data;
 
 const ICONS: Record<string, React.ElementType> = {
   Heart,
@@ -46,7 +57,7 @@ const ICONS: Record<string, React.ElementType> = {
 
 type Screen = (typeof screens)[number];
 
-export default function HygieiaCaseStudy() {
+export default function ProjectCaseStudy() {
   const [lightbox, setLightbox] = useState<Screen | null>(null);
   const [pipeline, setPipeline] = useState(models[0].name);
 
@@ -122,14 +133,14 @@ export default function HygieiaCaseStudy() {
                       external
                       icon={<Github size={15} />}
                     >
-                      View source
+                      {labels.sourceAction}
                     </NeonButton>
                     <NeonButton
-                      href="/#work"
+                      href={labels.backHref}
                       variant="ghost"
                       icon={<ArrowUpRight size={15} />}
                     >
-                      Other projects
+                      {labels.otherProjectsAction}
                     </NeonButton>
                   </div>
                 </Reveal>
@@ -188,12 +199,7 @@ export default function HygieiaCaseStudy() {
         {/* ======================================================== overview */}
         <section className="band pt-0">
           <div className="shell">
-            <SectionHead
-              index="01"
-              label="The gist"
-              title="What it"
-              accentWord="does"
-            />
+            <SectionHead {...sections.overview} />
             <div className="mt-12 grid gap-10 lg:grid-cols-[1.1fr_1fr] lg:gap-16">
               <div className="space-y-5">
                 {overview.map((p, i) => (
@@ -239,13 +245,7 @@ export default function HygieiaCaseStudy() {
         {/* ========================================================== models */}
         <section className="band pt-0">
           <div className="shell">
-            <SectionHead
-              index="02"
-              label="Model portfolio"
-              title="Five models,"
-              accentWord="one interface"
-              lede="Each model was trained, tuned and scored on its own dataset. Accuracy alone hides class imbalance, so ROC-AUC is reported next to it."
-            />
+            <SectionHead {...sections.models} />
 
             <Stack className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {models.map((m) => {
@@ -280,7 +280,7 @@ export default function HygieiaCaseStudy() {
                             <Icon size={19} />
                           </span>
                           <span className="hud text-right text-ink-faint">
-                            ROC-AUC
+                            {labels.rocAuc}
                             <br />
                             <span className="text-ink">{m.rocAuc}</span>
                           </span>
@@ -321,16 +321,14 @@ export default function HygieiaCaseStudy() {
                   <table className="w-full min-w-[46rem] text-left">
                     <thead>
                       <tr className="border-b border-white/10">
-                        {['Model', 'Accuracy', 'ROC-AUC', 'Samples', 'Architecture'].map(
-                          (h) => (
-                            <th
-                              key={h}
-                              className="hud px-5 py-4 font-medium text-ink-faint"
-                            >
-                              {h}
-                            </th>
-                          )
-                        )}
+                        {labels.tableHeaders.map((h) => (
+                          <th
+                            key={h}
+                            className="hud px-5 py-4 font-medium text-ink-faint"
+                          >
+                            {h}
+                          </th>
+                        ))}
                       </tr>
                     </thead>
                     <tbody>
@@ -376,12 +374,7 @@ export default function HygieiaCaseStudy() {
         {/* ======================================================= pipelines */}
         <section className="band pt-0">
           <div className="shell">
-            <SectionHead
-              index="03"
-              label="Under the hood"
-              title="How a prediction"
-              accentWord="is made"
-            />
+            <SectionHead {...sections.pipelines} />
 
             {/* tabs */}
             <Reveal className="mt-10 flex flex-wrap gap-2">
@@ -439,14 +432,14 @@ export default function HygieiaCaseStudy() {
                           color: activeModel.hue,
                         }}
                       >
-                        {activeModel.samples} samples
+                        {activeModel.samples} {labels.samplesSuffix}
                       </span>
                     </div>
 
                     <div className="mt-8 grid gap-10 lg:grid-cols-2">
                       {/* flow */}
                       <div>
-                        <p className="eyebrow mb-5">Pipeline flow</p>
+                        <p className="eyebrow mb-5">{labels.pipelineFlow}</p>
                         <ol className="relative space-y-3">
                           <span
                             aria-hidden="true"
@@ -517,13 +510,7 @@ export default function HygieiaCaseStudy() {
         {/* ========================================================= screens */}
         <section className="band pt-0">
           <div className="shell">
-            <SectionHead
-              index="04"
-              label="Interface"
-              title="Every screen,"
-              accentWord="in context"
-              lede="Click any frame to open it full size."
-            />
+            <SectionHead {...sections.screens} />
 
             <div className="mt-14 space-y-20 md:space-y-28">
               {screens.map((s, i) => {
@@ -537,7 +524,7 @@ export default function HygieiaCaseStudy() {
                           'group/shot relative block w-full text-left',
                           flip && 'md:order-2'
                         )}
-                        aria-label={`Open ${s.title} full size`}
+                        aria-label={fill(labels.lightboxAria, { title: s.title })}
                       >
                         <Panel cut={22} className="overflow-hidden">
                           <div className="relative aspect-[16/10] w-full bg-black/30">
@@ -551,7 +538,7 @@ export default function HygieiaCaseStudy() {
                           </div>
                         </Panel>
                         <span className="hud absolute bottom-4 right-4 border border-accent/40 bg-black/60 px-2 py-1 text-accent opacity-0 backdrop-blur-sm transition-opacity duration-300 group-hover/shot:opacity-100">
-                          Expand
+                          {labels.expandHint}
                         </span>
                       </button>
 
@@ -577,12 +564,7 @@ export default function HygieiaCaseStudy() {
         {/* ==================================================== architecture */}
         <section className="band pt-0">
           <div className="shell">
-            <SectionHead
-              index="05"
-              label="Architecture"
-              title="Built on"
-              accentWord="two halves"
-            />
+            <SectionHead {...sections.architecture} />
 
             <div className="mt-12 grid gap-4 lg:grid-cols-2">
               {stack.map((layer, i) => {
@@ -624,12 +606,7 @@ export default function HygieiaCaseStudy() {
         {/* ======================================================== security */}
         <section className="band pt-0">
           <div className="shell">
-            <SectionHead
-              index="06"
-              label="Trust model"
-              title="Four layers of"
-              accentWord="defence"
-            />
+            <SectionHead {...sections.security} />
 
             <Stack className="mt-12 grid gap-4 md:grid-cols-2">
               {security.map((layer, i) => (
@@ -677,10 +654,10 @@ export default function HygieiaCaseStudy() {
               <Panel hot cut={30}>
                 <div className="flex flex-col items-start justify-between gap-6 p-8 md:flex-row md:items-center md:p-12">
                   <div>
-                    <p className="eyebrow">End of case study</p>
+                    <p className="eyebrow">{labels.outroEyebrow}</p>
                     <h2 className="mt-3 font-display text-[clamp(1.6rem,4vw,2.6rem)] font-extrabold leading-tight tracking-tightest">
-                      Want the code, or the{' '}
-                      <span className="neon-text">next one?</span>
+                      {labels.outroTitle}{' '}
+                      <span className="neon-text">{labels.outroAccent}</span>
                     </h2>
                   </div>
                   <div className="flex flex-wrap gap-3">
@@ -689,14 +666,14 @@ export default function HygieiaCaseStudy() {
                       external
                       icon={<Github size={15} />}
                     >
-                      Repository
+                      {labels.outroRepoAction}
                     </NeonButton>
                     <NeonButton
-                      href="/#work"
+                      href={labels.backHref}
                       variant="ghost"
                       icon={<ArrowUpRight size={15} />}
                     >
-                      Back to work
+                      {labels.outroBackAction}
                     </NeonButton>
                   </div>
                 </div>
@@ -733,7 +710,7 @@ export default function HygieiaCaseStudy() {
                 <span className="hud text-accent">{lightbox.title}</span>
                 <button
                   onClick={() => setLightbox(null)}
-                  aria-label="Close"
+                  aria-label={labels.closeLabel}
                   className="grid h-9 w-9 place-items-center border border-white/15 text-ink transition-colors hover:border-accent hover:text-accent"
                 >
                   <X size={16} />

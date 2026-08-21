@@ -3,7 +3,10 @@
 import Image from 'next/image';
 import { ArrowUpRight, Flag, GraduationCap } from 'lucide-react';
 import portfolioData from '@/data/portfolio.json';
+import content from '@/data/content.json';
 import { Panel, Reveal, SectionHead } from '@/components/fx';
+
+const COPY = content.beyond;
 
 const VOLUNTEERING = portfolioData.volunteering.filter(
   (v) => !v.id.includes('placeholder')
@@ -37,13 +40,7 @@ export function Beyond() {
   return (
     <section id="beyond" className="band">
       <div className="shell">
-        <SectionHead
-          index="07"
-          label="Off the clock"
-          title="Outside the"
-          accentWord="editor"
-          lede="Track marshalling, workshops, and the community work that keeps the learning honest."
-        />
+        <SectionHead {...COPY.head} />
 
         <Reveal className="mt-14">
           <Panel cut={26} className="overflow-hidden">
@@ -58,7 +55,7 @@ export function Beyond() {
               <div className="p-7 md:p-9">
                 <LaneHeader
                   icon={<Flag size={14} />}
-                  label="Volunteering"
+                  label={COPY.volunteeringLabel}
                   count={VOLUNTEERING.length}
                 />
                 <ul className="mt-6 space-y-5">
@@ -76,7 +73,7 @@ export function Beyond() {
                       <div className="min-w-0">
                         <p className="font-display text-base font-bold leading-tight">
                           {v.role}
-                          <span className="text-accent"> @ </span>
+                          <span className="text-accent">{COPY.roleJoiner}</span>
                           {v.organization}
                         </p>
                         <p className="hud mt-1 text-ink-faint">
@@ -96,7 +93,7 @@ export function Beyond() {
               <div className="border-t border-white/8 p-7 md:p-9 lg:border-l lg:border-t-0">
                 <LaneHeader
                   icon={<GraduationCap size={14} />}
-                  label="Workshops attended"
+                  label={COPY.workshopsLabel}
                   count={WORKSHOPS.length}
                 />
                 <ol className="mt-6 space-y-4">

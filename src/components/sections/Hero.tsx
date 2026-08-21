@@ -13,11 +13,13 @@ import { FaGithub, FaInstagram, FaLinkedin, FaTelegram } from 'react-icons/fa6';
 import { FaDiscord } from 'react-icons/fa';
 import { SiGoogle } from 'react-icons/si';
 import portfolioData from '@/data/portfolio.json';
+import content from '@/data/content.json';
 import { NeonButton, Ticker } from '@/components/fx';
 import { useUI } from '@/context/UIContext';
-import { cn } from '@/lib/utils';
+import { cn, fill } from '@/lib/utils';
 
 const { basics, socialLinks } = portfolioData;
+const COPY = content.hero;
 const [FIRST, ...REST] = basics.name.split(' ');
 const SURNAME = REST.join(' ');
 
@@ -33,19 +35,26 @@ const SOCIAL_ICON: Record<string, React.ReactNode> = {
 const MARQUEE = [
   basics.availability,
   `${basics.location.city} · ${basics.location.country}`,
-  'UI/UX Design',
-  'AI / ML',
-  'Full-Stack',
-  'IoT Automation',
-  'Generative AI',
+  ...COPY.marquee,
 ];
 
 /* -------------------------------------------------------------- portrait */
 
+/** Placement for each HUD chip, in the order the content file lists them. */
+const CHIP_ANCHORS = [
+  'right-2 top-0 hidden sm:flex lg:right-16 xl:right-24',
+  '-right-2 top-[48%] hidden sm:flex lg:right-6 xl:right-10',
+  'bottom-[14%] -left-2 hidden md:flex lg:left-10',
+];
+
+/** Where the subject starts dissolving, so the crop never reads as a cut. */
+const FADE =
+  'linear-gradient(to bottom, #000 66%, rgba(0,0,0,0.45) 86%, transparent 99%)';
+
 /**
- * The transparent PNG gets three passes: a blurred duotone echo offset behind
- * it (masked by the same file), the photo itself with an accent rim glow, and
- * a scan sweep clipped to the silhouette.
+ * The transparent PNG gets two passes: a blurred duotone echo offset behind it
+ * (masked by the same file) and the photo itself with an accent rim glow. Both
+ * share the same bottom fade so they dissolve together.
  */
 function Portrait({ src, tilt }: { src: string; tilt: { rx: any; ry: any } }) {
   const [failed, setFailed] = useState(false);
@@ -57,15 +66,19 @@ function Portrait({ src, tilt }: { src: string; tilt: { rx: any; ry: any } }) {
     if (img?.complete && img.naturalWidth === 0) setFailed(true);
   }, []);
 
+  // Silhouette ∩ bottom fade. Two mask layers intersected, so the echo is both
+  // cut to the subject's shape and faded out at the hips.
   const maskProps = {
-    WebkitMaskImage: `url(${src})`,
-    maskImage: `url(${src})`,
-    WebkitMaskSize: 'contain',
-    maskSize: 'contain',
-    WebkitMaskRepeat: 'no-repeat',
-    maskRepeat: 'no-repeat',
-    WebkitMaskPosition: 'bottom center',
-    maskPosition: 'bottom center',
+    WebkitMaskImage: `url(${src}), ${FADE}`,
+    maskImage: `url(${src}), ${FADE}`,
+    WebkitMaskSize: 'contain, 100% 100%',
+    maskSize: 'contain, 100% 100%',
+    WebkitMaskRepeat: 'no-repeat, no-repeat',
+    maskRepeat: 'no-repeat, no-repeat',
+    WebkitMaskPosition: 'bottom center, bottom center',
+    maskPosition: 'bottom center, bottom center',
+    WebkitMaskComposite: 'source-in',
+    maskComposite: 'intersect',
   } as React.CSSProperties;
 
   if (failed) {
@@ -76,11 +89,14 @@ function Portrait({ src, tilt }: { src: string; tilt: { rx: any; ry: any } }) {
           style={{ ['--notch' as string]: '28px' }}
         />
         <div className="relative z-10 mb-10 px-6 text-center">
-          <p className="hud text-accent">Portrait slot</p>
+          <p className="hud text-accent">{COPY.portraitSlot.title}</p>
           <p className="mt-2 font-mono text-[0.7rem] leading-relaxed text-ink-faint">
-            drop a cut-out PNG at
+            {COPY.portraitSlot.hint}
             <br />
-            <span className="text-ink">public{src}</span>
+            <span className="text-ink">
+              {COPY.portraitSlot.pathPrefix}
+              {src}
+            </span>
           </p>
         </div>
         <div
@@ -97,15 +113,16 @@ function Portrait({ src, tilt }: { src: string; tilt: { rx: any; ry: any } }) {
   return (
     <motion.div
       style={{ rotateX: tilt.rx, rotateY: tilt.ry, transformPerspective: 1200 }}
-      className="relative mx-auto w-full max-w-[30rem]"
+      className="relative mx-auto w-full max-w-[36rem] lg:ml-auto lg:mr-[-3rem] lg:max-w-[42rem] xl:mr-[-4.5rem]"
     >
-      {/* pedestal glow under the subject */}
+      {/* glow sitting where the subject dissolves, so the fade reads as light
+          rather than a missing lower half */}
       <div
         aria-hidden="true"
-        className="absolute inset-x-4 bottom-2 h-28 rounded-[50%] opacity-[calc(0.9*var(--fx))] blur-[38px]"
+        className="absolute inset-x-2 bottom-[6%] h-40 rounded-[50%] opacity-[calc(0.75*var(--fx))] blur-[46px]"
         style={{
           background:
-            'radial-gradient(ellipse at center, rgb(var(--accent-rgb) / 0.55), transparent 72%)',
+            'radial-gradient(ellipse at center, rgb(var(--accent-rgb) / 0.45), transparent 72%)',
         }}
       />
 
@@ -133,41 +150,19 @@ function Portrait({ src, tilt }: { src: string; tilt: { rx: any; ry: any } }) {
       <img
         ref={imgRef}
         src={src}
-        alt={`${basics.name}, ${basics.headline}`}
+        alt={fill(COPY.portraitAlt, {
+          name: basics.name,
+          headline: basics.headline,
+        })}
         onError={() => setFailed(true)}
         className="relative z-10 w-full select-none object-contain"
         style={{
           filter:
             'drop-shadow(0 0 34px rgb(var(--accent-rgb) / calc(0.45 * var(--fx)))) drop-shadow(0 22px 44px rgba(0,0,0,0.65))',
+          WebkitMaskImage: FADE,
+          maskImage: FADE,
         }}
         draggable={false}
-      />
-
-      {/* scan sweep, clipped to the silhouette */}
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 z-20 overflow-hidden opacity-[calc(1*var(--fx))]"
-        style={maskProps}
-      >
-        <div
-          className="h-1/4 w-full animate-sweep-y"
-          style={{
-            background:
-              'linear-gradient(to bottom, transparent, rgb(var(--accent-rgb) / 0.55), transparent)',
-            filter: 'blur(2px)',
-          }}
-        />
-      </div>
-
-      {/* fine horizontal scanlines over the subject */}
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 z-20 opacity-[calc(0.4*var(--fx))] mix-blend-overlay"
-        style={{
-          ...maskProps,
-          backgroundImage:
-            'repeating-linear-gradient(to bottom, rgba(255,255,255,0.5) 0 1px, transparent 1px 4px)',
-        }}
       />
     </motion.div>
   );
@@ -194,10 +189,10 @@ function RoleRoller({ roles }: { roles: string[] }) {
       <AnimatePresence initial={false}>
         <motion.span
           key={roles[i]}
-          initial={{ y: '105%', opacity: 0 }}
-          animate={{ y: '0%', opacity: 1 }}
-          exit={{ y: '-105%', opacity: 0 }}
-          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          initial={{ y: '105%' }}
+          animate={{ y: '0%' }}
+          exit={{ y: '-105%' }}
+          transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }}
           className="absolute inset-0 flex items-center whitespace-nowrap text-accent"
         >
           {roles[i]}
@@ -285,7 +280,7 @@ export function Hero() {
 
       {/* ---------------------------------------------- content */}
       <div className="shell relative z-10 flex-1">
-        <div className="relative grid items-center gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-6">
+        <div className="relative grid items-center gap-10 lg:grid-cols-[1fr_1.12fr] lg:gap-4">
           {/* --- type stack --- */}
           <div className="relative z-10 order-1 lg:order-1">
             {/* availability chip */}
@@ -334,8 +329,10 @@ export function Hero() {
               transition={{ delay: 0.48, duration: 0.6 }}
               className="mt-5 max-w-md text-[0.98rem] leading-relaxed text-ink-dim"
             >
-              {basics.tagline}. Building things that sit at the seam of
-              interface, intelligence and hardware — from Chennai, for anywhere.
+              {fill(COPY.blurb, {
+                tagline: basics.tagline,
+                city: basics.location.city,
+              })}
             </motion.p>
 
             {/* actions */}
@@ -345,8 +342,11 @@ export function Hero() {
               transition={{ delay: 0.56, duration: 0.6 }}
               className="mt-9 flex flex-wrap items-center gap-3"
             >
-              <NeonButton href="/#work" icon={<ArrowUpRight size={15} />}>
-                See the work
+              <NeonButton
+                href={COPY.primaryHref}
+                icon={<ArrowUpRight size={15} />}
+              >
+                {COPY.primaryAction}
               </NeonButton>
               <NeonButton
                 href={basics.resumeUrl}
@@ -354,7 +354,7 @@ export function Hero() {
                 variant="ghost"
                 icon={<ArrowUpRight size={15} />}
               >
-                Résumé
+                {COPY.secondaryAction}
               </NeonButton>
             </motion.div>
 
@@ -370,7 +370,9 @@ export function Hero() {
                 {basics.location.city}, {basics.location.state}
               </span>
               <span className="hud text-ink-faint">
-                B.Tech CSE<span className="text-accent"> · </span>AI
+                {COPY.qualification}
+                <span className="text-accent"> · </span>
+                {COPY.qualificationDetail}
               </span>
               <div className="flex items-center gap-1">
                 {socialLinks.map((s) => (
@@ -394,31 +396,22 @@ export function Hero() {
             initial={{ opacity: 0, scale: 0.94, y: 24 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.95, ease: [0.22, 1, 0.36, 1] }}
-            className="pointer-events-none absolute inset-x-0 bottom-0 z-0 order-2 mx-auto w-[88%] max-w-sm lg:pointer-events-auto lg:relative lg:inset-auto lg:mx-0 lg:w-auto lg:max-w-none"
+            className="pointer-events-none absolute -right-[6%] bottom-0 z-0 order-2 w-[74%] max-w-[21rem] lg:pointer-events-auto lg:relative lg:inset-auto lg:w-auto lg:max-w-none"
           >
             <div className="portrait-ghost">
               <Portrait src={basics.portrait} tilt={{ rx, ry }} />
             </div>
 
             {/* floating HUD chips */}
-            <HudChip
-              className="right-0 top-[6%] hidden sm:flex"
-              delay={0.9}
-              k="focus"
-              v="Design × AI"
-            />
-            <HudChip
-              className="-right-2 top-[46%] hidden sm:flex md:-right-8"
-              delay={1.05}
-              k="stack"
-              v="Next · Python"
-            />
-            <HudChip
-              className="bottom-[10%] -left-2 hidden md:flex md:-left-6"
-              delay={1.2}
-              k="status"
-              v="Final year"
-            />
+            {COPY.chips.map((chip, i) => (
+              <HudChip
+                key={chip.key}
+                className={CHIP_ANCHORS[i]}
+                delay={0.9 + i * 0.15}
+                k={chip.key}
+                v={chip.value}
+              />
+            ))}
           </motion.div>
         </div>
       </div>
@@ -430,17 +423,17 @@ export function Hero() {
             {MARQUEE.map((item, i) => (
               <span key={i} className="flex items-center">
                 <span className="hud px-6 text-ink-dim">{item}</span>
-                <span className="text-accent">✦</span>
+                <span className="text-accent">{COPY.marqueeSeparator}</span>
               </span>
             ))}
           </Ticker>
         </div>
 
         <a
-          href="#about"
+          href={COPY.scrollHref}
           className="group mx-auto flex w-fit items-center gap-2 py-5 text-ink-faint transition-colors hover:text-accent"
         >
-          <span className="hud">Scroll</span>
+          <span className="hud">{COPY.scrollLabel}</span>
           <MoveDown
             size={13}
             className="transition-transform duration-500 group-hover:translate-y-1"

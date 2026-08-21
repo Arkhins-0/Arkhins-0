@@ -7,16 +7,17 @@ import {
   useEffect,
   useState,
 } from 'react';
+import content from '@/data/content.json';
 
-export const ACCENTS = ['rose', 'cyan', 'lime', 'violet'] as const;
-export type Accent = (typeof ACCENTS)[number];
+/** The palette is declared in the content file; nothing is listed here. */
+export const ACCENTS = content.theme.accents;
+export type Accent = (typeof ACCENTS)[number]['id'];
 
-export const ACCENT_SWATCH: Record<Accent, string> = {
-  rose: '#ff2d6f',
-  cyan: '#00f0ff',
-  lime: '#c6ff3d',
-  violet: '#a855f7',
-};
+const ACCENT_IDS = ACCENTS.map((a) => a.id);
+const DEFAULT_ACCENT = ACCENT_IDS[0];
+
+export const swatchFor = (id: Accent) =>
+  ACCENTS.find((a) => a.id === id)?.swatch ?? ACCENTS[0].swatch;
 
 type UIState = {
   accent: Accent;
@@ -30,17 +31,16 @@ type UIState = {
 
 const Ctx = createContext<UIState | null>(null);
 
-const KEY_ACCENT = 'gkv:accent';
-const KEY_FX = 'gkv:fx';
+const { accent: KEY_ACCENT, effects: KEY_FX } = content.storage;
 
 export function UIProvider({ children }: { children: React.ReactNode }) {
-  const [accent, setAccentState] = useState<Accent>('rose');
+  const [accent, setAccentState] = useState<Accent>(DEFAULT_ACCENT);
   const [fx, setFx] = useState(true);
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    const savedAccent = localStorage.getItem(KEY_ACCENT) as Accent | null;
-    if (savedAccent && ACCENTS.includes(savedAccent)) setAccentState(savedAccent);
+    const saved = localStorage.getItem(KEY_ACCENT);
+    if (saved && ACCENT_IDS.includes(saved)) setAccentState(saved);
 
     const savedFx = localStorage.getItem(KEY_FX);
     const prefersReduced = window.matchMedia(
@@ -60,13 +60,15 @@ export function UIProvider({ children }: { children: React.ReactNode }) {
     localStorage.setItem(KEY_FX, fx ? 'on' : 'off');
 
     const meta = document.querySelector('meta[name="theme-color"]');
-    if (meta) meta.setAttribute('content', ACCENT_SWATCH[accent]);
+    if (meta) meta.setAttribute('content', swatchFor(accent));
   }, [accent, fx, ready]);
 
   const setAccent = useCallback((a: Accent) => setAccentState(a), []);
   const cycleAccent = useCallback(
     () =>
-      setAccentState((prev) => ACCENTS[(ACCENTS.indexOf(prev) + 1) % ACCENTS.length]),
+      setAccentState(
+        (prev) => ACCENT_IDS[(ACCENT_IDS.indexOf(prev) + 1) % ACCENT_IDS.length]
+      ),
     []
   );
   const toggleFx = useCallback(() => setFx((v) => !v), []);
