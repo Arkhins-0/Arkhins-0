@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Sparkles, Zap, ZapOff } from 'lucide-react';
 import { ACCENTS, useUI } from '@/context/UIContext';
-import { NeonButton } from '@/components/fx';
+import { Anagram, NeonButton } from '@/components/fx';
 import { cn, fill } from '@/lib/utils';
 import portfolioData from '@/data/portfolio.json';
 import content from '@/data/content.json';
@@ -16,7 +16,12 @@ const { nav, brand, theme } = content;
 
 export const SECTIONS = nav.sections;
 
-const FIRST = basics.name.split(' ')[0];
+const NAV_MARK = brand.navMark;
+
+/** how long a word rests before the static takes it */
+const MARK_HOLD = 4200;
+const MARK_GLITCH = 500;
+const MARK_TYPE = 'font-display text-base font-bold tracking-tight';
 
 /** Watches every section and reports whichever owns the upper third. */
 function useActiveSection() {
@@ -149,9 +154,32 @@ export function Navigation() {
                 }}
               />
             </span>
-            <span className="hidden font-display text-base font-bold tracking-tight sm:block">
-              {FIRST}
-              <span className="neon-text">{brand.wordmarkSuffix}</span>
+            {/* Same mark as the footer, same component — only here the
+                letters stay put: the static clears and the other word is
+                simply standing there. The hidden sizer holds the width,
+                because noise glyphs are wider than the letters they replace
+                and a resizing wordmark would shove every nav link beside it. */}
+            <span className="relative hidden sm:block">
+              <span
+                aria-hidden="true"
+                className={cn('invisible block whitespace-nowrap', MARK_TYPE)}
+              >
+                {NAV_MARK.words[0]}
+                {brand.wordmarkSuffix}
+              </span>
+              <span className="absolute inset-0 flex items-center justify-center">
+                <Anagram
+                  words={NAV_MARK.words}
+                  hold={MARK_HOLD}
+                  glitchMs={MARK_GLITCH}
+                  travel={false}
+                  chroma={false}
+                  label={NAV_MARK.ariaLabel}
+                  letterClass={MARK_TYPE}
+                  tail={brand.wordmarkSuffix}
+                  tailClass="neon-text"
+                />
+              </span>
             </span>
           </Link>
 

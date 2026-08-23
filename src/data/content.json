@@ -27,6 +27,13 @@
       "ariaLabel": "Arkhins, an anagram of Krishna",
       "readyLabel": "OK",
       "waitingLabel": "···"
+    },
+    "navMark": {
+      "words": [
+        "KRISHNA",
+        "ARKHINS"
+      ],
+      "ariaLabel": "Krishna — also known as Arkhins"
     }
   },
   "fx": {

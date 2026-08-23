@@ -59,6 +59,12 @@ export interface AnagramProps {
   fit?: boolean;
   /** chromatic ghost layers during the glitch beat */
   chroma?: boolean;
+  /**
+   * Fly the letters into their new slots. Off, the swap happens behind the
+   * static instead: the noise clears and the next word is simply standing
+   * there — right for small settings where travel reads as jitter.
+   */
+  travel?: boolean;
   /** typography for the letters; may vary per word */
   letterClass?: LetterClass;
   /** trailing character, e.g. the brand full stop */
@@ -88,6 +94,7 @@ export function Anagram({
   once = false,
   fit = false,
   chroma = true,
+  travel = true,
   letterClass,
   tail,
   tailClass,
@@ -145,7 +152,7 @@ export function Anagram({
         setPhase('glitch');
       } else if (phase === 'glitch') {
         setIndex((i) => (i + 1) % words.length);
-        setPhase('move');
+        setPhase(travel ? 'move' : 'hold');
       } else {
         setPhase('hold');
       }
@@ -160,6 +167,7 @@ export function Anagram({
     hold,
     glitchMs,
     moveMs,
+    travel,
     words.length,
   ]);
 
@@ -235,7 +243,7 @@ export function Anagram({
       {current.map((letter, i) => (
         <motion.span
           key={letter.id}
-          layout={variant === 'main' && canAnimate && ready}
+          layout={variant === 'main' && canAnimate && ready && travel}
           className={cn(
             'inline-block transition-[color,text-shadow] duration-300',
             lettersClass
