@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ArrowUp } from 'lucide-react';
@@ -10,7 +11,7 @@ import { SiGoogle } from 'react-icons/si';
 import portfolioData from '@/data/portfolio.json';
 import content from '@/data/content.json';
 import { Anagram } from '@/components/fx';
-import { fill } from '@/lib/utils';
+import { cn, fill } from '@/lib/utils';
 import { SECTIONS } from './Navigation';
 
 const { basics, socialLinks } = portfolioData;
@@ -26,13 +27,60 @@ const SOCIAL_ICON: Record<string, React.ReactNode> = {
   telegram: <FaTelegram size={16} />,
 };
 
+/** The turning emblem that caps the wordmark, twin to the navbar's. */
+function Crest() {
+  return (
+    <span aria-hidden="true" className="shrink-0" style={{ perspective: '900px' }}>
+      <Image
+        src={brand.emblem}
+        alt=""
+        width={473}
+        height={512}
+        className="animate-spin-y h-20 w-auto sm:h-24"
+        style={{
+          transformStyle: 'preserve-3d',
+          filter:
+            'drop-shadow(0 0 18px rgb(var(--accent-rgb) / calc(0.55 * var(--fx))))',
+        }}
+      />
+    </span>
+  );
+}
+
+/** A standing emblem in the footer's left or right margin. */
+function Gutter({ side }: { side: 'left' | 'right' }) {
+  return (
+    <span
+      aria-hidden="true"
+      className={cn(
+        'pointer-events-none absolute top-1/2 z-0 hidden -translate-y-1/2 lg:block',
+        side === 'left' ? 'left-2 xl:left-8' : 'right-2 xl:right-8'
+      )}
+    >
+      <Image
+        src={brand.emblem}
+        alt=""
+        width={473}
+        height={512}
+        className="h-[11rem] w-auto opacity-[0.16] xl:h-[14rem] 2xl:h-[17rem]"
+      />
+    </span>
+  );
+}
+
 export function Footer() {
   const year = new Date().getFullYear();
   const [mark, setMark] = useState(0);
 
   return (
     <footer className="relative overflow-hidden border-t border-white/8 pt-16">
-      <div className="shell">
+      {/* The shell tops out at 84rem, so on a wide screen it leaves a gutter
+          either side. A standing emblem fills each one — no turn, no glow,
+          just a watermark at the same weight as the wordmark behind it. */}
+      <Gutter side="left" />
+      <Gutter side="right" />
+
+      <div className="shell relative z-10">
         {/* --------------------------------------------- columns */}
         <div className="grid gap-10 pb-14 md:grid-cols-[1.4fr_1fr_1fr]">
           <div>
@@ -93,6 +141,16 @@ export function Footer() {
               ))}
             </ul>
           </div>
+        </div>
+
+        {/* --------------------------------------------- crest bar
+            Three emblems above the wordmark, like a seal on a colophon: the
+            middle one turns on the same axis as the navbar's, the outriders
+            hold still so the row has an anchor at each end. */}
+        <div className="mb-7 flex items-center gap-5 sm:gap-6">
+          <span aria-hidden="true" className="neon-line h-px flex-1 opacity-30" />
+          <Crest />
+          <span aria-hidden="true" className="neon-line h-px flex-1 opacity-30" />
         </div>
 
         {/* --------------------------------------------- wordmark
