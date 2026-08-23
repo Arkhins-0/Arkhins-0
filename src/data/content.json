@@ -1,7 +1,8 @@
 {
   "brand": {
     "domain": "arkhins.com",
-    "monogramLength": 2,
+    "emblem": "/images/brand/arkhins-emblem.png",
+    "emblemAlt": "Arkhins emblem",
     "wordmarkSuffix": ".",
     "footerMark": {
       "words": [
@@ -164,7 +165,11 @@
       "timePlaceholder": "--:--:--",
       "base": "BASE",
       "status": "STATUS",
-      "statusValue": "Open"
+      "statusValue": "Open",
+      "qr": {
+        "value": "https://arkhins.com",
+        "aria": "QR code linking to https://arkhins.com"
+      }
     },
     "specRows": {
       "education": "Education",

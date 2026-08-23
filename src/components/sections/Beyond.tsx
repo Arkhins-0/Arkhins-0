@@ -61,13 +61,13 @@ export function Beyond() {
                 <ul className="mt-6 space-y-5">
                   {VOLUNTEERING.map((v) => (
                     <li key={v.id} className="group flex gap-4">
-                      <span className="relative h-12 w-12 shrink-0 overflow-hidden border border-white/12 bg-white/5">
+                      <span className="relative h-16 w-16 shrink-0">
                         <Image
                           src={v.logo}
                           alt=""
                           fill
-                          sizes="48px"
-                          className="object-contain p-1.5 transition-transform duration-500 group-hover:scale-110"
+                          sizes="64px"
+                          className="object-contain transition-transform duration-500 group-hover:scale-110"
                         />
                       </span>
                       <div className="min-w-0">

@@ -68,6 +68,7 @@ const config: Config = {
         'grid-slide': 'grid-slide 3.6s linear infinite',
         'orbit-slow': 'rotate360 26s linear infinite',
         'orbit-rev': 'rotate360 60s linear infinite reverse',
+        'spin-y': 'spin-y 9s linear infinite',
       },
       transitionTimingFunction: {
         swift: 'cubic-bezier(0.22, 1, 0.36, 1)',

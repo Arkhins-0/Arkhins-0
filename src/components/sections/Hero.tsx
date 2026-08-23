@@ -20,6 +20,7 @@ import { cn, fill } from '@/lib/utils';
 
 const { basics, socialLinks } = portfolioData;
 const COPY = content.hero;
+const BRAND = content.brand;
 const [FIRST, ...REST] = basics.name.split(' ');
 const SURNAME = REST.join(' ');
 
@@ -43,8 +44,8 @@ const MARQUEE = [
 /** Placement for each HUD chip, in the order the content file lists them. */
 const CHIP_ANCHORS = [
   'right-2 top-0 hidden sm:flex lg:right-16 xl:right-24',
-  '-right-2 top-[48%] hidden sm:flex lg:right-6 xl:right-10',
-  'bottom-[14%] -left-2 hidden md:flex lg:left-10',
+  'right-6 top-[48%] hidden sm:flex lg:right-24 xl:right-32',
+  'bottom-[14%] left-8 hidden md:flex lg:left-28',
 ];
 
 /** Where the subject starts dissolving, so the crop never reads as a cut. */
@@ -398,6 +399,42 @@ export function Hero() {
             transition={{ delay: 0.3, duration: 0.95, ease: [0.22, 1, 0.36, 1] }}
             className="relative z-10 order-2 mx-auto w-[80%] max-w-[20rem] sm:max-w-[24rem] lg:mx-0 lg:w-auto lg:max-w-none"
           >
+            {/* the emblem stands behind the subject as a crest — the artwork
+                is used as a mask so it takes the live accent rather than the
+                flat white of the file */}
+            <motion.div
+              aria-hidden="true"
+              // x/y carry the centring: framer owns the transform, so a
+              // -translate-x-1/2 class here would simply be overwritten
+              initial={{ opacity: 0, scale: 1.12, x: '-50%', y: '-50%' }}
+              animate={{ opacity: 1, scale: 1, x: '-50%', y: '-50%' }}
+              transition={{ delay: 0.45, duration: 1.4, ease: [0.22, 1, 0.36, 1] }}
+              className="pointer-events-none absolute left-[97%] top-[36%] -z-10 aspect-[473/512] w-[62%] opacity-[calc(0.3*var(--fx))]"
+              style={{ perspective: '1400px' }}
+            >
+              {/* the turn lives on a child: framer owns the parent's transform
+                  and would overwrite a CSS animation set alongside it */}
+              <div
+                className="h-full w-full"
+                style={{
+                  animation: 'spin-y 20s linear infinite',
+                  transformStyle: 'preserve-3d',
+                  WebkitMaskImage: `url(${BRAND.emblem})`,
+                  maskImage: `url(${BRAND.emblem})`,
+                  WebkitMaskSize: 'contain',
+                  maskSize: 'contain',
+                  WebkitMaskRepeat: 'no-repeat',
+                  maskRepeat: 'no-repeat',
+                  WebkitMaskPosition: 'center',
+                  maskPosition: 'center',
+                  background:
+                    'linear-gradient(160deg, rgb(var(--accent-rgb) / 0.95), rgb(var(--accent-2-rgb) / 0.6) 70%, transparent)',
+                  filter:
+                    'blur(0.4px) drop-shadow(0 0 26px rgb(var(--accent-rgb) / 0.5))',
+                }}
+              />
+            </motion.div>
+
             <Portrait src={basics.portrait} tilt={{ rx, ry }} />
 
             {/* floating HUD chips */}

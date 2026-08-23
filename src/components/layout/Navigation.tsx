@@ -1,12 +1,13 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Sparkles, Zap, ZapOff } from 'lucide-react';
 import { ACCENTS, useUI } from '@/context/UIContext';
 import { NeonButton } from '@/components/fx';
-import { cn, fill, getInitials } from '@/lib/utils';
+import { cn, fill } from '@/lib/utils';
 import portfolioData from '@/data/portfolio.json';
 import content from '@/data/content.json';
 
@@ -16,7 +17,6 @@ const { nav, brand, theme } = content;
 export const SECTIONS = nav.sections;
 
 const FIRST = basics.name.split(' ')[0];
-const MONOGRAM = getInitials(basics.name, brand.monogramLength);
 
 /** Watches every section and reports whichever owns the upper third. */
 function useActiveSection() {
@@ -129,11 +129,25 @@ export function Navigation() {
             className="group flex items-center gap-3"
             aria-label={fill(nav.homeAria, { name: basics.name })}
           >
+            {/* the emblem turns on its vertical axis, so it reads as a
+                machined part rather than a flat sticker */}
             <span
-              className="neon-fill notch-br grid h-9 w-9 place-items-center font-display text-sm font-extrabold"
-              style={{ ['--notch' as string]: '8px' }}
+              className="grid h-9 w-9 shrink-0 place-items-center"
+              style={{ perspective: '520px' }}
             >
-              {MONOGRAM}
+              <Image
+                src={brand.emblem}
+                alt={brand.emblemAlt}
+                width={73}
+                height={79}
+                priority
+                className="animate-spin-y h-9 w-auto"
+                style={{
+                  transformStyle: 'preserve-3d',
+                  filter:
+                    'drop-shadow(0 0 10px rgb(var(--accent-rgb) / calc(0.55 * var(--fx))))',
+                }}
+              />
             </span>
             <span className="hidden font-display text-base font-bold tracking-tight sm:block">
               {FIRST}

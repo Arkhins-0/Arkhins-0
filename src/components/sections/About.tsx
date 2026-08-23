@@ -3,13 +3,54 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
+import { FaGithub, FaInstagram, FaTelegram } from 'react-icons/fa6';
+import { FaDiscord } from 'react-icons/fa';
+import { Mail } from 'lucide-react';
 import portfolioData from '@/data/portfolio.json';
 import content from '@/data/content.json';
 import { Panel, Reveal, SectionHead, Stack, stackChild } from '@/components/fx';
 import { cn, fill } from '@/lib/utils';
+import { qr } from '@/lib/qr';
 
-const { basics, education, languages, interests } = portfolioData;
+const { basics, education, languages, interests, socialLinks } = portfolioData;
 const COPY = content.about;
+const BRAND = content.brand;
+
+const SOCIAL_ICON: Record<string, React.ReactNode> = {
+  github: <FaGithub />,
+  email: <Mail size={23} />,
+  instagram: <FaInstagram />,
+  discord: <FaDiscord />,
+  telegram: <FaTelegram />,
+};
+
+type CardLink = { id: string; name: string; username: string; url: string };
+
+/** The five handles that belong on a pass, in the order the X lays them out. */
+const CARD_LINKS: CardLink[] = [
+  socialLinks.find((s) => s.id === 'github') ?? null,
+  {
+    id: 'email',
+    name: 'Email',
+    username: basics.email,
+    url: `mailto:${basics.email}`,
+  },
+  socialLinks.find((s) => s.id === 'instagram') ?? null,
+  socialLinks.find((s) => s.id === 'discord') ?? null,
+  socialLinks.find((s) => s.id === 'telegram') ?? null,
+].filter((l): l is CardLink => l !== null);
+
+/** Corners, then the middle: 1 2 / 3 / 4 5. */
+const CARD_CELL = [
+  'col-start-1 row-start-1',
+  'col-start-3 row-start-1',
+  'col-start-2 row-start-2',
+  'col-start-1 row-start-3',
+  'col-start-3 row-start-3',
+];
+
+/** Encoded once at module scope — the URL is static content, not state. */
+const QR = qr(COPY.idCard.qr.value);
 
 /* Phrases the content file marks for emphasis, so the bio reads as edited copy
    rather than a dumped data string. */
@@ -148,10 +189,27 @@ export function About() {
                   />
                 </div>
 
-                <h3 className="mt-4 font-display text-xl font-bold leading-tight">
-                  {basics.name}
-                </h3>
-                <p className="hud mt-1 text-ink-faint">{basics.headline}</p>
+                <div className="mt-4 flex items-start justify-between gap-3">
+                  <div className="min-w-0">
+                    <h3 className="font-display text-xl font-bold leading-tight">
+                      {basics.name}
+                    </h3>
+                    <p className="hud mt-1 text-ink-faint">{basics.headline}</p>
+                  </div>
+
+                  {/* the crest sits with the name the way a seal sits on a pass */}
+                  <Image
+                    src={BRAND.emblem}
+                    alt=""
+                    width={512}
+                    height={512}
+                    className="h-16 w-auto shrink-0"
+                    style={{
+                      filter:
+                        'drop-shadow(0 0 12px rgb(var(--accent-rgb) / calc(0.6 * var(--fx))))',
+                    }}
+                  />
+                </div>
 
                 <dl className="mt-5 space-y-2 border-t border-white/8 pt-4 font-mono text-[0.7rem]">
                   <div className="flex justify-between">
@@ -173,19 +231,63 @@ export function About() {
                   </div>
                 </dl>
 
-                {/* pseudo-barcode */}
-                <div
-                  className="mt-5 h-8 w-full opacity-70"
-                  aria-hidden="true"
-                  style={{
-                    backgroundImage:
-                      'repeating-linear-gradient(90deg, rgba(233,237,251,0.85) 0 1px, transparent 1px 3px, rgba(233,237,251,0.85) 3px 5px, transparent 5px 9px)',
-                    maskImage:
-                      'linear-gradient(90deg, #000, #000 88%, transparent)',
-                    WebkitMaskImage:
-                      'linear-gradient(90deg, #000, #000 88%, transparent)',
-                  }}
-                />
+                {/* a real QR of the site URL, lit in the live accent rather
+                    than printer's black */}
+                {QR && (
+                  <div className="mt-5 flex items-center gap-4 border-t border-white/8 pt-4">
+                    <a
+                      href={COPY.idCard.qr.value}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group/code block transition-transform duration-500 ease-swift hover:scale-[1.03]"
+                    >
+                      <svg
+                        viewBox={`0 0 ${QR.size} ${QR.size}`}
+                        shapeRendering="crispEdges"
+                        role="img"
+                        aria-label={COPY.idCard.qr.aria}
+                        className="block h-[7rem] w-[7rem]"
+                        style={{
+                          filter:
+                            'drop-shadow(0 0 4px rgb(var(--accent-rgb) / calc(0.6 * var(--fx))))',
+                        }}
+                      >
+                        {/* fill on the group: a CSS var cannot ride on the
+                            presentation attribute of every rect */}
+                        <g style={{ fill: 'rgb(var(--accent-rgb))' }}>
+                          {QR.runs.map((run) => (
+                            <rect
+                              key={`${run.x}-${run.y}`}
+                              x={run.x}
+                              y={run.y}
+                              width={run.width}
+                              height={1}
+                            />
+                          ))}
+                        </g>
+                      </svg>
+                    </a>
+
+                    {/* the handles that go with the code, set as a quincunx */}
+                    <ul className="ml-3 grid grid-cols-3 grid-rows-3 place-items-center">
+                      {CARD_LINKS.map((link, i) => (
+                        <li key={link.id} className={CARD_CELL[i]}>
+                          <a
+                            href={link.url}
+                            {...(link.id === 'email'
+                              ? {}
+                              : { target: '_blank', rel: 'noopener noreferrer' })}
+                            aria-label={link.name}
+                            title={`${link.name} · ${link.username}`}
+                            className="grid h-10 w-10 place-items-center text-[1.45rem] text-ink-faint transition-all duration-300 hover:-translate-y-0.5 hover:text-accent"
+                          >
+                            {SOCIAL_ICON[link.id] ?? null}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
               </div>
             </Panel>
           </Reveal>

@@ -418,6 +418,13 @@ video {
   }
 }
 
+/* Horizontal turn for the nav emblem — a flat spin about the Y axis. */
+@keyframes spin-y {
+  to {
+    transform: rotateY(360deg);
+  }
+}
+
 @keyframes grid-slide {
   from {
     background-position: 0 0;
