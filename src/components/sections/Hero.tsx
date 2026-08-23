@@ -396,11 +396,9 @@ export function Hero() {
             initial={{ opacity: 0, scale: 0.94, y: 24 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.95, ease: [0.22, 1, 0.36, 1] }}
-            className="pointer-events-none absolute -right-[6%] bottom-0 z-0 order-2 w-[74%] max-w-[21rem] lg:pointer-events-auto lg:relative lg:inset-auto lg:w-auto lg:max-w-none"
+            className="relative z-10 order-2 mx-auto w-[80%] max-w-[20rem] sm:max-w-[24rem] lg:mx-0 lg:w-auto lg:max-w-none"
           >
-            <div className="portrait-ghost">
-              <Portrait src={basics.portrait} tilt={{ rx, ry }} />
-            </div>
+            <Portrait src={basics.portrait} tilt={{ rx, ry }} />
 
             {/* floating HUD chips */}
             {COPY.chips.map((chip, i) => (

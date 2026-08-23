@@ -508,16 +508,6 @@ video {
   margin-bottom: 1em;
 }
 
-/* Below lg the portrait sits behind the headline as a ghost rather than
-   consuming a whole screen above it. */
-@media (max-width: 1023px) {
-  .portrait-ghost {
-    opacity: 0.42;
-    -webkit-mask-image: linear-gradient(to top, transparent 3%, #000 30%);
-    mask-image: linear-gradient(to top, transparent 3%, #000 30%);
-  }
-}
-
 /* While the custom cursor is live, suppress every native cursor — including
    the UA pointer on links and the text caret over copy. */
 .cursor-hidden,
