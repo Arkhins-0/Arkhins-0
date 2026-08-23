@@ -38,7 +38,6 @@ export const metadata: Metadata = {
   description: meta.description,
   keywords: meta.keywords,
   authors: [{ name: meta.author }],
-  icons: { icon: basics.profilePicture },
   openGraph: {
     title: meta.title,
     description: meta.description,
