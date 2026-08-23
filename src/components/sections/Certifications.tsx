@@ -1,18 +1,24 @@
 'use client';
 
+import { useMemo, useState } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { ExternalLink, ShieldCheck } from 'lucide-react';
+import { Award, ExternalLink, ShieldCheck } from 'lucide-react';
 import portfolioData from '@/data/portfolio.json';
 import content from '@/data/content.json';
-import { fill } from '@/lib/utils';
-import { Panel, SectionHead, Stack, stackChild } from '@/components/fx';
+import { cn, fill } from '@/lib/utils';
+import { Panel, Reveal, SectionHead, Stack, stackChild } from '@/components/fx';
 
 const COPY = content.proof;
 
 const CERTS = portfolioData.certifications.filter(
   (c) => !c.id.includes('placeholder')
 );
+
+const CATEGORIES = [
+  COPY.allFilter,
+  ...Array.from(new Set(CERTS.map((c) => c.category))),
+];
 
 /** Boarding-pass stub: hazard-taped counterfoil on the left, detail on the
  *  right, foil sheen sliding across the whole thing on hover. */
@@ -50,15 +56,26 @@ function Stub({ cert }: { cert: (typeof CERTS)[number] }) {
       {/* detail */}
       <div className="relative flex flex-col gap-2 p-5">
         <div className="flex items-start gap-3">
-          <span className="relative h-10 w-10 shrink-0 overflow-hidden">
-            <Image
-              src={cert.badge}
-              alt=""
-              fill
-              sizes="40px"
-              className="object-contain"
-            />
-          </span>
+          {/* not every issuer ships a badge; those fall back to a seal */}
+          {cert.badge ? (
+            <span className="relative h-10 w-10 shrink-0 overflow-hidden">
+              <Image
+                src={cert.badge}
+                alt=""
+                fill
+                sizes="40px"
+                className="object-contain"
+              />
+            </span>
+          ) : (
+            <span
+              aria-hidden="true"
+              className="notch-br grid h-10 w-10 shrink-0 place-items-center border border-accent/30 bg-accent/8 text-accent"
+              style={{ ['--notch' as string]: '8px' }}
+            >
+              <Award size={17} />
+            </span>
+          )}
           <div className="min-w-0 flex-1">
             <h3 className="font-display text-base font-bold leading-tight">
               {cert.name}
@@ -110,18 +127,61 @@ function Stub({ cert }: { cert: (typeof CERTS)[number] }) {
 }
 
 export function Certifications() {
+  const [filter, setFilter] = useState(COPY.allFilter);
+
+  const shown = useMemo(
+    () =>
+      filter === COPY.allFilter
+        ? CERTS
+        : CERTS.filter((c) => c.category === filter),
+    [filter]
+  );
+
   return (
     <section id="proof" className="band">
       <div className="shell">
         <SectionHead {...COPY.head} />
 
-        <Stack className="mt-14">
+        {/* filters */}
+        <Reveal className="mt-12 flex flex-wrap items-center gap-2">
+          <span className="eyebrow mr-3">{COPY.indexLabel}</span>
+          {CATEGORIES.map((c) => (
+            <button
+              key={c}
+              onClick={() => setFilter(c)}
+              aria-pressed={filter === c}
+              className={cn(
+                'border px-3 py-1.5 font-mono text-[0.68rem] uppercase tracking-[0.14em] transition-all duration-300',
+                filter === c
+                  ? 'border-accent bg-accent/12 text-accent'
+                  : 'border-white/10 text-ink-faint hover:border-white/30 hover:text-ink'
+              )}
+            >
+              {c}
+              <span className="ml-2 text-[0.6rem] opacity-50">
+                {String(
+                  c === COPY.allFilter
+                    ? CERTS.length
+                    : CERTS.filter((x) => x.category === c).length
+                ).padStart(2, '0')}
+              </span>
+            </button>
+          ))}
+        </Reveal>
+
+        <Stack key={filter} className="mt-6" amount={0.05}>
           <ul className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-            {CERTS.map((c) => (
+            {shown.map((c) => (
               <Stub key={c.id} cert={c} />
             ))}
           </ul>
         </Stack>
+
+        {shown.length === 0 && (
+          <p className="py-14 text-center font-mono text-sm text-ink-faint">
+            {fill(COPY.emptyState, { filter })}
+          </p>
+        )}
       </div>
     </section>
   );

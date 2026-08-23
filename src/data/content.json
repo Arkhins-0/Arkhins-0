@@ -237,7 +237,10 @@
     "unverifiedLabel": "On file",
     "verifyAction": "Verify",
     "verifyAria": "Verify {name}",
-    "emptyCredential": "—"
+    "emptyCredential": "—",
+    "indexLabel": "Filter",
+    "allFilter": "All",
+    "emptyState": "Nothing filed under “{filter}” yet."
   },
   "beyond": {
     "head": {
