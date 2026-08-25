@@ -1,12 +1,10 @@
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
-// Helper function to return asset paths (Vercel serves public assets from root)
+/** Public assets are served from the root; external URLs pass through. */
 export function getAssetPath(path: string): string {
   if (!path) return path;
-  // External URLs returned as-is
   if (path.startsWith('http://') || path.startsWith('https://')) return path;
-  // Ensure path starts with /
   return path.startsWith('/') ? path : `/${path}`;
 }
 
@@ -14,15 +12,27 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export function formatDate(date: string): string {
-  return date;
+/**
+ * Fills `{token}` placeholders in a copy string from the data files. Every
+ * rendered sentence lives in JSON, so anything variable is interpolated here
+ * rather than concatenated in a component.
+ */
+export function fill(
+  template: string,
+  vars: Record<string, string | number | undefined>
+): string {
+  return template.replace(/\{(\w+)\}/g, (match, key: string) => {
+    const value = vars[key];
+    return value === undefined ? match : String(value);
+  });
 }
 
-export function getInitials(name: string): string {
+/** Initials, capped to `count` characters. */
+export function getInitials(name: string, count = 2): string {
   return name
     .split(' ')
-    .map((n) => n[0])
+    .map((part) => part[0])
     .join('')
     .toUpperCase()
-    .slice(0, 2);
+    .slice(0, count);
 }

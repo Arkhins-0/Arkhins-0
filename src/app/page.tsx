@@ -1,14 +1,14 @@
-import { Navigation } from '@/components/layout/Navigation';
-import { Footer } from '@/components/layout/Footer';
-import { SettingsPanel } from '@/components/layout/SettingsPanel';
-import { Hero } from '@/components/sections/Hero';
-import { About } from '@/components/sections/About';
-import { Projects } from '@/components/sections/Projects';
-import { Experience } from '@/components/sections/Experience';
-import { Skills } from '@/components/sections/Skills';
-import { Certifications } from '@/components/sections/Certifications';
-import { Volunteering } from '@/components/sections/Volunteering';
-import { Contact } from '@/components/sections/Contact';
+import { Navigation, Footer } from '@/components/layout';
+import {
+  Hero,
+  About,
+  Projects,
+  Experience,
+  Skills,
+  Certifications,
+  Beyond,
+  Contact,
+} from '@/components/sections';
 
 export default function Home() {
   return (
@@ -21,11 +21,10 @@ export default function Home() {
         <Experience />
         <Skills />
         <Certifications />
-        <Volunteering />
+        <Beyond />
         <Contact />
       </main>
       <Footer />
-      <SettingsPanel />
     </>
   );
 }

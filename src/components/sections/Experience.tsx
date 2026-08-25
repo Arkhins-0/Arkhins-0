@@ -1,213 +1,165 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useRef } from 'react';
 import Image from 'next/image';
-import { Briefcase, Calendar, MapPin, ExternalLink, ChevronRight, ChevronDown } from 'lucide-react';
+import { motion, useScroll, useSpring } from 'framer-motion';
+import { ArrowUpRight } from 'lucide-react';
 import portfolioData from '@/data/portfolio.json';
-import { RevealOnScroll } from '@/components/ui/Animations';
-import { GlowingEffect } from '@/components/ui/glowing-effect';
-import { cn, getAssetPath } from '@/lib/utils';
+import content from '@/data/content.json';
+import { Panel, Reveal, SectionHead } from '@/components/fx';
+import { cn } from '@/lib/utils';
+
+const COPY = content.path;
+const ROLES = portfolioData.experience.filter(
+  (e) => !e.id.includes('placeholder')
+);
+
+function Entry({ role, n }: { role: (typeof ROLES)[number]; n: number }) {
+  return (
+    <div className="group relative pl-14 md:pl-24">
+      {/* node on the rail */}
+      <span className="absolute left-[1.15rem] top-7 z-10 flex h-3 w-3 -translate-x-1/2 items-center justify-center md:left-[2.4rem]">
+        <span
+          className={cn(
+            'absolute h-full w-full rotate-45 transition-all duration-500',
+            role.current
+              ? 'bg-accent shadow-[0_0_16px_rgb(var(--accent-rgb)/0.9)]'
+              : 'bg-bg ring-1 ring-white/25 group-hover:bg-accent group-hover:ring-accent'
+          )}
+        />
+        {role.current && (
+          <span className="absolute h-full w-full rotate-45 bg-accent animate-pulse-ring" />
+        )}
+      </span>
+
+      {/* branch line into the card */}
+      <span
+        aria-hidden="true"
+        className="absolute left-[1.15rem] top-[2.15rem] h-px w-8 origin-left scale-x-0 bg-accent/60 transition-transform duration-500 ease-swift group-hover:scale-x-100 md:left-[2.4rem] md:w-12"
+      />
+
+      <Panel
+        cut={18}
+        spotlight
+        className="transition-transform duration-500 ease-swift group-hover:translate-x-1"
+      >
+        <div className="relative overflow-hidden p-6 md:p-7">
+          {/* oversized index watermark */}
+          <span
+            aria-hidden="true"
+            className="pointer-events-none absolute -right-2 -top-6 font-display text-[6rem] font-extrabold leading-none text-white/[0.035]"
+          >
+            {String(n).padStart(2, '0')}
+          </span>
+
+          <div className="relative flex flex-wrap items-start gap-4">
+            <span className="relative h-11 w-11 shrink-0 overflow-hidden border border-white/12 bg-white/5">
+              <Image
+                src={role.logo}
+                alt=""
+                fill
+                sizes="44px"
+                className="object-contain p-1.5"
+              />
+            </span>
+
+            <div className="min-w-0 flex-1">
+              <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+                <h3 className="font-display text-lg font-bold leading-tight md:text-xl">
+                  {role.position}
+                </h3>
+                {role.current && (
+                  <span className="hud border border-accent/45 px-1.5 py-0.5 text-accent">
+                    {COPY.currentLabel}
+                  </span>
+                )}
+              </div>
+
+              <a
+                href={role.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-1 inline-flex items-center gap-1 text-sm text-ink-dim transition-colors hover:text-accent"
+              >
+                {role.company}
+                <ArrowUpRight size={12} />
+              </a>
+
+              <p className="hud mt-2 text-ink-faint">
+                {role.startDate} — {role.endDate}
+                <span className="text-accent"> · </span>
+                {role.type}
+                <span className="text-accent"> · </span>
+                {role.location}
+              </p>
+            </div>
+          </div>
+
+          {/* highlights read as a terminal log */}
+          <ul className="relative mt-5 space-y-1.5 border-l border-white/10 pl-4">
+            {role.highlights.map((h) => (
+              <li
+                key={h}
+                className="relative text-[0.86rem] leading-relaxed text-ink-dim"
+              >
+                <span className="absolute -left-4 text-accent/70">▸</span>
+                {h}
+              </li>
+            ))}
+          </ul>
+
+          <ul className="relative mt-5 flex flex-wrap gap-1.5">
+            {role.technologies.map((t) => (
+              <li
+                key={t}
+                className="border border-white/10 px-2 py-0.5 font-mono text-[0.63rem] text-ink-faint transition-colors group-hover:border-accent/25 group-hover:text-ink-dim"
+              >
+                {t}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </Panel>
+    </div>
+  );
+}
 
 export function Experience() {
-  const { experience } = portfolioData;
-  const validExperiences = experience.filter(exp => !exp.id.includes('placeholder'));
-  const [expandedId, setExpandedId] = useState<string | null>(null);
-
-  // Close expanded card when clicking outside
-  useEffect(() => {
-    const handleClickOutside = () => setExpandedId(null);
-    if (expandedId) {
-      document.addEventListener('click', handleClickOutside);
-      return () => document.removeEventListener('click', handleClickOutside);
-    }
-  }, [expandedId]);
+  const track = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: track,
+    offset: ['start 65%', 'end 60%'],
+  });
+  const fill = useSpring(scrollYProgress, {
+    stiffness: 120,
+    damping: 28,
+    restDelta: 0.001,
+  });
 
   return (
-    <section id="experience" className="section-padding">
-      <div className="container-custom">
-        {/* Section Header */}
-        <RevealOnScroll className="text-center mb-16">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-display font-bold mb-4">
-            Work <span className="text-gradient">Experience</span>
-          </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            My professional journey and the experiences that have shaped my career
-          </p>
-        </RevealOnScroll>
+    <section id="path" className="band">
+      <div className="shell">
+        <SectionHead {...COPY.head} />
 
-        {/* Timeline */}
-        <div className="relative max-w-4xl mx-auto">
-          {/* Timeline Line */}
-          <div className="absolute left-0 md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-accent via-accent/50 to-transparent md:-translate-x-1/2" />
+        <div ref={track} className="relative mt-14">
+          {/* rail: dim base + scroll-linked neon fill */}
+          <div
+            aria-hidden="true"
+            className="absolute bottom-0 left-[1.15rem] top-0 w-px bg-white/10 md:left-[2.4rem]"
+          />
+          <motion.div
+            aria-hidden="true"
+            style={{ scaleY: fill }}
+            className="absolute bottom-0 left-[1.15rem] top-0 w-px origin-top bg-accent shadow-[0_0_14px_rgb(var(--accent-rgb)/0.8)] md:left-[2.4rem]"
+          />
 
-          {/* Experience Items */}
-          <div className="space-y-12">
-            {validExperiences.map((exp, index) => (
-              <RevealOnScroll
-                key={exp.id}
-                delay={index * 0.1}
-                direction={index % 2 === 0 ? 'right' : 'left'}
-              >
-                <div
-                  className={cn(
-                    'relative grid md:grid-cols-2 gap-8 md:gap-16',
-                    index % 2 === 0 ? 'md:text-right' : ''
-                  )}
-                >
-                  {/* Timeline Node */}
-                  <div className="absolute left-0 md:left-1/2 top-0 md:-translate-x-1/2">
-                    <motion.div
-                      initial={{ scale: 0 }}
-                      whileInView={{ scale: 1 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: 0.2, type: 'spring' }}
-                      className="w-4 h-4 rounded-full bg-accent border-4 border-background shadow-lg shadow-accent/50"
-                    />
-                  </div>
-
-                  {/* Content - Alternating sides on desktop */}
-                  <div
-                    className={cn(
-                      'pl-8 md:pl-0',
-                      index % 2 === 0 ? 'md:col-start-1' : 'md:col-start-2'
-                    )}
-                  >
-                    <motion.div
-                      whileHover={{ y: -5 }}
-                      className="relative p-6 rounded-2xl glass-card gradient-border cursor-pointer"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setExpandedId(expandedId === exp.id ? null : exp.id);
-                      }}
-                    >
-                      <GlowingEffect
-                        spread={40}
-                        glow={true}
-                        disabled={false}
-                        proximity={64}
-                        inactiveZone={0.01}
-                        borderWidth={2}
-                      />
-                      {/* Header */}
-                      <div className={cn('flex items-start gap-4', index % 2 === 0 ? 'md:flex-row-reverse' : '')}>
-
-                        {/* Company Logo */}
-                        <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-accent/20 to-accent/5 flex items-center justify-center overflow-hidden">
-                          {exp.logo ? (
-                            <Image
-                              src={getAssetPath(exp.logo)}
-                              alt={exp.company + ' logo'}
-                              width={40}
-                              height={40}
-                              className="object-contain"
-                            />
-                          ) : (
-                            <Briefcase size={24} className="text-accent" />
-                          )}
-                        </div>
-                        
-                        <div className={cn('flex-1', index % 2 === 0 ? 'md:text-right' : '')}>
-                          <h3 className="text-lg font-semibold">{exp.position}</h3>
-                          <p className="text-accent font-medium">{exp.company}</p>
-                        </div>
-
-                        {/* Expand/Collapse Icon */}
-                        <motion.div
-                          animate={{ rotate: expandedId === exp.id ? 180 : 0 }}
-                          transition={{ duration: 0.2 }}
-                        >
-                          <ChevronDown size={20} className="text-accent" />
-                        </motion.div>
-                      </div>
-
-                      {/* Meta - Always Visible */}
-                      <div className={cn(
-                        'flex flex-wrap items-center gap-4 mt-4 text-sm text-muted-foreground',
-                        index % 2 === 0 ? 'md:justify-end' : ''
-                      )}>
-                        <span className="flex items-center gap-1">
-                          <Calendar size={14} />
-                          {exp.startDate} - {exp.current ? 'Present' : exp.endDate}
-                        </span>
-                        <span className="flex items-center gap-1">
-                          <MapPin size={14} />
-                          {exp.location}
-                        </span>
-                        <span className="px-2 py-0.5 rounded-full bg-accent/10 text-accent text-xs">
-                          {exp.type}
-                        </span>
-                      </div>
-
-                      {/* Expandable Content */}
-                      <AnimatePresence>
-                        {expandedId === exp.id && (
-                          <motion.div
-                            initial={{ height: 0, opacity: 0 }}
-                            animate={{ height: 'auto', opacity: 1 }}
-                            exit={{ height: 0, opacity: 0 }}
-                            transition={{ duration: 0.3 }}
-                            className="overflow-hidden"
-                          >
-                            {/* Description */}
-                            <p className="mt-4 text-sm text-muted-foreground">
-                              {exp.description}
-                            </p>
-
-                            {/* Highlights */}
-                            <ul className={cn('mt-4 space-y-2', index % 2 === 0 ? 'md:text-left' : '')}>
-                              {exp.highlights.map((highlight, i) => (
-                                <li
-                                  key={i}
-                                  className="flex items-start gap-2 text-sm text-muted-foreground"
-                                >
-                                  <ChevronRight size={14} className="flex-shrink-0 mt-1 text-accent" />
-                                  {highlight}
-                                </li>
-                              ))}
-                            </ul>
-
-                            {/* Technologies */}
-                            <div className={cn('flex flex-wrap gap-2 mt-4', index % 2 === 0 ? 'md:justify-end' : '')}>
-                              {exp.technologies.map((tech) => (
-                                <span
-                                  key={tech}
-                                  className="px-2 py-1 text-xs rounded-md bg-muted text-muted-foreground"
-                                >
-                                  {tech}
-                                </span>
-                              ))}
-                            </div>
-
-                            {/* Link */}
-                            {exp.url && (
-                              <a
-                                href={exp.url}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className={cn(
-                                  'inline-flex items-center gap-1 mt-4 text-sm text-accent hover:underline z-20 relative',
-                                  index % 2 === 0 ? 'md:justify-end md:ml-auto' : ''
-                                )}
-                                style={{ zIndex: 20, position: 'relative' }}
-                                onClick={(e) => e.stopPropagation()}
-                              >
-                                <span>Visit Company</span>
-                                <ExternalLink size={14} />
-                              </a>
-                            )}
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-                    </motion.div>
-                  </div>
-
-                  {/* Empty column for alternating layout */}
-                  <div className="hidden md:block" />
-                </div>
-              </RevealOnScroll>
+          <ul className="space-y-8">
+            {ROLES.map((role, i) => (
+              <Reveal key={role.id} as="li" dir="up" delay={i * 0.05}>
+                <Entry role={role} n={i + 1} />
+              </Reveal>
             ))}
-          </div>
+          </ul>
         </div>
       </div>
     </section>

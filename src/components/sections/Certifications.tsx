@@ -1,114 +1,187 @@
 'use client';
 
-import { motion } from 'framer-motion';
-import { Award, ExternalLink, Calendar, CheckCircle } from 'lucide-react';
+import { useMemo, useState } from 'react';
 import Image from 'next/image';
-import { useState } from 'react';
+import { motion } from 'framer-motion';
+import { Award, ExternalLink, ShieldCheck } from 'lucide-react';
 import portfolioData from '@/data/portfolio.json';
-import { RevealOnScroll } from '@/components/ui/Animations';
-import { GlowingEffect } from '@/components/ui/glowing-effect';
-import { getAssetPath } from '@/lib/utils';
+import content from '@/data/content.json';
+import { cn, fill } from '@/lib/utils';
+import { Panel, Reveal, SectionHead, Stack, stackChild } from '@/components/fx';
 
-export function Certifications() {
-  const { certifications } = portfolioData;
-  const validCertifications = certifications.filter(cert => !cert.id.includes('placeholder'));
-  const [imageErrors, setImageErrors] = useState<Set<string>>(new Set());
+const COPY = content.proof;
 
-  const handleImageError = (certId: string) => {
-    setImageErrors(prev => new Set(prev).add(certId));
-  };
+const CERTS = portfolioData.certifications.filter(
+  (c) => !c.id.includes('placeholder')
+);
+
+const CATEGORIES = [
+  COPY.allFilter,
+  ...Array.from(new Set(CERTS.map((c) => c.category))),
+];
+
+/** Boarding-pass stub: hazard-taped counterfoil on the left, detail on the
+ *  right, foil sheen sliding across the whole thing on hover. */
+function Stub({ cert }: { cert: (typeof CERTS)[number] }) {
+  const year = cert.date.split(' ').pop();
+  const verified = Boolean(cert.credentialUrl);
+
+  const body = (
+    <div className="group/stub relative grid h-full grid-cols-[3.25rem_1fr] overflow-hidden">
+      {/* foil sheen */}
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 z-20 -translate-x-full opacity-0 transition-all duration-[900ms] ease-swift group-hover/stub:translate-x-full group-hover/stub:opacity-100"
+        style={{
+          background:
+            'linear-gradient(105deg, transparent 30%, rgba(255,255,255,0.16) 45%, rgb(var(--accent-rgb) / 0.24) 52%, rgba(255,255,255,0.12) 60%, transparent 72%)',
+        }}
+      />
+
+      {/* counterfoil */}
+      <div className="relative flex flex-col items-center justify-between border-r border-dashed border-white/18 bg-white/[0.03] py-4">
+        <span className="hazard h-8 w-4 opacity-60" />
+        <span
+          className="hud whitespace-nowrap text-ink-faint"
+          style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
+        >
+          {verified ? COPY.verifiedLabel : COPY.unverifiedLabel} · {year}
+        </span>
+        <ShieldCheck
+          size={14}
+          className={verified ? 'text-accent' : 'text-ink-faint'}
+        />
+      </div>
+
+      {/* detail */}
+      <div className="relative flex flex-col gap-2 p-5">
+        <div className="flex items-start gap-3">
+          {/* not every issuer ships a badge; those fall back to a seal */}
+          {cert.badge ? (
+            <span className="relative h-10 w-10 shrink-0 overflow-hidden">
+              <Image
+                src={cert.badge}
+                alt=""
+                fill
+                sizes="40px"
+                className="object-contain"
+              />
+            </span>
+          ) : (
+            <span
+              aria-hidden="true"
+              className="notch-br grid h-10 w-10 shrink-0 place-items-center border border-accent/30 bg-accent/8 text-accent"
+              style={{ ['--notch' as string]: '8px' }}
+            >
+              <Award size={17} />
+            </span>
+          )}
+          <div className="min-w-0 flex-1">
+            <h3 className="font-display text-base font-bold leading-tight">
+              {cert.name}
+            </h3>
+            <p className="hud mt-1 text-accent">{cert.issuer}</p>
+          </div>
+        </div>
+
+        <p className="text-[0.83rem] leading-relaxed text-ink-dim">
+          {cert.description}
+        </p>
+
+        <div className="mt-auto flex items-center justify-between gap-3 border-t border-white/8 pt-3">
+          <span className="hud text-ink-faint">{cert.date}</span>
+          {verified ? (
+            <span className="hud inline-flex items-center gap-1.5 text-accent transition-transform duration-300 group-hover/stub:translate-x-0.5">
+              {COPY.verifyAction}
+              <ExternalLink size={11} />
+            </span>
+          ) : (
+            <span className="hud text-ink-faint">
+              {cert.credentialId ?? COPY.emptyCredential}
+            </span>
+          )}
+        </div>
+      </div>
+    </div>
+  );
 
   return (
-    <section id="certifications" className="section-padding">
-      <div className="container-custom">
-        {/* Section Header */}
-        <RevealOnScroll className="text-center mb-16">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-display font-bold mb-4">
-            <span className="text-gradient">Certifications</span> & Achievements
-          </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            Professional certifications and courses that validate my expertise
-          </p>
-        </RevealOnScroll>
+    <motion.li variants={stackChild} className="h-full">
+      <Panel cut={16} spotlight className="h-full">
+        {verified ? (
+          <a
+            href={cert.credentialUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block h-full"
+            aria-label={fill(COPY.verifyAria, { name: cert.name })}
+          >
+            {body}
+          </a>
+        ) : (
+          body
+        )}
+      </Panel>
+    </motion.li>
+  );
+}
 
-        {/* Certifications Grid */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {validCertifications.map((cert, index) => (
-            <RevealOnScroll key={cert.id} delay={index * 0.1}>
-              <motion.div
-                whileHover={{ y: -5 }}
-                className="relative h-full p-6 rounded-2xl glass-card gradient-border"
-              >
-                <GlowingEffect
-                  spread={40}
-                  glow={true}
-                  disabled={false}
-                  proximity={64}
-                  inactiveZone={0.01}
-                  borderWidth={2}
-                />
-                
-                {/* Icon */}
-                <div className="relative mb-4">
-                  {cert.badge && !imageErrors.has(cert.id) ? (
-                    <div className="h-12 flex items-center justify-start overflow-hidden">
-                      <Image
-                        src={getAssetPath(cert.badge)}
-                        alt={cert.name}
-                        width={100}
-                        height={48}
-                        className="h-full w-auto object-contain"
-                        onError={() => handleImageError(cert.id)}
-                      />
-                    </div>
-                  ) : (
-                    <div className="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center">
-                      <Award size={24} className="text-accent" />
-                    </div>
-                  )}
-                  <motion.div
-                    initial={{ scale: 0 }}
-                    whileInView={{ scale: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.3, type: 'spring' }}
-                    className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-green-500 flex items-center justify-center"
-                  >
-                    <CheckCircle size={12} className="text-white" />
-                  </motion.div>
-                </div>
+export function Certifications() {
+  const [filter, setFilter] = useState(COPY.allFilter);
 
-                {/* Content */}
-                <h3 className="font-semibold mb-1 group-hover:text-accent transition-colors">
-                  {cert.name}
-                </h3>
-                <p className="text-sm text-accent mb-2">{cert.issuer}</p>
-                
-                <div className="flex items-center gap-2 text-xs text-muted-foreground mb-3">
-                  <Calendar size={12} />
-                  {cert.date}
-                </div>
+  const shown = useMemo(
+    () =>
+      filter === COPY.allFilter
+        ? CERTS
+        : CERTS.filter((c) => c.category === filter),
+    [filter]
+  );
 
-                <p className="text-sm text-muted-foreground line-clamp-2 mb-4">
-                  {cert.description}
-                </p>
+  return (
+    <section id="proof" className="band">
+      <div className="shell">
+        <SectionHead {...COPY.head} />
 
-                {/* Verify Link */}
-                {cert.credentialUrl && (
-                  <a
-                    href={cert.credentialUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 text-sm text-accent hover:underline z-20 relative"
-                    style={{ zIndex: 20, position: 'relative' }}
-                  >
-                    <span>Verify Credential</span>
-                    <ExternalLink size={12} />
-                  </a>
-                )}
-              </motion.div>
-            </RevealOnScroll>
+        {/* filters */}
+        <Reveal className="mt-12 flex flex-wrap items-center gap-2">
+          <span className="eyebrow mr-3">{COPY.indexLabel}</span>
+          {CATEGORIES.map((c) => (
+            <button
+              key={c}
+              onClick={() => setFilter(c)}
+              aria-pressed={filter === c}
+              className={cn(
+                'border px-3 py-1.5 font-mono text-[0.68rem] uppercase tracking-[0.14em] transition-all duration-300',
+                filter === c
+                  ? 'border-accent bg-accent/12 text-accent'
+                  : 'border-white/10 text-ink-faint hover:border-white/30 hover:text-ink'
+              )}
+            >
+              {c}
+              <span className="ml-2 text-[0.6rem] opacity-50">
+                {String(
+                  c === COPY.allFilter
+                    ? CERTS.length
+                    : CERTS.filter((x) => x.category === c).length
+                ).padStart(2, '0')}
+              </span>
+            </button>
           ))}
-        </div>
+        </Reveal>
+
+        <Stack key={filter} className="mt-6" amount={0.05}>
+          <ul className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+            {shown.map((c) => (
+              <Stub key={c.id} cert={c} />
+            ))}
+          </ul>
+        </Stack>
+
+        {shown.length === 0 && (
+          <p className="py-14 text-center font-mono text-sm text-ink-faint">
+            {fill(COPY.emptyState, { filter })}
+          </p>
+        )}
       </div>
     </section>
   );

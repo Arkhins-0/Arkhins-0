@@ -1,4 +1,5 @@
-// Portfolio data types for type-safe JSON mapping
+// Shape of src/data/portfolio.json. The components read the JSON directly and
+// infer their types from it; this file is the human-readable schema.
 
 export interface Meta {
   title: string;
@@ -18,9 +19,13 @@ export interface Basics {
   headline: string;
   tagline: string;
   email: string;
-  phone: string;
   location: Location;
+  /** square photo used on the About ID card */
   profilePicture: string;
+  /** transparent cut-out PNG composited in the hero */
+  portrait: string;
+  /** cycled through the hero's role slot */
+  roles: string[];
   resumeUrl: string;
   availability: string;
   bio: string;
@@ -31,6 +36,7 @@ export interface SocialLink {
   name: string;
   username: string;
   url: string;
+  /** key into each section's icon map: github | linkedin | instagram | google | discord | telegram */
   icon: string;
 }
 
@@ -65,35 +71,50 @@ export interface Experience {
 
 export interface Project {
   id: string;
+  /** url-safe name; matches public/projects/<slug>/ */
+  slug?: string;
   title: string;
   description: string;
   longDescription: string;
   thumbnail: string;
   images: string[];
+  markdownFile?: string;
   tags: string[];
   category: string;
   date: string;
+  /** short label shown in the work index, e.g. "Design + Frontend" */
+  role?: string;
+  year?: string;
   githubUrl: string;
   liveUrl: string;
-  caseStudyUrl?: string;
+  /** present only when the project has its own case-study route */
+  pageUrl?: string;
   featured: boolean;
   status: string;
 }
 
 export interface Skill {
   name: string;
+  /** basename in public/images/skills/<icon>.png */
   icon: string;
   level: number;
 }
 
 export interface SkillCategory {
   name: string;
+  description: string;
   skills: Skill[];
+}
+
+export interface TechStackItem {
+  name: string;
+  /** full path, unlike Skill.icon */
+  icon: string;
 }
 
 export interface Skills {
   categories: SkillCategory[];
-  techStack: string[];
+  techStack: TechStackItem[];
 }
 
 export interface Certification {
@@ -102,6 +123,7 @@ export interface Certification {
   issuer: string;
   date: string;
   description: string;
+  /** empty string renders the card as unverified */
   credentialUrl: string;
   credentialId?: string;
   badge: string;
@@ -159,6 +181,7 @@ export interface Language {
   id: string;
   name: string;
   proficiency: string;
+  /** 1–5, rendered as chamfered ticks */
   level: number;
 }
 
@@ -171,6 +194,10 @@ export interface Testimonial {
   avatar: string;
 }
 
+/**
+ * Any entry whose `id` contains "placeholder" is filtered out before render,
+ * so templates can sit in the JSON without appearing on the site.
+ */
 export interface PortfolioData {
   meta: Meta;
   basics: Basics;

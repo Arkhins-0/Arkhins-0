@@ -1,3 +1,3 @@
-export { Navigation } from './Navigation';
+export { Navigation, SECTIONS } from './Navigation';
 export { Footer } from './Footer';
-export { SettingsPanel } from './SettingsPanel';
+export { Boot } from './Boot';

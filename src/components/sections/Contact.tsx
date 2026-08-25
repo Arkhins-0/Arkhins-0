@@ -1,300 +1,353 @@
 'use client';
 
-import { useState, useRef } from 'react';
-import { motion } from 'framer-motion';
-import { Mail, Phone, MapPin, Send, ArrowRight, CheckCircle, AlertCircle } from 'lucide-react';
-import { FaLinkedin, FaGithub, FaInstagram } from 'react-icons/fa';
+import { useRef, useState } from 'react';
+import {
+  AlertCircle,
+  CheckCircle2,
+  Copy,
+  MapPin,
+  Send,
+} from 'lucide-react';
+import { FaGithub, FaInstagram, FaLinkedin, FaTelegram } from 'react-icons/fa6';
+import { FaDiscord } from 'react-icons/fa';
 import { SiGoogle } from 'react-icons/si';
 import portfolioData from '@/data/portfolio.json';
-import { RevealOnScroll } from '@/components/ui/Animations';
-import { GlowingEffect } from '@/components/ui/glowing-effect';
+import content from '@/data/content.json';
+import { NeonButton, Panel, Reveal, SectionHead } from '@/components/fx';
+import { cn } from '@/lib/utils';
+
+const { basics, socialLinks } = portfolioData;
+const COPY = content.contact;
+
+const SOCIAL_ICON: Record<string, React.ReactNode> = {
+  github: <FaGithub size={17} />,
+  linkedin: <FaLinkedin size={17} />,
+  instagram: <FaInstagram size={17} />,
+  google: <SiGoogle size={17} />,
+  discord: <FaDiscord size={17} />,
+  telegram: <FaTelegram size={17} />,
+};
+
+/* Field ids for the upstream form live in the content file, so the client and
+   the API route read one source. */
+const ENTRY = COPY.formEntries;
+const FIELDS = COPY.fields;
+
+type FormState = Record<string, string>;
+
+/** Blank state derived from the declared fields, so adding one to the content
+ *  file is the only edit needed. */
+const EMPTY_FORM: FormState = Object.fromEntries(
+  [...FIELDS.map((f) => f.name), COPY.messageField.name].map((n) => [n, ''])
+);
+
+type Status = 'idle' | 'sending' | 'success' | 'error';
 
 export function Contact() {
-  const { basics, socialLinks } = portfolioData;
-  const [formState, setFormState] = useState({
-    name: '',
-    email: '',
-    subject: '',
-    message: '',
-  });
-  const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
+  const [form, setForm] = useState<FormState>(EMPTY_FORM);
+  const [status, setStatus] = useState<Status>('idle');
+  const [copied, setCopied] = useState(false);
+  const submitted = useRef(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const ACTION = process.env.NEXT_PUBLIC_GOOGLE_FORM_ACTION || '';
+  const DIRECT =
+    process.env.NEXT_PUBLIC_GOOGLE_FORM_DIRECT === 'true' && Boolean(ACTION);
+
+  const change = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => setForm((p) => ({ ...p, [e.target.name]: e.target.value }));
+
+  const reset = (next: Status) => {
+    setStatus(next);
+    if (next !== 'sending') setTimeout(() => setStatus('idle'), 3200);
+  };
+
+  /* Route through the server action when it is available (Vercel), which keeps
+     the Google Form endpoint off the client. */
+  const submitViaApi = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus('sending');
-
     try {
-      const res = await fetch('/api/submit-google-form', {
+      const res = await fetch(COPY.endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formState),
+        body: JSON.stringify(form),
       });
-
       const json = await res.json();
       if (res.ok && json.success) {
-        setStatus('success');
-        setFormState({ name: '', email: '', subject: '', message: '' });
-        setTimeout(() => setStatus('idle'), 3000);
+        setForm(EMPTY_FORM);
+        reset('success');
       } else {
-        console.error('Submit error', json);
-        setStatus('error');
-        setTimeout(() => setStatus('idle'), 3000);
+        reset('error');
       }
-    } catch (err) {
-      console.error(err);
-      setStatus('error');
-      setTimeout(() => setStatus('idle'), 3000);
+    } catch {
+      reset('error');
     }
   };
 
-  // Direct Google Form submit (for static hosts like GitHub Pages)
-  const iframeRef = useRef<HTMLIFrameElement | null>(null);
-  const submittedRef = useRef(false);
-  const GOOGLE_FORM_ACTION = process.env.NEXT_PUBLIC_GOOGLE_FORM_ACTION || '';
-  const USE_GOOGLE_FORM_DIRECT = process.env.NEXT_PUBLIC_GOOGLE_FORM_DIRECT === 'true' && !!GOOGLE_FORM_ACTION;
-
-  const handleDirectSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    // Do not prevent default — allow the browser to submit the form to Google Forms.
-    // Mark that we submitted so iframe onLoad can detect completion.
+  /* Static-host fallback: let the browser POST straight to Google, targeting a
+     hidden iframe so the page never navigates away. */
+  const submitDirect = () => {
     setStatus('sending');
-    submittedRef.current = true;
+    submitted.current = true;
   };
 
-  const handleIframeLoad = () => {
-    if (submittedRef.current) {
-      submittedRef.current = false;
-      setStatus('success');
-      setFormState({ name: '', email: '', subject: '', message: '' });
-      setTimeout(() => setStatus('idle'), 3000);
+  const onIframeLoad = () => {
+    if (!submitted.current) return;
+    submitted.current = false;
+    setForm(EMPTY_FORM);
+    reset('success');
+  };
+
+  const copyEmail = async () => {
+    try {
+      await navigator.clipboard.writeText(basics.email);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1800);
+    } catch {
+      /* clipboard blocked — the mailto link still works */
     }
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormState(prev => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   return (
-    <section id="contact" className="section-padding bg-muted/30 overflow-x-hidden">
-      <div className="container-custom px-4 sm:px-6 max-w-full overflow-hidden">
-        {/* Section Header */}
-        <RevealOnScroll className="text-center mb-16">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-display font-bold mb-4">
-            Get In <span className="text-gradient">Touch</span>
-          </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            Have a project in mind or just want to say hello? I&apos;d love to hear from you!
-          </p>
-        </RevealOnScroll>
+    <section id="contact" className="band overflow-hidden">
+      <div className="shell">
+        <SectionHead {...COPY.head} />
 
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20">
-          {/* Contact Info */}
-          <RevealOnScroll direction="right">
-            <div className="space-y-8">
-              <div>
-                <h3 className="text-2xl font-semibold mb-4">Let&apos;s connect</h3>
-                <p className="text-muted-foreground">
-                  I&apos;m currently looking for new opportunities and my inbox is always open.
-                  Whether you have a question or just want to say hi, I&apos;ll try my best to get back to you!
-                </p>
-              </div>
+        {/* ------------------------------------------- giant mailto */}
+        <Reveal className="mt-10">
+          <a
+            href={`mailto:${basics.email}`}
+            className="group inline-block max-w-full"
+          >
+            <span className="block break-all font-display text-[clamp(1.35rem,4.7vw,3.1rem)] font-extrabold leading-[1] tracking-tightest transition-colors duration-500 group-hover:text-accent">
+              {basics.email}
+            </span>
+            <span className="mt-3 block h-px w-full origin-left scale-x-0 neon-line transition-transform duration-700 ease-swift group-hover:scale-x-100" />
+          </a>
+        </Reveal>
 
-              {/* Contact Cards */}
-              <div className="space-y-4 max-w-full">
-                <motion.a
-                  href={`mailto:${basics.email}`}
-                  whileHover={{ x: 5 }}
-                  className="flex items-center gap-3 sm:gap-4 p-3 sm:p-4 rounded-xl glass-card hover:border-accent/50 transition-colors overflow-hidden"
-                >
-                  <div className="p-2 sm:p-3 rounded-lg bg-accent/10 flex-shrink-0">
-                    <Mail size={18} className="text-accent sm:w-5 sm:h-5" />
-                  </div>
-                  <div className="min-w-0 flex-1 overflow-hidden">
-                    <p className="text-xs sm:text-sm text-muted-foreground">Email</p>
-                    <p className="font-medium text-sm sm:text-base truncate">{basics.email}</p>
-                  </div>
-                  <ArrowRight size={16} className="ml-auto text-accent flex-shrink-0" />
-                </motion.a>
-                
-                <motion.div
-                  whileHover={{ x: 5 }}
-                  className="flex items-center gap-3 sm:gap-4 p-3 sm:p-4 rounded-xl glass-card overflow-hidden"
-                >
-                  <div className="p-2 sm:p-3 rounded-lg bg-accent/10 flex-shrink-0">
-                    <MapPin size={18} className="text-accent sm:w-5 sm:h-5" />
-                  </div>
-                  <div className="min-w-0 flex-1 overflow-hidden">
-                    <p className="text-xs sm:text-sm text-muted-foreground">Location</p>
-                    <p className="font-medium text-sm sm:text-base truncate">{basics.location.city}, {basics.location.country}</p>
-                  </div>
-                </motion.div>
-              </div>
+        <div className="mt-14 grid gap-10 lg:grid-cols-[1fr_1.15fr] lg:gap-14">
+          {/* --------------------------------------------- left column */}
+          <div className="space-y-8">
+            <Reveal dir="right">
+              <p className="max-w-md text-[0.98rem] leading-relaxed text-ink-dim">
+                {COPY.blurb}
+              </p>
+            </Reveal>
 
-              {/* Social Links */}
-              <div>
-                <p className="text-sm text-muted-foreground mb-4">Find me on</p>
-                <div className="flex gap-3">
-                  {socialLinks.slice(0, 4).map((social) => (
-                    <motion.a
-                      key={social.id}
-                      href={social.url}
+            <Reveal dir="right" delay={0.08}>
+              <dl className="space-y-0 border-t border-white/8">
+                <div className="flex items-center justify-between gap-4 border-b border-white/8 py-4">
+                  <dt className="hud text-ink-faint">{COPY.emailLabel}</dt>
+                  <dd className="flex items-center gap-3">
+                    <span className="truncate text-sm">{basics.email}</span>
+                    <button
+                      onClick={copyEmail}
+                      aria-label={COPY.copyAria}
+                      className="text-ink-faint transition-colors hover:text-accent"
+                    >
+                      {copied ? (
+                        <CheckCircle2 size={14} className="text-accent" />
+                      ) : (
+                        <Copy size={14} />
+                      )}
+                    </button>
+                  </dd>
+                </div>
+                <div className="flex items-center justify-between gap-4 border-b border-white/8 py-4">
+                  <dt className="hud text-ink-faint">{COPY.locationLabel}</dt>
+                  <dd className="flex items-center gap-2 text-sm">
+                    <MapPin size={13} className="text-accent" />
+                    {basics.location.city}, {basics.location.country}
+                  </dd>
+                </div>
+                <div className="flex items-center justify-between gap-4 border-b border-white/8 py-4">
+                  <dt className="hud text-ink-faint">{COPY.statusLabel}</dt>
+                  <dd className="flex items-center gap-2 text-sm text-accent">
+                    <span className="relative flex h-1.5 w-1.5">
+                      <span className="absolute h-full w-full rounded-full bg-accent animate-pulse-ring" />
+                      <span className="relative h-1.5 w-1.5 rounded-full bg-accent" />
+                    </span>
+                    {basics.availability}
+                  </dd>
+                </div>
+              </dl>
+            </Reveal>
+
+            <Reveal dir="right" delay={0.14}>
+              <p className="eyebrow mb-4">{COPY.elsewhereLabel}</p>
+              <ul className="flex flex-wrap gap-2">
+                {socialLinks.map((s) => (
+                  <li key={s.id}>
+                    <a
+                      href={s.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      whileHover={{ y: -3 }}
-                      className="p-3 rounded-xl bg-accent/10 text-accent hover:bg-accent hover:text-white transition-all"
-                      aria-label={social.name}
+                      className="group flex items-center gap-2.5 border border-white/10 px-3 py-2.5 transition-all duration-300 hover:-translate-y-0.5 hover:border-accent/50 hover:bg-accent/8"
+                      aria-label={s.name}
                     >
-                      {social.icon === 'linkedin' && <FaLinkedin size={20} />}
-                      {social.icon === 'github' && <FaGithub size={20} />}
-                      {social.icon === 'google' && <SiGoogle size={20} />}
-                      {social.icon === 'instagram' && <FaInstagram size={20} />}
-                      {!['linkedin', 'github', 'google', 'instagram'].includes(social.icon) && <Mail size={20} />}
-                    </motion.a>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </RevealOnScroll>
+                      <span className="text-ink-faint transition-colors group-hover:text-accent">
+                        {SOCIAL_ICON[s.icon]}
+                      </span>
+                      <span className="hud text-ink-faint transition-colors group-hover:text-ink">
+                        {s.username}
+                      </span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </Reveal>
+          </div>
 
-          {/* Contact Form */}
-          <RevealOnScroll direction="left" delay={0.2}>
-            <form
-              {...(USE_GOOGLE_FORM_DIRECT
-                ? {
-                    action: GOOGLE_FORM_ACTION,
-                    method: 'POST' as const,
-                    target: 'hidden_iframe',
-                    onSubmit: handleDirectSubmit,
-                  }
-                : {
-                    onSubmit: handleSubmit,
-                  })}
-              className="relative p-4 sm:p-8 rounded-2xl glass-card gradient-border w-full max-w-full"
-            >
-              {USE_GOOGLE_FORM_DIRECT && (
-                <>
-                  {/* invisible iframe to avoid redirect on static hosts */}
-                  <iframe
-                    name="hidden_iframe"
-                    ref={iframeRef}
-                    style={{ display: 'none' }}
-                    onLoad={handleIframeLoad}
-                    title="hidden-form-target"
-                  />
-                  {/* hidden Google Form entry fields (map your entry.* ids) */}
-                  <input type="hidden" name="entry.1444212408" value={formState.name} />
-                  <input type="hidden" name="entry.12430413" value={formState.email} />
-                  <input type="hidden" name="entry.1777991339" value={formState.subject} />
-                  <input type="hidden" name="entry.445717152" value={formState.message} />
-                </>
-              )}
-              <GlowingEffect
-                spread={40}
-                glow={true}
-                disabled={false}
-                proximity={64}
-                inactiveZone={0.01}
-                borderWidth={2}
-              />
-              <div className="grid sm:grid-cols-2 gap-4 mb-4">
-                <div>
-                  <label htmlFor="name" className="block text-sm font-medium mb-2">
-                    Name
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    value={formState.name}
-                    onChange={handleChange}
-                    required
-                    className="w-full px-4 py-3 rounded-xl bg-muted border border-border focus:border-accent focus:ring-1 focus:ring-accent outline-none transition-all"
-                    placeholder="John Doe"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="email" className="block text-sm font-medium mb-2">
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={formState.email}
-                    onChange={handleChange}
-                    required
-                    className="w-full px-4 py-3 rounded-xl bg-muted border border-border focus:border-accent focus:ring-1 focus:ring-accent outline-none transition-all"
-                    placeholder="john@example.com"
-                  />
-                </div>
-              </div>
-
-              <div className="mb-4">
-                <label htmlFor="subject" className="block text-sm font-medium mb-2">
-                  Subject
-                </label>
-                <input
-                  type="text"
-                  id="subject"
-                  name="subject"
-                  value={formState.subject}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-3 rounded-xl bg-muted border border-border focus:border-accent focus:ring-1 focus:ring-accent outline-none transition-all"
-                  placeholder="Project Inquiry"
-                />
-              </div>
-
-              <div className="mb-6">
-                <label htmlFor="message" className="block text-sm font-medium mb-2">
-                  Message
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  value={formState.message}
-                  onChange={handleChange}
-                  required
-                  rows={5}
-                  className="w-full px-4 py-3 rounded-xl bg-muted border border-border focus:border-accent focus:ring-1 focus:ring-accent outline-none transition-all resize-none"
-                  placeholder="Tell me about your project..."
-                />
-              </div>
-
-              <button
-                type="submit"
-                disabled={status === 'sending'}
-                className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-accent text-white font-medium rounded-xl hover:bg-accent-dark transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+          {/* --------------------------------------------- console form */}
+          <Reveal dir="left" delay={0.1}>
+            <Panel hot cut={24} className="scanlines">
+              <form
+                {...(DIRECT
+                  ? {
+                      action: ACTION,
+                      method: 'POST' as const,
+                      target: COPY.console.iframeName,
+                      onSubmit: submitDirect,
+                    }
+                  : { onSubmit: submitViaApi })}
+                className="relative p-6 md:p-8"
               >
-                {status === 'sending' ? (
+                {/* console chrome */}
+                <div className="mb-7 flex items-center gap-2 border-b border-white/8 pb-4">
+                  <span className="h-2 w-2 rotate-45 bg-accent" />
+                  <span className="hud text-ink-faint">
+                    {COPY.console.title}
+                    <span className="text-accent">.</span>
+                    {COPY.console.titleSuffix}
+                  </span>
+                  <span className="ml-auto hud text-ink-faint">
+                    {DIRECT ? COPY.console.directMode : COPY.console.apiMode}
+                  </span>
+                </div>
+
+                {DIRECT && (
                   <>
-                    <motion.div
-                      animate={{ rotate: 360 }}
-                      transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
-                      className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full"
+                    <iframe
+                      name={COPY.console.iframeName}
+                      title={COPY.console.iframeTitle}
+                      onLoad={onIframeLoad}
+                      className="hidden"
                     />
-                    Sending...
+                    {Object.entries(ENTRY).map(([key, id]) => (
+                      <input
+                        key={id}
+                        type="hidden"
+                        name={id}
+                        value={form[key] ?? ''}
+                        readOnly
+                      />
+                    ))}
                   </>
-                ) : status === 'success' ? (
-                  <>
-                    <CheckCircle size={18} />
-                    Message Sent!
-                  </>
-                ) : status === 'error' ? (
-                  <>
-                    <AlertCircle size={18} />
-                    Error. Try Again
-                  </>
-                  ) : (
-                    <>
-                      <Send size={18} />
-                      Send Message
-                    </>
-                  )}
-                </button>
+                )}
+
+                <div className="space-y-6">
+                  {FIELDS.map((f) => (
+                    <Field
+                      key={f.name}
+                      {...f}
+                      value={form[f.name] ?? ''}
+                      onChange={change}
+                    />
+                  ))}
+
+                  <label className="block">
+                    <span className="hud mb-2 flex items-center gap-2 text-ink-faint">
+                      <span className="text-accent">{COPY.console.prompt}</span>{' '}
+                      {COPY.messageField.label}
+                    </span>
+                    <textarea
+                      name={COPY.messageField.name}
+                      rows={5}
+                      required
+                      value={form[COPY.messageField.name] ?? ''}
+                      onChange={change}
+                      placeholder={COPY.messageField.placeholder}
+                      className="w-full resize-none border-b border-white/12 bg-transparent pb-2 font-mono text-sm text-ink outline-none transition-colors placeholder:text-ink-faint/60 focus:border-accent"
+                    />
+                  </label>
+                </div>
+
+                <div className="mt-8 flex flex-wrap items-center gap-4">
+                  <NeonButton
+                    type="submit"
+                    disabled={status === 'sending'}
+                    magnetic={false}
+                    icon={<Send size={14} />}
+                  >
+                    {status === 'sending' ? COPY.sendingLabel : COPY.submitLabel}
+                  </NeonButton>
+
+                  <span
+                    className={cn(
+                      'hud flex items-center gap-2 transition-opacity duration-300',
+                      status === 'idle' || status === 'sending'
+                        ? 'opacity-0'
+                        : 'opacity-100'
+                    )}
+                    role="status"
+                  >
+                    {status === 'success' && (
+                      <>
+                        <CheckCircle2 size={13} className="text-accent" />
+                        <span className="text-accent">{COPY.successLabel}</span>
+                      </>
+                    )}
+                    {status === 'error' && (
+                      <>
+                        <AlertCircle size={13} className="text-rose" />
+                        <span className="text-rose">{COPY.errorLabel}</span>
+                      </>
+                    )}
+                  </span>
+                </div>
               </form>
-            </RevealOnScroll>
+            </Panel>
+          </Reveal>
         </div>
       </div>
     </section>
+  );
+}
+
+const PROMPT = COPY.console.prompt;
+
+function Field({
+  name,
+  label,
+  type,
+  placeholder,
+  value,
+  onChange,
+}: {
+  name: string;
+  label: string;
+  type: string;
+  placeholder: string;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}) {
+  return (
+    <label className="block">
+      <span className="hud mb-2 flex items-center gap-2 text-ink-faint">
+        <span className="text-accent">{PROMPT}</span> {label}
+      </span>
+      <input
+        type={type}
+        name={name}
+        required
+        value={value}
+        onChange={onChange}
+        placeholder={placeholder}
+        autoComplete={name === 'email' ? 'email' : 'off'}
+        className="w-full border-b border-white/12 bg-transparent pb-2 font-mono text-sm text-ink outline-none transition-colors placeholder:text-ink-faint/60 focus:border-accent"
+      />
+    </label>
   );
 }
