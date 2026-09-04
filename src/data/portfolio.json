@@ -293,9 +293,9 @@
     },
     {
       "id": "proj-4",
-      "title": "CTR Unified - One Nation. One Championship.",
-      "description": "The official platform for CTR Unified, the multi-discipline sports collective behind Chennai Turbo Riders, covering motorsport, hockey, pickleball, volleyball and cricket under a single identity.",
-      "longDescription": "https://www.ctrsports.in. A unified digital home for six sporting programmes and the CTR x JK Tyre FMSCI Indian National Car Racing Championship. Built with Next.js and TailwindCSS, the site holds one design system across every discipline while giving the 2026 championship - seven categories, four rounds, three circuits - its own destination with venues, calendar and an editorial newsroom.",
+      "title": "CTR - Indian National Car Racing Championship",
+      "description": "The official portal of the CTR-JK Tyre FMSCI Indian National Car Racing Championship: newsroom, schedule with live round countdown, results, standings, drivers, teams, tickets and hospitality, videos, polls and a fan zone with accounts.",
+      "longDescription": "https://www.ctrsports.in. The championship-first home of the 2026 INCRC - One Nation, One Championship. Built with Next.js and TailwindCSS as an editorial product rather than a brochure: a magazine-style Latest page with venue guides and category explainers, a ticker that always shows the current round and session, drivers' and teams' standings, four ticket and hospitality tiers, and a Fan Zone with sign-in, predictions, polls, favourites and a newsletter, across Kari Motor Speedway, Bren Raceway and the Madras International Circuit.",
       "thumbnail": "/images/projects/ctrsports.png",
       "images": [
         "/images/projects/ctrsports.png"
@@ -305,10 +305,10 @@
         "Next.js",
         "React",
         "TailwindCSS",
-        "Brand Systems"
+        "Fan Platform"
       ],
       "category": "Frontend",
-      "date": "August 2026",
+      "date": "September 2026",
       "githubUrl": "",
       "liveUrl": "https://www.ctrsports.in",
       "featured": true,
