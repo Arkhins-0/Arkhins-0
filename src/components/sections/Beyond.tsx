@@ -15,6 +15,7 @@ const WORKSHOPS = portfolioData.workshops.filter(
   (w) => !w.id.includes('placeholder')
 );
 
+/** LaneHeader: icon, label and count header for each lane. */
 function LaneHeader({
   icon,
   label,
@@ -36,6 +37,7 @@ function LaneHeader({
   );
 }
 
+/** Beyond: split panel of volunteering and workshop lanes. */
 export function Beyond() {
   return (
     <section id="beyond" className="band">
@@ -45,13 +47,11 @@ export function Beyond() {
         <Reveal className="mt-14">
           <Panel cut={26} className="overflow-hidden">
             <div className="relative grid gap-0 lg:grid-cols-2">
-              {/* hazard divider between the two lanes */}
               <span
                 aria-hidden="true"
                 className="hazard absolute left-1/2 top-0 hidden h-full w-1 -translate-x-1/2 opacity-40 lg:block"
               />
 
-              {/* ------------------------------------------ volunteering */}
               <div className="p-7 md:p-9">
                 <LaneHeader
                   icon={<Flag size={14} />}
@@ -89,7 +89,6 @@ export function Beyond() {
                 </ul>
               </div>
 
-              {/* ------------------------------------------ workshops */}
               <div className="border-t border-white/8 p-7 md:p-9 lg:border-l lg:border-t-0">
                 <LaneHeader
                   icon={<GraduationCap size={14} />}

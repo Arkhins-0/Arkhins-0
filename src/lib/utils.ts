@@ -8,15 +8,12 @@ export function getAssetPath(path: string): string {
   return path.startsWith('/') ? path : `/${path}`;
 }
 
+/** Merge class names with Tailwind conflict resolution. */
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-/**
- * Fills `{token}` placeholders in a copy string from the data files. Every
- * rendered sentence lives in JSON, so anything variable is interpolated here
- * rather than concatenated in a component.
- */
+/** Fills `{token}` placeholders in a copy string from the data files. */
 export function fill(
   template: string,
   vars: Record<string, string | number | undefined>

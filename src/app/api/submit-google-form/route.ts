@@ -3,11 +3,7 @@ import content from '@/data/content.json';
 
 const ENTRY = content.contact.formEntries;
 
-/**
- * Relays a contact submission to the form endpoint configured in the
- * environment. Field ids come from the content file, so the client form and
- * this route can never drift apart.
- */
+/** Relays a contact submission to the form endpoint configured in the environment. */
 export async function POST(req: Request) {
   try {
     const body = await req.json();
@@ -31,8 +27,6 @@ export async function POST(req: Request) {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: params.toString(),
-      // The endpoint answers with a redirect; do not follow it so the status
-      // stays inspectable.
       redirect: 'manual' as RequestRedirect,
     });
 

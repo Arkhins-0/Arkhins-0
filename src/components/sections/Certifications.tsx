@@ -20,15 +20,13 @@ const CATEGORIES = [
   ...Array.from(new Set(CERTS.map((c) => c.category))),
 ];
 
-/** Boarding-pass stub: hazard-taped counterfoil on the left, detail on the
- *  right, foil sheen sliding across the whole thing on hover. */
+/** Stub: boarding-pass certificate card with counterfoil and hover foil sheen. */
 function Stub({ cert }: { cert: (typeof CERTS)[number] }) {
   const year = cert.date.split(' ').pop();
   const verified = Boolean(cert.credentialUrl);
 
   const body = (
     <div className="group/stub relative grid h-full grid-cols-[3.25rem_1fr] overflow-hidden">
-      {/* foil sheen */}
       <span
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 z-20 -translate-x-full opacity-0 transition-all duration-[900ms] ease-swift group-hover/stub:translate-x-full group-hover/stub:opacity-100"
@@ -38,7 +36,6 @@ function Stub({ cert }: { cert: (typeof CERTS)[number] }) {
         }}
       />
 
-      {/* counterfoil */}
       <div className="relative flex flex-col items-center justify-between border-r border-dashed border-white/18 bg-white/[0.03] py-4">
         <span className="hazard h-8 w-4 opacity-60" />
         <span
@@ -53,10 +50,8 @@ function Stub({ cert }: { cert: (typeof CERTS)[number] }) {
         />
       </div>
 
-      {/* detail */}
       <div className="relative flex flex-col gap-2 p-5">
         <div className="flex items-start gap-3">
-          {/* not every issuer ships a badge; those fall back to a seal */}
           {cert.badge ? (
             <span className="relative h-10 w-10 shrink-0 overflow-hidden">
               <Image
@@ -126,6 +121,7 @@ function Stub({ cert }: { cert: (typeof CERTS)[number] }) {
   );
 }
 
+/** Certifications: filterable grid of boarding-pass certificate stubs. */
 export function Certifications() {
   const [filter, setFilter] = useState(COPY.allFilter);
 
@@ -142,7 +138,6 @@ export function Certifications() {
       <div className="shell">
         <SectionHead {...COPY.head} />
 
-        {/* filters */}
         <Reveal className="mt-12 flex flex-wrap items-center gap-2">
           <span className="eyebrow mr-3">{COPY.indexLabel}</span>
           {CATEGORIES.map((c) => (

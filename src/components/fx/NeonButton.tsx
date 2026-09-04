@@ -37,6 +37,7 @@ const skin: Record<Variant, string> = {
   ghost: 'border border-white/15 text-ink hover:border-accent/60 hover:text-accent glass',
 };
 
+/** Shared button interior: hover shine sweep, solid-variant glow, label, and icon. */
 function Inner({
   children,
   icon,
@@ -48,7 +49,6 @@ function Inner({
 }) {
   return (
     <>
-      {/* diagonal shine sweeps across on hover */}
       <span
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 -translate-x-full skew-x-12 bg-white/25 transition-transform duration-700 ease-swift group-hover/btn:translate-x-full"
@@ -70,6 +70,7 @@ function Inner({
   );
 }
 
+/** Notched neon CTA rendered as a link, external anchor, or button, optionally magnetic. */
 export function NeonButton(props: AsLink | AsButton) {
   const {
     children,

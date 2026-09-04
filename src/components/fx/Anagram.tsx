@@ -14,12 +14,7 @@ const REF_PX = 100;
 
 type Letter = { id: string; ch: string };
 
-/**
- * Build one stable set of letter objects from the first word, then an ordering
- * of those same objects for every other word. Returns null unless every word is
- * an anagram of the first — the whole effect depends on reusing the elements
- * rather than swapping text.
- */
+/** Builds stable letter objects from the first word plus an ordering per word; null unless every word is an anagram of the first. */
 function buildOrders(words: string[]): Letter[][] | null {
   if (words.length === 0) return null;
   const base: Letter[] = words[0].split('').map((ch, i) => ({ id: `l${i}`, ch }));
@@ -46,32 +41,20 @@ function buildOrders(words: string[]): Letter[][] | null {
 
 type LetterClass = string | ((wordIndex: number) => string);
 
+/** Props for Anagram; every entry in `words` must be an anagram of the first. */
 export interface AnagramProps {
-  /** every entry must be an anagram of the first */
   words: string[];
-  /** ms a word rests before it comes apart */
   hold?: number;
   glitchMs?: number;
   moveMs?: number;
-  /** stop on the last word instead of cycling forever */
   once?: boolean;
-  /** scale the wordmark to exactly fill its parent's width */
   fit?: boolean;
-  /** chromatic ghost layers during the glitch beat */
   chroma?: boolean;
-  /**
-   * Fly the letters into their new slots. Off, the swap happens behind the
-   * static instead: the noise clears and the next word is simply standing
-   * there — right for small settings where travel reads as jitter.
-   */
   travel?: boolean;
-  /** typography for the letters; may vary per word */
   letterClass?: LetterClass;
-  /** trailing character, e.g. the brand full stop */
   tail?: string;
   tailClass?: string;
   className?: string;
-  /** read out instead of the letters, which churn through glyphs mid-swap */
   label?: string;
   onChange?: (state: {
     phase: AnagramPhase;
@@ -81,11 +64,7 @@ export interface AnagramProps {
   }) => void;
 }
 
-/**
- * Holds a word, tears it apart with glyph noise and a chromatic split, then
- * flies the same letter elements into their slots in the next word. The letters
- * travel; they are never re-typeset, which is what sells the rearrangement.
- */
+/** Holds a word, tears it apart with glyph noise and a chromatic split, then flies the same letter elements into the next word. */
 export function Anagram({
   words,
   hold = 3000,
@@ -104,8 +83,6 @@ export function Anagram({
 }: AnagramProps) {
   const { fx } = useUI();
 
-  // Memoise on content, not array identity — a new Letter[] every render would
-  // change the keys and break the layout animation entirely.
   const signature = words.join('|');
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const orders = useMemo(() => buildOrders(words), [signature]);
@@ -121,13 +98,9 @@ export function Anagram({
   const sizer = useRef<HTMLSpanElement>(null);
 
   const canAnimate = Boolean(orders) && words.length > 1 && fx;
-  // With effects off the loop just rests on its first word, and a one-shot run
-  // shows the word it would have resolved to.
   const shownIndex = canAnimate ? index : once ? words.length - 1 : 0;
   const glitching = canAnimate && phase === 'glitch';
   const finished = once && shownIndex === words.length - 1 && phase === 'hold';
-
-  /* ------------------------------------------------------------- observer */
 
   useEffect(() => {
     const el = host.current;
@@ -139,8 +112,6 @@ export function Anagram({
     io.observe(el);
     return () => io.disconnect();
   }, []);
-
-  /* -------------------------------------------------------- phase machine */
 
   useEffect(() => {
     if (!canAnimate || !inView || finished) return;
@@ -171,8 +142,6 @@ export function Anagram({
     words.length,
   ]);
 
-  /* ----------------------------------------------------------- the churn */
-
   useEffect(() => {
     if (!glitching || !orders) {
       setNoise(null);
@@ -195,8 +164,6 @@ export function Anagram({
     return () => clearInterval(id);
   }, [glitching, orders]);
 
-  /* ------------------------------------------------------------ reporting */
-
   const report = useRef(onChange);
   report.current = onChange;
   useEffect(() => {
@@ -208,10 +175,6 @@ export function Anagram({
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [phase, shownIndex, signature]);
-
-  /* ----------------------------------------------------------------- fit
-     Measured as a real font-size rather than a transform, so the wordmark
-     rasterises crisply at whatever size the column happens to be. */
 
   useEffect(() => {
     if (!fit) return;

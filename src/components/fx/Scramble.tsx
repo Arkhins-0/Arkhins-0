@@ -7,10 +7,7 @@ import content from '@/data/content.json';
 
 const GLYPHS = content.fx.scrambleGlyphs;
 
-/**
- * Decodes its text once, the first time it scrolls into view. Characters
- * resolve left-to-right while the not-yet-resolved tail churns through glyphs.
- */
+/** Decodes its text left-to-right the first time it scrolls into view, churning the unresolved tail through glyphs. */
 export function Scramble({
   text,
   className,
@@ -19,7 +16,6 @@ export function Scramble({
 }: {
   text: string;
   className?: string;
-  /** frames each character waits before locking in */
   speed?: number;
   as?: 'span' | 'h1' | 'h2' | 'h3' | 'div' | 'p';
 }) {
@@ -67,7 +63,6 @@ export function Scramble({
       { threshold: 0.4 }
     );
 
-    // Start hidden-ish so the pop-in reads as a decode, not a text swap.
     setOut(text.replace(/[^\s]/g, '·'));
     io.observe(node);
 

@@ -1,13 +1,10 @@
 'use client';
 
 import { useRef } from 'react';
-import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import { motion, useMotionValue, useSpring } from 'framer-motion';
 import { useUI } from '@/context/UIContext';
 
-/**
- * Pulls its child toward the cursor while hovered. Pointer-fine only —
- * on touch it is an inert wrapper.
- */
+/** Pulls its child toward the cursor while hovered; inert on touch. */
 export function Magnetic({
   children,
   strength = 0.34,
@@ -23,8 +20,6 @@ export function Magnetic({
   const my = useMotionValue(0);
   const sx = useSpring(mx, { stiffness: 260, damping: 18, mass: 0.4 });
   const sy = useSpring(my, { stiffness: 260, damping: 18, mass: 0.4 });
-  const x = useTransform(sx, (v) => v);
-  const y = useTransform(sy, (v) => v);
 
   const handle = (e: React.PointerEvent<HTMLDivElement>) => {
     if (!fx || e.pointerType !== 'mouse' || !ref.current) return;
@@ -42,7 +37,7 @@ export function Magnetic({
     <motion.div
       ref={ref}
       className={className}
-      style={{ x, y }}
+      style={{ x: sx, y: sy }}
       onPointerMove={handle}
       onPointerLeave={reset}
     >

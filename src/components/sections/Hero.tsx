@@ -39,36 +39,27 @@ const MARQUEE = [
   ...COPY.marquee,
 ];
 
-/* -------------------------------------------------------------- portrait */
-
-/** Placement for each HUD chip, in the order the content file lists them. */
+/** Placement for each HUD chip, in content-file order. */
 const CHIP_ANCHORS = [
   'right-2 top-0 hidden sm:flex lg:right-16 xl:right-24',
   'right-6 top-[48%] hidden sm:flex lg:right-24 xl:right-32',
   'bottom-[14%] left-8 hidden md:flex lg:left-28',
 ];
 
-/** Where the subject starts dissolving, so the crop never reads as a cut. */
+/** Bottom dissolve mask shared by the photo and its echoes. */
 const FADE =
   'linear-gradient(to bottom, #000 66%, rgba(0,0,0,0.45) 86%, transparent 99%)';
 
-/**
- * The transparent PNG gets two passes: a blurred duotone echo offset behind it
- * (masked by the same file) and the photo itself with an accent rim glow. Both
- * share the same bottom fade so they dissolve together.
- */
+/** Portrait: transparent PNG with duotone echoes, rim glow and bottom fade. */
 function Portrait({ src, tilt }: { src: string; tilt: { rx: any; ry: any } }) {
   const [failed, setFailed] = useState(false);
   const imgRef = useRef<HTMLImageElement>(null);
 
-  // If the request already failed before hydration, onError will never fire.
   useEffect(() => {
     const img = imgRef.current;
     if (img?.complete && img.naturalWidth === 0) setFailed(true);
   }, []);
 
-  // Silhouette ∩ bottom fade. Two mask layers intersected, so the echo is both
-  // cut to the subject's shape and faded out at the hips.
   const maskProps = {
     WebkitMaskImage: `url(${src}), ${FADE}`,
     maskImage: `url(${src}), ${FADE}`,
@@ -116,8 +107,6 @@ function Portrait({ src, tilt }: { src: string; tilt: { rx: any; ry: any } }) {
       style={{ rotateX: tilt.rx, rotateY: tilt.ry, transformPerspective: 1200 }}
       className="relative mx-auto w-full max-w-[36rem] lg:ml-auto lg:mr-[-3rem] lg:max-w-[42rem] xl:mr-[-4.5rem]"
     >
-      {/* glow sitting where the subject dissolves, so the fade reads as light
-          rather than a missing lower half */}
       <div
         aria-hidden="true"
         className="absolute inset-x-2 bottom-[6%] h-40 rounded-[50%] opacity-[calc(0.75*var(--fx))] blur-[46px]"
@@ -127,7 +116,6 @@ function Portrait({ src, tilt }: { src: string; tilt: { rx: any; ry: any } }) {
         }}
       />
 
-      {/* duotone echo, offset and blurred */}
       <div
         aria-hidden="true"
         className="absolute inset-0 translate-x-4 translate-y-1 opacity-[calc(0.75*var(--fx))] blur-[3px]"
@@ -146,7 +134,6 @@ function Portrait({ src, tilt }: { src: string; tilt: { rx: any; ry: any } }) {
         }}
       />
 
-      {/* the photo */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         ref={imgRef}
@@ -169,8 +156,7 @@ function Portrait({ src, tilt }: { src: string; tilt: { rx: any; ry: any } }) {
   );
 }
 
-/* ---------------------------------------------------------------- roller */
-
+/** RoleRoller: cycles through roles with a vertical slot animation. */
 function RoleRoller({ roles }: { roles: string[] }) {
   const [i, setI] = useState(0);
   useEffect(() => {
@@ -178,8 +164,6 @@ function RoleRoller({ roles }: { roles: string[] }) {
     return () => clearInterval(t);
   }, [roles.length]);
 
-  // A hidden sizer holds the width of the longest role so the brackets never
-  // jump, and the slots overlap instead of leaving a gap between them.
   const widest = roles.reduce((a, b) => (b.length > a.length ? b : a), '');
 
   return (
@@ -203,8 +187,37 @@ function RoleRoller({ roles }: { roles: string[] }) {
   );
 }
 
-/* ------------------------------------------------------------------ hero */
+/** HudChip: small key/value glass chip floated over the portrait. */
+function HudChip({
+  k,
+  v,
+  className,
+  delay,
+}: {
+  k: string;
+  v: string;
+  className?: string;
+  delay: number;
+}) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ delay, duration: 0.5 }}
+      className={cn(
+        'glass notch-br absolute z-20 items-center gap-2 px-3 py-2',
+        className
+      )}
+      style={{ ['--notch' as string]: '8px' }}
+    >
+      <span className="hud text-ink-faint">{k}</span>
+      <span className="h-3 w-px bg-accent/50" />
+      <span className="hud text-ink">{v}</span>
+    </motion.div>
+  );
+}
 
+/** Hero: full-viewport intro with portrait, role roller and marquee. */
 export function Hero() {
   const { fx } = useUI();
 
@@ -234,9 +247,6 @@ export function Hero() {
       id="home"
       className="relative flex min-h-[100svh] flex-col justify-between overflow-hidden pb-0 pt-28 md:pt-36"
     >
-      {/* ---------------------------------------------- local visuals */}
-
-      {/* perspective grid floor */}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-x-0 bottom-0 h-[42vh] opacity-[calc(0.8*var(--fx))]"
@@ -256,7 +266,6 @@ export function Hero() {
         />
       </div>
 
-      {/* rotating halo behind the subject */}
       <motion.div
         aria-hidden="true"
         style={{ x: haloX, y: haloY }}
@@ -279,12 +288,9 @@ export function Hero() {
         />
       </motion.div>
 
-      {/* ---------------------------------------------- content */}
       <div className="shell relative z-10 flex-1">
         <div className="relative grid items-center gap-10 lg:grid-cols-[1fr_1.12fr] lg:gap-4">
-          {/* --- type stack --- */}
           <div className="relative z-10 order-1 lg:order-1">
-            {/* availability chip */}
             <motion.div
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
@@ -299,7 +305,6 @@ export function Hero() {
               <span className="hud text-accent">{basics.availability}</span>
             </motion.div>
 
-            {/* name */}
             <motion.h1
               initial={{ opacity: 0, y: 26 }}
               animate={{ opacity: 1, y: 0 }}
@@ -312,7 +317,6 @@ export function Hero() {
               </span>
             </motion.h1>
 
-            {/* role roller */}
             <motion.div
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
@@ -336,7 +340,6 @@ export function Hero() {
               })}
             </motion.p>
 
-            {/* actions */}
             <motion.div
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
@@ -359,7 +362,6 @@ export function Hero() {
               </NeonButton>
             </motion.div>
 
-            {/* meta strip */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -392,28 +394,20 @@ export function Hero() {
             </motion.div>
           </div>
 
-          {/* --- portrait --- */}
           <motion.div
             initial={{ opacity: 0, scale: 0.94, y: 24 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.95, ease: [0.22, 1, 0.36, 1] }}
             className="relative z-10 order-2 mx-auto w-[80%] max-w-[20rem] sm:max-w-[24rem] lg:mx-0 lg:w-auto lg:max-w-none"
           >
-            {/* the emblem stands behind the subject as a crest — the artwork
-                is used as a mask so it takes the live accent rather than the
-                flat white of the file */}
             <motion.div
               aria-hidden="true"
-              // x/y carry the centring: framer owns the transform, so a
-              // -translate-x-1/2 class here would simply be overwritten
               initial={{ opacity: 0, scale: 1.12, x: '-50%', y: '-50%' }}
               animate={{ opacity: 1, scale: 1, x: '-50%', y: '-50%' }}
               transition={{ delay: 0.45, duration: 1.4, ease: [0.22, 1, 0.36, 1] }}
               className="pointer-events-none absolute left-[97%] top-[36%] -z-10 aspect-[473/512] w-[62%] opacity-[calc(0.3*var(--fx))]"
               style={{ perspective: '1400px' }}
             >
-              {/* the turn lives on a child: framer owns the parent's transform
-                  and would overwrite a CSS animation set alongside it */}
               <div
                 className="h-full w-full"
                 style={{
@@ -437,7 +431,6 @@ export function Hero() {
 
             <Portrait src={basics.portrait} tilt={{ rx, ry }} />
 
-            {/* floating HUD chips */}
             {COPY.chips.map((chip, i) => (
               <HudChip
                 key={chip.key}
@@ -451,7 +444,6 @@ export function Hero() {
         </div>
       </div>
 
-      {/* ---------------------------------------------- bottom rail */}
       <div className="relative z-10 mt-12">
         <div className="border-y border-white/8 bg-black/25 py-3 backdrop-blur-sm">
           <Ticker duration={44} fade>
@@ -476,34 +468,5 @@ export function Hero() {
         </a>
       </div>
     </section>
-  );
-}
-
-function HudChip({
-  k,
-  v,
-  className,
-  delay,
-}: {
-  k: string;
-  v: string;
-  className?: string;
-  delay: number;
-}) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.9 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ delay, duration: 0.5 }}
-      className={cn(
-        'glass notch-br absolute z-20 items-center gap-2 px-3 py-2',
-        className
-      )}
-      style={{ ['--notch' as string]: '8px' }}
-    >
-      <span className="hud text-ink-faint">{k}</span>
-      <span className="h-3 w-px bg-accent/50" />
-      <span className="hud text-ink">{v}</span>
-    </motion.div>
   );
 }

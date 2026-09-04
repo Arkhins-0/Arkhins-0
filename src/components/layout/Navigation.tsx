@@ -17,8 +17,6 @@ const { nav, brand, theme } = content;
 export const SECTIONS = nav.sections;
 
 const NAV_MARK = brand.navMark;
-
-/** how long a word rests before the static takes it */
 const MARK_HOLD = 4200;
 const MARK_GLITCH = 500;
 const MARK_TYPE = 'font-display text-base font-bold tracking-tight';
@@ -50,6 +48,7 @@ function useActiveSection() {
   return active;
 }
 
+/** Accent swatches and the FX toggle, shared by the header and the mobile sheet. */
 function Controls({ compact = false }: { compact?: boolean }) {
   const { accent, setAccent, fx, toggleFx } = useUI();
   return (
@@ -89,6 +88,7 @@ function Controls({ compact = false }: { compact?: boolean }) {
   );
 }
 
+/** Site header with wordmark, section links, scroll spine, and the mobile menu. */
 export function Navigation() {
   const [open, setOpen] = useState(false);
   const [condensed, setCondensed] = useState(false);
@@ -110,9 +110,6 @@ export function Navigation() {
 
   return (
     <>
-      {/* While the sheet is open the header has to outrank it, otherwise the
-          close button is buried and the menu can only be dismissed by
-          navigating. */}
       <header
         className={cn(
           'fixed inset-x-0 top-0 px-4 pt-4 md:px-8 md:pt-6',
@@ -128,14 +125,11 @@ export function Navigation() {
           )}
           style={{ ['--notch' as string]: '14px' }}
         >
-          {/* wordmark */}
           <Link
             href={`/#${SECTIONS[0].id}`}
             className="group flex items-center gap-3"
             aria-label={fill(nav.homeAria, { name: basics.name })}
           >
-            {/* the emblem turns on its vertical axis, so it reads as a
-                machined part rather than a flat sticker */}
             <span
               className="grid h-9 w-9 shrink-0 place-items-center"
               style={{ perspective: '520px' }}
@@ -154,11 +148,6 @@ export function Navigation() {
                 }}
               />
             </span>
-            {/* Same mark as the footer, same component — only here the
-                letters stay put: the static clears and the other word is
-                simply standing there. The hidden sizer holds the width,
-                because noise glyphs are wider than the letters they replace
-                and a resizing wordmark would shove every nav link beside it. */}
             <span className="relative hidden sm:block">
               <span
                 aria-hidden="true"
@@ -183,7 +172,6 @@ export function Navigation() {
             </span>
           </Link>
 
-          {/* desktop links */}
           <ul className="hidden items-center gap-0.5 lg:flex">
             {SECTIONS.map((s, i) => {
               const on = active === s.id;
@@ -217,7 +205,6 @@ export function Navigation() {
             })}
           </ul>
 
-          {/* right cluster */}
           <div className="flex items-center gap-4">
             <div className="hidden md:block">
               <Controls />
@@ -234,7 +221,6 @@ export function Navigation() {
               </NeonButton>
             </div>
 
-            {/* burger */}
             <button
               onClick={() => setOpen((v) => !v)}
               aria-label={open ? nav.closeMenu : nav.openMenu}
@@ -258,7 +244,7 @@ export function Navigation() {
         </nav>
       </header>
 
-      {/* ------------------------------------------------ scroll spine */}
+      {/* scroll spine */}
       <div className="pointer-events-none fixed right-5 top-1/2 z-[55] hidden -translate-y-1/2 flex-col items-end gap-3 2xl:flex">
         {SECTIONS.map((s, i) => {
           const on = active === s.id;
@@ -290,7 +276,7 @@ export function Navigation() {
         })}
       </div>
 
-      {/* ------------------------------------------------ mobile menu */}
+      {/* mobile menu */}
       <AnimatePresence>
         {open && (
           <motion.div

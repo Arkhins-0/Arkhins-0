@@ -19,11 +19,11 @@ const { categories, techStack } = portfolioData.skills as unknown as {
   techStack: { name: string; icon: string }[];
 };
 
-/* Two lanes running opposite directions; split so neither repeats the other. */
+/** Ticker lanes running opposite directions; split so neither repeats the other. */
 const LANE_A = techStack.filter((_, i) => i % 2 === 0);
 const LANE_B = techStack.filter((_, i) => i % 2 === 1);
 
-/** Circular meter drawn as a stroked arc — animates in whenever it mounts. */
+/** Meter: circular skill meter drawn as a stroked arc, animating on mount. */
 function Meter({ level, icon, name }: { level: number; icon: string; name: string }) {
   return (
     <div className="relative h-16 w-16 shrink-0">
@@ -65,6 +65,27 @@ function Meter({ level, icon, name }: { level: number; icon: string; name: strin
   );
 }
 
+/** TechChip: bordered icon-plus-name chip for the tech tickers. */
+function TechChip({ name, icon }: { name: string; icon: string }) {
+  return (
+    <span className="group mx-2 inline-flex items-center gap-2.5 border border-white/8 px-4 py-2.5 transition-colors duration-300 hover:border-accent/45">
+      <span className="relative h-5 w-5 shrink-0">
+        <Image
+          src={icon}
+          alt=""
+          fill
+          sizes="20px"
+          className="object-contain opacity-70 transition-opacity duration-300 group-hover:opacity-100"
+        />
+      </span>
+      <span className="hud whitespace-nowrap text-ink-faint transition-colors duration-300 group-hover:text-ink">
+        {name}
+      </span>
+    </span>
+  );
+}
+
+/** Skills: category selector, animated skill tiles and dual tech tickers. */
 export function Skills() {
   const [active, setActive] = useState(0);
   const category = categories[active];
@@ -75,7 +96,6 @@ export function Skills() {
         <SectionHead {...COPY.head} />
 
         <div className="mt-14 grid gap-10 lg:grid-cols-[minmax(0,22rem)_1fr] lg:gap-16">
-          {/* -------------------------------------------- category list */}
           <Reveal dir="right">
             <ul className="flex flex-col gap-1">
               {categories.map((c, i) => {
@@ -127,7 +147,6 @@ export function Skills() {
             </AnimatePresence>
           </Reveal>
 
-          {/* -------------------------------------------- skill tiles */}
           <div className="relative">
             <AnimatePresence mode="wait">
               <motion.ul
@@ -171,7 +190,6 @@ export function Skills() {
         </div>
       </div>
 
-      {/* ------------------------------------------------ tech ticker */}
       <div className="relative mt-20 space-y-3 border-y border-white/8 bg-black/20 py-8">
         <Ticker duration={52}>
           {LANE_A.map((t, i) => (
@@ -185,24 +203,5 @@ export function Skills() {
         </Ticker>
       </div>
     </section>
-  );
-}
-
-function TechChip({ name, icon }: { name: string; icon: string }) {
-  return (
-    <span className="group mx-2 inline-flex items-center gap-2.5 border border-white/8 px-4 py-2.5 transition-colors duration-300 hover:border-accent/45">
-      <span className="relative h-5 w-5 shrink-0">
-        <Image
-          src={icon}
-          alt=""
-          fill
-          sizes="20px"
-          className="object-contain opacity-70 transition-opacity duration-300 group-hover:opacity-100"
-        />
-      </span>
-      <span className="hud whitespace-nowrap text-ink-faint transition-colors duration-300 group-hover:text-ink">
-        {name}
-      </span>
-    </span>
   );
 }

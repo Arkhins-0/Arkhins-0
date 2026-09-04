@@ -4,10 +4,7 @@ import { Reveal } from './Reveal';
 import { Scramble } from './Scramble';
 import { cn } from '@/lib/utils';
 
-/**
- * Every band opens with the same signal: an index chip, hazard tape, a mono
- * label, then a rule that runs to the edge — a schematic sheet header.
- */
+/** Schematic section header: index chip, hazard tape, mono label, edge rule, then title and lede. */
 export function SectionHead({
   index,
   label,

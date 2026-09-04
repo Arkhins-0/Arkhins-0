@@ -293,6 +293,32 @@
     },
     {
       "id": "proj-4",
+      "title": "CTR Unified - One Nation. One Championship.",
+      "description": "The official platform for CTR Unified, the multi-discipline sports collective behind Chennai Turbo Riders, covering motorsport, hockey, pickleball, volleyball and cricket under a single identity.",
+      "longDescription": "https://www.ctrsports.in. A unified digital home for six sporting programmes and the CTR x JK Tyre FMSCI Indian National Car Racing Championship. Built with Next.js and TailwindCSS, the site holds one design system across every discipline while giving the 2026 championship - seven categories, four rounds, three circuits - its own destination with venues, calendar and an editorial newsroom.",
+      "thumbnail": "/images/projects/ctrsports.png",
+      "images": [
+        "/images/projects/ctrsports.png"
+      ],
+      "markdownFile": "/images/projects/ctrsports.md",
+      "tags": [
+        "Next.js",
+        "React",
+        "TailwindCSS",
+        "Brand Systems"
+      ],
+      "category": "Frontend",
+      "date": "August 2026",
+      "githubUrl": "",
+      "liveUrl": "https://www.ctrsports.in",
+      "featured": true,
+      "status": "Live",
+      "slug": "ctr-unified",
+      "role": "Design + Frontend",
+      "year": "2026"
+    },
+    {
+      "id": "proj-5",
       "title": "Predicting Microsoft Stock Values",
       "description": "This project uses time series analysis and Keras to predict Microsoft stock values. The model was trained and evaluated, showing a Root Mean Squared Error (RMSE) of 16.94 (5.75% error) on data from 2020-2025.",
       "longDescription": "A comprehensive stock prediction system using deep learning techniques including LSTM networks for time series forecasting. The project handles data preprocessing, time filtering, and timezone considerations.",

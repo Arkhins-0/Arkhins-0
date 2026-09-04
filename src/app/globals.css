@@ -2,11 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ============================================================
-   NEON GLASS DESIGN SYSTEM
-   Dark-only. Four neon hues; one is promoted to --accent at a
-   time via [data-accent] on <html> (see PaletteContext).
-   ============================================================ */
+/* Neon glass design system — dark-only; one of four neon hues is promoted to --accent via [data-accent] on <html> */
 
 :root {
   /* Ground */
@@ -91,8 +87,7 @@
 }
 
 html {
-  /* framer-motion measures scroll offsets against the scroll container; a
-     static <html> makes those measurements unreliable (and warns in dev). */
+  /* framer-motion needs a non-static <html> for reliable scroll measurements */
   position: relative;
   scroll-behavior: smooth;
   overflow-x: hidden;
@@ -337,6 +332,17 @@ video {
   }
 }
 
+/* ------------------------------------------------------- staged boot: page hidden while only the emblem is on stage, looping animations parked until the curtain tears */
+
+html[data-stage='emblem'] :is(header, main, footer) {
+  content-visibility: hidden;
+}
+
+html[data-stage='emblem'] :is(header, main, footer) *,
+html[data-stage='boot'] :is(header, main, footer) * {
+  animation-play-state: paused !important;
+}
+
 /* ------------------------------------------------------------ motion */
 
 @keyframes drift-a {
@@ -515,8 +521,7 @@ video {
   margin-bottom: 1em;
 }
 
-/* While the custom cursor is live, suppress every native cursor — including
-   the UA pointer on links and the text caret over copy. */
+/* While the custom cursor is live, suppress every native cursor */
 .cursor-hidden,
 .cursor-hidden * {
   cursor: none !important;
@@ -532,8 +537,7 @@ video {
   display: none;
 }
 
-/* Glass fill without a border — used inside <Panel>, whose 1px gradient
-   parent already draws the edge. */
+/* Glass fill without a border — used inside <Panel>, whose gradient parent draws the edge */
 .glass-fill {
   background:
     linear-gradient(

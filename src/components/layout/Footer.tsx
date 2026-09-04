@@ -68,20 +68,17 @@ function Gutter({ side }: { side: 'left' | 'right' }) {
   );
 }
 
+/** Site footer: link columns, crest bar, cycling anagram wordmark, bottom bar. */
 export function Footer() {
   const year = new Date().getFullYear();
   const [mark, setMark] = useState(0);
 
   return (
     <footer className="relative overflow-hidden border-t border-white/8 pt-16">
-      {/* The shell tops out at 84rem, so on a wide screen it leaves a gutter
-          either side. A standing emblem fills each one — no turn, no glow,
-          just a watermark at the same weight as the wordmark behind it. */}
       <Gutter side="left" />
       <Gutter side="right" />
 
       <div className="shell relative z-10">
-        {/* --------------------------------------------- columns */}
         <div className="grid gap-10 pb-14 md:grid-cols-[1.4fr_1fr_1fr]">
           <div>
             <p className="eyebrow">{footer.currentlyLabel}</p>
@@ -143,20 +140,12 @@ export function Footer() {
           </div>
         </div>
 
-        {/* --------------------------------------------- crest bar
-            Three emblems above the wordmark, like a seal on a colophon: the
-            middle one turns on the same axis as the navbar's, the outriders
-            hold still so the row has an anchor at each end. */}
         <div className="mb-7 flex items-center gap-5 sm:gap-6">
           <span aria-hidden="true" className="neon-line h-px flex-1 opacity-30" />
           <Crest />
           <span aria-hidden="true" className="neon-line h-px flex-1 opacity-30" />
         </div>
 
-        {/* --------------------------------------------- wordmark
-            The two words are rearrangements of one another, cycling on the same
-            beat as the intro. `fit` sizes it to the column, so it never
-            overruns the shell however wide the viewport gets. */}
         <div className="relative select-none">
           <Anagram
             words={MARK.words}
@@ -187,7 +176,6 @@ export function Footer() {
           </div>
         </div>
 
-        {/* --------------------------------------------- bottom bar */}
         <div className="mt-8 flex flex-col-reverse items-center justify-between gap-4 border-t border-white/8 py-6 sm:flex-row">
           <p className="hud text-ink-faint">
             {fill(footer.copyright, {

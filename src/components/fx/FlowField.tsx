@@ -14,12 +14,14 @@ type Particle = {
   w: number;
 };
 
-/**
- * Signature background: particles advected through a layered-sine flow field,
- * leaving additive neon trails. Trails are erased with `destination-out` so the
- * canvas stays transparent and the aurora layers below keep showing through.
- */
-export function FlowField({ className = '' }: { className?: string }) {
+/** Full-viewport canvas of particles advected through a sine flow field, leaving additive neon trails. */
+export function FlowField({
+  className = '',
+  active = true,
+}: {
+  className?: string;
+  active?: boolean;
+}) {
   const ref = useRef<HTMLCanvasElement>(null);
   const { fx, accent, ready } = useUI();
 
@@ -29,7 +31,7 @@ export function FlowField({ className = '' }: { className?: string }) {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    if (!fx) {
+    if (!fx || !active) {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       return;
     }
@@ -77,14 +79,12 @@ export function FlowField({ className = '' }: { className?: string }) {
       canvas.style.height = `${h}px`;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-      // Scale the swarm to the viewport, but keep phones cheap.
       const target = Math.round(
         Math.min(260, Math.max(70, (w * h) / (w < 768 ? 14000 : 7200)))
       );
       particles = Array.from({ length: target }, () => spawn());
     };
 
-    // Cheap smooth field: three sine octaves summed into an angle.
     const angleAt = (x: number, y: number) =>
       (Math.sin(x * 0.0016 + t) +
         Math.sin(y * 0.0021 - t * 0.72) +
@@ -162,7 +162,7 @@ export function FlowField({ className = '' }: { className?: string }) {
       window.removeEventListener('resize', onResize);
       document.removeEventListener('visibilitychange', onVisibility);
     };
-  }, [fx, accent, ready]);
+  }, [fx, accent, ready, active]);
 
   return (
     <canvas

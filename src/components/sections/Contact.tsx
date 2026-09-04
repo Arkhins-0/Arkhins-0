@@ -28,21 +28,55 @@ const SOCIAL_ICON: Record<string, React.ReactNode> = {
   telegram: <FaTelegram size={17} />,
 };
 
-/* Field ids for the upstream form live in the content file, so the client and
-   the API route read one source. */
 const ENTRY = COPY.formEntries;
 const FIELDS = COPY.fields;
+const PROMPT = COPY.console.prompt;
 
 type FormState = Record<string, string>;
 
-/** Blank state derived from the declared fields, so adding one to the content
- *  file is the only edit needed. */
+/** Blank state derived from the declared fields. */
 const EMPTY_FORM: FormState = Object.fromEntries(
   [...FIELDS.map((f) => f.name), COPY.messageField.name].map((n) => [n, ''])
 );
 
 type Status = 'idle' | 'sending' | 'success' | 'error';
 
+/** Field: labelled console-style text input. */
+function Field({
+  name,
+  label,
+  type,
+  placeholder,
+  value,
+  onChange,
+}: {
+  name: string;
+  label: string;
+  type: string;
+  placeholder: string;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}) {
+  return (
+    <label className="block">
+      <span className="hud mb-2 flex items-center gap-2 text-ink-faint">
+        <span className="text-accent">{PROMPT}</span> {label}
+      </span>
+      <input
+        type={type}
+        name={name}
+        required
+        value={value}
+        onChange={onChange}
+        placeholder={placeholder}
+        autoComplete={name === 'email' ? 'email' : 'off'}
+        className="w-full border-b border-white/12 bg-transparent pb-2 font-mono text-sm text-ink outline-none transition-colors placeholder:text-ink-faint/60 focus:border-accent"
+      />
+    </label>
+  );
+}
+
+/** Contact: giant mailto, detail list, socials and a console-styled form. */
 export function Contact() {
   const [form, setForm] = useState<FormState>(EMPTY_FORM);
   const [status, setStatus] = useState<Status>('idle');
@@ -62,8 +96,6 @@ export function Contact() {
     if (next !== 'sending') setTimeout(() => setStatus('idle'), 3200);
   };
 
-  /* Route through the server action when it is available (Vercel), which keeps
-     the Google Form endpoint off the client. */
   const submitViaApi = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus('sending');
@@ -85,8 +117,6 @@ export function Contact() {
     }
   };
 
-  /* Static-host fallback: let the browser POST straight to Google, targeting a
-     hidden iframe so the page never navigates away. */
   const submitDirect = () => {
     setStatus('sending');
     submitted.current = true;
@@ -114,7 +144,6 @@ export function Contact() {
       <div className="shell">
         <SectionHead {...COPY.head} />
 
-        {/* ------------------------------------------- giant mailto */}
         <Reveal className="mt-10">
           <a
             href={`mailto:${basics.email}`}
@@ -128,7 +157,6 @@ export function Contact() {
         </Reveal>
 
         <div className="mt-14 grid gap-10 lg:grid-cols-[1fr_1.15fr] lg:gap-14">
-          {/* --------------------------------------------- left column */}
           <div className="space-y-8">
             <Reveal dir="right">
               <p className="max-w-md text-[0.98rem] leading-relaxed text-ink-dim">
@@ -200,7 +228,6 @@ export function Contact() {
             </Reveal>
           </div>
 
-          {/* --------------------------------------------- console form */}
           <Reveal dir="left" delay={0.1}>
             <Panel hot cut={24} className="scanlines">
               <form
@@ -214,7 +241,6 @@ export function Contact() {
                   : { onSubmit: submitViaApi })}
                 className="relative p-6 md:p-8"
               >
-                {/* console chrome */}
                 <div className="mb-7 flex items-center gap-2 border-b border-white/8 pb-4">
                   <span className="h-2 w-2 rotate-45 bg-accent" />
                   <span className="hud text-ink-faint">
@@ -313,41 +339,5 @@ export function Contact() {
         </div>
       </div>
     </section>
-  );
-}
-
-const PROMPT = COPY.console.prompt;
-
-function Field({
-  name,
-  label,
-  type,
-  placeholder,
-  value,
-  onChange,
-}: {
-  name: string;
-  label: string;
-  type: string;
-  placeholder: string;
-  value: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-}) {
-  return (
-    <label className="block">
-      <span className="hud mb-2 flex items-center gap-2 text-ink-faint">
-        <span className="text-accent">{PROMPT}</span> {label}
-      </span>
-      <input
-        type={type}
-        name={name}
-        required
-        value={value}
-        onChange={onChange}
-        placeholder={placeholder}
-        autoComplete={name === 'email' ? 'email' : 'off'}
-        className="w-full border-b border-white/12 bg-transparent pb-2 font-mono text-sm text-ink outline-none transition-colors placeholder:text-ink-faint/60 focus:border-accent"
-      />
-    </label>
   );
 }

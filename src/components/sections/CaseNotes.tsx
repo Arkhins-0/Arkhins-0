@@ -20,17 +20,14 @@ export type NotesTarget = {
 
 type Status = 'loading' | 'ready' | 'error';
 
-/** Markdown files reference their images relatively; make them root-absolute. */
+/** absolute: makes a markdown-relative image src root-absolute. */
 function absolute(src: string) {
   if (!src) return src;
   if (/^(https?:)?\/\//.test(src) || src.startsWith('/')) return src;
   return `/${src.replace(/^\.\//, '')}`;
 }
 
-/**
- * Slide-over reader for a project's long-form write-up. The file is fetched on
- * open rather than bundled, so the notes cost nothing until someone asks.
- */
+/** CaseNotes: slide-over reader that fetches a project's markdown on open. */
 export function CaseNotes({
   project,
   onClose,
@@ -65,7 +62,6 @@ export function CaseNotes({
     };
   }, [file]);
 
-  // Escape closes; the page underneath must not scroll while this is open.
   useEffect(() => {
     if (!project) return;
     const onKey = (e: KeyboardEvent) => {
@@ -106,7 +102,6 @@ export function CaseNotes({
             className="notch-tl glass-fill-solid absolute inset-y-0 right-0 flex w-[min(46rem,100vw)] flex-col border-l border-accent/25"
             style={{ ['--notch' as string]: '28px' }}
           >
-            {/* header */}
             <header className="flex items-start gap-4 border-b border-white/8 px-6 py-5 md:px-9">
               <div className="min-w-0 flex-1">
                 <p className="eyebrow">{COPY.eyebrow}</p>
@@ -130,7 +125,6 @@ export function CaseNotes({
               </button>
             </header>
 
-            {/* body */}
             <div className="markdown-content flex-1 overflow-y-auto px-6 py-7 md:px-9">
               {status === 'loading' && (
                 <p className="hud animate-pulse text-ink-faint">

@@ -2,10 +2,7 @@
 
 import { cn } from '@/lib/utils';
 
-/**
- * Seamless marquee. Children are rendered twice and the track slides exactly
- * -50%, so the loop has no seam regardless of content width.
- */
+/** Seamless marquee: children render twice and the track slides -50%, so the loop has no seam. */
 export function Ticker({
   children,
   duration = 38,

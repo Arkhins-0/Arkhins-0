@@ -26,7 +26,7 @@ const SOCIAL_ICON: Record<string, React.ReactNode> = {
 
 type CardLink = { id: string; name: string; username: string; url: string };
 
-/** The five handles that belong on a pass, in the order the X lays them out. */
+/** The five handles that belong on the pass, in layout order. */
 const CARD_LINKS: CardLink[] = [
   socialLinks.find((s) => s.id === 'github') ?? null,
   {
@@ -40,7 +40,7 @@ const CARD_LINKS: CardLink[] = [
   socialLinks.find((s) => s.id === 'telegram') ?? null,
 ].filter((l): l is CardLink => l !== null);
 
-/** Corners, then the middle: 1 2 / 3 / 4 5. */
+/** Quincunx grid cells: corners, then the middle. */
 const CARD_CELL = [
   'col-start-1 row-start-1',
   'col-start-3 row-start-1',
@@ -49,13 +49,11 @@ const CARD_CELL = [
   'col-start-3 row-start-3',
 ];
 
-/** Encoded once at module scope — the URL is static content, not state. */
 const QR = qr(COPY.idCard.qr.value);
 
-/* Phrases the content file marks for emphasis, so the bio reads as edited copy
-   rather than a dumped data string. */
 const HIGHLIGHTS = COPY.highlights;
 
+/** markUp: wraps highlighted phrases from the content file in neon emphasis. */
 function markUp(text: string) {
   const pattern = new RegExp(`(${HIGHLIGHTS.join('|')})`, 'gi');
   return text.split(pattern).map((chunk, i) =>
@@ -69,7 +67,7 @@ function markUp(text: string) {
   );
 }
 
-/** Datasheet row: mono key on the left, content on the right, lights on hover. */
+/** SpecRow: datasheet row — mono key left, content right, lights on hover. */
 function SpecRow({
   k,
   children,
@@ -101,6 +99,7 @@ function SpecRow({
   );
 }
 
+/** IstClock: live clock in the card's configured timezone. */
 function IstClock() {
   const [time, setTime] = useState<string | null>(null);
   useEffect(() => {
@@ -123,7 +122,7 @@ function IstClock() {
   );
 }
 
-/** Five chamfered ticks; filled ones show proficiency. */
+/** LevelBar: five chamfered ticks; filled ones show proficiency. */
 function LevelBar({ level }: { level: number }) {
   return (
     <span className="inline-flex gap-1" aria-hidden="true">
@@ -145,6 +144,7 @@ function LevelBar({ level }: { level: number }) {
   );
 }
 
+/** About: ID-card panel beside a datasheet of bio, education and languages. */
 export function About() {
   return (
     <section id="about" className="band">
@@ -152,7 +152,6 @@ export function About() {
         <SectionHead {...COPY.head} />
 
         <div className="mt-14 grid gap-10 lg:grid-cols-[20rem_1fr] lg:gap-16">
-          {/* ------------------------------------------------ ID card */}
           <Reveal dir="right" className="lg:sticky lg:top-28 lg:self-start">
             <Panel hot cut={22} spotlight className="w-full">
               <div className="p-5">
@@ -197,7 +196,6 @@ export function About() {
                     <p className="hud mt-1 text-ink-faint">{basics.headline}</p>
                   </div>
 
-                  {/* the crest sits with the name the way a seal sits on a pass */}
                   <Image
                     src={BRAND.emblem}
                     alt=""
@@ -231,8 +229,6 @@ export function About() {
                   </div>
                 </dl>
 
-                {/* a real QR of the site URL, lit in the live accent rather
-                    than printer's black */}
                 {QR && (
                   <div className="mt-5 flex items-center gap-4 border-t border-white/8 pt-4">
                     <a
@@ -252,8 +248,6 @@ export function About() {
                             'drop-shadow(0 0 4px rgb(var(--accent-rgb) / calc(0.6 * var(--fx))))',
                         }}
                       >
-                        {/* fill on the group: a CSS var cannot ride on the
-                            presentation attribute of every rect */}
                         <g style={{ fill: 'rgb(var(--accent-rgb))' }}>
                           {QR.runs.map((run) => (
                             <rect
@@ -268,7 +262,6 @@ export function About() {
                       </svg>
                     </a>
 
-                    {/* the handles that go with the code, set as a quincunx */}
                     <ul className="ml-3 grid grid-cols-3 grid-rows-3 place-items-center">
                       {CARD_LINKS.map((link, i) => (
                         <li key={link.id} className={CARD_CELL[i]}>
@@ -292,7 +285,6 @@ export function About() {
             </Panel>
           </Reveal>
 
-          {/* ------------------------------------------------ datasheet */}
           <div>
             <Reveal>
               <p className="max-w-3xl font-display text-[clamp(1.15rem,2.3vw,1.65rem)] font-semibold leading-[1.5] tracking-tight text-ink-dim">
@@ -362,7 +354,6 @@ export function About() {
               </SpecRow>
             </Stack>
 
-            {/* ------------------------------------------ interest field */}
             <Reveal delay={0.1} className="mt-12">
               <p className="eyebrow mb-5">{COPY.interestsLabel}</p>
               <ul className="flex flex-wrap gap-2">
