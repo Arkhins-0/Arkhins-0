@@ -15,6 +15,7 @@ const offset: Record<Dir, { x: number; y: number }> = {
   none: { x: 0, y: 0 },
 };
 
+/** Fades/slides its children in once when they scroll into view. */
 export function Reveal({
   children,
   className,
@@ -45,11 +46,13 @@ export function Reveal({
   );
 }
 
+/** Parent variants for a staggered in-view reveal. */
 export const stackParent: Variants = {
   hidden: {},
   show: { transition: { staggerChildren: 0.07, delayChildren: 0.05 } },
 };
 
+/** Child variants paired with stackParent. */
 export const stackChild: Variants = {
   hidden: { opacity: 0, y: 26, filter: 'blur(5px)' },
   show: {

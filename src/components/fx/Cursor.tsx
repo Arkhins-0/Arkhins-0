@@ -3,10 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useUI } from '@/context/UIContext';
 
-/**
- * Two-part cursor: a hard dot that tracks 1:1 and a lagging neon ring that
- * swells over anything interactive. Mouse-only; hidden entirely on touch.
- */
+/** Two-part custom cursor: a 1:1 dot plus a lagging neon ring that swells over interactive elements; mouse-only. */
 export function Cursor() {
   const dot = useRef<HTMLDivElement>(null);
   const ring = useRef<HTMLDivElement>(null);

@@ -293,6 +293,32 @@
     },
     {
       "id": "proj-4",
+      "title": "CTR - Indian National Car Racing Championship",
+      "description": "The official portal of the CTR-JK Tyre FMSCI Indian National Car Racing Championship: newsroom, schedule with live round countdown, results, standings, drivers, teams, tickets and hospitality, videos, polls and a fan zone with accounts.",
+      "longDescription": "https://www.ctrsports.in. The championship-first home of the 2026 INCRC - One Nation, One Championship. Built with Next.js and TailwindCSS as an editorial product rather than a brochure: a magazine-style Latest page with venue guides and category explainers, a ticker that always shows the current round and session, drivers' and teams' standings, four ticket and hospitality tiers, and a Fan Zone with sign-in, predictions, polls, favourites and a newsletter, across Kari Motor Speedway, Bren Raceway and the Madras International Circuit.",
+      "thumbnail": "/images/projects/ctrsports.png",
+      "images": [
+        "/images/projects/ctrsports.png"
+      ],
+      "markdownFile": "/images/projects/ctrsports.md",
+      "tags": [
+        "Next.js",
+        "React",
+        "TailwindCSS",
+        "Fan Platform"
+      ],
+      "category": "Frontend",
+      "date": "September 2026",
+      "githubUrl": "",
+      "liveUrl": "https://www.ctrsports.in",
+      "featured": true,
+      "status": "Live",
+      "slug": "ctr-unified",
+      "role": "Design + Frontend",
+      "year": "2026"
+    },
+    {
+      "id": "proj-5",
       "title": "Predicting Microsoft Stock Values",
       "description": "This project uses time series analysis and Keras to predict Microsoft stock values. The model was trained and evaluated, showing a Root Mean Squared Error (RMSE) of 16.94 (5.75% error) on data from 2020-2025.",
       "longDescription": "A comprehensive stock prediction system using deep learning techniques including LSTM networks for time series forecasting. The project handles data preprocessing, time filtering, and timezone considerations.",

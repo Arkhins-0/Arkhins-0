@@ -18,25 +18,16 @@ const EDGE_HOT =
 type PanelProps = {
   children: React.ReactNode;
   className?: string;
-  /** which corners get chamfered */
   notch?: keyof typeof CLIP;
-  /** chamfer size in px */
   cut?: number;
-  /** accent-tinted edge instead of neutral white */
   hot?: boolean;
-  /** opaque-ish fill for panels sitting over busy background */
   solid?: boolean;
-  /** pointer-tracked glow inside the panel */
   spotlight?: boolean;
   innerClassName?: string;
   as?: 'div' | 'article' | 'li' | 'section';
 };
 
-/**
- * The site's structural surface: a 1px gradient edge clipped to a chamfer,
- * with a frosted fill inset inside it. The 1px offset between the two clips
- * leaves a fine bevel on the cut corners, which is the point.
- */
+/** Chamfered surface: a 1px gradient edge with a frosted fill inset inside it. */
 export function Panel({
   children,
   className,

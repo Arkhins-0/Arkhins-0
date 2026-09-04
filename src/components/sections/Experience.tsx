@@ -14,10 +14,10 @@ const ROLES = portfolioData.experience.filter(
   (e) => !e.id.includes('placeholder')
 );
 
+/** Entry: one role card hung off the timeline rail. */
 function Entry({ role, n }: { role: (typeof ROLES)[number]; n: number }) {
   return (
     <div className="group relative pl-14 md:pl-24">
-      {/* node on the rail */}
       <span className="absolute left-[1.15rem] top-7 z-10 flex h-3 w-3 -translate-x-1/2 items-center justify-center md:left-[2.4rem]">
         <span
           className={cn(
@@ -32,7 +32,6 @@ function Entry({ role, n }: { role: (typeof ROLES)[number]; n: number }) {
         )}
       </span>
 
-      {/* branch line into the card */}
       <span
         aria-hidden="true"
         className="absolute left-[1.15rem] top-[2.15rem] h-px w-8 origin-left scale-x-0 bg-accent/60 transition-transform duration-500 ease-swift group-hover:scale-x-100 md:left-[2.4rem] md:w-12"
@@ -44,7 +43,6 @@ function Entry({ role, n }: { role: (typeof ROLES)[number]; n: number }) {
         className="transition-transform duration-500 ease-swift group-hover:translate-x-1"
       >
         <div className="relative overflow-hidden p-6 md:p-7">
-          {/* oversized index watermark */}
           <span
             aria-hidden="true"
             className="pointer-events-none absolute -right-2 -top-6 font-display text-[6rem] font-extrabold leading-none text-white/[0.035]"
@@ -95,7 +93,6 @@ function Entry({ role, n }: { role: (typeof ROLES)[number]; n: number }) {
             </div>
           </div>
 
-          {/* highlights read as a terminal log */}
           <ul className="relative mt-5 space-y-1.5 border-l border-white/10 pl-4">
             {role.highlights.map((h) => (
               <li
@@ -124,6 +121,7 @@ function Entry({ role, n }: { role: (typeof ROLES)[number]; n: number }) {
   );
 }
 
+/** Experience: role timeline with a scroll-linked neon rail. */
 export function Experience() {
   const track = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
@@ -142,7 +140,6 @@ export function Experience() {
         <SectionHead {...COPY.head} />
 
         <div ref={track} className="relative mt-14">
-          {/* rail: dim base + scroll-linked neon fill */}
           <div
             aria-hidden="true"
             className="absolute bottom-0 left-[1.15rem] top-0 w-px bg-white/10 md:left-[2.4rem]"

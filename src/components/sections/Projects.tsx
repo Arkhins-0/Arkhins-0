@@ -35,13 +35,7 @@ const CATEGORIES = [
   ...Array.from(new Set(ALL.map((p) => p.category))),
 ];
 
-/* ------------------------------------------------------------------ row */
-
-/**
- * The work index reads as a ledger rather than a card wall: hairline-ruled
- * rows, an oversized entry number in the left gutter, and the cover riding
- * beside the copy so the whole list stays scannable in one pass.
- */
+/** ProjectRow: ledger-style entry with number, cover, copy and actions. */
 function ProjectRow({
   project,
   n,
@@ -60,7 +54,6 @@ function ProjectRow({
       variants={stackChild}
       className="group relative border-b border-white/10"
     >
-      {/* row wash and left spine, both keyed to hover */}
       <span
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
@@ -76,7 +69,6 @@ function ProjectRow({
       />
 
       <div className="relative grid gap-5 py-7 pl-4 pr-1 transition-transform duration-500 ease-swift group-hover:translate-x-2 md:grid-cols-[3rem_minmax(0,16rem)_minmax(0,1fr)] md:items-center md:gap-8 md:py-9 md:pl-6">
-        {/* entry number */}
         <div className="flex items-center gap-3 md:block">
           <span className="font-display text-2xl font-extrabold leading-none text-white/25 transition-colors duration-500 group-hover:text-accent md:text-[2.75rem]">
             {String(n).padStart(2, '0')}
@@ -87,7 +79,6 @@ function ProjectRow({
           />
         </div>
 
-        {/* cover */}
         <div
           className="notch-br relative aspect-[16/10] overflow-hidden border border-white/10 bg-black/40 transition-colors duration-500 group-hover:border-accent/40"
           style={{ ['--notch' as string]: '16px' }}
@@ -120,7 +111,6 @@ function ProjectRow({
           )}
         </div>
 
-        {/* body */}
         <div className="min-w-0">
           <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
             <span className="hud text-accent">{project.category}</span>
@@ -168,7 +158,6 @@ function ProjectRow({
               className="hidden h-px flex-1 bg-white/10 sm:block"
             />
 
-            {/* actions */}
             <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
               {project.pageUrl && (
                 <Link
@@ -228,8 +217,7 @@ function ProjectRow({
   );
 }
 
-/* -------------------------------------------------------------- section */
-
+/** Projects: filterable work ledger with a slide-over case-notes reader. */
 export function Projects() {
   const [filter, setFilter] = useState(COPY.allFilter);
   const [notes, setNotes] = useState<NotesTarget>(null);
@@ -245,7 +233,6 @@ export function Projects() {
       <div className="shell">
         <SectionHead {...COPY.head} />
 
-        {/* filters */}
         <Reveal className="mt-12 flex flex-wrap items-center gap-2">
           <span className="eyebrow mr-3">{COPY.indexLabel}</span>
           {CATEGORIES.map((c) => (
@@ -268,7 +255,6 @@ export function Projects() {
           </span>
         </Reveal>
 
-        {/* ledger */}
         <Stack key={filter} className="mt-8" amount={0.05}>
           <ol className="border-t border-white/10">
             {shown.map((p, i) => (
@@ -289,7 +275,6 @@ export function Projects() {
           </p>
         )}
 
-        {/* outro */}
         <Reveal className="mt-14 flex flex-wrap items-center justify-between gap-6 border-t border-white/8 pt-8">
           <p className="max-w-md text-sm text-ink-dim">{COPY.outroCopy}</p>
           <NeonButton

@@ -57,6 +57,7 @@ const ICONS: Record<string, React.ElementType> = {
 
 type Screen = (typeof screens)[number];
 
+/** Hygieia case study: hero, overview, models, pipelines, screens, architecture, security, outro, lightbox. */
 export default function ProjectCaseStudy() {
   const [lightbox, setLightbox] = useState<Screen | null>(null);
   const [pipeline, setPipeline] = useState(models[0].name);
@@ -69,7 +70,6 @@ export default function ProjectCaseStudy() {
       <ProjectBar name={meta.name} />
 
       <main>
-        {/* ============================================================ hero */}
         <section className="relative overflow-hidden pb-20 pt-32 md:pt-40">
           <div className="shell">
             <div className="grid items-end gap-10 lg:grid-cols-[1.25fr_1fr]">
@@ -146,7 +146,6 @@ export default function ProjectCaseStudy() {
                 </Reveal>
               </div>
 
-              {/* stat block */}
               <Reveal dir="left" delay={0.2}>
                 <Panel hot cut={24}>
                   <dl className="grid grid-cols-2">
@@ -170,7 +169,6 @@ export default function ProjectCaseStudy() {
               </Reveal>
             </div>
 
-            {/* cover */}
             <Reveal delay={0.34} className="mt-16">
               <Panel cut={32} className="group/cover overflow-hidden">
                 <div className="relative aspect-[16/9] w-full">
@@ -196,7 +194,6 @@ export default function ProjectCaseStudy() {
           </div>
         </section>
 
-        {/* ======================================================== overview */}
         <section className="band pt-0">
           <div className="shell">
             <SectionHead {...sections.overview} />
@@ -242,7 +239,6 @@ export default function ProjectCaseStudy() {
           </div>
         </section>
 
-        {/* ========================================================== models */}
         <section className="band pt-0">
           <div className="shell">
             <SectionHead {...sections.models} />
@@ -314,7 +310,6 @@ export default function ProjectCaseStudy() {
               })}
             </Stack>
 
-            {/* comparison table */}
             <Reveal className="mt-8">
               <Panel cut={18} className="overflow-hidden">
                 <div className="rail-scroll">
@@ -371,12 +366,10 @@ export default function ProjectCaseStudy() {
           </div>
         </section>
 
-        {/* ======================================================= pipelines */}
         <section className="band pt-0">
           <div className="shell">
             <SectionHead {...sections.pipelines} />
 
-            {/* tabs */}
             <Reveal className="mt-10 flex flex-wrap gap-2">
               {models.map((m) => {
                 const on = pipeline === m.name;
@@ -437,7 +430,6 @@ export default function ProjectCaseStudy() {
                     </div>
 
                     <div className="mt-8 grid gap-10 lg:grid-cols-2">
-                      {/* flow */}
                       <div>
                         <p className="eyebrow mb-5">{labels.pipelineFlow}</p>
                         <ol className="relative space-y-3">
@@ -475,7 +467,6 @@ export default function ProjectCaseStudy() {
                         </ol>
                       </div>
 
-                      {/* details */}
                       <div>
                         <p className="eyebrow mb-5">
                           {activePipeline.detailsTitle}
@@ -507,7 +498,6 @@ export default function ProjectCaseStudy() {
           </div>
         </section>
 
-        {/* ========================================================= screens */}
         <section className="band pt-0">
           <div className="shell">
             <SectionHead {...sections.screens} />
@@ -561,7 +551,6 @@ export default function ProjectCaseStudy() {
           </div>
         </section>
 
-        {/* ==================================================== architecture */}
         <section className="band pt-0">
           <div className="shell">
             <SectionHead {...sections.architecture} />
@@ -603,7 +592,6 @@ export default function ProjectCaseStudy() {
           </div>
         </section>
 
-        {/* ======================================================== security */}
         <section className="band pt-0">
           <div className="shell">
             <SectionHead {...sections.security} />
@@ -647,7 +635,6 @@ export default function ProjectCaseStudy() {
           </div>
         </section>
 
-        {/* =========================================================== outro */}
         <section className="band pt-0">
           <div className="shell">
             <Reveal>
@@ -685,7 +672,6 @@ export default function ProjectCaseStudy() {
 
       <Footer />
 
-      {/* ========================================================= lightbox */}
       <AnimatePresence>
         {lightbox && (
           <motion.div

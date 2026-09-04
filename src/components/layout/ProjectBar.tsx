@@ -8,8 +8,7 @@ import content from '@/data/content.json';
 
 const COPY = content.projectPage;
 
-/** Slim chrome for a project page: back to the index, project name, scroll
- *  state. Deliberately lighter than the site nav so the work leads. */
+/** Slim chrome for a project page: back link, project name, scroll state. */
 export function ProjectBar({
   name,
   kind = COPY.kindLabel,
