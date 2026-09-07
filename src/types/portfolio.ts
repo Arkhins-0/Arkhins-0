@@ -5,6 +5,9 @@ export interface Meta {
   description: string;
   keywords: string[];
   author: string;
+  siteUrl: string;
+  ogImage: string;
+  ogAlt: string;
 }
 
 export interface Location {
