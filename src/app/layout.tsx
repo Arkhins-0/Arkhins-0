@@ -27,7 +27,7 @@ const mono = JetBrains_Mono({
   display: 'swap',
 });
 
-const { meta, basics } = portfolioData;
+const { meta, basics, socialLinks } = portfolioData;
 
 export const metadata: Metadata = {
   metadataBase: new URL(meta.siteUrl),
@@ -37,10 +37,27 @@ export const metadata: Metadata = {
   },
   description: meta.description,
   keywords: meta.keywords,
-  authors: [{ name: meta.author }],
+  authors: [{ name: meta.author, url: meta.siteUrl }],
+  creator: meta.author,
+  publisher: meta.author,
+  alternates: {
+    canonical: meta.siteUrl,
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
   openGraph: {
     title: meta.title,
     description: meta.description,
+    url: meta.siteUrl,
+    siteName: meta.title,
     type: 'website',
     images: [{ url: meta.ogImage, alt: meta.ogAlt }],
   },
@@ -50,6 +67,26 @@ export const metadata: Metadata = {
     description: meta.description,
     images: [meta.ogImage],
   },
+};
+
+// Person schema so search engines associate "Krishna Vijay" / "Krishna Vijay G." queries with this site
+const personJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: basics.name,
+  alternateName: ['Krishna Vijay', 'Krishna Vijay G', 'Arkhins'],
+  url: meta.siteUrl,
+  image: `${meta.siteUrl}${basics.profilePicture}`,
+  jobTitle: basics.headline,
+  description: meta.description,
+  email: `mailto:${basics.email}`,
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: basics.location.city,
+    addressRegion: basics.location.state,
+    addressCountry: basics.location.country,
+  },
+  sameAs: socialLinks.map((link) => link.url),
 };
 
 export const viewport: Viewport = {
@@ -73,6 +110,10 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="min-h-screen overflow-x-hidden bg-bg text-ink antialiased">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+        />
         <UIProvider>
           <Backdrop />
           <ScrollRail />
