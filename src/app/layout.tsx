@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import { Syne, Space_Grotesk, JetBrains_Mono } from 'next/font/google';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import './globals.css';
 import { UIProvider } from '@/context/UIContext';
 import { Backdrop, Cursor, ScrollRail } from '@/components/fx';
@@ -121,6 +122,7 @@ export default function RootLayout({
           <Boot />
           {children}
         </UIProvider>
+        <SpeedInsights />
       </body>
     </html>
   );
