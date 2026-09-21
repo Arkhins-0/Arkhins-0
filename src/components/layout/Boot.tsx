@@ -8,14 +8,13 @@ import { useUI } from '@/context/UIContext';
 import { cn } from '@/lib/utils';
 import content from '@/data/content.json';
 import portfolioData from '@/data/portfolio.json';
+import projectRows from '@/data/db/projects.json';
 
 /** Small above-the-fold art, warmed while the curtain is up. */
 const PREFETCH = [
   portfolioData.basics.profilePicture,
   portfolioData.basics.portrait,
-  ...portfolioData.projects
-    .filter((p) => !p.id.includes('placeholder'))
-    .map((p) => p.thumbnail),
+  ...projectRows.filter((p) => p.published).map((p) => p.thumbnail),
 ];
 
 const INTRO = content.brand.boot;

@@ -11,8 +11,9 @@ import content from '@/data/content.json';
 import { Panel, Reveal, SectionHead, Stack, stackChild } from '@/components/fx';
 import { cn, fill } from '@/lib/utils';
 import { qr } from '@/lib/qr';
+import type { EducationRow } from '@/types/content';
 
-const { basics, education, languages, interests, socialLinks } = portfolioData;
+const { basics, languages, interests, socialLinks } = portfolioData;
 const COPY = content.about;
 const BRAND = content.brand;
 
@@ -145,7 +146,7 @@ function LevelBar({ level }: { level: number }) {
 }
 
 /** About: ID-card panel beside a datasheet of bio, education and languages. */
-export function About() {
+export function About({ education }: { education: EducationRow[] }) {
   return (
     <section id="about" className="band">
       <div className="shell">
@@ -299,7 +300,7 @@ export function About() {
                     <li key={e.id} className="flex items-start gap-3">
                       <span className="relative mt-0.5 h-9 w-9 shrink-0 overflow-hidden border border-white/12 bg-white/5">
                         <Image
-                          src={e.logo}
+                          src={e.logo ?? '/images/education/placeholder.png'}
                           alt=""
                           fill
                           sizes="36px"
@@ -313,8 +314,8 @@ export function About() {
                           <span className="text-ink-dim">{e.field}</span>
                         </p>
                         <p className="mt-0.5 font-mono text-[0.68rem] text-ink-faint">
-                          {e.institution} — {e.startDate}–{e.endDate}
-                          <span className="text-accent"> · {e.score}</span>
+                          {e.institution} — {e.startYear}–{e.endYear ?? 'Present'}
+                          {e.score && <span className="text-accent"> · {e.score}</span>}
                         </p>
                       </div>
                     </li>
