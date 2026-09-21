@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Hygieia — Multi-Disease Diagnosis Framework</title>
-  <meta name="description" content="Visual showcase of Hygieia: five diagnostic AI models, a context-aware health assistant and a blockchain audit trail behind one calm clinical interface." />
+  <meta name="description" content="Visual showcase of Hygieia: five diagnostic AI models, a context-aware health assistant and a blockchain audit trail behind one calm clinical interface, in light and dark." />
   <link rel="icon" href="../logo.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -23,7 +23,8 @@
       <a href="#overview">Overview</a>
       <a href="#models">Models</a>
       <a href="#flow">Flow</a>
-      <a href="#trust">Trust</a>
+      <a href="#themes">Themes</a>
+      <a href="#mobile">Mobile</a>
       <a href="#gallery">Gallery</a>
     </nav>
     <a class="btn btn-ghost" href="../../hygieia">Read the case study</a>
@@ -52,17 +53,17 @@
 
     <div class="stage" data-tilt-stage aria-hidden="true">
       <figure class="shot shot-left" data-depth="0.6">
-        <img src="../screen-dashboard.png" alt="" loading="eager" />
+        <img src="../mock/desktop/dashboard-light.png" alt="" loading="eager" />
       </figure>
       <figure class="shot shot-center" data-depth="1">
         <div class="browser">
           <span class="b-dots"><i></i><i></i><i></i></span>
           <span class="b-url">hygieia.app</span>
         </div>
-        <img src="../screen-landing.png" alt="" loading="eager" />
+        <img src="../mock/desktop/landing-viewport-dark.png" alt="" loading="eager" />
       </figure>
       <figure class="shot shot-right" data-depth="0.6">
-        <img src="../screen-analysis.png" alt="" loading="eager" />
+        <img src="../mock/desktop/result-heart-light.png" alt="" loading="eager" />
       </figure>
     </div>
   </section>
@@ -70,13 +71,14 @@
   <!-- ───────────────────────── MARQUEE ───────────────────────── -->
   <section class="marquee" aria-hidden="true">
     <div class="marquee-track" data-marquee>
-      <img src="../screen-landing.png" alt="" />
-      <img src="../screen-dashboard.png" alt="" />
-      <img src="../screen-analysis.png" alt="" />
-      <img src="../screen-chat.png" alt="" />
-      <img src="../screen-blockchain.png" alt="" />
-      <img src="../screen-auth.png" alt="" />
-      <img src="../screen-contact.png" alt="" />
+      <img src="../mock/desktop/dashboard-dark.png" alt="" />
+      <img src="../mock/desktop/analysis-hub-light.png" alt="" />
+      <img src="../mock/desktop/result-heart-dark.png" alt="" />
+      <img src="../mock/desktop/chat-light.png" alt="" />
+      <img src="../mock/desktop/admin-blockchain-dark.png" alt="" />
+      <img src="../mock/desktop/history-light.png" alt="" />
+      <img src="../mock/desktop/analysis-heart-dark.png" alt="" />
+      <img src="../mock/desktop/login-light.png" alt="" />
     </div>
   </section>
 
@@ -155,20 +157,20 @@
         <p>Context-aware fields with real-time validation and helper text for every medical parameter. Skin lesions are uploaded as images; the other models take questionnaires and lab values.</p>
         <ul class="ticks"><li>Toggles and units tuned per parameter</li><li>Image upload with progress states</li><li>Clear disclaimer: a risk assessment, not a diagnosis</li></ul>
       </div>
-      <figure class="device iso-right" data-tilt>
-        <img src="../screen-analysis.png" alt="Heart risk analysis form" loading="lazy" />
+      <figure class="device iso-right tall" data-tilt>
+        <img src="../mock/desktop/analysis-heart-light.png" alt="Heart risk analysis form" loading="lazy" />
       </figure>
     </div>
 
     <div class="feature feature-flip reveal">
       <div class="feature-copy">
         <span class="step">02</span>
-        <h3>Results and history</h3>
-        <p>The dashboard keeps recent analyses, per-model counts and an activity timeline, with quick cards into every diagnostic flow. Each result carries its confidence score and risk level.</p>
-        <ul class="ticks"><li>Per-model counters</li><li>Risk level and confidence on every result</li><li>One click back into any analysis</li></ul>
+        <h3>Result, explained</h3>
+        <p>Every result shows the risk level, a confidence score, the exact inputs used, the model and method, and its blockchain transaction hash. Dr. Hygieia adds a plain-language reading of what the numbers mean.</p>
+        <ul class="ticks"><li>Risk level and confidence up front</li><li>Inputs and model details for auditability</li><li>AI summary generated for the result</li></ul>
       </div>
-      <figure class="device iso-left" data-tilt>
-        <img src="../screen-dashboard.png" alt="User dashboard" loading="lazy" />
+      <figure class="device iso-left tall" data-tilt>
+        <img src="../mock/desktop/result-heart-dark.png" alt="Heart risk prediction result" loading="lazy" />
       </figure>
     </div>
 
@@ -180,7 +182,7 @@
         <ul class="ticks"><li>Streaming answers</li><li>Session management</li><li>Deep links to analyses</li></ul>
       </div>
       <figure class="device iso-right" data-tilt>
-        <img src="../screen-chat.png" alt="Dr. Hygieia chat" loading="lazy" />
+        <img src="../mock/desktop/chat-dark.png" alt="Dr. Hygieia chat" loading="lazy" />
       </figure>
     </div>
 
@@ -189,25 +191,44 @@
         <span class="step">04</span>
         <h3>Blockchain verification</h3>
         <p>Every record is hashed with SHA-256 and appended to a chain. Verification walks the chain, flags any tampering and gives administrators an oversight dashboard.</p>
-        <ul class="ticks"><li>Immutable audit trail</li><li>Tamper detection and chain validation</li><li>Admin oversight</li></ul>
+        <ul class="ticks"><li>Immutable audit trail</li><li>Tamper detection and chain validation</li><li>Admin oversight and user management</li></ul>
       </div>
       <figure class="device iso-left" data-tilt>
-        <img src="../screen-blockchain.png" alt="Blockchain verification dashboard" loading="lazy" />
+        <img src="../mock/desktop/admin-blockchain-light.png" alt="Blockchain verification dashboard" loading="lazy" />
       </figure>
     </div>
   </section>
 
-  <!-- ───────────────────────── DECK ───────────────────────── -->
-  <section class="section" id="deck">
+  <!-- ───────────────────────── THEMES ───────────────────────── -->
+  <section class="section" id="themes">
     <div class="section-head reveal">
       <p class="eyebrow">Interface</p>
-      <h2>Calm, accessible, built for long sessions.</h2>
-      <p>Dark and light mode, responsive by default: the same flows work on a ward tablet and on a phone in a waiting room.</p>
+      <h2>Calm in daylight, calm at night.</h2>
+      <p>Built for long clinical sessions: soft surfaces, one green accent, and a dark mode that keeps every card legible. Drag the handle to compare.</p>
     </div>
-    <div class="deck reveal">
-      <figure class="deck-card deck-1"><img src="../screen-auth.png" alt="Authentication" loading="lazy" /></figure>
-      <figure class="deck-card deck-2"><img src="../screen-contact.png" alt="Contact" loading="lazy" /></figure>
-      <figure class="deck-card deck-3"><img src="../screen-landing.png" alt="Landing" loading="lazy" /></figure>
+    <div class="compare reveal" data-compare>
+      <img class="compare-a" src="../mock/desktop/dashboard-light.png" alt="Dashboard, light theme" />
+      <img class="compare-b" src="../mock/desktop/dashboard-dark.png" alt="Dashboard, dark theme" />
+      <div class="compare-handle" aria-hidden="true"><span></span></div>
+      <input class="compare-range" type="range" min="0" max="100" value="50" aria-label="Compare light and dark themes" />
+      <span class="compare-tag tag-a">Light</span>
+      <span class="compare-tag tag-b">Dark</span>
+    </div>
+  </section>
+
+  <!-- ───────────────────────── MOBILE ───────────────────────── -->
+  <section class="section" id="mobile">
+    <div class="section-head reveal">
+      <p class="eyebrow">Responsive</p>
+      <h2>The same flows on a phone in a waiting room.</h2>
+      <p>Hover a phone to scroll its screen.</p>
+    </div>
+    <div class="phones reveal">
+      <figure class="phone phone-1 light"><div class="phone-screen scroller"><img src="../mock/mobile/landing-light.png" alt="Landing on a phone" loading="lazy" /></div></figure>
+      <figure class="phone phone-2"><div class="phone-screen scroller"><img src="../mock/mobile/dashboard-dark.png" alt="Dashboard on a phone" loading="lazy" /></div></figure>
+      <figure class="phone phone-3 light"><div class="phone-screen scroller"><img src="../mock/mobile/analysis-heart-light.png" alt="Heart risk form on a phone" loading="lazy" /></div></figure>
+      <figure class="phone phone-4"><div class="phone-screen scroller"><img src="../mock/mobile/result-heart-dark.png" alt="Result on a phone" loading="lazy" /></div></figure>
+      <figure class="phone phone-5 light"><div class="phone-screen"><img src="../mock/mobile/login-light.png" alt="Sign in on a phone" loading="lazy" /></div></figure>
     </div>
   </section>
 
@@ -242,7 +263,7 @@
       </div>
       <div class="stack-col">
         <h4>Backend and models</h4>
-        <ul class="chips"><li>Flask</li><li>SQLAlchemy</li><li>JWT</li><li>scikit-learn</li><li>TensorFlow</li><li>Google Derm Foundation</li></ul>
+        <ul class="chips"><li>Flask</li><li>SQLAlchemy</li><li>JWT</li><li>scikit-learn</li><li>TensorFlow</li><li>Google Derm Foundation</li><li>Gemini</li></ul>
       </div>
     </div>
   </section>
@@ -251,24 +272,36 @@
   <section class="section" id="gallery">
     <div class="section-head reveal">
       <p class="eyebrow">Gallery</p>
-      <h2>Every screen.</h2>
-      <p>Click any image to open it at full size.</p>
+      <h2>Every screen, both themes.</h2>
+      <p>Click any image to open it at full resolution.</p>
     </div>
     <div class="gallery" data-gallery>
-      <a href="../screen-landing.png" class="g-item reveal"><img src="../screen-landing.png" alt="Landing page" loading="lazy" /><span>Landing page</span></a>
-      <a href="../screen-dashboard.png" class="g-item reveal"><img src="../screen-dashboard.png" alt="User dashboard" loading="lazy" /><span>User dashboard</span></a>
-      <a href="../screen-analysis.png" class="g-item reveal"><img src="../screen-analysis.png" alt="Analysis interface" loading="lazy" /><span>Analysis interface</span></a>
-      <a href="../screen-chat.png" class="g-item reveal"><img src="../screen-chat.png" alt="Dr. Hygieia" loading="lazy" /><span>Dr. Hygieia</span></a>
-      <a href="../screen-blockchain.png" class="g-item reveal"><img src="../screen-blockchain.png" alt="Blockchain verification" loading="lazy" /><span>Blockchain verification</span></a>
-      <a href="../screen-auth.png" class="g-item reveal"><img src="../screen-auth.png" alt="Authentication" loading="lazy" /><span>Authentication</span></a>
-      <a href="../screen-contact.png" class="g-item reveal"><img src="../screen-contact.png" alt="Contact" loading="lazy" /><span>Contact</span></a>
-      <a href="../cover.png" class="g-item reveal"><img src="../cover.png" alt="Cover" loading="lazy" /><span>Cover</span></a>
+      <a href="../mock/desktop/landing-viewport-dark.png" class="g-item reveal"><img src="../mock/desktop/landing-viewport-dark.png" alt="Landing, dark" loading="lazy" /><span>Landing · dark</span></a>
+      <a href="../mock/desktop/landing-viewport-light.png" class="g-item reveal"><img src="../mock/desktop/landing-viewport-light.png" alt="Landing, light" loading="lazy" /><span>Landing · light</span></a>
+      <a href="../mock/desktop/dashboard-light.png" class="g-item reveal"><img src="../mock/desktop/dashboard-light.png" alt="Dashboard, light" loading="lazy" /><span>Dashboard · light</span></a>
+      <a href="../mock/desktop/dashboard-dark.png" class="g-item reveal"><img src="../mock/desktop/dashboard-dark.png" alt="Dashboard, dark" loading="lazy" /><span>Dashboard · dark</span></a>
+      <a href="../mock/desktop/analysis-hub-light.png" class="g-item reveal"><img src="../mock/desktop/analysis-hub-light.png" alt="Analysis services" loading="lazy" /><span>Analysis services</span></a>
+      <a href="../mock/desktop/analysis-heart-light.png" class="g-item reveal"><img src="../mock/desktop/analysis-heart-light.png" alt="Heart risk form" loading="lazy" /><span>Heart risk form</span></a>
+      <a href="../mock/desktop/analysis-skin-dark.png" class="g-item reveal"><img src="../mock/desktop/analysis-skin-dark.png" alt="Skin lesion upload" loading="lazy" /><span>Skin lesion upload · dark</span></a>
+      <a href="../mock/desktop/analysis-breast-light.png" class="g-item reveal"><img src="../mock/desktop/analysis-breast-light.png" alt="Breast cancer prediction form" loading="lazy" /><span>Breast cancer prediction</span></a>
+      <a href="../mock/desktop/result-heart-dark.png" class="g-item reveal"><img src="../mock/desktop/result-heart-dark.png" alt="Heart result, dark" loading="lazy" /><span>Heart result · dark</span></a>
+      <a href="../mock/desktop/result-diabetes-light.png" class="g-item reveal"><img src="../mock/desktop/result-diabetes-light.png" alt="Diabetes result" loading="lazy" /><span>Diabetes result</span></a>
+      <a href="../mock/desktop/result-breast-dark.png" class="g-item reveal"><img src="../mock/desktop/result-breast-dark.png" alt="Breast tissue result" loading="lazy" /><span>Breast tissue result · dark</span></a>
+      <a href="../mock/desktop/history-light.png" class="g-item reveal"><img src="../mock/desktop/history-light.png" alt="Analysis history" loading="lazy" /><span>Analysis history</span></a>
+      <a href="../mock/desktop/chat-light.png" class="g-item reveal"><img src="../mock/desktop/chat-light.png" alt="Dr. Hygieia, light" loading="lazy" /><span>Dr. Hygieia · light</span></a>
+      <a href="../mock/desktop/chat-dark.png" class="g-item reveal"><img src="../mock/desktop/chat-dark.png" alt="Dr. Hygieia, dark" loading="lazy" /><span>Dr. Hygieia · dark</span></a>
+      <a href="../mock/desktop/admin-blockchain-light.png" class="g-item reveal"><img src="../mock/desktop/admin-blockchain-light.png" alt="Blockchain verification" loading="lazy" /><span>Blockchain verification</span></a>
+      <a href="../mock/desktop/admin-users-dark.png" class="g-item reveal"><img src="../mock/desktop/admin-users-dark.png" alt="User management" loading="lazy" /><span>User management · dark</span></a>
+      <a href="../mock/desktop/profile-light.png" class="g-item reveal"><img src="../mock/desktop/profile-light.png" alt="Profile" loading="lazy" /><span>Profile</span></a>
+      <a href="../mock/desktop/docs-models-dark.png" class="g-item reveal"><img src="../mock/desktop/docs-models-dark.png" alt="Model documentation" loading="lazy" /><span>Model docs · dark</span></a>
+      <a href="../mock/desktop/register-light.png" class="g-item reveal"><img src="../mock/desktop/register-light.png" alt="Register" loading="lazy" /><span>Register</span></a>
+      <a href="../mock/desktop/login-dark.png" class="g-item reveal"><img src="../mock/desktop/login-dark.png" alt="Sign in, dark" loading="lazy" /><span>Sign in · dark</span></a>
     </div>
   </section>
 
   <footer class="footer">
     <div class="brand"><img src="../logo.svg" alt="" width="28" height="28" /><span>Hygieia</span></div>
-    <p>Multi-Disease Diagnosis Framework · <a class="link" href="https://github.com/Krishna-Vijay-G/Hygieia.git" target="_blank" rel="noopener">Source on GitHub</a> · <a class="link" href="../../hygieia">Full case study</a></p>
+    <p>Multi-Disease Diagnosis Framework · <a class="link" href="https://github.com/Krishna-Vijay-G/Hygieia.git" target="_blank" rel="noopener">Source on GitHub</a> · <a class="link" href="../../hygieia">Full case study</a>. Screens show fictional demo data.</p>
   </footer>
 
   <div class="lightbox" data-lightbox hidden>

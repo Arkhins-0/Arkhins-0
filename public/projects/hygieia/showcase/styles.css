@@ -342,3 +342,13 @@ p { margin: 0; }
   .deck-card { position: static; width: 100%; transform: none !important; }
 }
 .footer .link { color: var(--accent); }
+
+/* Full-page captures are tall: crop stage/device frames to a fixed ratio, top-aligned */
+.theme-hygieia .shot { aspect-ratio: 16 / 10; }
+.theme-hygieia .shot img { height: 100%; object-fit: cover; object-position: top; }
+.theme-hygieia .device:not(.tall) { aspect-ratio: 16 / 10; }
+.theme-hygieia .device:not(.tall) img { height: 100%; object-fit: cover; object-position: top; }
+.theme-hygieia .marquee-track img { height: 238px; width: auto; object-fit: cover; object-position: top; }
+.theme-hygieia .compare-b { clip-path: inset(0 0 0 var(--pos)); }
+.theme-hygieia .phone-screen { padding-top: 0; }
+.theme-hygieia .phone.light .phone-screen { background: #f8fafc; }
