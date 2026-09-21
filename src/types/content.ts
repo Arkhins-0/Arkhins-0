@@ -66,7 +66,7 @@ export interface Rgb {
   rgb: string;
 }
 
-export type Look = 'clinic' | 'ledger' | 'folio' | 'pitwall' | 'tower' | 'plain';
+export type Look = 'clinic' | 'ledger' | 'folio' | 'pitwall' | 'tower' | 'blueprint' | 'plain';
 
 export interface ShowcaseTheme {
   /** Visual treatment: surfaces, radii, background motif. */

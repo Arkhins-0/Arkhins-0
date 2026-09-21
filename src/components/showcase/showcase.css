@@ -426,6 +426,110 @@
 .sc[data-look='tower'] .sc-marquee-track i { background: var(--accent); border-radius: 50%; transform: none; }
 .sc[data-look='tower'] .sc-ticks li::before { border-color: var(--accent); }
 
+
+/* blueprint: drafting paper. A deep blue ground ruled with a fine grid, dashed panels with corner ticks,
+   monospaced annotations, IBM Plex Sans for headings, and one terracotta signal. No glow, no glass. */
+.sc[data-look='blueprint'] {
+  --bg: #0a1a2f;
+  --bg-raise: #0f2240;
+  --bg-sink: #071426;
+  --fg: #eef4ff;
+  --fg-dim: #b7c7e3;
+  --fg-faint: #7f93b8;
+  --glass-line: rgba(159, 197, 255, 0.28);
+  --font-display: var(--font-plex), system-ui, sans-serif;
+  --sc-radius: 3px;
+  --sc-surface: rgba(255, 255, 255, 0.035);
+  --sc-surface-2: rgba(255, 255, 255, 0.06);
+  --sc-line: rgba(159, 197, 255, 0.35);
+  --sc-shadow: none;
+  --grid: rgba(159, 197, 255, 0.09);
+  --grid-major: rgba(159, 197, 255, 0.16);
+  background:
+    linear-gradient(var(--grid-major) 1px, transparent 1px) 0 0 / 120px 120px,
+    linear-gradient(90deg, var(--grid-major) 1px, transparent 1px) 0 0 / 120px 120px,
+    linear-gradient(var(--grid) 1px, transparent 1px) 0 0 / 24px 24px,
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px) 0 0 / 24px 24px,
+    var(--bg);
+}
+.sc[data-look='blueprint'] .sc-bg {
+  background: radial-gradient(60% 40% at 50% 0%, rgb(var(--accent-rgb) / 0.12), transparent 70%);
+  mask-image: none;
+}
+.sc[data-look='blueprint'] .sc-watermark { opacity: 0.06; filter: grayscale(1) brightness(3); }
+.sc[data-look='blueprint'] .sc-hero { isolation: isolate; }
+.sc[data-look='blueprint'] .sc-hero::before,
+.sc[data-look='blueprint'] .sc-hero::after {
+  /* title-block rules, the way a drawing sheet is framed */
+  content: '';
+  position: absolute;
+  left: max(1.25rem, calc((100% - 84rem) / 2 + 1.25rem));
+  right: max(1.25rem, calc((100% - 84rem) / 2 + 1.25rem));
+  height: 1px;
+  background: var(--sc-line);
+  pointer-events: none;
+}
+.sc[data-look='blueprint'] .sc-hero::before { top: 5.5rem; }
+.sc[data-look='blueprint'] .sc-hero::after { bottom: 0; }
+
+/* type: Plex, tight but upright; annotations in mono */
+.sc[data-look='blueprint'] .font-display { font-weight: 600; letter-spacing: -0.03em; }
+.sc[data-look='blueprint'] .tracking-tightest { letter-spacing: -0.035em; }
+.sc[data-look='blueprint'] .neon-text { text-shadow: none; font-style: normal; text-decoration: underline; text-decoration-thickness: 3px; text-underline-offset: 0.12em; text-decoration-color: rgb(var(--accent-rgb) / 0.55); }
+.sc[data-look='blueprint'] .neon-line { box-shadow: none; background: linear-gradient(90deg, transparent, var(--sc-line) 20%, var(--sc-line) 80%, transparent); }
+.sc[data-look='blueprint'] .hazard { background-image: repeating-linear-gradient(-45deg, rgb(var(--accent-rgb) / 0.8) 0 2px, transparent 2px 7px); }
+
+/* panels: dashed drafting boxes with corner ticks */
+.sc[data-look='blueprint'] .sc-card {
+  border: 1px dashed var(--sc-line);
+  border-radius: 3px;
+  background: rgba(7, 20, 38, 0.72);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  box-shadow: none;
+  overflow: visible;
+}
+.sc[data-look='blueprint'] .sc-card::before,
+.sc[data-look='blueprint'] .sc-card::after {
+  content: '';
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border: 0 solid rgb(var(--accent-rgb) / 0.9);
+  pointer-events: none;
+  z-index: 2;
+}
+.sc[data-look='blueprint'] .sc-card::before { top: -1px; left: -1px; border-top-width: 2px; border-left-width: 2px; }
+.sc[data-look='blueprint'] .sc-card::after { bottom: -1px; right: -1px; border-bottom-width: 2px; border-right-width: 2px; }
+/* content sits above the corner ticks; skip the children that place themselves (captions, overlays) */
+.sc[data-look='blueprint'] .sc-card > *:not(figcaption):not([aria-hidden]) { position: relative; }
+.sc[data-look='blueprint'] .sc-gallery button.sc-card { overflow: hidden; }
+.sc[data-look='blueprint'] .sc-gallery button.sc-card::before,
+.sc[data-look='blueprint'] .sc-gallery button.sc-card::after { display: none; }
+.sc[data-look='blueprint'] .sc-card [class*='border-white/'] { border-color: rgba(159, 197, 255, 0.22); }
+.sc[data-look='blueprint'] .sc-card [class*='divide-white/'] > :not([hidden]) ~ :not([hidden]) { border-color: rgba(159, 197, 255, 0.18); }
+.sc[data-look='blueprint'] main [class*='border-white/'] { border-color: rgba(159, 197, 255, 0.24); }
+.sc[data-look='blueprint'] main [class*='divide-white/'] > :not([hidden]) ~ :not([hidden]) { border-color: rgba(159, 197, 255, 0.18); }
+
+/* buttons, frames, chrome */
+.sc[data-look='blueprint'] .neon-fill { background: var(--accent); color: #fff; }
+.sc[data-look='blueprint'] :is(a, button).notch-diag { clip-path: none; border-radius: 3px; }
+.sc[data-look='blueprint'] .glass { background: rgba(7, 20, 38, 0.86); border-color: var(--sc-line); backdrop-filter: none; -webkit-backdrop-filter: none; }
+.sc[data-look='blueprint'] .glass-fill,
+.sc[data-look='blueprint'] .glass-fill-solid { background: #0f2240; backdrop-filter: none; -webkit-backdrop-filter: none; }
+.sc[data-look='blueprint'] .sc-frame { border-radius: 3px; border: 1px solid rgba(238, 244, 255, 0.55); background: #000; box-shadow: 0 0 0 6px rgba(7, 20, 38, 0.8); }
+.sc[data-look='blueprint'] .sc-browser { background: #0f2240; border-bottom-color: rgba(159, 197, 255, 0.25); border-radius: 0; }
+.sc[data-look='blueprint'] .sc-browser span { border-radius: 2px; }
+.sc[data-look='blueprint'] .sc-phone { border-color: rgba(238, 244, 255, 0.5); box-shadow: inset 0 0 0 2px #0f2240; }
+.sc[data-look='blueprint'] .sc-gallery figcaption { border-radius: 2px; background: #0a1a2f; border: 1px solid var(--sc-line); font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; }
+.sc[data-look='blueprint'] .sc-duo-shared { border: 1px dashed var(--sc-line); border-radius: 3px; }
+.sc[data-look='blueprint'] .sc-duo-shared li { border-color: var(--sc-line); border-radius: 2px; }
+.sc[data-look='blueprint'] .sc-marquee { background: transparent; border-top: 1px dashed var(--sc-line); border-bottom: 1px dashed var(--sc-line); }
+.sc[data-look='blueprint'] .sc-marquee-track { font-family: var(--font-mono); font-size: 0.78rem; font-weight: 500; letter-spacing: 0.16em; color: var(--fg-dim); }
+.sc[data-look='blueprint'] .sc-marquee-track i { background: var(--accent); }
+.sc[data-look='blueprint'] .sc-ticks li::before { border-color: var(--accent); }
+.sc[data-look='blueprint'] .rounded-full { border-radius: 2px; }
+
 /* plain: the site's default glass */
 .sc[data-look='plain'] .sc-bg {
   background: radial-gradient(60% 45% at 50% 0%, rgb(var(--accent-rgb) / 0.12), transparent 70%);

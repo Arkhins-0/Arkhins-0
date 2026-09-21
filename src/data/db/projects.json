@@ -1975,6 +1975,728 @@
     }
   },
   {
+    "id": "proj-10",
+    "slug": "spartan",
+    "title": "Spartan: Open-Source Motorsport Management",
+    "tagline": "A free platform for running championships, race teams, circuits and marshal signups",
+    "summary": "An Apache-licensed platform for motorsport clubs: race teams with entry lists and licences, championships with rounds and sessions, circuit operators with reservations and payments, signup events for track days and marshals, gear inventory with a ledger, and messaging. Next.js 16, MUI, Prisma on Neon, Bun, twelve ADRs and two hundred tests.",
+    "description": "Spartan is a free, open-source platform for running motorsport championships and race teams. Championship administrators manage divisions, rounds with practice, qualifying and race sessions, entry lists, standings and volunteers; team administrators manage rosters, licences and emergency contacts; circuit operators manage venues, surfaces, schedules, reservations and payments; anyone can host signup events with role-limited slots, priority windows, waitlists and Stripe Connect payments. The codebase is built on Next.js 16 with Server Actions, MUI v7, Prisma 7 on Neon, Auth.js, Bun, and is governed by versioned architecture decision records with quality gates, smoke tests and uptime checks in GitHub Actions.",
+    "category": "Full-stack",
+    "role": "Architecture · Full-stack · Open source",
+    "year": "2026",
+    "date": "September 2026",
+    "status": "Live · v0.70",
+    "featured": true,
+    "published": true,
+    "sortOrder": 22,
+    "tags": [
+      "Next.js 16",
+      "Prisma · Neon",
+      "MUI",
+      "Bun",
+      "Apache-2.0"
+    ],
+    "thumbnail": "/projects/spartan/thumbnail.png",
+    "cover": "/projects/spartan/cover.png",
+    "images": [],
+    "githubUrl": "https://github.com/Arkhins-0/spartan",
+    "liveUrl": "https://spartan.arkhins.com",
+    "markdownFile": null,
+    "content": {
+      "version": 1,
+      "theme": {
+        "look": "blueprint",
+        "accent": {
+          "hex": "#e05a3a",
+          "rgb": "224 90 58"
+        },
+        "accent2": {
+          "hex": "#9fc5ff",
+          "rgb": "159 197 255"
+        },
+        "watermark": "/projects/spartan/logo.png"
+      },
+      "screens": {
+        "default": "dark"
+      },
+      "hero": {
+        "eyebrow": "Open source · Apache-2.0 · v0.70",
+        "title": "Run a championship",
+        "accent": "without the spreadsheets.",
+        "lede": "Spartan is a free platform for motorsport clubs: race teams with entry lists and licences, championships with rounds, sessions and standings, circuits with reservations and payments, signup events for track days and marshals, and gear with a ledger. One codebase, governed by written architecture decisions and a CI that refuses to ship a regression.",
+        "badges": [
+          {
+            "label": "Free and open source",
+            "tone": "accent"
+          },
+          {
+            "label": "97 Prisma models"
+          },
+          {
+            "label": "12 ADRs"
+          },
+          {
+            "label": "213 test files"
+          }
+        ],
+        "actions": [
+          {
+            "label": "Open spartan.arkhins.com",
+            "href": "https://spartan.arkhins.com",
+            "external": true
+          },
+          {
+            "label": "View source",
+            "href": "https://github.com/Arkhins-0/spartan",
+            "external": true,
+            "kind": "ghost"
+          }
+        ],
+        "facts": [
+          {
+            "label": "Role",
+            "value": "Architecture, full-stack, docs"
+          },
+          {
+            "label": "Stack",
+            "value": "Next.js 16 · React 19 · MUI v7 · Prisma 7 · Neon"
+          },
+          {
+            "label": "Toolchain",
+            "value": "Bun · Vitest · GitHub Actions · Vercel"
+          },
+          {
+            "label": "Licence",
+            "value": "Apache-2.0 code · CC BY 4.0 docs"
+          }
+        ],
+        "stage": {
+          "url": "spartan.arkhins.com",
+          "center": {
+            "light": "/projects/spartan/mock/desktop/league-dashboard.png",
+            "alt": "A championship dashboard in Spartan"
+          },
+          "left": {
+            "light": "/projects/spartan/mock/desktop/home.png",
+            "alt": "The Spartan landing page"
+          },
+          "right": {
+            "light": "/projects/spartan/mock/desktop/league-round.png",
+            "alt": "A race round with its sessions"
+          }
+        }
+      },
+      "sections": [
+        {
+          "type": "marquee",
+          "items": [
+            "Entry lists",
+            "Race weekends",
+            "Sessions",
+            "Standings",
+            "Marshal signup",
+            "Circuits",
+            "Reservations",
+            "Stripe Connect",
+            "Gear ledger",
+            "Messaging",
+            "ADR-governed",
+            "Apache-2.0"
+          ]
+        },
+        {
+          "type": "stats",
+          "items": [
+            {
+              "value": "97",
+              "label": "Prisma models"
+            },
+            {
+              "value": "58",
+              "label": "Migrations, deployed on build"
+            },
+            {
+              "value": "213",
+              "label": "Vitest suites"
+            },
+            {
+              "value": "11",
+              "label": "GitHub Actions workflows"
+            }
+          ]
+        },
+        {
+          "type": "overview",
+          "head": {
+            "index": "01",
+            "label": "Overview",
+            "title": "Paddock operations,",
+            "accentWord": "as software."
+          },
+          "paragraphs": [
+            "A club season runs on entry lists, licence numbers, emergency contacts, session timetables, marshal rosters and who has paid. Most of it lives in spreadsheets, group chats and email chains. Spartan replaces those with one source of truth that a team administrator, a championship secretary and a circuit operator can all sign into.",
+            "Four kinds of organisation share the platform. Race teams keep rosters and respond to rounds. Championships own divisions, rounds with practice, qualifying and race sessions, entry confirmation, standings, documents, gear and messaging. Circuit operators manage venues, surfaces, operating hours, schedule blocks, reservations and card payments. Anyone can host a signup event with role-limited slots for drivers, marshals, scrutineers and officials.",
+            "The engineering is as deliberate as the product: every mutation is a Server Action behind Zod, every decision that shaped the architecture is a numbered record in the repository, and the release pipeline runs quality gates, smoke tests, deployment validation and uptime checks on a schedule."
+          ],
+          "features": [
+            {
+              "icon": "ClipboardList",
+              "title": "Entry lists",
+              "description": "Drivers and crew with licence numbers, contacts and emergency details; email invitations with unique signup links."
+            },
+            {
+              "icon": "CalendarDays",
+              "title": "Race weekends",
+              "description": "Rounds with practice, qualifying and race sessions, circuit and scrutineering details, and Going / Not going / Maybe from every entrant."
+            },
+            {
+              "icon": "Users",
+              "title": "Marshal signup",
+              "description": "Signup events with per-slot capacities that are never oversold, priority windows for members, FIFO waitlists with claim windows."
+            },
+            {
+              "icon": "Warehouse",
+              "title": "Gear ledger",
+              "description": "Pooled and tagged inventory, team requests, allocations, custody handoffs and an immutable activity ledger with an email outbox."
+            },
+            {
+              "icon": "Map",
+              "title": "Circuits",
+              "description": "Venues with surfaces, operating hours, schedule blocks, reservations, lesson offerings and Stripe Connect payments."
+            },
+            {
+              "icon": "GitBranch",
+              "title": "Decision records",
+              "description": "Twelve ADRs, linted and integrity-checked in CI, from Server Actions as the mutation surface to motorsport-only scope."
+            }
+          ]
+        },
+        {
+          "type": "table",
+          "head": {
+            "index": "02",
+            "label": "Decisions",
+            "title": "Written down",
+            "accentWord": "before built."
+          },
+          "columns": [
+            "ADR",
+            "Decision",
+            "Why"
+          ],
+          "rows": [
+            [
+              "0001",
+              "Record decisions as versioned markdown in git",
+              "Reviewable, diffable, linted"
+            ],
+            [
+              "0002",
+              "Server Actions as the primary mutation surface",
+              "One validated path for every write"
+            ],
+            [
+              "0003",
+              "PostgreSQL only through Prisma on Neon serverless",
+              "No raw SQL; checked in CI"
+            ],
+            [
+              "0004",
+              "MUI as the primary component library",
+              "Accessible, themeable, dense"
+            ],
+            [
+              "0005",
+              "Bun as the development and CI toolchain",
+              "Fast installs, one runtime"
+            ],
+            [
+              "0006",
+              "League gear as ledger projections with an outbox",
+              "Auditable custody, durable email"
+            ],
+            [
+              "0007",
+              "Canonical venue reservations for occupancy",
+              "One truth for who holds a surface"
+            ],
+            [
+              "0009",
+              "Delegate authority through scoped role grants",
+              "Chief marshals without super admins"
+            ],
+            [
+              "0010",
+              "Object storage through a provider seam",
+              "S3 or Vercel Blob, signed reads"
+            ],
+            [
+              "0011",
+              "Race weekends as rounds with sessions and open volunteer signup",
+              "The motorsport shape of a weekend"
+            ],
+            [
+              "0012",
+              "Motorsport-only platform",
+              "One domain, done properly"
+            ]
+          ],
+          "hues": [
+            "#9fc5ff",
+            "#e05a3a",
+            "#9fc5ff",
+            "#9fc5ff",
+            "#9fc5ff",
+            "#9fc5ff",
+            "#9fc5ff",
+            "#9fc5ff",
+            "#9fc5ff",
+            "#e05a3a",
+            "#e05a3a"
+          ]
+        },
+        {
+          "type": "tabs",
+          "head": {
+            "index": "03",
+            "label": "Under the hood",
+            "title": "Three flows that",
+            "accentWord": "carry a weekend.",
+            "lede": "A round from creation to confirmed grid, a signup event from slots to waitlist, and the gear ledger that knows where every helmet is."
+          },
+          "tabs": [
+            {
+              "id": "round",
+              "label": "Round",
+              "subtitle": "From a date to a confirmed grid",
+              "steps": [
+                {
+                  "title": "Create the round",
+                  "description": "Circuit, paddock and scrutineering details, then sessions: practice, qualifying, race, each with its own time and notes."
+                },
+                {
+                  "title": "Invite the entry list",
+                  "description": "Every team member on the round's entry list is emailed; a Going, Not going or Maybe lands instantly on the admin's summary."
+                },
+                {
+                  "title": "Accept the waiver",
+                  "description": "Round waivers are versioned; an acceptance is recorded per entrant before the weekend."
+                },
+                {
+                  "title": "Open marshal signup",
+                  "description": "Volunteer needs with capacities and credentials; assignments and reminders go out on a cron."
+                },
+                {
+                  "title": "Enter results",
+                  "description": "Race results per session feed the championship standings and the day sheet."
+                }
+              ],
+              "detailsTitle": "Pieces",
+              "details": [
+                "RaceRound · RaceSession",
+                "RaceEntry · RaceResult",
+                "RoundWaiver · Acceptance",
+                "VolunteerNeed · Assignment",
+                "RSVP · Invitation",
+                "/api/cron/rsvp-reminders",
+                "day-sheet"
+              ]
+            },
+            {
+              "id": "signup",
+              "label": "Signup events",
+              "subtitle": "A SignUpGenius that cannot oversell",
+              "steps": [
+                {
+                  "title": "Define slots",
+                  "description": "Thirty drivers, forty marshals, four scrutineers, eight officials: per-slot capacities enforced under concurrent registration."
+                },
+                {
+                  "title": "Choose visibility",
+                  "description": "Private, invite-only by email, link-only with a regenerable unguessable link, or public with rollup onto circuit and association pages."
+                },
+                {
+                  "title": "Run priority windows",
+                  "description": "Members register first; when a phase opens to the public, the waitlist makes FIFO offers with time-boxed claim windows and a cron backstop."
+                },
+                {
+                  "title": "Take payment",
+                  "description": "Venmo, Zelle, cash instructions with paid, unpaid and waived tracking, or online cards through Stripe Connect with refunds."
+                },
+                {
+                  "title": "Form the day",
+                  "description": "Grid and marshal-post formation from signups with reserves, session rotations, posted entry lists and a participants-only media gallery."
+                }
+              ],
+              "detailsTitle": "Pieces",
+              "details": [
+                "SignupEvent · SignupSlot",
+                "EventRegistrationPhase",
+                "EventInvitation · EventManager",
+                "EventGame · Participant",
+                "EventMediaItem",
+                "Stripe Connect",
+                "/api/cron/event-waitlist"
+              ]
+            },
+            {
+              "id": "gear",
+              "label": "Gear ledger",
+              "subtitle": "Where every item is, and was",
+              "steps": [
+                {
+                  "title": "Catalogue and stock",
+                  "description": "Pooled stock per storage location and tagged units with their own identity."
+                },
+                {
+                  "title": "Request and allocate",
+                  "description": "Teams raise needs; administrators approve and allocate from pool or unit, each as a command with a projection."
+                },
+                {
+                  "title": "Hand over",
+                  "description": "Custody handoffs record who holds what, including partial returns."
+                },
+                {
+                  "title": "Pledge in kind",
+                  "description": "A public wishlist takes pledges without money, photos or QR codes; receipts land in inventory."
+                },
+                {
+                  "title": "Notify durably",
+                  "description": "Every gear email goes through an outbox with retry and reminder sweeps."
+                }
+              ],
+              "detailsTitle": "Pieces",
+              "details": [
+                "GearCatalogItem · GearUnit",
+                "GearPoolStock · StorageLocation",
+                "TeamGearNeed · Command",
+                "GearAllocation · Handoff",
+                "GearWishlist · Pledge",
+                "GearActivity ledger",
+                "NotificationOutbox"
+              ]
+            }
+          ]
+        },
+        {
+          "type": "steps",
+          "head": {
+            "index": "04",
+            "label": "Key screens",
+            "title": "From the landing page",
+            "accentWord": "to the day sheet."
+          },
+          "items": [
+            {
+              "title": "The front door",
+              "body": "A marketing site in the same build: the problem, the four kinds of organisation, how it works in three steps, and a free signup. Pricing is honest: the core is free and provider-portable by decision.",
+              "ticks": [
+                "Features, pricing, security and docs pages",
+                "MDX documentation with guides and an API reference",
+                "Umami analytics, no advertising"
+              ],
+              "image": {
+                "light": "/projects/spartan/mock/desktop/home-full.png",
+                "alt": "The full Spartan landing page"
+              },
+              "tall": true
+            },
+            {
+              "title": "A championship dashboard",
+              "body": "Divisions, teams, upcoming rounds, open invitations and messages for one championship, with role-scoped navigation for administrators, team administrators and members.",
+              "ticks": [
+                "LeagueUser roles per championship",
+                "Scoped role grants for chief marshals and coordinators",
+                "Public association page with schedule feed"
+              ],
+              "image": {
+                "light": "/projects/spartan/mock/desktop/league-dashboard.png",
+                "alt": "A championship dashboard"
+              }
+            },
+            {
+              "title": "A race round",
+              "body": "Sessions in order, the circuit, waiver status, the entry list with each entrant's response, volunteer needs and the day sheet.",
+              "ticks": [
+                "Practice, qualifying, race sessions",
+                "Entry confirmation summary",
+                "Marshal assignments and reminders"
+              ],
+              "image": {
+                "light": "/projects/spartan/mock/desktop/league-round.png",
+                "alt": "A race round"
+              }
+            },
+            {
+              "title": "Standings",
+              "body": "Derived from race results per session, per division. Age-gated where a championship configures it, so junior classes publish participation without a points table.",
+              "ticks": [
+                "Results feed standings",
+                "Per-division tables",
+                "STATS_MIN_AGE_LEVEL gate"
+              ],
+              "image": {
+                "light": "/projects/spartan/mock/desktop/league-standings.png",
+                "alt": "Championship standings"
+              }
+            },
+            {
+              "title": "The calendar",
+              "body": "A grid on a desktop and a list on a phone, across every team and championship a member belongs to, with an ICS feed for the association.",
+              "ticks": [
+                "Responsive grid and list",
+                "ICS export per association",
+                "Sessions, practices and signup events together"
+              ],
+              "image": {
+                "light": "/projects/spartan/mock/desktop/calendar.png",
+                "alt": "The calendar"
+              }
+            },
+            {
+              "title": "Platform admin",
+              "body": "User moderation with an approval kill-switch, and an audit log of every write across the platform.",
+              "ticks": [
+                "approved as a suspension switch",
+                "AuditLog per mutation",
+                "Rate-limit buckets per action"
+              ],
+              "image": {
+                "light": "/projects/spartan/mock/desktop/admin-audit.png",
+                "alt": "The audit log"
+              }
+            }
+          ]
+        },
+        {
+          "type": "phones",
+          "head": {
+            "index": "05",
+            "label": "Pit wall",
+            "title": "Built for the",
+            "accentWord": "paddock.",
+            "lede": "Mobile first by design: a marshal confirms from the post, a team administrator checks the grid from the pit wall."
+          },
+          "items": [
+            {
+              "light": "/projects/spartan/mock/mobile/dashboard.png",
+              "alt": "Dashboard on a phone"
+            },
+            {
+              "light": "/projects/spartan/mock/mobile/league-round.png",
+              "alt": "A round on a phone"
+            },
+            {
+              "light": "/projects/spartan/mock/mobile/calendar.png",
+              "alt": "Calendar on a phone"
+            },
+            {
+              "light": "/projects/spartan/mock/mobile/league-standings.png",
+              "alt": "Standings on a phone"
+            },
+            {
+              "light": "/projects/spartan/mock/mobile/home.png",
+              "alt": "Landing on a phone"
+            }
+          ]
+        },
+        {
+          "type": "columns",
+          "head": {
+            "index": "06",
+            "label": "Engineering",
+            "title": "What keeps it",
+            "accentWord": "honest."
+          },
+          "columns": [
+            {
+              "title": "Quality gates",
+              "style": "ticks",
+              "items": [
+                "Type-check, lint and Vitest on every push",
+                "A raw-SQL check that fails the build on a bypass of Prisma",
+                "ADR lint, integrity and review-date checks",
+                "Smoke tests and deployment validation after a release",
+                "Weekly uptime monitoring and version checks"
+              ]
+            },
+            {
+              "title": "Security",
+              "style": "ticks",
+              "items": [
+                "Zod on every form and action input",
+                "bcrypt at cost 12; JWT sessions in HTTP-only cookies",
+                "Rate-limit buckets on sign-in and sensitive actions",
+                "Email verification and an approval kill-switch",
+                "Signed, expiring reads from private object storage"
+              ]
+            },
+            {
+              "title": "Stack",
+              "style": "chips",
+              "items": [
+                "Next.js 16",
+                "React 19",
+                "TypeScript",
+                "MUI v7 · Emotion",
+                "Tailwind v4 (marketing)",
+                "Prisma 7",
+                "Neon Postgres",
+                "Auth.js v5",
+                "Zod",
+                "Bun",
+                "Vitest",
+                "Sentry",
+                "Stripe Connect",
+                "AWS SES · Brevo · Mailchimp",
+                "S3 · Vercel Blob",
+                "dnd-kit",
+                "date-fns",
+                "MDX",
+                "Umami"
+              ]
+            },
+            {
+              "title": "Operations",
+              "style": "ticks",
+              "items": [
+                "Migrations deploy during the Vercel build",
+                "Provider seams for email and storage",
+                "Five cron routes for reminders, waitlists, gear and batches",
+                "Release workflow tags and publishes from main",
+                "Docs site under /docs from MDX"
+              ]
+            }
+          ]
+        },
+        {
+          "type": "gallery",
+          "head": {
+            "index": "07",
+            "label": "More screens",
+            "title": "The rest of the",
+            "accentWord": "paddock."
+          },
+          "items": [
+            {
+              "light": "/projects/spartan/mock/desktop/features-full.png",
+              "alt": "Features",
+              "caption": "Features"
+            },
+            {
+              "light": "/projects/spartan/mock/desktop/pricing.png",
+              "alt": "Pricing",
+              "caption": "Pricing"
+            },
+            {
+              "light": "/projects/spartan/mock/desktop/signups.png",
+              "alt": "Signups",
+              "caption": "Public signup events"
+            },
+            {
+              "light": "/projects/spartan/mock/desktop/docs.png",
+              "alt": "Docs",
+              "caption": "Documentation"
+            },
+            {
+              "light": "/projects/spartan/mock/desktop/security.png",
+              "alt": "Security",
+              "caption": "Security"
+            },
+            {
+              "light": "/projects/spartan/mock/desktop/dashboard.png",
+              "alt": "Dashboard",
+              "caption": "Member dashboard"
+            },
+            {
+              "light": "/projects/spartan/mock/desktop/events.png",
+              "alt": "Events",
+              "caption": "Events"
+            },
+            {
+              "light": "/projects/spartan/mock/desktop/roster.png",
+              "alt": "Roster",
+              "caption": "Team roster"
+            },
+            {
+              "light": "/projects/spartan/mock/desktop/league-rounds.png",
+              "alt": "Rounds",
+              "caption": "Rounds"
+            },
+            {
+              "light": "/projects/spartan/mock/desktop/league-teams.png",
+              "alt": "Teams",
+              "caption": "Teams in a championship"
+            },
+            {
+              "light": "/projects/spartan/mock/desktop/league-workforce.png",
+              "alt": "Workforce",
+              "caption": "Workforce and volunteers"
+            },
+            {
+              "light": "/projects/spartan/mock/desktop/league-gear.png",
+              "alt": "Gear",
+              "caption": "Gear inventory"
+            },
+            {
+              "light": "/projects/spartan/mock/desktop/league-messages.png",
+              "alt": "Messages",
+              "caption": "Championship messaging"
+            },
+            {
+              "light": "/projects/spartan/mock/desktop/league-settings.png",
+              "alt": "Settings",
+              "caption": "Championship settings"
+            },
+            {
+              "light": "/projects/spartan/mock/desktop/venues.png",
+              "alt": "Venues",
+              "caption": "Venues"
+            },
+            {
+              "light": "/projects/spartan/mock/desktop/signup-events.png",
+              "alt": "Signup events",
+              "caption": "Signup events"
+            },
+            {
+              "light": "/projects/spartan/mock/desktop/account.png",
+              "alt": "Account",
+              "caption": "Account and data export"
+            },
+            {
+              "light": "/projects/spartan/mock/desktop/login.png",
+              "alt": "Login",
+              "caption": "Sign in"
+            }
+          ]
+        },
+        {
+          "type": "outro",
+          "title": "Want to run a season on",
+          "accentWord": "open source?",
+          "actions": [
+            {
+              "label": "Open spartan.arkhins.com",
+              "href": "https://spartan.arkhins.com",
+              "external": true
+            },
+            {
+              "label": "Repository",
+              "href": "https://github.com/Arkhins-0/spartan",
+              "external": true,
+              "kind": "ghost"
+            },
+            {
+              "label": "Back to portfolio",
+              "href": "/#work",
+              "kind": "ghost"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
     "id": "proj-2",
     "slug": "bidnest",
     "title": "BidNest: Modern Chit Fund Management Platform",

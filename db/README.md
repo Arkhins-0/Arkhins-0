@@ -31,8 +31,9 @@ Looks: `clinic` (Hygieia: glass, large radii, dotted grid), `ledger` (Scholar Tr
 surfaces), `folio` (Bookisham: paper ground, serif display type, a night-band hero over `backdrop`),
 `pitwall` (Chennai Turbo Riders: carbon black, racing yellow, condensed uppercase type, chamfered cards,
 scanlines over `backdrop`), `tower` (CTR Sports: blue-tinted carbon, warm off-white plates with dark ink,
-pill buttons, italic uppercase Exo 2, a chequered band) and `plain` (the site's default glass, used by
-generic pages). A `duo` block
+pill buttons, italic uppercase Exo 2, a chequered band), `blueprint` (Spartan: drafting-paper blue ruled
+with a grid, dashed panels with corner ticks, IBM Plex Sans, mono annotations) and `plain` (the site's
+default glass, used by generic pages). A `duo` block
 puts two builds of one product side by side in browser or phone frames, with a strip of what they share;
 a `marquee` is a scrolling strip of short phrases.
 

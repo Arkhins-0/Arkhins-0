@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { Exo_2, Fraunces, Rajdhani } from 'next/font/google';
+import { Exo_2, Fraunces, IBM_Plex_Sans, Rajdhani } from 'next/font/google';
 import { Footer } from '@/components/layout';
 import { Showcase } from '@/components/showcase/Showcase';
 import { defaultShowcase, getProject, listProjectSlugs } from '@/lib/content';
@@ -31,6 +31,14 @@ const exo = Exo_2({
   display: 'swap',
 });
 
+/** Neutral engineering grotesque, exposed as --font-plex (the blueprint look uses it). */
+const plex = IBM_Plex_Sans({
+  subsets: ['latin'],
+  weight: ['500', '600', '700'],
+  variable: '--font-plex',
+  display: 'swap',
+});
+
 export const dynamicParams = false;
 
 export async function generateStaticParams() {
@@ -55,7 +63,7 @@ export default async function ProjectPage({ params }: { params: { slug: string }
   if (!project) notFound();
   const doc = project.content ?? defaultShowcase(project);
   return (
-    <div className={`${serif.variable} ${condensed.variable} ${exo.variable}`}>
+    <div className={`${serif.variable} ${condensed.variable} ${exo.variable} ${plex.variable}`}>
       <Showcase project={project} doc={doc} />
       <Footer />
     </div>
