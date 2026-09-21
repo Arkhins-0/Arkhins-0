@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { Fraunces, Rajdhani } from 'next/font/google';
+import { Exo_2, Fraunces, Rajdhani } from 'next/font/google';
 import { Footer } from '@/components/layout';
 import { Showcase } from '@/components/showcase/Showcase';
 import { defaultShowcase, getProject, listProjectSlugs } from '@/lib/content';
@@ -19,6 +19,15 @@ const condensed = Rajdhani({
   subsets: ['latin'],
   weight: ['600', '700'],
   variable: '--font-condensed',
+  display: 'swap',
+});
+
+/** Wide technical grotesque, exposed as --font-exo (the tower look uses it, upright and italic). */
+const exo = Exo_2({
+  subsets: ['latin'],
+  weight: ['600', '700', '800'],
+  style: ['normal', 'italic'],
+  variable: '--font-exo',
   display: 'swap',
 });
 
@@ -46,7 +55,7 @@ export default async function ProjectPage({ params }: { params: { slug: string }
   if (!project) notFound();
   const doc = project.content ?? defaultShowcase(project);
   return (
-    <div className={`${serif.variable} ${condensed.variable}`}>
+    <div className={`${serif.variable} ${condensed.variable} ${exo.variable}`}>
       <Showcase project={project} doc={doc} />
       <Footer />
     </div>

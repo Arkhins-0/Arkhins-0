@@ -47,6 +47,15 @@ import {
   Radio,
   Trophy,
   Video,
+  CalendarDays,
+  FileUp,
+  ListChecks,
+  Medal,
+  ScrollText,
+  Shield,
+  Ticket,
+  Tv,
+  Vote,
 } from 'lucide-react';
 import content from '@/data/content.json';
 import { cn, fill } from '@/lib/utils';
@@ -61,6 +70,7 @@ const ICONS: Record<string, React.ElementType> = {
   Monitor, Palette, Ribbon, Scan, Server, ShieldCheck, Sparkles, Users,
   Bell, BookOpen, Database, EyeOff, FileText, Fingerprint, Globe, KeyRound, Layers, RefreshCw, Smartphone, Timer, Upload, Wallet, WifiOff,
   Flag, Gauge, Image: ImageIcon, Map, Newspaper, Radio, Trophy, Video,
+  CalendarDays, FileUp, ListChecks, Medal, ScrollText, Shield, Ticket, Tv, Vote,
 };
 
 export function Icon({ name, size = 17, className }: { name?: string; size?: number; className?: string }) {
