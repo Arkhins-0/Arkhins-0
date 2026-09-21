@@ -66,7 +66,7 @@ export interface Rgb {
   rgb: string;
 }
 
-export type Look = 'clinic' | 'ledger' | 'folio' | 'plain';
+export type Look = 'clinic' | 'ledger' | 'folio' | 'pitwall' | 'plain';
 
 export interface ShowcaseTheme {
   /** Visual treatment: surfaces, radii, background motif. */
@@ -75,7 +75,7 @@ export interface ShowcaseTheme {
   accent2: Rgb;
   /** Large faded emblem placed behind the hero. */
   watermark?: string;
-  /** Photograph behind the hero. The folio look renders the hero as a night band over it. */
+  /** Photograph behind the hero. folio renders the hero as a night band over it; pitwall fades it under scanlines. */
   backdrop?: string;
 }
 
@@ -171,6 +171,8 @@ export type Block =
       /** What both builds have in common, shown as a strip of chips under them. */
       shared?: { title: string; items: string[] };
     }
+  /** A scrolling strip of short phrases, the way a broadcast ticker or a pit-lane board reads. */
+  | { type: 'marquee'; items: string[] }
   | { type: 'markdown'; head: Head; file: string }
   | { type: 'outro'; title: string; accentWord?: string; actions: Action[] };
 

@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { Fraunces } from 'next/font/google';
+import { Fraunces, Rajdhani } from 'next/font/google';
 import { Footer } from '@/components/layout';
 import { Showcase } from '@/components/showcase/Showcase';
 import { defaultShowcase, getProject, listProjectSlugs } from '@/lib/content';
@@ -11,6 +11,14 @@ const serif = Fraunces({
   weight: ['500', '600', '700'],
   style: ['normal', 'italic'],
   variable: '--font-serif',
+  display: 'swap',
+});
+
+/** Condensed technical face, exposed as --font-condensed (the pitwall look uses it). */
+const condensed = Rajdhani({
+  subsets: ['latin'],
+  weight: ['600', '700'],
+  variable: '--font-condensed',
   display: 'swap',
 });
 
@@ -38,7 +46,7 @@ export default async function ProjectPage({ params }: { params: { slug: string }
   if (!project) notFound();
   const doc = project.content ?? defaultShowcase(project);
   return (
-    <div className={serif.variable}>
+    <div className={`${serif.variable} ${condensed.variable}`}>
       <Showcase project={project} doc={doc} />
       <Footer />
     </div>
