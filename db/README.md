@@ -19,13 +19,18 @@ different page without a schema change:
 ```
 content = {
   version: 1,
-  theme:   { look, accent, accent2, watermark? },      // per-project look, scoped CSS variables
-  screens: { default: "dark" | "light" },              // which screenshot variant to show first
+  theme:   { look, accent, accent2, watermark?, backdrop? },  // per-project look, scoped CSS variables
+  screens: { default: "dark" | "light" },                     // which screenshot variant to show first
   hero:    { title, accent, lede, badges, facts, stage: { center, left, right } },
-  sections: [ { type: "stats" | "overview" | "cards" | "table" | "tabs" | "steps"
+  sections: [ { type: "stats" | "overview" | "cards" | "table" | "tabs" | "steps" | "duo"
                     | "compare" | "phones" | "gallery" | "columns" | "markdown" | "outro", … } ]
 }
 ```
+
+Looks: `clinic` (Hygieia: glass, large radii, dotted grid), `ledger` (Scholar Track: ruled lines, hairline
+surfaces), `folio` (Bookisham: paper ground, serif display type, a night-band hero over `backdrop`) and
+`plain` (the site's default glass, used by generic pages). A `duo` block puts two builds of one product
+side by side, one in a browser frame and one in a phone, with a strip of what they share.
 
 Screenshots are `{ light, dark, alt }` pairs. The page renders one variant at a time and offers a
 "Screens: light / dark" switch instead of listing every screen twice. A `compare` block shows both

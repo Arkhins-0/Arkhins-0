@@ -9,7 +9,7 @@ import content from '@/data/content.json';
 import { NeonButton, Panel, Reveal, SectionHead, Stack, stackChild } from '@/components/fx';
 import { cn } from '@/lib/utils';
 import type { Action, Block, Head } from '@/types/content';
-import { Compare, Frame, Gallery, Icon, Phones } from './ui';
+import { Compare, Frame, Gallery, Icon, PhoneFrame, Phones } from './ui';
 
 const COPY = content.projectPage;
 
@@ -227,6 +227,38 @@ export function BlockView({ block, index }: { block: Block; index: number }) {
                 </motion.div>
               ))}
             </Stack>
+          </div>
+        </section>
+      );
+
+    case 'duo':
+      return (
+        <section className="band pt-0" id={id}>
+          <div className="shell">
+            <SectionHead {...block.head} />
+            <div className="sc-duo mt-12">
+              {block.sides.map((s, i) => (
+                <Reveal key={s.title} delay={i * 0.1} className="sc-duo-side">
+                  <div>
+                    <span className="hud text-accent">{s.eyebrow}</span>
+                    <h3 className="mt-3 font-display text-[clamp(1.4rem,2.6vw,2rem)] font-bold leading-tight tracking-tight">{s.title}</h3>
+                    <p className="mt-3 max-w-md text-[0.92rem] leading-relaxed text-ink-dim">{s.body}</p>
+                    <ul className="sc-ticks mt-4 space-y-1.5 text-sm text-ink">
+                      {s.points.map((p) => <li key={p}>{p}</li>)}
+                    </ul>
+                  </div>
+                  <div className="sc-duo-device" data-device={s.device}>
+                    {s.device === 'phone' ? <PhoneFrame image={s.image} /> : <Frame image={s.image} url={s.url} tilt={i % 2 ? 'left' : 'right'} />}
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+            {block.shared && (
+              <Reveal className="sc-duo-shared mt-10">
+                <span className="hud text-ink-faint">{block.shared.title}</span>
+                <ul>{block.shared.items.map((t) => <li key={t}>{t}</li>)}</ul>
+              </Reveal>
+            )}
           </div>
         </section>
       );

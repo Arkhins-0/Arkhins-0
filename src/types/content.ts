@@ -66,7 +66,7 @@ export interface Rgb {
   rgb: string;
 }
 
-export type Look = 'clinic' | 'ledger' | 'plain';
+export type Look = 'clinic' | 'ledger' | 'folio' | 'plain';
 
 export interface ShowcaseTheme {
   /** Visual treatment: surfaces, radii, background motif. */
@@ -75,6 +75,8 @@ export interface ShowcaseTheme {
   accent2: Rgb;
   /** Large faded emblem placed behind the hero. */
   watermark?: string;
+  /** Photograph behind the hero. The folio look renders the hero as a night band over it. */
+  backdrop?: string;
 }
 
 export interface Action {
@@ -152,6 +154,22 @@ export type Block =
       type: 'columns';
       head: Head;
       columns: { title: string; style: 'chips' | 'ticks'; items: string[] }[];
+    }
+  | {
+      /** Two builds of one product side by side, e.g. the web app in a browser and the native app in a phone. */
+      type: 'duo';
+      head: Head;
+      sides: {
+        eyebrow: string;
+        title: string;
+        body: string;
+        device: 'browser' | 'phone';
+        image: ThemedImage;
+        url?: string;
+        points: string[];
+      }[];
+      /** What both builds have in common, shown as a strip of chips under them. */
+      shared?: { title: string; items: string[] };
     }
   | { type: 'markdown'; head: Head; file: string }
   | { type: 'outro'; title: string; accentWord?: string; actions: Action[] };

@@ -50,6 +50,157 @@
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), var(--sc-shadow);
 }
 
+
+/* folio: a reading room. Paper ground, serif display type, one ember for actions. The hero is a night
+   band over the project's own photograph, the way the app's landing page sits over its banner, and
+   the page turns to paper underneath the stage. */
+.sc[data-look='folio'] {
+  --bg: #f4eee3;
+  --bg-raise: #fbf8f1;
+  --bg-sink: #eae2d2;
+  --fg: #1b1a17;
+  --fg-dim: #4a4741;
+  --fg-faint: #8a857b;
+  --glass-bg: rgba(255, 255, 255, 0.6);
+  --glass-line: rgba(27, 26, 23, 0.12);
+  --glass-line-hot: rgba(27, 26, 23, 0.22);
+  --muted: #eae2d2;
+  --border: var(--glass-line);
+  --night: #14120f;
+  --seam: clamp(150px, 20vw, 300px);
+  --font-display: var(--font-serif), Georgia, 'Times New Roman', serif;
+  --sc-radius: 18px;
+  --sc-surface: #fffdf8;
+  --sc-surface-2: #f8f3ea;
+  --sc-line: rgba(27, 26, 23, 0.12);
+  --sc-shadow: 0 24px 60px -28px rgba(70, 40, 10, 0.35), 0 8px 22px -12px rgba(70, 40, 10, 0.16);
+  background: var(--bg);
+  color: var(--fg);
+}
+.sc[data-look='folio']::before {
+  /* paper grain */
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.55;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .55 0 0 0 0 .5 0 0 0 0 .42 0 0 0 .16 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.sc[data-look='folio'] .sc-bg { display: none; }
+.sc[data-look='folio'] .sc-watermark { display: none; }
+
+/* the night band */
+.sc[data-look='folio'] .sc-hero {
+  --fg: #f6f1e7;
+  --fg-dim: rgba(246, 241, 231, 0.78);
+  --fg-faint: rgba(246, 241, 231, 0.52);
+  isolation: isolate;
+  color: var(--fg);
+  background: linear-gradient(180deg, var(--night) 0, var(--night) calc(100% - var(--seam)), var(--bg) calc(100% - var(--seam)));
+}
+.sc[data-look='folio'] .sc-hero::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: var(--seam);
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgb(var(--accent-rgb) / 0.8) 30%, rgb(var(--accent-2-rgb) / 0.8) 70%, transparent);
+  pointer-events: none;
+}
+.sc-backdrop { display: none; }
+.sc[data-look='folio'] .sc-backdrop {
+  display: block;
+  position: absolute;
+  inset: 0 0 auto 0;
+  width: 100%;
+  height: calc(100% - var(--seam));
+  object-fit: cover;
+  object-position: center 30%;
+  opacity: 0.6;
+  z-index: -1;
+  pointer-events: none;
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.75) 45%, transparent 100%);
+}
+.sc[data-look='folio'] .sc-hero h1 { font-weight: 600; letter-spacing: -0.02em; }
+.sc[data-look='folio'] .sc-hero .glass { background: rgba(255, 255, 255, 0.08); border-color: rgba(246, 241, 231, 0.28); }
+.sc[data-look='folio'] .sc-hero [class*='border-white/'] { border-color: rgba(246, 241, 231, 0.28); }
+.sc[data-look='folio'] .sc-hero [class*='bg-white/'] { background-color: rgba(255, 255, 255, 0.1); }
+
+/* the project bar stays night-coloured over both halves */
+.sc[data-look='folio'] > header {
+  --fg: #f6f1e7;
+  --fg-dim: rgba(246, 241, 231, 0.78);
+  --fg-faint: rgba(246, 241, 231, 0.55);
+}
+.sc[data-look='folio'] > header .glass { background: rgba(20, 18, 15, 0.88); border-color: rgba(246, 241, 231, 0.14); }
+
+/* type */
+.sc[data-look='folio'] .font-display { font-weight: 600; }
+.sc[data-look='folio'] .tracking-tightest { letter-spacing: -0.02em; }
+.sc[data-look='folio'] .neon-text { text-shadow: none; font-style: italic; font-weight: 500; }
+.sc[data-look='folio'] .neon-line { box-shadow: none; }
+
+/* surfaces and buttons */
+.sc[data-look='folio'] .neon-fill { background: linear-gradient(104deg, var(--accent), color-mix(in oklab, var(--accent) 70%, var(--accent-2))); color: #fff; }
+.sc[data-look='folio'] main .glass { background: rgba(255, 255, 255, 0.62); border-color: var(--glass-line); }
+.sc[data-look='folio'] .glass-fill,
+.sc[data-look='folio'] .glass-fill-solid { background: #fffdf8; backdrop-filter: none; -webkit-backdrop-filter: none; }
+.sc[data-look='folio'] .sc-card { backdrop-filter: none; -webkit-backdrop-filter: none; box-shadow: var(--sc-shadow); }
+.sc[data-look='folio'] .sc-frame { background: var(--night); border-color: rgba(27, 26, 23, 0.18); }
+.sc[data-look='folio'] .sc-browser { background: rgba(255, 255, 255, 0.06); }
+.sc[data-look='folio'] main [class*='border-white/'] { border-color: rgba(27, 26, 23, 0.12); }
+.sc[data-look='folio'] main [class*='divide-white/'] > :not([hidden]) ~ :not([hidden]) { border-color: rgba(27, 26, 23, 0.1); }
+.sc[data-look='folio'] main [class*='bg-white/'] { background-color: rgba(27, 26, 23, 0.04); }
+.sc[data-look='folio'] main [class*='bg-black/'] { background-color: rgba(27, 26, 23, 0.06); }
+.sc[data-look='folio'] .sc-gallery figcaption { background: rgba(20, 18, 15, 0.82); color: #f6f1e7; }
+.sc[data-look='folio'] .sc-screens { background: rgba(20, 18, 15, 0.9); }
+
+/* ------------------------------------------------------------------- duo */
+
+.sc-duo {
+  display: grid;
+  gap: 3rem 3rem;
+  align-items: start;
+}
+@media (min-width: 900px) {
+  .sc-duo { grid-template-columns: 1.3fr 1fr; }
+}
+.sc-duo-side {
+  display: grid;
+  gap: 1.75rem;
+  align-content: start;
+}
+.sc-duo-device[data-device='browser'] { padding: 10px 0; }
+.sc-duo-device[data-device='phone'] {
+  display: flex;
+  justify-content: center;
+  perspective: 1400px;
+  padding: 10px 0 24px;
+}
+.sc-duo-device[data-device='phone'] .sc-phone { width: 236px; transform: rotateY(-12deg) rotateZ(2deg); }
+.sc-duo-device[data-device='phone'] .sc-phone:hover { transform: rotateY(0) rotateZ(0) translateY(-6px) scale(1.04); }
+.sc-duo-shared {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1.25rem;
+  padding: 1.1rem 1.35rem;
+  border: 1px dashed var(--sc-line);
+  border-radius: var(--sc-radius);
+}
+.sc-duo-shared ul { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.sc-duo-shared li {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  padding: 0.35rem 0.6rem;
+  border: 1px solid var(--sc-line);
+  border-radius: 6px;
+  color: var(--fg-dim);
+}
+
 /* plain: the site's default glass */
 .sc[data-look='plain'] .sc-bg {
   background: radial-gradient(60% 45% at 50% 0%, rgb(var(--accent-rgb) / 0.12), transparent 70%);
@@ -402,6 +553,8 @@
 }
 
 @media (max-width: 720px) {
+  /* hero facts: two tidy columns instead of a ragged centred wrap */
+  .sc-hero dl { display: grid; grid-template-columns: 1fr 1fr; justify-items: start; gap: 1rem 1.25rem; }
   .sc-stage { height: auto; }
   .sc-shot { position: static !important; width: 100% !important; transform: none !important; }
   .sc-shot[data-pos='left'], .sc-shot[data-pos='right'] { display: none; }

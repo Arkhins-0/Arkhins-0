@@ -19,6 +19,7 @@ function hasDarkVariant(doc: ShowcaseDoc): boolean {
     if (b.type === 'steps') seen.push(...b.items.map((i) => i.image));
     if (b.type === 'phones' || b.type === 'gallery') seen.push(...b.items);
     if (b.type === 'compare') seen.push(b.image);
+    if (b.type === 'duo') seen.push(...b.sides.map((s) => s.image));
   }
   return seen.some((i) => i.dark && i.dark !== i.light);
 }
@@ -59,7 +60,8 @@ export function Showcase({ project, doc }: { project: ProjectRow; doc: ShowcaseD
 function Hero({ doc }: { doc: ShowcaseDoc }) {
   const h = doc.hero;
   return (
-    <section className="relative overflow-hidden pb-6 pt-32 md:pt-40">
+    <section className="sc-hero relative overflow-hidden pb-6 pt-32 md:pt-40">
+      {doc.theme.backdrop && <img className="sc-backdrop" src={doc.theme.backdrop} alt="" aria-hidden="true" />}
       <div className="shell text-center">
         {h.eyebrow && (
           <Reveal dir="none">
