@@ -246,7 +246,40 @@
       "status": "Completed",
       "slug": "hygieia",
       "role": "Design + ML + Full-stack",
-      "year": "2025"
+      "year": "2025",
+      "showcaseUrl": "/projects/hygieia/showcase/index.html"
+    },
+    {
+      "id": "proj-scholar-track",
+      "title": "Scholar Track: PhD Scholar Tracking Portal",
+      "description": "A portal that carries a PhD scholar from admission to degree through four Doctoral Committee reviews, with two-step approvals, document uploads, an audit trail and templated email. GitHub-inspired interface in light and dark.",
+      "longDescription": "Scholar Track replaces paper files and email threads with one source of truth for a research office: three roles (scholar, supervisor, R&D section), five gated milestones, presigned uploads to object storage with authenticated proxies, hashed portal keys and reset tokens, and a full audit log. Built with Next.js 14, Prisma on Neon Postgres, NextAuth, Tailwind and Brevo.",
+      "thumbnail": "/projects/scholar-track/thumbnail.png",
+      "images": [
+        "/projects/scholar-track/cover.png",
+        "/projects/scholar-track/images/admin-dashboard-dark.png",
+        "/projects/scholar-track/images/staff-review-light-full.png",
+        "/projects/scholar-track/images/graduate-degree-light.png"
+      ],
+      "markdownFile": "/projects/scholar-track/case-study.md",
+      "tags": [
+        "Next.js",
+        "TypeScript",
+        "Prisma",
+        "PostgreSQL",
+        "Design System",
+        "Full-stack"
+      ],
+      "category": "Web",
+      "date": "September 2026",
+      "githubUrl": "https://github.com/Arkhins-0/scholar",
+      "liveUrl": "",
+      "showcaseUrl": "/projects/scholar-track/index.html",
+      "featured": true,
+      "status": "Completed",
+      "slug": "scholar-track",
+      "role": "Design + Full-stack",
+      "year": "2026"
     },
     {
       "id": "proj-2",

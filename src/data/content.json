@@ -210,7 +210,8 @@
       "close": "Close notes",
       "aria": "{title} — case notes",
       "openAria": "Read case notes for {title}"
-    }
+    },
+    "showcaseAction": "Showcase"
   },
   "path": {
     "head": {
@@ -344,7 +345,8 @@
     "barName": "All projects",
     "barKind": "archive",
     "barBackHref": "/",
-    "barBackLabel": "Home"
+    "barBackLabel": "Home",
+    "showcaseBadge": "Showcase"
   },
   "projectPage": {
     "backHref": "/#work",

@@ -17,6 +17,7 @@ export const metadata: Metadata = {
 
 type Project = (typeof portfolioData.projects)[number] & {
   pageUrl?: string;
+  showcaseUrl?: string;
   role?: string;
   year?: string;
 };
@@ -70,7 +71,9 @@ export default function ProjectsIndex() {
             <ul className="grid gap-5 md:grid-cols-2">
               {PROJECTS.map((p, i) => {
                 const internal = Boolean(p.pageUrl);
-                const href = p.pageUrl || p.liveUrl || p.githubUrl || '#';
+                // Static showcases live under /public, so they open with a full page load.
+                const href = p.pageUrl || p.showcaseUrl || p.liveUrl || p.githubUrl || '#';
+                const sameTab = internal || Boolean(p.showcaseUrl && !p.pageUrl);
                 const Card: any = internal ? Link : 'a';
 
                 return (
@@ -82,7 +85,7 @@ export default function ProjectsIndex() {
                       className="group/card h-full"
                     >
                       <Card
-                        {...(internal
+                        {...(sameTab
                           ? { href }
                           : {
                               href,
@@ -100,9 +103,9 @@ export default function ProjectsIndex() {
                             className="object-cover transition-transform duration-[1.1s] ease-swift group-hover/card:scale-[1.05]"
                           />
                           <div className="absolute inset-0 bg-gradient-to-t from-bg/85 via-bg/10 to-transparent" />
-                          {internal && (
+                          {(internal || p.showcaseUrl) && (
                             <span className="hud absolute left-4 top-4 border border-accent/50 bg-black/50 px-2 py-1 text-accent backdrop-blur-sm">
-                              {COPY.caseStudyBadge}
+                              {internal ? COPY.caseStudyBadge : COPY.showcaseBadge}
                             </span>
                           )}
                         </div>
