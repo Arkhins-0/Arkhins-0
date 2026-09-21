@@ -84,6 +84,8 @@ export interface Project {
   githubUrl: string;
   liveUrl: string;
   pageUrl?: string;
+  /** Static, self-contained showcase page under /public (opens as a full page load). */
+  showcaseUrl?: string;
   featured: boolean;
   status: string;
 }

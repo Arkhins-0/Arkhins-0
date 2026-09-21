@@ -4,7 +4,7 @@ import { useMemo, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { ArrowUpRight, FileText, Github, Globe } from 'lucide-react';
+import { ArrowUpRight, FileText, Github, Globe, Sparkles } from 'lucide-react';
 import portfolioData from '@/data/portfolio.json';
 import content from '@/data/content.json';
 import {
@@ -21,6 +21,7 @@ const COPY = content.work;
 
 type Project = (typeof portfolioData.projects)[number] & {
   pageUrl?: string;
+  showcaseUrl?: string;
   markdownFile?: string;
   role?: string;
   year?: string;
@@ -170,6 +171,19 @@ function ProjectRow({
                   />
                   {COPY.caseStudyAction}
                 </Link>
+              )}
+
+              {project.showcaseUrl && (
+                <a
+                  href={project.showcaseUrl}
+                  className="group/act hud inline-flex items-center gap-1.5 text-accent"
+                >
+                  <Sparkles
+                    size={13}
+                    className="transition-transform duration-300 group-hover/act:-translate-y-0.5 group-hover/act:translate-x-0.5"
+                  />
+                  {COPY.showcaseAction}
+                </a>
               )}
 
               {project.liveUrl && (

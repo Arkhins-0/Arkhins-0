@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Scholar Track — PhD Scholar Tracking Portal</title>
+  <meta name="description" content="Case study and visual showcase of Scholar Track, a PhD scholar tracking portal: proposal to degree through four Doctoral Committee reviews, with a GitHub-inspired interface in light and dark." />
+  <link rel="icon" href="images/logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <a class="skip" href="#overview">Skip to content</a>
+
+  <header class="topbar">
+    <a class="brand" href="#top">
+      <img src="images/logo.png" alt="" width="36" height="36" />
+      <span>Scholar Track</span>
+    </a>
+    <nav class="topnav" aria-label="Sections">
+      <a href="#overview">Overview</a>
+      <a href="#roles">Roles</a>
+      <a href="#workflow">Workflow</a>
+      <a href="#themes">Themes</a>
+      <a href="#mobile">Mobile</a>
+      <a href="#gallery">Gallery</a>
+    </nav>
+    <a class="btn btn-ghost" href="#gallery">View screens</a>
+  </header>
+
+  <!-- ───────────────────────── HERO ───────────────────────── -->
+  <section class="hero" id="top">
+    <div class="hero-bg" aria-hidden="true">
+      <img src="images/library.jpg" alt="" />
+    </div>
+    <div class="hero-copy reveal">
+      <p class="eyebrow"><span class="dot"></span> Case study · Web application</p>
+      <h1>The PhD journey,<br /><em>from proposal to degree.</em></h1>
+      <p class="lede">
+        Scholar Track guides a research scholar through four Doctoral Committee reviews and a degree stage,
+        with a two-step approval at every milestone. One portal, three roles, a full audit trail, and an
+        interface that reads like a well-set journal.
+      </p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#workflow">Explore the workflow</a>
+        <a class="btn btn-ghost" href="#gallery">All screens</a>
+      </div>
+      <dl class="hero-facts">
+        <div><dt>Roles</dt><dd>Scholar · Supervisor · R&amp;D</dd></div>
+        <div><dt>Stages</dt><dd>Proposal → DC1–DC4 → Degree</dd></div>
+        <div><dt>Themes</dt><dd>Light &amp; dark, first-class</dd></div>
+      </dl>
+    </div>
+
+    <div class="stage" data-tilt-stage aria-hidden="true">
+      <figure class="shot shot-left" data-depth="0.6">
+        <img src="images/hero-admin-dark.png" alt="" loading="eager" />
+      </figure>
+      <figure class="shot shot-center" data-depth="1">
+        <div class="browser">
+          <span class="b-dots"><i></i><i></i><i></i></span>
+          <span class="b-url">scholar-track.app / student / dashboard</span>
+        </div>
+        <img src="images/hero-student-light.png" alt="" loading="eager" />
+      </figure>
+      <figure class="shot shot-right" data-depth="0.6">
+        <img src="images/hero-login-dark.png" alt="" loading="eager" />
+      </figure>
+    </div>
+  </section>
+
+  <!-- ───────────────────────── MARQUEE ───────────────────────── -->
+  <section class="marquee" aria-hidden="true">
+    <div class="marquee-track" data-marquee>
+      <img src="images/student-dashboard-light.png" alt="" />
+      <img src="images/admin-approvals-dark.png" alt="" />
+      <img src="images/graduate-degree-light.png" alt="" />
+      <img src="images/admin-scholars-dark.png" alt="" />
+      <img src="images/student-dc2-light.png" alt="" />
+      <img src="images/staff-dashboard-dark.png" alt="" />
+      <img src="images/admin-requests-light.png" alt="" />
+      <img src="images/forgot-dark.png" alt="" />
+    </div>
+  </section>
+
+  <!-- ───────────────────────── OVERVIEW ───────────────────────── -->
+  <section class="section" id="overview">
+    <div class="section-head reveal">
+      <p class="eyebrow">Overview</p>
+      <h2>Built for a research office, designed like a product.</h2>
+      <p>
+        The portal replaces paper files and email threads with a single source of truth. Every transition is enforced
+        on the server, every rejection carries remarks, and every step writes an audit row. Scholars always know what
+        to do next; supervisors and the R&amp;D section always know what is waiting for them.
+      </p>
+    </div>
+    <div class="stats reveal">
+      <div><strong>5</strong><span>milestones with required documents</span></div>
+      <div><strong>2-step</strong><span>approval: supervisor, then R&amp;D</span></div>
+      <div><strong>12</strong><span>templated email notifications</span></div>
+      <div><strong>100%</strong><span>server-side gating and audit</span></div>
+    </div>
+  </section>
+
+  <!-- ───────────────────────── ROLES ───────────────────────── -->
+  <section class="section" id="roles">
+    <div class="section-head reveal">
+      <p class="eyebrow">Three roles</p>
+      <h2>One portal, three points of view.</h2>
+    </div>
+    <div class="roles">
+      <article class="role-card reveal" data-tilt>
+        <div class="role-media"><img src="images/student-dashboard-light.png" alt="Scholar overview with journey list" loading="lazy" /></div>
+        <h3>Scholar</h3>
+        <p>Registers with a one-time portal key, files the proposal, uploads milestone documents and always sees the next step.</p>
+      </article>
+      <article class="role-card reveal" data-tilt style="--delay:.1s">
+        <div class="role-media"><img src="images/staff-dashboard-dark.png" alt="Supervisor dashboard" loading="lazy" /></div>
+        <h3>Supervisor</h3>
+        <p>Constitutes the Doctoral Committee, assigns a co-supervisor and approves or returns each application with remarks.</p>
+      </article>
+      <article class="role-card reveal" data-tilt style="--delay:.2s">
+        <div class="role-media"><img src="images/admin-dashboard-dark.png" alt="R&amp;D overview with queues" loading="lazy" /></div>
+        <h3>R&amp;D Section</h3>
+        <p>Issues portal keys, allocates supervisors, gives the final approval, records meetings and issues the degree.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ───────────────────────── WORKFLOW ───────────────────────── -->
+  <section class="section" id="workflow">
+    <div class="section-head reveal">
+      <p class="eyebrow">Workflow</p>
+      <h2>Every milestone follows the same rhythm.</h2>
+      <p class="mono flow">DRAFT → SUBMITTED → SUPERVISOR_APPROVED → RND_APPROVED → MEETING_COMPLETED</p>
+    </div>
+
+    <div class="feature reveal">
+      <div class="feature-copy">
+        <span class="step">01</span>
+        <h3>The scholar uploads and submits</h3>
+        <p>Each stage lists exactly which documents are required. Uploads go straight to object storage through short-lived signed URLs, with progress, and the application cannot be submitted until every slot is filled.</p>
+        <ul class="ticks"><li>Required-document checklist</li><li>Direct-to-bucket uploads, 10MB, PDF/JPG/PNG</li><li>Application tracker with dates and remarks</li></ul>
+      </div>
+      <figure class="device iso-right" data-tilt>
+        <img src="images/student-dc2-light.png" alt="DC2 application with four uploaded documents" loading="lazy" />
+      </figure>
+    </div>
+
+    <div class="feature feature-flip reveal">
+      <div class="feature-copy">
+        <span class="step">02</span>
+        <h3>The supervisor reviews</h3>
+        <p>The scholar page puts the proposal, committee, documents and the decision form on one screen. Returning an application requires remarks, which land in the scholar's tracker and inbox.</p>
+        <ul class="ticks"><li>Committee picker, 2 to 5 members from the pool</li><li>Approve, or return with mandatory remarks</li><li>Email to the scholar and the R&amp;D queue</li></ul>
+      </div>
+      <figure class="device iso-left tall" data-tilt>
+        <img src="images/staff-review-light-full.png" alt="Supervisor review page" loading="lazy" />
+      </figure>
+    </div>
+
+    <div class="feature reveal">
+      <div class="feature-copy">
+        <span class="step">03</span>
+        <h3>The R&amp;D section closes the loop</h3>
+        <p>Queues with live counters show what is waiting: supervisor requests, final approvals, and meetings to record. Marking a meeting complete unlocks the next stage; on the last stage it issues the degree.</p>
+        <ul class="ticks"><li>Counters in the navigation</li><li>One click to record a meeting or issue a degree</li><li>Filterable scholar register with CSV export</li></ul>
+      </div>
+      <figure class="device iso-right" data-tilt>
+        <img src="images/admin-approvals-dark.png" alt="R&amp;D approvals queue" loading="lazy" />
+      </figure>
+    </div>
+
+    <div class="feature feature-flip reveal">
+      <div class="feature-copy">
+        <span class="step">04</span>
+        <h3>And the journey ends with a degree</h3>
+        <p>The scholar's overview turns fully green, the completion record shows the issue date, and the final email congratulates the new doctor.</p>
+      </div>
+      <figure class="device iso-left" data-tilt>
+        <img src="images/graduate-degree-light.png" alt="Scholar overview after the degree is issued" loading="lazy" />
+      </figure>
+    </div>
+  </section>
+
+  <!-- ───────────────────────── THEMES ───────────────────────── -->
+  <section class="section" id="themes">
+    <div class="section-head reveal">
+      <p class="eyebrow">Design system</p>
+      <h2>Light and dark, drawn from the same tokens.</h2>
+      <p>A GitHub-inspired system: hairline borders, quiet surfaces, one accent, semantic state colours. Serif headings give it an academic voice. Drag the handle to compare.</p>
+    </div>
+    <div class="compare reveal" data-compare>
+      <img class="compare-a" src="images/admin-dashboard-light.png" alt="R&amp;D overview, light theme" />
+      <img class="compare-b" src="images/admin-dashboard-dark.png" alt="R&amp;D overview, dark theme" />
+      <div class="compare-handle" aria-hidden="true"><span></span></div>
+      <input class="compare-range" type="range" min="0" max="100" value="50" aria-label="Compare light and dark themes" />
+      <span class="compare-tag tag-a">Light</span>
+      <span class="compare-tag tag-b">Dark</span>
+    </div>
+    <div class="tokens reveal">
+      <div><i style="background:#0969da"></i>Accent</div>
+      <div><i style="background:#1f883d"></i>Primary action</div>
+      <div><i style="background:#9a6700"></i>Attention</div>
+      <div><i style="background:#cf222e"></i>Danger</div>
+      <div><i style="background:#8250df"></i>Done</div>
+      <div><i style="background:#d0d7de"></i>Hairline</div>
+    </div>
+  </section>
+
+  <!-- ───────────────────────── MOBILE ───────────────────────── -->
+  <section class="section" id="mobile">
+    <div class="section-head reveal">
+      <p class="eyebrow">Responsive</p>
+      <h2>Fits a phone without a separate app.</h2>
+      <p>Tabs scroll, tables stack, and the full journey stays readable one-handed. Hover a phone to scroll its screen.</p>
+    </div>
+    <div class="phones reveal">
+      <figure class="phone phone-1 light"><div class="phone-screen"><img src="images/m-login-light.png" alt="Sign in on a phone" loading="lazy" /></div></figure>
+      <figure class="phone phone-2"><div class="phone-screen scroller"><img src="images/m-student-dark.png" alt="Scholar overview on a phone" loading="lazy" /></div></figure>
+      <figure class="phone phone-3 light"><div class="phone-screen scroller"><img src="images/m-admin-light.png" alt="R&amp;D overview on a phone" loading="lazy" /></div></figure>
+      <figure class="phone phone-4 light"><div class="phone-screen scroller"><img src="images/m-dc2-light.png" alt="DC2 application on a phone" loading="lazy" /></div></figure>
+      <figure class="phone phone-5"><div class="phone-screen"><img src="images/m-staff-dark.png" alt="Supervisor dashboard on a phone" loading="lazy" /></div></figure>
+    </div>
+  </section>
+
+  <!-- ───────────────────────── GALLERY ───────────────────────── -->
+  <section class="section" id="gallery">
+    <div class="section-head reveal">
+      <p class="eyebrow">Gallery</p>
+      <h2>Every screen, both themes.</h2>
+      <p>Click any image to open it at full resolution.</p>
+    </div>
+    <div class="gallery" data-gallery>
+      <a href="images/student-dashboard-light.png" class="g-item reveal"><img src="images/student-dashboard-light.png" alt="Scholar overview, light" loading="lazy" /><span>Scholar overview · light</span></a>
+      <a href="images/student-dashboard-dark.png" class="g-item reveal"><img src="images/student-dashboard-dark.png" alt="Scholar overview, dark" loading="lazy" /><span>Scholar overview · dark</span></a>
+      <a href="images/student-dc2-light.png" class="g-item reveal"><img src="images/student-dc2-light.png" alt="DC2 application" loading="lazy" /><span>DC2 application</span></a>
+      <a href="images/graduate-degree-light.png" class="g-item reveal"><img src="images/graduate-degree-light.png" alt="Degree completed" loading="lazy" /><span>Degree completed</span></a>
+      <a href="images/staff-dashboard-dark.png" class="g-item reveal"><img src="images/staff-dashboard-dark.png" alt="Supervisor dashboard" loading="lazy" /><span>Supervisor dashboard</span></a>
+      <a href="images/staff-review-light-full.png" class="g-item reveal"><img src="images/staff-review-light-full.png" alt="Supervisor review page" loading="lazy" /><span>Supervisor review</span></a>
+      <a href="images/admin-dashboard-light.png" class="g-item reveal"><img src="images/admin-dashboard-light.png" alt="R&amp;D overview, light" loading="lazy" /><span>R&amp;D overview · light</span></a>
+      <a href="images/admin-dashboard-dark.png" class="g-item reveal"><img src="images/admin-dashboard-dark.png" alt="R&amp;D overview, dark" loading="lazy" /><span>R&amp;D overview · dark</span></a>
+      <a href="images/admin-requests-light.png" class="g-item reveal"><img src="images/admin-requests-light.png" alt="Supervisor requests" loading="lazy" /><span>Supervisor requests</span></a>
+      <a href="images/admin-approvals-dark.png" class="g-item reveal"><img src="images/admin-approvals-dark.png" alt="R&amp;D approvals" loading="lazy" /><span>R&amp;D approvals</span></a>
+      <a href="images/admin-meetings-light.png" class="g-item reveal"><img src="images/admin-meetings-light.png" alt="Meetings and degrees" loading="lazy" /><span>Meetings &amp; degrees</span></a>
+      <a href="images/admin-scholars-dark.png" class="g-item reveal"><img src="images/admin-scholars-dark.png" alt="Scholar register" loading="lazy" /><span>Scholar register</span></a>
+      <a href="images/admin-keys-generated-light.png" class="g-item reveal"><img src="images/admin-keys-generated-light.png" alt="Portal keys generated" loading="lazy" /><span>Portal keys</span></a>
+      <a href="images/login-light.png" class="g-item reveal"><img src="images/login-light.png" alt="Sign in, light" loading="lazy" /><span>Sign in · light</span></a>
+      <a href="images/forgot-dark.png" class="g-item reveal"><img src="images/forgot-dark.png" alt="Forgot password, dark" loading="lazy" /><span>Forgot password · dark</span></a>
+      <a href="images/hero-login-dark.png" class="g-item reveal"><img src="images/hero-login-dark.png" alt="Sign in, dark, 4K" loading="lazy" /><span>Sign in · dark · 4K</span></a>
+    </div>
+  </section>
+
+  <!-- ───────────────────────── STACK ───────────────────────── -->
+  <section class="section" id="stack">
+    <div class="section-head reveal">
+      <p class="eyebrow">Under the hood</p>
+      <h2>Stack and safeguards.</h2>
+    </div>
+    <div class="stack reveal">
+      <div class="stack-col">
+        <h4>Built with</h4>
+        <ul class="chips">
+          <li>Next.js 14</li><li>TypeScript</li><li>Prisma</li><li>Neon Postgres</li><li>NextAuth</li><li>Tailwind CSS</li><li>Zod</li><li>S3-compatible storage</li><li>Brevo email</li><li>Vercel</li>
+        </ul>
+      </div>
+      <div class="stack-col">
+        <h4>Security model</h4>
+        <ul class="ticks">
+          <li>Role-based middleware and server-side stage gating</li>
+          <li>Files streamed through authenticated proxies, never public URLs</li>
+          <li>Presigned uploads verified with HeadObject before recording</li>
+          <li>Hashed portal keys and single-use, expiring reset tokens</li>
+          <li>bcrypt passwords, lockout after failed logins, strict CSP</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="brand"><img src="images/logo.png" alt="" width="28" height="28" /><span>Scholar Track</span></div>
+    <p>PhD Scholar Tracking Portal · Research &amp; Development Section. All people shown are fictional demo data.</p>
+  </footer>
+
+  <!-- Lightbox -->
+  <div class="lightbox" data-lightbox hidden>
+    <button class="lb-close" type="button" aria-label="Close">×</button>
+    <button class="lb-prev" type="button" aria-label="Previous">‹</button>
+    <figure><img alt="" /><figcaption></figcaption></figure>
+    <button class="lb-next" type="button" aria-label="Next">›</button>
+  </div>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
