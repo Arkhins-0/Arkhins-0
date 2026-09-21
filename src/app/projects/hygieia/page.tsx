@@ -136,6 +136,13 @@ export default function ProjectCaseStudy() {
                       {labels.sourceAction}
                     </NeonButton>
                     <NeonButton
+                      href={meta.showcase}
+                      external
+                      icon={<Sparkles size={15} />}
+                    >
+                      {labels.showcaseAction}
+                    </NeonButton>
+                    <NeonButton
                       href={labels.backHref}
                       variant="ghost"
                       icon={<ArrowUpRight size={15} />}

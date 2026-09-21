@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="en" class="theme-hygieia">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Hygieia — Multi-Disease Diagnosis Framework</title>
+  <meta name="description" content="Visual showcase of Hygieia: five diagnostic AI models, a context-aware health assistant and a blockchain audit trail behind one calm clinical interface." />
+  <link rel="icon" href="../logo.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <a class="skip" href="#overview">Skip to content</a>
+
+  <header class="topbar">
+    <a class="brand" href="#top">
+      <img src="../logo.svg" alt="" width="36" height="36" />
+      <span>Hygieia</span>
+    </a>
+    <nav class="topnav" aria-label="Sections">
+      <a href="#overview">Overview</a>
+      <a href="#models">Models</a>
+      <a href="#flow">Flow</a>
+      <a href="#trust">Trust</a>
+      <a href="#gallery">Gallery</a>
+    </nav>
+    <a class="btn btn-ghost" href="../../hygieia">Read the case study</a>
+  </header>
+
+  <!-- ───────────────────────── HERO ───────────────────────── -->
+  <section class="hero" id="top">
+    <div class="hero-bg hero-bg-plain" aria-hidden="true"></div>
+    <div class="hero-copy reveal">
+      <p class="eyebrow"><span class="dot"></span> Case study · AI health platform</p>
+      <h1>Your health,<br /><em>analyzed intelligently.</em></h1>
+      <p class="lede">
+        Hygieia bundles five independently trained diagnostic models behind one interface, writes every result to a
+        tamper-evident chain, and answers questions through Dr. Hygieia, an assistant that reads your own history.
+      </p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#flow">See how a prediction is made</a>
+        <a class="btn btn-ghost" href="#gallery">All screens</a>
+      </div>
+      <dl class="hero-facts">
+        <div><dt>Models</dt><dd>Heart · Diabetes · Skin · Breast ×2</dd></div>
+        <div><dt>Accuracy</dt><dd>96%+ average, ROC-AUC reported</dd></div>
+        <div><dt>Records</dt><dd>SHA-256 chained, re-verifiable</dd></div>
+      </dl>
+    </div>
+
+    <div class="stage" data-tilt-stage aria-hidden="true">
+      <figure class="shot shot-left" data-depth="0.6">
+        <img src="../screen-dashboard.png" alt="" loading="eager" />
+      </figure>
+      <figure class="shot shot-center" data-depth="1">
+        <div class="browser">
+          <span class="b-dots"><i></i><i></i><i></i></span>
+          <span class="b-url">hygieia.app</span>
+        </div>
+        <img src="../screen-landing.png" alt="" loading="eager" />
+      </figure>
+      <figure class="shot shot-right" data-depth="0.6">
+        <img src="../screen-analysis.png" alt="" loading="eager" />
+      </figure>
+    </div>
+  </section>
+
+  <!-- ───────────────────────── MARQUEE ───────────────────────── -->
+  <section class="marquee" aria-hidden="true">
+    <div class="marquee-track" data-marquee>
+      <img src="../screen-landing.png" alt="" />
+      <img src="../screen-dashboard.png" alt="" />
+      <img src="../screen-analysis.png" alt="" />
+      <img src="../screen-chat.png" alt="" />
+      <img src="../screen-blockchain.png" alt="" />
+      <img src="../screen-auth.png" alt="" />
+      <img src="../screen-contact.png" alt="" />
+    </div>
+  </section>
+
+  <!-- ───────────────────────── OVERVIEW ───────────────────────── -->
+  <section class="section" id="overview">
+    <div class="section-head reveal">
+      <p class="eyebrow">Overview</p>
+      <h2>Clinical-grade prediction, an assistant, and an audit trail. One platform.</h2>
+      <p>
+        A clinician or a curious patient can move from a heart-risk questionnaire to a dermatology image scan without
+        changing tools. Every prediction is hashed into an append-only chain, so a result can be re-verified later and
+        any tampering shows up as a broken link.
+      </p>
+    </div>
+    <div class="stats reveal">
+      <div><strong>5</strong><span>diagnostic models, each trained and tuned separately</span></div>
+      <div><strong>96%+</strong><span>average accuracy, validated with ROC-AUC</span></div>
+      <div><strong>253K</strong><span>training samples across the five datasets</span></div>
+      <div><strong>4</strong><span>security layers, from JWT to chain integrity</span></div>
+    </div>
+  </section>
+
+  <!-- ───────────────────────── MODELS ───────────────────────── -->
+  <section class="section" id="models">
+    <div class="section-head reveal">
+      <p class="eyebrow">Model portfolio</p>
+      <h2>Five models, one interface.</h2>
+      <p>Accuracy alone hides class imbalance, so ROC-AUC is reported next to it.</p>
+    </div>
+    <div class="models reveal">
+      <article class="model" style="--hue:#ef4444" data-tilt>
+        <span class="model-dot"></span>
+        <h3>Heart Risk</h3>
+        <p>18 clinical parameters · Stacking ensemble</p>
+        <div class="model-nums"><strong>99.4%</strong><span>ROC-AUC 99.9%</span></div>
+      </article>
+      <article class="model" style="--hue:#f97316" data-tilt>
+        <span class="model-dot"></span>
+        <h3>Diabetes Risk</h3>
+        <p>Symptom-based analysis · Random Forest + XGBoost</p>
+        <div class="model-nums"><strong>98.1%</strong><span>ROC-AUC 99.6%</span></div>
+      </article>
+      <article class="model" style="--hue:#14b8a6" data-tilt>
+        <span class="model-dot"></span>
+        <h3>Skin Diagnosis</h3>
+        <p>AI image analysis · CNN + Derm Foundation</p>
+        <div class="model-nums"><strong>96.8%</strong><span>ROC-AUC 99.3%</span></div>
+      </article>
+      <article class="model" style="--hue:#ec4899" data-tilt>
+        <span class="model-dot"></span>
+        <h3>Breast Cancer</h3>
+        <p>10 risk factors · Voting ensemble · 251,661 samples</p>
+        <div class="model-nums"><strong>81.3%</strong><span>ROC-AUC 86.2%</span></div>
+      </article>
+      <article class="model" style="--hue:#a855f7" data-tilt>
+        <span class="model-dot"></span>
+        <h3>Breast Tissue</h3>
+        <p>30 FNA measurements · Stacking ensemble</p>
+        <div class="model-nums"><strong>97.2%</strong><span>ROC-AUC 99.7%</span></div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ───────────────────────── FLOW ───────────────────────── -->
+  <section class="section" id="flow">
+    <div class="section-head reveal">
+      <p class="eyebrow">How a prediction is made</p>
+      <h2>From a form or an image to a verified record.</h2>
+      <p class="mono flow">INPUT → FEATURES → ENSEMBLE → CALIBRATION → RESULT → SHA-256 CHAIN</p>
+    </div>
+
+    <div class="feature reveal">
+      <div class="feature-copy">
+        <span class="step">01</span>
+        <h3>Guided input</h3>
+        <p>Context-aware fields with real-time validation and helper text for every medical parameter. Skin lesions are uploaded as images; the other models take questionnaires and lab values.</p>
+        <ul class="ticks"><li>Toggles and units tuned per parameter</li><li>Image upload with progress states</li><li>Clear disclaimer: a risk assessment, not a diagnosis</li></ul>
+      </div>
+      <figure class="device iso-right" data-tilt>
+        <img src="../screen-analysis.png" alt="Heart risk analysis form" loading="lazy" />
+      </figure>
+    </div>
+
+    <div class="feature feature-flip reveal">
+      <div class="feature-copy">
+        <span class="step">02</span>
+        <h3>Results and history</h3>
+        <p>The dashboard keeps recent analyses, per-model counts and an activity timeline, with quick cards into every diagnostic flow. Each result carries its confidence score and risk level.</p>
+        <ul class="ticks"><li>Per-model counters</li><li>Risk level and confidence on every result</li><li>One click back into any analysis</li></ul>
+      </div>
+      <figure class="device iso-left" data-tilt>
+        <img src="../screen-dashboard.png" alt="User dashboard" loading="lazy" />
+      </figure>
+    </div>
+
+    <div class="feature reveal">
+      <div class="feature-copy">
+        <span class="step">03</span>
+        <h3>Dr. Hygieia</h3>
+        <p>A context-aware assistant that answers with your own analysis history in view. Multiple concurrent conversations, streaming responses and direct links into specific results.</p>
+        <ul class="ticks"><li>Streaming answers</li><li>Session management</li><li>Deep links to analyses</li></ul>
+      </div>
+      <figure class="device iso-right" data-tilt>
+        <img src="../screen-chat.png" alt="Dr. Hygieia chat" loading="lazy" />
+      </figure>
+    </div>
+
+    <div class="feature feature-flip reveal">
+      <div class="feature-copy">
+        <span class="step">04</span>
+        <h3>Blockchain verification</h3>
+        <p>Every record is hashed with SHA-256 and appended to a chain. Verification walks the chain, flags any tampering and gives administrators an oversight dashboard.</p>
+        <ul class="ticks"><li>Immutable audit trail</li><li>Tamper detection and chain validation</li><li>Admin oversight</li></ul>
+      </div>
+      <figure class="device iso-left" data-tilt>
+        <img src="../screen-blockchain.png" alt="Blockchain verification dashboard" loading="lazy" />
+      </figure>
+    </div>
+  </section>
+
+  <!-- ───────────────────────── DECK ───────────────────────── -->
+  <section class="section" id="deck">
+    <div class="section-head reveal">
+      <p class="eyebrow">Interface</p>
+      <h2>Calm, accessible, built for long sessions.</h2>
+      <p>Dark and light mode, responsive by default: the same flows work on a ward tablet and on a phone in a waiting room.</p>
+    </div>
+    <div class="deck reveal">
+      <figure class="deck-card deck-1"><img src="../screen-auth.png" alt="Authentication" loading="lazy" /></figure>
+      <figure class="deck-card deck-2"><img src="../screen-contact.png" alt="Contact" loading="lazy" /></figure>
+      <figure class="deck-card deck-3"><img src="../screen-landing.png" alt="Landing" loading="lazy" /></figure>
+    </div>
+  </section>
+
+  <!-- ───────────────────────── TRUST ───────────────────────── -->
+  <section class="section" id="trust">
+    <div class="section-head reveal">
+      <p class="eyebrow">Trust model</p>
+      <h2>Four layers of defence.</h2>
+    </div>
+    <div class="stack reveal">
+      <div class="stack-col">
+        <h4>Authentication</h4>
+        <ul class="ticks"><li>JWT token-based auth</li><li>Bcrypt password hashing</li><li>Session management</li></ul>
+      </div>
+      <div class="stack-col">
+        <h4>Authorization</h4>
+        <ul class="ticks"><li>Role-based access control</li><li>Admin / user separation</li><li>Resource ownership validation</li></ul>
+      </div>
+      <div class="stack-col">
+        <h4>Data protection</h4>
+        <ul class="ticks"><li>Input validation and sanitisation</li><li>SQL injection prevention</li><li>XSS protection</li></ul>
+      </div>
+      <div class="stack-col">
+        <h4>Blockchain</h4>
+        <ul class="ticks"><li>SHA-256 cryptographic hashing</li><li>Immutable audit trail</li><li>Chain integrity validation</li></ul>
+      </div>
+    </div>
+    <div class="stack reveal" style="margin-top:24px">
+      <div class="stack-col">
+        <h4>Frontend</h4>
+        <ul class="chips"><li>Next.js 14</li><li>TypeScript</li><li>Tailwind CSS</li><li>Framer Motion</li><li>TanStack Query</li><li>Zustand</li></ul>
+      </div>
+      <div class="stack-col">
+        <h4>Backend and models</h4>
+        <ul class="chips"><li>Flask</li><li>SQLAlchemy</li><li>JWT</li><li>scikit-learn</li><li>TensorFlow</li><li>Google Derm Foundation</li></ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────────────────────── GALLERY ───────────────────────── -->
+  <section class="section" id="gallery">
+    <div class="section-head reveal">
+      <p class="eyebrow">Gallery</p>
+      <h2>Every screen.</h2>
+      <p>Click any image to open it at full size.</p>
+    </div>
+    <div class="gallery" data-gallery>
+      <a href="../screen-landing.png" class="g-item reveal"><img src="../screen-landing.png" alt="Landing page" loading="lazy" /><span>Landing page</span></a>
+      <a href="../screen-dashboard.png" class="g-item reveal"><img src="../screen-dashboard.png" alt="User dashboard" loading="lazy" /><span>User dashboard</span></a>
+      <a href="../screen-analysis.png" class="g-item reveal"><img src="../screen-analysis.png" alt="Analysis interface" loading="lazy" /><span>Analysis interface</span></a>
+      <a href="../screen-chat.png" class="g-item reveal"><img src="../screen-chat.png" alt="Dr. Hygieia" loading="lazy" /><span>Dr. Hygieia</span></a>
+      <a href="../screen-blockchain.png" class="g-item reveal"><img src="../screen-blockchain.png" alt="Blockchain verification" loading="lazy" /><span>Blockchain verification</span></a>
+      <a href="../screen-auth.png" class="g-item reveal"><img src="../screen-auth.png" alt="Authentication" loading="lazy" /><span>Authentication</span></a>
+      <a href="../screen-contact.png" class="g-item reveal"><img src="../screen-contact.png" alt="Contact" loading="lazy" /><span>Contact</span></a>
+      <a href="../cover.png" class="g-item reveal"><img src="../cover.png" alt="Cover" loading="lazy" /><span>Cover</span></a>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="brand"><img src="../logo.svg" alt="" width="28" height="28" /><span>Hygieia</span></div>
+    <p>Multi-Disease Diagnosis Framework · <a class="link" href="https://github.com/Krishna-Vijay-G/Hygieia.git" target="_blank" rel="noopener">Source on GitHub</a> · <a class="link" href="../../hygieia">Full case study</a></p>
+  </footer>
+
+  <div class="lightbox" data-lightbox hidden>
+    <button class="lb-close" type="button" aria-label="Close">×</button>
+    <button class="lb-prev" type="button" aria-label="Previous">‹</button>
+    <figure><img alt="" /><figcaption></figcaption></figure>
+    <button class="lb-next" type="button" aria-label="Next">›</button>
+  </div>
+
+  <script src="script.js" defer></script>
+</body>
+</html>

@@ -29,7 +29,8 @@
         "label": "Dr. Hygieia assistant",
         "tone": "muted"
       }
-    ]
+    ],
+    "showcase": "/projects/hygieia/showcase/index.html"
   },
   "stats": [
     {
@@ -489,6 +490,7 @@
     "outroRepoAction": "Repository",
     "outroBackAction": "Back to work",
     "backHref": "/#work",
-    "closeLabel": "Close"
+    "closeLabel": "Close",
+    "showcaseAction": "Interactive showcase"
   }
 }
