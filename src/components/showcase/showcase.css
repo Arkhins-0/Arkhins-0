@@ -326,6 +326,106 @@
 .sc[data-look='pitwall'] .sc-marquee-track { color: #0a0a0a; }
 .sc[data-look='pitwall'] .sc-marquee-track i { background: #0a0a0a; }
 
+
+/* tower: a timing tower. Blue-tinted carbon page, warm off-white plates for every card with dark ink
+   on them, one signal yellow, pill buttons, italic uppercase Exo 2, a chequered band and halftone dots.
+   Flat throughout: hairlines and surface steps, no glow and no shadow. */
+.sc[data-look='tower'] {
+  --bg: #15151e;
+  --bg-raise: #1c1c25;
+  --bg-sink: #0d0d13;
+  --fg: #f7f4f1;
+  --fg-dim: #cdcdcd;
+  --fg-faint: #a3a3a8;
+  --glass-line: rgba(255, 255, 255, 0.12);
+  --font-display: var(--font-exo), 'Exo 2', system-ui, sans-serif;
+  --sc-radius: 8px;
+  --sc-surface: #f7f4f1;
+  --sc-surface-2: #eeeae6;
+  --sc-line: #e0dedc;
+  --sc-shadow: none;
+  background: var(--bg);
+}
+.sc[data-look='tower'] .sc-bg {
+  background:
+    radial-gradient(60% 40% at 50% 0%, rgb(var(--accent-rgb) / 0.1), transparent 70%),
+    radial-gradient(circle, rgba(255, 255, 255, 0.07) 1px, transparent 1.6px) 0 0 / 9px 9px;
+  mask-image: linear-gradient(180deg, #000 0%, rgba(0, 0, 0, 0.5) 35%, transparent 72%);
+}
+.sc[data-look='tower'] .sc-watermark { opacity: 0.05; filter: none; }
+.sc[data-look='tower'] .sc-hero { isolation: isolate; }
+.sc[data-look='tower'] .sc-hero::before {
+  /* the chequered band */
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 12px;
+  background: repeating-conic-gradient(#f7f4f1 0 25%, transparent 0 50%) 0 0 / 24px 24px;
+  opacity: 0.9;
+  pointer-events: none;
+}
+.sc[data-look='tower'] .sc-backdrop {
+  display: block;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.22;
+  z-index: -1;
+  pointer-events: none;
+  filter: grayscale(0.4);
+  mask-image: linear-gradient(180deg, #000 10%, transparent 90%);
+}
+
+/* type: italic uppercase display, no letter-spacing tricks, no glow */
+.sc[data-look='tower'] :is(h1, h2, h3).font-display { text-transform: uppercase; font-style: italic; font-weight: 800; letter-spacing: 0; }
+.sc[data-look='tower'] .tracking-tightest { letter-spacing: 0; }
+.sc[data-look='tower'] .neon-text { text-shadow: none; font-style: italic; }
+.sc[data-look='tower'] .neon-line { box-shadow: none; }
+.sc[data-look='tower'] .sc-hero h1 { line-height: 0.95; }
+
+/* plates: light cards with dark ink; the accent darkens so it stays legible on them */
+.sc[data-look='tower'] .sc-card {
+  --fg: #15151e;
+  --fg-dim: #47464c;
+  --fg-faint: #6b6b71;
+  --accent: #8a6d00;
+  --accent-rgb: 138 109 0;
+  color: var(--fg);
+  background: var(--sc-surface);
+  border-color: var(--sc-line);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  box-shadow: none;
+}
+.sc[data-look='tower'] .sc-card [class*='border-white/'] { border-color: #e0dedc; }
+.sc[data-look='tower'] .sc-card [class*='divide-white/'] > :not([hidden]) ~ :not([hidden]) { border-color: #e0dedc; }
+.sc[data-look='tower'] .sc-card [class*='bg-white/'] { background-color: rgba(21, 21, 30, 0.04); }
+.sc[data-look='tower'] .sc-card .neon-text { color: var(--fg); font-style: italic; }
+.sc[data-look='tower'] .sc-card .hud.text-accent,
+.sc[data-look='tower'] .sc-card .text-accent { color: #8a6d00; }
+.sc[data-look='tower'] .sc-card .text-rose { color: #b30500; }
+
+/* pills and frames */
+.sc[data-look='tower'] :is(a, button).notch-diag { clip-path: none; border-radius: 9999px; }
+.sc[data-look='tower'] .neon-fill { background: var(--accent); color: #0a0a0a; }
+.sc[data-look='tower'] .glass { background: rgba(28, 28, 37, 0.85); backdrop-filter: none; -webkit-backdrop-filter: none; }
+.sc[data-look='tower'] .glass-fill,
+.sc[data-look='tower'] .glass-fill-solid { background: #1c1c25; backdrop-filter: none; -webkit-backdrop-filter: none; }
+.sc[data-look='tower'] .sc-frame { border-radius: 8px; border-color: rgba(255, 255, 255, 0.16); background: #000; box-shadow: none; }
+.sc[data-look='tower'] .sc-phone { box-shadow: inset 0 0 0 2px #26262b; }
+.sc[data-look='tower'] .sc-gallery figcaption { border-radius: 999px; background: #f7f4f1; color: #15151e; font-weight: 600; }
+.sc[data-look='tower'] .sc-gallery button.sc-card { background: #000; border-color: rgba(255, 255, 255, 0.12); }
+.sc[data-look='tower'] .sc-duo-shared { border-style: solid; border-color: rgba(255, 255, 255, 0.14); }
+.sc[data-look='tower'] .sc-duo-shared li { border-color: rgba(255, 255, 255, 0.14); border-radius: 999px; }
+.sc[data-look='tower'] .sc-marquee { background: #f7f4f1; border: 0; }
+.sc[data-look='tower'] .sc-marquee-track { color: #15151e; font-style: italic; }
+.sc[data-look='tower'] .sc-marquee-track i { background: var(--accent); border-radius: 50%; transform: none; }
+.sc[data-look='tower'] .sc-ticks li::before { border-color: var(--accent); }
+
 /* plain: the site's default glass */
 .sc[data-look='plain'] .sc-bg {
   background: radial-gradient(60% 45% at 50% 0%, rgb(var(--accent-rgb) / 0.12), transparent 70%);

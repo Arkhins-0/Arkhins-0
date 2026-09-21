@@ -2640,12 +2640,12 @@
   {
     "id": "proj-4",
     "slug": "ctr-unified",
-    "title": "CTR - Indian National Car Racing Championship",
-    "tagline": null,
-    "summary": "The official portal of the CTR-JK Tyre FMSCI Indian National Car Racing Championship: newsroom, schedule with live round countdown, results, standings, drivers, teams, tickets and hospitality, videos, polls and a fan zone with accounts.",
-    "description": "https://www.ctrsports.in. The championship-first home of the 2026 INCRC - One Nation, One Championship. Built with Next.js and TailwindCSS as an editorial product rather than a brochure: a magazine-style Latest page with venue guides and category explainers, a ticker that always shows the current round and session, drivers' and teams' standings, four ticket and hospitality tiers, and a Fan Zone with sign-in, predictions, polls, favourites and a newsletter, across Kari Motor Speedway, Bren Raceway and the Madras International Circuit.",
-    "category": "Frontend",
-    "role": "Design + Frontend",
+    "title": "CTR Sports: Championship Portal and CMS",
+    "tagline": "The home of the Indian National Car Racing Championship, and the newsroom that runs it",
+    "summary": "The official portal of the CTR–JK Tyre FMSCI Indian National Car Racing Championship: newsroom, schedule with a live round countdown, results, standings computed from published classifications, drivers, teams, tickets, video, polls and a fan zone with accounts. Behind it, on its own hostname, a role-based CMS with results entry, a standings engine, Word import, a media library and an audit log.",
+    "description": "ctrsports.in is a championship-first editorial product for the 2026 INCRC season: a magazine-style Latest page, a ticker that always knows the current round and session, per-class results and standings across seven categories, driver and team pages, tickets and hospitality, and a fan zone with predictions, polls, favourites and a newsletter. The same Next.js deployment serves the CMS on admin.ctrsports.in: nine roles, results entry that recomputes standings on publish, .docx article import, a media library on Neon object storage, push and email notifications, a team-member portal and an audit log of every write.",
+    "category": "Full-stack",
+    "role": "Design · Full-stack · CMS",
     "year": "2026",
     "date": "September 2026",
     "status": "Live",
@@ -2653,18 +2653,789 @@
     "published": true,
     "sortOrder": 50,
     "tags": [
-      "Next.js",
-      "React",
-      "TailwindCSS",
-      "Fan Platform"
+      "Next.js 15",
+      "Drizzle · Neon",
+      "RBAC",
+      "Tailwind v4",
+      "Web Push"
     ],
-    "thumbnail": "/images/projects/ctrsports.png",
-    "cover": "/images/projects/ctrsports.png",
+    "thumbnail": "/projects/ctr-unified/thumbnail.png",
+    "cover": "/projects/ctr-unified/cover.png",
     "images": [],
-    "githubUrl": null,
+    "githubUrl": "https://github.com/Arkhins-0/CTRSports-new",
     "liveUrl": "https://www.ctrsports.in",
-    "markdownFile": "/images/projects/ctrsports.md",
-    "content": null
+    "markdownFile": null,
+    "content": {
+      "version": 1,
+      "theme": {
+        "look": "tower",
+        "accent": {
+          "hex": "#f7d619",
+          "rgb": "247 214 25"
+        },
+        "accent2": {
+          "hex": "#e0dedc",
+          "rgb": "224 222 220"
+        },
+        "watermark": "/projects/ctr-unified/logo.png"
+      },
+      "screens": {
+        "default": "dark"
+      },
+      "hero": {
+        "eyebrow": "INCRC 2026 · One Nation, One Championship",
+        "title": "A championship,",
+        "accent": "as a product.",
+        "lede": "ctrsports.in is the source of truth for a national racing championship: the newsroom, the calendar and its countdown, results and standings for seven classes, drivers, teams, tickets and a fan zone. The CMS that keeps it right lives on its own hostname in the same deployment, with roles, a standings engine and an audit trail.",
+        "badges": [
+          {
+            "label": "Site + CMS, one deployment",
+            "tone": "accent"
+          },
+          {
+            "label": "9 roles, 29 permissions"
+          },
+          {
+            "label": "Standings computed on publish"
+          },
+          {
+            "label": "7 race classes"
+          }
+        ],
+        "actions": [
+          {
+            "label": "Visit ctrsports.in",
+            "href": "https://www.ctrsports.in",
+            "external": true
+          },
+          {
+            "label": "View source",
+            "href": "https://github.com/Arkhins-0/CTRSports-new",
+            "external": true,
+            "kind": "ghost"
+          }
+        ],
+        "facts": [
+          {
+            "label": "Role",
+            "value": "Design, full-stack, CMS"
+          },
+          {
+            "label": "Stack",
+            "value": "Next.js 15 · Drizzle · Neon · Tailwind v4"
+          },
+          {
+            "label": "Shape",
+            "value": "npm workspaces: site, db, ui, email"
+          },
+          {
+            "label": "Status",
+            "value": "Live for the 2026 season"
+          }
+        ],
+        "stage": {
+          "url": "ctrsports.in",
+          "center": {
+            "light": "/projects/ctr-unified/mock/desktop/home.png",
+            "alt": "The ctrsports.in home page: a magazine lead story under the round ticker"
+          },
+          "left": {
+            "light": "/projects/ctr-unified/mock/desktop/standings.png",
+            "alt": "Drivers' standings"
+          },
+          "right": {
+            "light": "/projects/ctr-unified/mock/desktop/admin-results-session.png",
+            "alt": "Results entry in the CMS"
+          }
+        }
+      },
+      "sections": [
+        {
+          "type": "marquee",
+          "items": [
+            "Latest",
+            "Schedule",
+            "Results",
+            "Standings",
+            "Drivers",
+            "Teams",
+            "Tickets",
+            "Video",
+            "Fan zone",
+            "One deployment, two hostnames",
+            "Recompute on publish"
+          ]
+        },
+        {
+          "type": "stats",
+          "items": [
+            {
+              "value": "58",
+              "label": "Tables in the Drizzle schema"
+            },
+            {
+              "value": "9",
+              "label": "Admin roles"
+            },
+            {
+              "value": "7",
+              "label": "Race classes, one weekend"
+            },
+            {
+              "value": "106",
+              "label": "Pages across site and CMS"
+            }
+          ]
+        },
+        {
+          "type": "overview",
+          "head": {
+            "index": "01",
+            "label": "Overview",
+            "title": "Built to be",
+            "accentWord": "the record."
+          },
+          "paragraphs": [
+            "A championship portal is not a brochure. It updates every session of every race weekend, its standings must be right, its calendar must be unambiguous, and its ticket path has to work for someone standing at a circuit gate on a phone. The design borrows from broadcast timing graphics so it reads like a championship, not a startup.",
+            "The primary navigation is the championship itself: Latest, Schedule, Results, Standings, Drivers, Teams, Tickets. A ticker across every page shows the current round, the session and a countdown, so the site always knows where the season is. Seven classes race on shared weekends, so results and standings are per category, and the model was generalised into championships, seasons, rounds and sessions so a future series is just another row.",
+            "The CMS is the other half of the same build. Nine roles cover the newsroom, the race editors, team and driver managers, media, pages and the fan zone; every server action re-checks its permission and writes an audit row. Publishing a session's classification recomputes the standings snapshot from the stored points, deterministically, and the site's cached reads are invalidated by tag in the same process."
+          ],
+          "features": [
+            {
+              "icon": "Newspaper",
+              "title": "A newsroom that leads",
+              "description": "A magazine Latest page: a breaking lead, secondary features, venue guides and class explainers rather than a hero and a scroll."
+            },
+            {
+              "icon": "Timer",
+              "title": "Live season state",
+              "description": "The ticker reads the next round and session from the same data the schedule page renders, with a countdown."
+            },
+            {
+              "icon": "Trophy",
+              "title": "Standings engine",
+              "description": "Points systems live per championship season; publishing results recomputes overall, team and sub-classification tables."
+            },
+            {
+              "icon": "Shield",
+              "title": "Roles and audit",
+              "description": "Nine roles, 29 permissions, every mutation checked on the server and logged with who, what and when."
+            },
+            {
+              "icon": "FileUp",
+              "title": "Word import",
+              "description": "Drop a .docx into the article editor: mammoth converts it, sharp resizes every embedded image into the media library, sanitised HTML lands in TipTap."
+            },
+            {
+              "icon": "Vote",
+              "title": "Fan zone",
+              "description": "Accounts, predictions, polls, favourites, RSVPs and a double-opt-in newsletter, with web push and email reminders on a cron."
+            }
+          ]
+        },
+        {
+          "type": "duo",
+          "head": {
+            "index": "02",
+            "label": "Two hostnames",
+            "title": "Front of house,",
+            "accentWord": "race control.",
+            "lede": "One Next.js app, one process, one database. The middleware reads the Host header: the admin hostname is rewritten onto the CMS routes and the public hostname refuses them, so the CMS is unreachable through the site's domain and its cookies never cross over."
+          },
+          "sides": [
+            {
+              "eyebrow": "ctrsports.in",
+              "title": "The portal",
+              "body": "Dark-first, in the manner of a timing screen: warm off-white plates on carbon, a single signal yellow, Exo 2 for type and a monospaced face for every number.",
+              "device": "browser",
+              "url": "ctrsports.in/schedule/2026",
+              "image": {
+                "light": "/projects/ctr-unified/mock/desktop/schedule.png",
+                "alt": "The 2026 schedule"
+              },
+              "points": [
+                "Cached reads under tags, invalidated on every CMS write",
+                "Per-class results, standings and driver entries",
+                "Fan accounts with their own session cookie",
+                "PWA shell, web push, sitemap and OG from SITE_URL"
+              ]
+            },
+            {
+              "eyebrow": "admin.ctrsports.in",
+              "title": "The CMS",
+              "body": "Everything on the site has a screen: articles, race weekends, results entry, standings, teams and cars, drivers, media, pages, polls, newsletter, members, admins, settings and the audit log.",
+              "device": "browser",
+              "url": "admin.ctrsports.in/results",
+              "image": {
+                "light": "/projects/ctr-unified/mock/desktop/admin-results.png",
+                "alt": "Results entry in the CMS"
+              },
+              "points": [
+                "Server actions re-check permissions on every call",
+                "revalidateTag straight into the site's cache, no HTTP bridge",
+                "A members' portal for team staff at /m",
+                "Responses carry X-Robots-Tag: noindex"
+              ]
+            }
+          ],
+          "shared": {
+            "title": "Shared by both",
+            "items": [
+              "one Next.js build",
+              "packages/db · Drizzle schema",
+              "packages/ui · tokens and chamfers",
+              "packages/email · Brevo templates",
+              "Neon Postgres, pooled and direct",
+              "Neon object storage",
+              "ADMIN_URL and SITE_URL only",
+              "vercel.json crons"
+            ]
+          }
+        },
+        {
+          "type": "table",
+          "head": {
+            "index": "03",
+            "label": "Roles",
+            "title": "Who may",
+            "accentWord": "touch what."
+          },
+          "columns": [
+            "Role",
+            "Scope",
+            "Manages"
+          ],
+          "rows": [
+            [
+              "Super Admin",
+              "everything",
+              "Admin users, site settings and every module"
+            ],
+            [
+              "Manager",
+              "everything but accounts",
+              "All modules except admins and settings"
+            ],
+            [
+              "News Editor",
+              "newsroom",
+              "Articles, categories, tags and the media picker"
+            ],
+            [
+              "Race Editor",
+              "racing",
+              "Race weekends, circuits, results entry, standings recalc"
+            ],
+            [
+              "Team Manager",
+              "entries",
+              "Teams, season entries and cars"
+            ],
+            [
+              "Driver Manager",
+              "entries",
+              "Drivers and their season entries"
+            ],
+            [
+              "Media Manager",
+              "assets",
+              "Media library, videos and galleries"
+            ],
+            [
+              "Page Editor",
+              "content",
+              "CMS pages, blocks and sponsors"
+            ],
+            [
+              "Fan Zone Editor",
+              "audience",
+              "Polls and predictions, fan list, newsletter"
+            ]
+          ],
+          "hues": [
+            "#8a6d00",
+            "#8a6d00",
+            "#47464c",
+            "#47464c",
+            "#47464c",
+            "#47464c",
+            "#47464c",
+            "#47464c",
+            "#47464c"
+          ]
+        },
+        {
+          "type": "tabs",
+          "head": {
+            "index": "04",
+            "label": "Under the hood",
+            "title": "Three things that",
+            "accentWord": "must not be wrong.",
+            "lede": "Results, standings and what the fan sees next. Each is a short chain, and each ends in the same place: the public page is right the moment the editor presses publish."
+          },
+          "tabs": [
+            {
+              "id": "results",
+              "label": "Results to standings",
+              "subtitle": "From a classification sheet to the table",
+              "steps": [
+                {
+                  "title": "Pick the session",
+                  "description": "A round has sessions per class: practice, qualifying, Race 1, Race 2. Each carries its own grid and its own points scheme."
+                },
+                {
+                  "title": "Enter the classification",
+                  "description": "Positions, times, laps, status and fastest lap per entry, with the signed official declaration PDF attached to the session."
+                },
+                {
+                  "title": "Publish",
+                  "description": "The action re-checks the race-editor permission, writes the results, and writes an audit row."
+                },
+                {
+                  "title": "Recompute the snapshot",
+                  "description": "computeStandings reads the season's points system and rebuilds overall, team and sub-classification tables from session_results.points, deterministically."
+                },
+                {
+                  "title": "Invalidate by tag",
+                  "description": "The standings, results and round pages drop their cached reads in the same process; the ticker moves on to the next session."
+                }
+              ],
+              "detailsTitle": "Pieces",
+              "details": [
+                "championshipSeasons.pointsSystem",
+                "raceSessions.sequence",
+                "session_results",
+                "computeStandings()",
+                "standingsType: overall · team · rookie",
+                "revalidateTag",
+                "declarationMediaId"
+              ]
+            },
+            {
+              "id": "words",
+              "label": "Word to web",
+              "subtitle": "An article from a .docx in one step",
+              "steps": [
+                {
+                  "title": "Import the document",
+                  "description": "mammoth converts the Word file to HTML, keeping headings, quotes, lists and tables."
+                },
+                {
+                  "title": "Lift the pictures",
+                  "description": "Every embedded image goes through sharp into hero, card and thumb WebP variants under media/yyyy/mm in the bucket, and into the media library."
+                },
+                {
+                  "title": "Sanitise and load",
+                  "description": "The HTML is sanitised and loaded into TipTap, where the editor keeps writing with the same toolbar as a fresh article."
+                },
+                {
+                  "title": "Publish and notify",
+                  "description": "Category, tags and a slug from github-slugger; the Latest page, the home lead and the newsletter digest pick it up on their own."
+                }
+              ],
+              "detailsTitle": "Pieces",
+              "details": [
+                "mammoth",
+                "sharp",
+                "sanitize-html",
+                "@tiptap/react",
+                "github-slugger",
+                "media/{yyyy}/{mm}",
+                "unstable_cache tags"
+              ]
+            },
+            {
+              "id": "fans",
+              "label": "Fan zone",
+              "subtitle": "What a fan gets between weekends",
+              "steps": [
+                {
+                  "title": "Register",
+                  "description": "Fan accounts have their own session secret and cookie, separate from admins and members, and never collide across hostnames."
+                },
+                {
+                  "title": "Predict, vote, follow",
+                  "description": "Predictions on a round, polls, favourite drivers and teams, saved articles and RSVPs to rounds."
+                },
+                {
+                  "title": "Opt in",
+                  "description": "The newsletter is double opt-in; confirm and unsubscribe links are tokenised pages on the site."
+                },
+                {
+                  "title": "Get reminded",
+                  "description": "A daily cron sends round reminders by web push and email; a weekly one sends the digest, with body images fitted to the reader's screen."
+                }
+              ],
+              "detailsTitle": "Pieces",
+              "details": [
+                "FAN_SESSION_SECRET",
+                "web-push · VAPID",
+                "Brevo via packages/email",
+                "/api/cron/round-reminders",
+                "/api/cron/newsletter-digest",
+                "consent only for embedded video"
+              ]
+            }
+          ]
+        },
+        {
+          "type": "steps",
+          "head": {
+            "index": "05",
+            "label": "Key screens",
+            "title": "From the lead story",
+            "accentWord": "to the last row."
+          },
+          "items": [
+            {
+              "title": "The front page",
+              "body": "A ticker with the current round, session and countdown, then a magazine: one lead, a grid of features, venue guides and explainers, the next round, the standings at a glance and the partners' marks in white.",
+              "ticks": [
+                "Round ticker on every page",
+                "Lead story with class badges",
+                "Partner logos as white marks, no plates"
+              ],
+              "image": {
+                "light": "/projects/ctr-unified/mock/desktop/home-full.png",
+                "alt": "The full home page"
+              },
+              "tall": true
+            },
+            {
+              "title": "Standings",
+              "body": "Drivers' and teams' tables per class, with points, wins and podiums, recomputed the moment a session is published. Position numbers and points sit in the monospaced timing face.",
+              "ticks": [
+                "Per-class tabs",
+                "Overall, team and sub-classification tables",
+                "Same data the CMS standings screen shows"
+              ],
+              "image": {
+                "light": "/projects/ctr-unified/mock/desktop/standings.png",
+                "alt": "Drivers' standings"
+              }
+            },
+            {
+              "title": "A race weekend",
+              "body": "Every session of every class across the weekend, with the circuit, its turns and direction, the countdown to the next session, and the results once they are in.",
+              "ticks": [
+                "Sessions grouped by day and class",
+                "Circuit facts from the circuits module",
+                "RSVP for signed-in fans"
+              ],
+              "image": {
+                "light": "/projects/ctr-unified/mock/desktop/round-full.png",
+                "alt": "A round page"
+              },
+              "tall": true
+            },
+            {
+              "title": "Results entry",
+              "body": "The CMS screen a race editor lives in on a Sunday: one session, every entry, positions, times and status, the declaration PDF, and a publish that recomputes the standings.",
+              "ticks": [
+                "Permission re-checked on the server",
+                "Audit row per publish",
+                "Standings snapshot rebuilt from stored points"
+              ],
+              "image": {
+                "light": "/projects/ctr-unified/mock/desktop/admin-results-session.png",
+                "alt": "Results entry for one session"
+              }
+            },
+            {
+              "title": "The article editor",
+              "body": "TipTap with tables, links and images from the media library; import a .docx and keep editing. Category, tags, hero image and scheduling on the side.",
+              "ticks": [
+                "Import .docx",
+                "Media picker with WebP variants",
+                "Preview links built from SITE_URL"
+              ],
+              "image": {
+                "light": "/projects/ctr-unified/mock/desktop/admin-news-edit.png",
+                "alt": "The article editor"
+              }
+            },
+            {
+              "title": "The audit log",
+              "body": "Every write, by whom, on what, when. Roles are enforced in the action itself, not only in the navigation, so the log is complete by construction.",
+              "ticks": [
+                "Nine roles, many per admin",
+                "Denied screen for out-of-scope routes",
+                "Settings edit the theme at runtime"
+              ],
+              "image": {
+                "light": "/projects/ctr-unified/mock/desktop/admin-audit.png",
+                "alt": "The audit log"
+              }
+            }
+          ]
+        },
+        {
+          "type": "phones",
+          "head": {
+            "index": "06",
+            "label": "At the gate",
+            "title": "On a phone,",
+            "accentWord": "at the circuit.",
+            "lede": "Tickets, the schedule and the standings on a phone, and the CMS too: a race editor can enter a classification from the pit wall."
+          },
+          "items": [
+            {
+              "light": "/projects/ctr-unified/mock/mobile/home.png",
+              "alt": "Home on a phone"
+            },
+            {
+              "light": "/projects/ctr-unified/mock/mobile/tickets.png",
+              "alt": "Tickets on a phone"
+            },
+            {
+              "light": "/projects/ctr-unified/mock/mobile/standings.png",
+              "alt": "Standings on a phone"
+            },
+            {
+              "light": "/projects/ctr-unified/mock/mobile/round.png",
+              "alt": "A round on a phone"
+            },
+            {
+              "light": "/projects/ctr-unified/mock/mobile/admin-results-session.png",
+              "alt": "Results entry on a phone"
+            }
+          ]
+        },
+        {
+          "type": "columns",
+          "head": {
+            "index": "07",
+            "label": "Stack and rules",
+            "title": "What keeps it",
+            "accentWord": "on schedule."
+          },
+          "columns": [
+            {
+              "title": "Model",
+              "style": "ticks",
+              "items": [
+                "championships → seasons → rounds → sessions, with sequence for Race 1 and 2",
+                "Points systems as JSON per season; standings types per season",
+                "Race categories per championship; entries carry a classification",
+                "Standings snapshots, never live sums",
+                "Media by key, URLs built from the current bucket"
+              ]
+            },
+            {
+              "title": "Boundaries",
+              "style": "ticks",
+              "items": [
+                "Admin, fan and member cookies have distinct names and secrets",
+                "/admin/* is a 404 on the public host",
+                "Server actions check permissions, then write the audit row",
+                "Client-side image compression keeps uploads under the function limit",
+                "No domain in the source: SITE_URL and ADMIN_URL only"
+              ]
+            },
+            {
+              "title": "Stack",
+              "style": "chips",
+              "items": [
+                "Next.js 15",
+                "React 19",
+                "TypeScript",
+                "Tailwind CSS v4",
+                "Drizzle ORM",
+                "Neon Postgres",
+                "@neondatabase/serverless",
+                "Neon object storage",
+                "sharp",
+                "mammoth",
+                "TipTap",
+                "TanStack Table",
+                "zod",
+                "bcryptjs",
+                "web-push",
+                "Brevo",
+                "date-fns",
+                "npm workspaces",
+                "Vercel crons"
+              ]
+            },
+            {
+              "title": "Operations",
+              "style": "ticks",
+              "items": [
+                "19 Drizzle migrations against the direct connection",
+                "Seed is idempotent: racing data rebuilt, content kept",
+                "db:copy and storage:copy move a whole deployment",
+                "Fetch-data pulls the latest results into JSON snapshots",
+                "GitHub Actions runs the cron jobs off-platform too"
+              ]
+            }
+          ]
+        },
+        {
+          "type": "gallery",
+          "head": {
+            "index": "08",
+            "label": "More screens",
+            "title": "The rest of the",
+            "accentWord": "grid."
+          },
+          "items": [
+            {
+              "light": "/projects/ctr-unified/mock/desktop/latest.png",
+              "alt": "Latest",
+              "caption": "Latest"
+            },
+            {
+              "light": "/projects/ctr-unified/mock/desktop/article.png",
+              "alt": "An article",
+              "caption": "An article"
+            },
+            {
+              "light": "/projects/ctr-unified/mock/desktop/results.png",
+              "alt": "Results",
+              "caption": "Results, 2026"
+            },
+            {
+              "light": "/projects/ctr-unified/mock/desktop/standings-teams.png",
+              "alt": "Teams' standings",
+              "caption": "Teams' standings"
+            },
+            {
+              "light": "/projects/ctr-unified/mock/desktop/drivers.png",
+              "alt": "Drivers",
+              "caption": "Drivers"
+            },
+            {
+              "light": "/projects/ctr-unified/mock/desktop/driver.png",
+              "alt": "A driver",
+              "caption": "A driver"
+            },
+            {
+              "light": "/projects/ctr-unified/mock/desktop/teams.png",
+              "alt": "Teams",
+              "caption": "Teams"
+            },
+            {
+              "light": "/projects/ctr-unified/mock/desktop/team.png",
+              "alt": "A team",
+              "caption": "A team"
+            },
+            {
+              "light": "/projects/ctr-unified/mock/desktop/tickets.png",
+              "alt": "Tickets",
+              "caption": "Tickets and hospitality"
+            },
+            {
+              "light": "/projects/ctr-unified/mock/desktop/video.png",
+              "alt": "Video",
+              "caption": "Video hub"
+            },
+            {
+              "light": "/projects/ctr-unified/mock/desktop/polls.png",
+              "alt": "Polls",
+              "caption": "Polls and predictions"
+            },
+            {
+              "light": "/projects/ctr-unified/mock/desktop/partners.png",
+              "alt": "Partners",
+              "caption": "Partners"
+            },
+            {
+              "light": "/projects/ctr-unified/mock/desktop/about.png",
+              "alt": "The world of CTR",
+              "caption": "The world of CTR"
+            },
+            {
+              "light": "/projects/ctr-unified/mock/desktop/register.png",
+              "alt": "Register",
+              "caption": "Fan registration"
+            },
+            {
+              "light": "/projects/ctr-unified/mock/desktop/admin-dashboard.png",
+              "alt": "CMS dashboard",
+              "caption": "CMS dashboard"
+            },
+            {
+              "light": "/projects/ctr-unified/mock/desktop/admin-races.png",
+              "alt": "Race weekends",
+              "caption": "Race weekends"
+            },
+            {
+              "light": "/projects/ctr-unified/mock/desktop/admin-standings.png",
+              "alt": "Standings in the CMS",
+              "caption": "Standings, CMS"
+            },
+            {
+              "light": "/projects/ctr-unified/mock/desktop/admin-drivers.png",
+              "alt": "Drivers in the CMS",
+              "caption": "Drivers, CMS"
+            },
+            {
+              "light": "/projects/ctr-unified/mock/desktop/admin-teams.png",
+              "alt": "Teams and cars",
+              "caption": "Teams and cars"
+            },
+            {
+              "light": "/projects/ctr-unified/mock/desktop/admin-media.png",
+              "alt": "Media library",
+              "caption": "Media library"
+            },
+            {
+              "light": "/projects/ctr-unified/mock/desktop/admin-newsletter.png",
+              "alt": "Newsletter",
+              "caption": "Newsletter issues"
+            },
+            {
+              "light": "/projects/ctr-unified/mock/desktop/admin-admins.png",
+              "alt": "Admin users",
+              "caption": "Admin users and roles"
+            },
+            {
+              "light": "/projects/ctr-unified/mock/desktop/admin-settings.png",
+              "alt": "Site settings",
+              "caption": "Site settings and theme"
+            },
+            {
+              "light": "/projects/ctr-unified/mock/desktop/admin-docs.png",
+              "alt": "User guide",
+              "caption": "The built-in user guide"
+            },
+            {
+              "light": "/projects/ctr-unified/mock/desktop/member-login.png",
+              "alt": "Members' portal",
+              "caption": "Members' portal sign-in"
+            },
+            {
+              "light": "/projects/ctr-unified/mock/desktop/admin-login.png",
+              "alt": "CMS sign-in",
+              "caption": "CMS sign-in"
+            }
+          ]
+        },
+        {
+          "type": "outro",
+          "title": "Want a championship that",
+          "accentWord": "runs itself?",
+          "actions": [
+            {
+              "label": "Visit ctrsports.in",
+              "href": "https://www.ctrsports.in",
+              "external": true
+            },
+            {
+              "label": "Repository",
+              "href": "https://github.com/Arkhins-0/CTRSports-new",
+              "external": true,
+              "kind": "ghost"
+            },
+            {
+              "label": "Back to portfolio",
+              "href": "/#work",
+              "kind": "ghost"
+            }
+          ]
+        }
+      ]
+    }
   },
   {
     "id": "proj-5",
