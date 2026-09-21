@@ -1,0 +1,41 @@
+[
+  {
+    "id": "edu-1",
+    "institution": "Bharath Institute of Higher Education and Research",
+    "degree": "Bachelor of Technology",
+    "field": "Computer Science (AI Specialization)",
+    "score": "87.0%",
+    "startYear": "2022",
+    "endYear": "2026",
+    "current": true,
+    "description": "Pursuing the Field of Computers and delving deep into AI with a specialization.",
+    "logo": "/images/education/Bharath.png",
+    "sortOrder": 10
+  },
+  {
+    "id": "edu-2",
+    "institution": "SSV Institutions",
+    "degree": "+2 Board Exam",
+    "field": "Computer Science",
+    "score": "87.3%",
+    "startYear": "2020",
+    "endYear": "2022",
+    "current": false,
+    "description": "Finished schooling with Computer Science group.",
+    "logo": "/images/education/SSV.png",
+    "sortOrder": 20
+  },
+  {
+    "id": "edu-3",
+    "institution": "SSV Institutions",
+    "degree": "10th Board Exam",
+    "field": "School",
+    "score": "98.8%",
+    "startYear": "2018",
+    "endYear": "2020",
+    "current": false,
+    "description": "Finished the 10th Board Exam with distinction.",
+    "logo": "/images/education/SSV.png",
+    "sortOrder": 30
+  }
+]

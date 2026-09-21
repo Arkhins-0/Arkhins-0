@@ -1,0 +1,36 @@
+import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
+import { Footer } from '@/components/layout';
+import { Showcase } from '@/components/showcase/Showcase';
+import { defaultShowcase, getProject, listProjectSlugs } from '@/lib/content';
+
+export const dynamicParams = false;
+
+export async function generateStaticParams() {
+  return (await listProjectSlugs()).map((slug) => ({ slug }));
+}
+
+export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+  const p = await getProject(params.slug);
+  if (!p) return {};
+  const title = p.tagline ? `${p.title.split(':')[0].trim()} — ${p.tagline}` : p.title;
+  const description = p.description ?? p.summary;
+  return {
+    title,
+    description,
+    openGraph: { title, description, images: p.cover ? [{ url: p.cover }] : undefined },
+  };
+}
+
+/** Every project lives at /projects/<slug>; the page is rendered from the row's content document. */
+export default async function ProjectPage({ params }: { params: { slug: string } }) {
+  const project = await getProject(params.slug);
+  if (!project) notFound();
+  const doc = project.content ?? defaultShowcase(project);
+  return (
+    <>
+      <Showcase project={project} doc={doc} />
+      <Footer />
+    </>
+  );
+}

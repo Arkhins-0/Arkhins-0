@@ -194,24 +194,15 @@
       "lede": "A case study, a few products, and the experiments in between. Each one taught me something the tutorial didn't."
     },
     "featuredBadge": "★ Featured",
-    "caseStudyAction": "Case study",
+    "caseStudyAction": "Open project",
     "sourceAction": "Source",
     "indexLabel": "Index",
     "allFilter": "All",
     "emptyState": "Nothing filed under “{filter}” yet.",
     "outroCopy": "More experiments, half-finished ideas and commit history live on GitHub.",
     "outroAction": "Browse the repos",
-    "notesAction": "Case notes",
     "liveAction": "Live",
-    "reader": {
-      "eyebrow": "Case notes",
-      "loading": "Loading case notes…",
-      "error": "Could not load the notes for this project.",
-      "close": "Close notes",
-      "aria": "{title} — case notes",
-      "openAria": "Read case notes for {title}"
-    },
-    "showcaseAction": "Showcase"
+    "openAria": "Open {title}"
   },
   "path": {
     "head": {
@@ -345,13 +336,32 @@
     "barName": "All projects",
     "barKind": "archive",
     "barBackHref": "/",
-    "barBackLabel": "Home",
-    "showcaseBadge": "Showcase"
+    "barBackLabel": "Home"
   },
   "projectPage": {
     "backHref": "/#work",
-    "backLabel": "All work",
-    "kindLabel": "case study"
+    "backLabel": "Back to portfolio",
+    "kindLabel": "project",
+    "screens": {
+      "label": "Screens",
+      "light": "Light",
+      "dark": "Dark"
+    },
+    "lightbox": {
+      "close": "Close",
+      "prev": "Previous",
+      "next": "Next",
+      "open": "Open {title} full size"
+    },
+    "markdown": {
+      "loading": "Loading…",
+      "error": "Could not load this document."
+    },
+    "compare": {
+      "light": "Light",
+      "dark": "Dark",
+      "aria": "Compare light and dark themes"
+    }
   },
   "storage": {
     "accent": "ui:accent",

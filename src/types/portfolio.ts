@@ -1,4 +1,7 @@
 // Shape of src/data/portfolio.json; components infer types from the JSON, this is the human-readable schema.
+// Projects and education live in the content tables instead: see src/types/content.ts and db/schema.sql.
+
+export type { EducationRow as Education, ProjectRow as Project } from './content';
 
 export interface Meta {
   title: string;
@@ -38,19 +41,6 @@ export interface SocialLink {
   icon: string;
 }
 
-export interface Education {
-  id: string;
-  institution: string;
-  degree: string;
-  field: string;
-  score: string;
-  startDate: string;
-  endDate: string;
-  current: boolean;
-  description: string;
-  logo: string;
-}
-
 export interface Experience {
   id: string;
   company: string;
@@ -65,29 +55,6 @@ export interface Experience {
   technologies: string[];
   logo: string;
   url: string;
-}
-
-export interface Project {
-  id: string;
-  slug?: string;
-  title: string;
-  description: string;
-  longDescription: string;
-  thumbnail: string;
-  images: string[];
-  markdownFile?: string;
-  tags: string[];
-  category: string;
-  date: string;
-  role?: string;
-  year?: string;
-  githubUrl: string;
-  liveUrl: string;
-  pageUrl?: string;
-  /** Static, self-contained showcase page under /public (opens as a full page load). */
-  showcaseUrl?: string;
-  featured: boolean;
-  status: string;
 }
 
 export interface Skill {
@@ -187,14 +154,12 @@ export interface Testimonial {
   avatar: string;
 }
 
-/** Root shape; any entry whose `id` contains "placeholder" is filtered out before render. */
+/** Root shape of portfolio.json. */
 export interface PortfolioData {
   meta: Meta;
   basics: Basics;
   socialLinks: SocialLink[];
-  education: Education[];
   experience: Experience[];
-  projects: Project[];
   skills: Skills;
   certifications: Certification[];
   awards: Award[];

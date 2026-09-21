@@ -1,0 +1,1511 @@
+[
+  {
+    "id": "proj-1",
+    "slug": "hygieia",
+    "title": "HYGIEIA: Multi Disease Diagnosis Framework",
+    "tagline": "Multi-Disease Diagnosis Framework",
+    "summary": "A Framework has been built with multiple models to predict variety of conditions with scalable features and high trustworthy accuracy.",
+    "description": "This Framework uses multiple AI models to diagnose. It has AI Chatting capabilities for the Healthcare and Blockchain integration. It integrates data from different sources to provide reliable health assessments.",
+    "category": "AI/ML",
+    "role": "Design + ML + Full-stack",
+    "year": "2025",
+    "date": "November 2025",
+    "status": "Completed",
+    "featured": true,
+    "published": true,
+    "sortOrder": 10,
+    "tags": [
+      "Deep Learning",
+      "AI",
+      "TensorFlow",
+      "Model Training"
+    ],
+    "thumbnail": "/projects/hygieia/thumbnail.png",
+    "cover": "/projects/hygieia/cover.png",
+    "images": [],
+    "githubUrl": "https://github.com/Krishna-Vijay-G/Hygieia.git",
+    "liveUrl": null,
+    "markdownFile": "/projects/hygieia/case-study.md",
+    "content": {
+      "version": 1,
+      "theme": {
+        "look": "clinic",
+        "accent": {
+          "hex": "#34d399",
+          "rgb": "52 211 153"
+        },
+        "accent2": {
+          "hex": "#22d3ee",
+          "rgb": "34 211 238"
+        },
+        "watermark": "/projects/hygieia/logo.svg"
+      },
+      "screens": {
+        "default": "dark"
+      },
+      "hero": {
+        "eyebrow": "AI health platform · 2025",
+        "title": "Your health,",
+        "accent": "analyzed intelligently.",
+        "lede": "Hygieia bundles five independently trained diagnostic models behind one calm interface, writes every result to a tamper-evident chain, and answers questions through Dr. Hygieia, an assistant that reads your own history.",
+        "badges": [
+          {
+            "label": "96%+ avg accuracy",
+            "tone": "accent"
+          },
+          {
+            "label": "5 AI models"
+          },
+          {
+            "label": "Blockchain verified"
+          },
+          {
+            "label": "Dr. Hygieia assistant"
+          }
+        ],
+        "actions": [
+          {
+            "label": "View source",
+            "href": "https://github.com/Krishna-Vijay-G/Hygieia.git",
+            "external": true
+          },
+          {
+            "label": "How a prediction is made",
+            "href": "#s-pipelines",
+            "kind": "ghost"
+          }
+        ],
+        "facts": [
+          {
+            "label": "Models",
+            "value": "Heart · Diabetes · Skin · Breast ×2"
+          },
+          {
+            "label": "Accuracy",
+            "value": "96%+ average, ROC-AUC reported"
+          },
+          {
+            "label": "Records",
+            "value": "SHA-256 chained, re-verifiable"
+          }
+        ],
+        "stage": {
+          "url": "hygieia.app",
+          "center": {
+            "light": "/projects/hygieia/mock/desktop/landing-viewport-light.png",
+            "dark": "/projects/hygieia/mock/desktop/landing-viewport-dark.png",
+            "alt": "Hygieia landing page"
+          },
+          "left": {
+            "light": "/projects/hygieia/mock/desktop/dashboard-light.png",
+            "dark": "/projects/hygieia/mock/desktop/dashboard-dark.png",
+            "alt": "User dashboard"
+          },
+          "right": {
+            "light": "/projects/hygieia/mock/desktop/result-heart-light.png",
+            "dark": "/projects/hygieia/mock/desktop/result-heart-dark.png",
+            "alt": "Heart risk prediction result"
+          }
+        }
+      },
+      "sections": [
+        {
+          "type": "stats",
+          "items": [
+            {
+              "value": "5",
+              "label": "Diagnostic models"
+            },
+            {
+              "value": "96%+",
+              "label": "Average accuracy"
+            },
+            {
+              "value": "253K",
+              "label": "Training samples"
+            },
+            {
+              "value": "4",
+              "label": "Security layers"
+            }
+          ]
+        },
+        {
+          "type": "overview",
+          "head": {
+            "index": "01",
+            "label": "The gist",
+            "title": "What it",
+            "accentWord": "does"
+          },
+          "paragraphs": [
+            "Hygieia bundles five independently trained diagnostic models behind one interface, so a clinician or a curious patient can move between a heart-risk questionnaire and a dermatology image scan without changing tools.",
+            "Every prediction is written to an append-only chain with a SHA-256 hash, which means a result can be re-verified later and any tampering shows up as a broken chain. On top of that sits Dr. Hygieia, a context-aware assistant that can read your own analysis history when it answers."
+          ],
+          "features": [
+            {
+              "icon": "Cpu",
+              "title": "5 AI models",
+              "description": "Specialised diagnostic and predictive models, each trained and tuned separately."
+            },
+            {
+              "icon": "CheckCircle",
+              "title": "96%+ accuracy",
+              "description": "Clinical-grade predictions validated with ROC-AUC alongside raw accuracy."
+            },
+            {
+              "icon": "Link2",
+              "title": "Blockchain verified",
+              "description": "Every analysis is hashed and chained, so records can be re-verified later."
+            },
+            {
+              "icon": "MessageCircle",
+              "title": "AI health assistant",
+              "description": "Dr. Hygieia answers with your analysis history in context, not in a vacuum."
+            },
+            {
+              "icon": "Palette",
+              "title": "Dark / light mode",
+              "description": "A calm, accessible interface built for long clinical sessions."
+            },
+            {
+              "icon": "Monitor",
+              "title": "Responsive by default",
+              "description": "The same flows work on a ward tablet and on a phone in a waiting room."
+            }
+          ]
+        },
+        {
+          "type": "cards",
+          "head": {
+            "index": "02",
+            "label": "Model portfolio",
+            "title": "Five models,",
+            "accentWord": "one interface",
+            "lede": "Each model was trained, tuned and scored on its own dataset. Accuracy alone hides class imbalance, so ROC-AUC is reported next to it."
+          },
+          "items": [
+            {
+              "title": "Heart Risk",
+              "icon": "Heart",
+              "subtitle": "18 clinical parameters",
+              "hue": "#ef4444",
+              "value": "99.4%",
+              "valueLabel": "ROC-AUC 99.9%",
+              "meta": "Stacking ensemble · 303 samples"
+            },
+            {
+              "title": "Diabetes Risk",
+              "icon": "Droplets",
+              "subtitle": "Symptom-based analysis",
+              "hue": "#f97316",
+              "value": "98.1%",
+              "valueLabel": "ROC-AUC 99.6%",
+              "meta": "Random Forest + XGBoost · 520 samples"
+            },
+            {
+              "title": "Skin Diagnosis",
+              "icon": "Scan",
+              "subtitle": "AI image analysis",
+              "hue": "#14b8a6",
+              "value": "96.8%",
+              "valueLabel": "ROC-AUC 99.3%",
+              "meta": "CNN + Derm Foundation · ISIC + HAM10000"
+            },
+            {
+              "title": "Breast Cancer",
+              "icon": "Ribbon",
+              "subtitle": "10 risk factors",
+              "hue": "#ec4899",
+              "value": "81.3%",
+              "valueLabel": "ROC-AUC 86.2%",
+              "meta": "Voting ensemble · 251,661 samples"
+            },
+            {
+              "title": "Breast Tissue",
+              "icon": "Ribbon",
+              "subtitle": "30 FNA measurements",
+              "hue": "#a855f7",
+              "value": "97.2%",
+              "valueLabel": "ROC-AUC 99.7%",
+              "meta": "Stacking ensemble · 569 samples"
+            }
+          ]
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Model",
+            "Accuracy",
+            "ROC-AUC",
+            "Samples",
+            "Architecture"
+          ],
+          "hues": [
+            "#ef4444",
+            "#f97316",
+            "#14b8a6",
+            "#ec4899",
+            "#a855f7"
+          ],
+          "rows": [
+            [
+              "Heart Risk",
+              "99.4%",
+              "99.9%",
+              "303",
+              "Stacking Ensemble"
+            ],
+            [
+              "Diabetes Risk",
+              "98.1%",
+              "99.6%",
+              "520",
+              "Random Forest + XGBoost"
+            ],
+            [
+              "Skin Diagnosis",
+              "96.8%",
+              "99.3%",
+              "ISIC + HAM10000",
+              "CNN + Derm Foundation"
+            ],
+            [
+              "Breast Cancer",
+              "81.3%",
+              "86.2%",
+              "251,661",
+              "Voting Ensemble"
+            ],
+            [
+              "Breast Tissue",
+              "97.2%",
+              "99.7%",
+              "569",
+              "Stacking Ensemble"
+            ]
+          ]
+        },
+        {
+          "type": "tabs",
+          "head": {
+            "index": "03",
+            "label": "Under the hood",
+            "title": "How a prediction",
+            "accentWord": "is made"
+          },
+          "tabs": [
+            {
+              "id": "heart",
+              "label": "Heart Risk",
+              "hue": "#ef4444",
+              "subtitle": "18 clinical parameters · Stacking Ensemble · 303 samples",
+              "steps": [
+                {
+                  "title": "Clinical input",
+                  "description": "18 clinical parameters: age, cholesterol, blood pressure and more"
+                },
+                {
+                  "title": "Feature engineering",
+                  "description": "Normalisation, encoding and feature selection"
+                },
+                {
+                  "title": "Base learners",
+                  "description": "Random Forest + XGBoost + Gradient Boosting"
+                },
+                {
+                  "title": "Meta-learner",
+                  "description": "Logistic regression stacking ensemble"
+                },
+                {
+                  "title": "Binary output",
+                  "description": "Heart disease risk prediction with a confidence score"
+                }
+              ],
+              "detailsTitle": "Input parameters",
+              "details": [
+                "Age",
+                "Sex",
+                "Chest pain type",
+                "Resting BP",
+                "Cholesterol",
+                "Fasting blood sugar",
+                "Resting ECG",
+                "Max heart rate",
+                "Exercise angina",
+                "ST depression",
+                "ST slope",
+                "Major vessels",
+                "Thalassemia"
+              ]
+            },
+            {
+              "id": "diabetes",
+              "label": "Diabetes Risk",
+              "hue": "#f97316",
+              "subtitle": "Symptom-based · Random Forest + XGBoost · 520 samples",
+              "steps": [
+                {
+                  "title": "Symptom input",
+                  "description": "Symptom-based questionnaire covering 16 symptoms"
+                },
+                {
+                  "title": "Feature processing",
+                  "description": "Binary encoding and symptom correlation analysis"
+                },
+                {
+                  "title": "Ensemble models",
+                  "description": "Random Forest + XGBoost predicting in parallel"
+                },
+                {
+                  "title": "Aggregation",
+                  "description": "Weighted voting for the final prediction"
+                },
+                {
+                  "title": "Risk assessment",
+                  "description": "Positive / negative diabetes risk classification"
+                }
+              ],
+              "detailsTitle": "Assessed symptoms",
+              "details": [
+                "Polyuria",
+                "Polydipsia",
+                "Sudden weight loss",
+                "Weakness",
+                "Polyphagia",
+                "Genital thrush",
+                "Visual blurring",
+                "Itching",
+                "Irritability",
+                "Delayed healing",
+                "Partial paresis",
+                "Muscle stiffness",
+                "Alopecia",
+                "Obesity"
+              ]
+            },
+            {
+              "id": "skin",
+              "label": "Skin Diagnosis",
+              "hue": "#14b8a6",
+              "subtitle": "AI image analysis · CNN + Derm Foundation",
+              "steps": [
+                {
+                  "title": "Input image",
+                  "description": "Upload a skin lesion image"
+                },
+                {
+                  "title": "Google Derm Foundation",
+                  "description": "Pre-trained on clinical dermatology images"
+                },
+                {
+                  "title": "Feature extraction",
+                  "description": "6,144-dim embeddings + 80 engineered features"
+                },
+                {
+                  "title": "Voting ensemble",
+                  "description": "XGBoost + Random Forest + Gradient Boosting + Extra Trees"
+                },
+                {
+                  "title": "7-class output",
+                  "description": "Skin condition classification with confidence"
+                }
+              ],
+              "detailsTitle": "Detectable conditions",
+              "details": [
+                "Actinic keratoses",
+                "Basal cell carcinoma ⚠",
+                "Benign keratosis",
+                "Dermatofibroma",
+                "Melanoma ⚠",
+                "Melanocytic nevus",
+                "Vascular lesions"
+              ]
+            },
+            {
+              "id": "breast-risk",
+              "label": "Breast Cancer",
+              "hue": "#ec4899",
+              "subtitle": "10 risk factors · Voting Ensemble · 251,661 samples",
+              "steps": [
+                {
+                  "title": "Risk factor input",
+                  "description": "10 lifestyle and demographic risk factors"
+                },
+                {
+                  "title": "Data preprocessing",
+                  "description": "Label encoding, SMOTE oversampling and normalisation"
+                },
+                {
+                  "title": "Base classifiers",
+                  "description": "Random Forest + XGBoost + Gradient Boosting"
+                },
+                {
+                  "title": "Voting ensemble",
+                  "description": "Soft voting for probability aggregation"
+                },
+                {
+                  "title": "Risk classification",
+                  "description": "Breast cancer risk level prediction"
+                }
+              ],
+              "detailsTitle": "Risk factors analysed",
+              "details": [
+                "Age",
+                "Race",
+                "Marital status",
+                "T stage",
+                "N stage",
+                "6th stage",
+                "Differentiation",
+                "Grade",
+                "Estrogen status",
+                "Progesterone status"
+              ]
+            },
+            {
+              "id": "breast-tissue",
+              "label": "Breast Tissue",
+              "hue": "#a855f7",
+              "subtitle": "30 FNA measurements · Stacking Ensemble · 569 samples",
+              "steps": [
+                {
+                  "title": "FNA measurements",
+                  "description": "30 fine-needle aspiration measurements"
+                },
+                {
+                  "title": "Feature engineering",
+                  "description": "Mean, SE and worst values for 10 cell nuclei features"
+                },
+                {
+                  "title": "Base learners",
+                  "description": "SVM + Random Forest + XGBoost"
+                },
+                {
+                  "title": "Meta-learner",
+                  "description": "Logistic regression stacking ensemble"
+                },
+                {
+                  "title": "Binary output",
+                  "description": "Malignant vs benign tissue classification"
+                }
+              ],
+              "detailsTitle": "Measured features",
+              "details": [
+                "Radius",
+                "Texture",
+                "Perimeter",
+                "Area",
+                "Smoothness",
+                "Compactness",
+                "Concavity",
+                "Concave points",
+                "Symmetry",
+                "Fractal dimension"
+              ]
+            }
+          ]
+        },
+        {
+          "type": "steps",
+          "head": {
+            "index": "04",
+            "label": "Interface",
+            "title": "Every screen,",
+            "accentWord": "in context",
+            "lede": "Captured from the running application with demo data. Use the screens switch to see the light or dark theme."
+          },
+          "items": [
+            {
+              "title": "Guided input",
+              "body": "Context-aware fields with real-time validation and helper text for every medical parameter. Skin lesions are uploaded as images; the other models take questionnaires and lab values.",
+              "ticks": [
+                "Toggles and units tuned per parameter",
+                "Image upload with progress states",
+                "A risk assessment, not a diagnosis, stated on every form"
+              ],
+              "image": {
+                "light": "/projects/hygieia/mock/desktop/analysis-heart-light.png",
+                "dark": "/projects/hygieia/mock/desktop/analysis-heart-dark.png",
+                "alt": "Heart risk analysis form"
+              },
+              "tall": true
+            },
+            {
+              "title": "Result, explained",
+              "body": "Every result shows the risk level, a confidence score, the exact inputs used, the model and method, and its blockchain transaction hash. Dr. Hygieia adds a plain-language reading of what the numbers mean.",
+              "ticks": [
+                "Risk level and confidence up front",
+                "Inputs and model details for auditability",
+                "AI summary generated for the result"
+              ],
+              "image": {
+                "light": "/projects/hygieia/mock/desktop/result-heart-light.png",
+                "dark": "/projects/hygieia/mock/desktop/result-heart-dark.png",
+                "alt": "Heart risk prediction result"
+              },
+              "tall": true
+            },
+            {
+              "title": "Dr. Hygieia",
+              "body": "A context-aware assistant that answers with your own analysis history in view. Multiple concurrent conversations, streaming responses and direct links into specific results.",
+              "ticks": [
+                "Streaming answers",
+                "Session management",
+                "Deep links to analyses"
+              ],
+              "image": {
+                "light": "/projects/hygieia/mock/desktop/chat-light.png",
+                "dark": "/projects/hygieia/mock/desktop/chat-dark.png",
+                "alt": "Dr. Hygieia chat"
+              }
+            },
+            {
+              "title": "Blockchain verification",
+              "body": "Every record is hashed with SHA-256 and appended to a chain. Verification walks the chain, flags any tampering and gives administrators an oversight dashboard.",
+              "ticks": [
+                "Immutable audit trail",
+                "Tamper detection and chain validation",
+                "Admin oversight and user management"
+              ],
+              "image": {
+                "light": "/projects/hygieia/mock/desktop/admin-blockchain-light.png",
+                "dark": "/projects/hygieia/mock/desktop/admin-blockchain-dark.png",
+                "alt": "Blockchain verification dashboard"
+              }
+            }
+          ]
+        },
+        {
+          "type": "compare",
+          "head": {
+            "index": "05",
+            "label": "Themes",
+            "title": "Calm in daylight,",
+            "accentWord": "calm at night",
+            "lede": "Soft surfaces, one green accent, and a dark mode that keeps every card legible. Drag the handle."
+          },
+          "image": {
+            "light": "/projects/hygieia/mock/desktop/dashboard-light.png",
+            "dark": "/projects/hygieia/mock/desktop/dashboard-dark.png",
+            "alt": "Dashboard"
+          }
+        },
+        {
+          "type": "phones",
+          "head": {
+            "index": "06",
+            "label": "Responsive",
+            "title": "Same flows on a",
+            "accentWord": "phone",
+            "lede": "Hover a phone to scroll its screen."
+          },
+          "items": [
+            {
+              "light": "/projects/hygieia/mock/mobile/landing-light.png",
+              "dark": "/projects/hygieia/mock/mobile/landing-dark.png",
+              "alt": "Landing"
+            },
+            {
+              "light": "/projects/hygieia/mock/mobile/dashboard-light.png",
+              "dark": "/projects/hygieia/mock/mobile/dashboard-dark.png",
+              "alt": "Dashboard"
+            },
+            {
+              "light": "/projects/hygieia/mock/mobile/analysis-heart-light.png",
+              "dark": "/projects/hygieia/mock/mobile/analysis-heart-dark.png",
+              "alt": "Heart risk form"
+            },
+            {
+              "light": "/projects/hygieia/mock/mobile/result-heart-light.png",
+              "dark": "/projects/hygieia/mock/mobile/result-heart-dark.png",
+              "alt": "Result"
+            },
+            {
+              "light": "/projects/hygieia/mock/mobile/login-light.png",
+              "dark": "/projects/hygieia/mock/mobile/login-dark.png",
+              "alt": "Sign in"
+            }
+          ]
+        },
+        {
+          "type": "columns",
+          "head": {
+            "index": "07",
+            "label": "Trust model",
+            "title": "Four layers of",
+            "accentWord": "defence"
+          },
+          "columns": [
+            {
+              "title": "Authentication",
+              "style": "ticks",
+              "items": [
+                "JWT token-based auth",
+                "Bcrypt password hashing",
+                "Session management"
+              ]
+            },
+            {
+              "title": "Authorization",
+              "style": "ticks",
+              "items": [
+                "Role-based access control",
+                "Admin / user separation",
+                "Resource ownership validation"
+              ]
+            },
+            {
+              "title": "Data protection",
+              "style": "ticks",
+              "items": [
+                "Input validation & sanitisation",
+                "SQL injection prevention",
+                "XSS protection"
+              ]
+            },
+            {
+              "title": "Blockchain",
+              "style": "ticks",
+              "items": [
+                "SHA-256 cryptographic hashing",
+                "Immutable audit trail",
+                "Chain integrity validation"
+              ]
+            },
+            {
+              "title": "Frontend",
+              "style": "chips",
+              "items": [
+                "Next.js 14",
+                "TypeScript",
+                "Tailwind CSS",
+                "Framer Motion",
+                "TanStack Query",
+                "Zustand"
+              ]
+            },
+            {
+              "title": "Backend & models",
+              "style": "chips",
+              "items": [
+                "Flask",
+                "SQLAlchemy",
+                "JWT",
+                "scikit-learn",
+                "TensorFlow",
+                "Google Derm Foundation",
+                "Gemini"
+              ]
+            }
+          ]
+        },
+        {
+          "type": "gallery",
+          "head": {
+            "index": "08",
+            "label": "Gallery",
+            "title": "All the",
+            "accentWord": "screens",
+            "lede": "Click any frame to open it full size."
+          },
+          "items": [
+            {
+              "light": "/projects/hygieia/mock/desktop/landing-viewport-light.png",
+              "dark": "/projects/hygieia/mock/desktop/landing-viewport-dark.png",
+              "alt": "Landing",
+              "caption": "Landing"
+            },
+            {
+              "light": "/projects/hygieia/mock/desktop/dashboard-light.png",
+              "dark": "/projects/hygieia/mock/desktop/dashboard-dark.png",
+              "alt": "Dashboard",
+              "caption": "Dashboard"
+            },
+            {
+              "light": "/projects/hygieia/mock/desktop/analysis-hub-light.png",
+              "dark": "/projects/hygieia/mock/desktop/analysis-hub-dark.png",
+              "alt": "Analysis services",
+              "caption": "Analysis services"
+            },
+            {
+              "light": "/projects/hygieia/mock/desktop/analysis-heart-light.png",
+              "dark": "/projects/hygieia/mock/desktop/analysis-heart-dark.png",
+              "alt": "Heart risk form",
+              "caption": "Heart risk form"
+            },
+            {
+              "light": "/projects/hygieia/mock/desktop/analysis-skin-light.png",
+              "dark": "/projects/hygieia/mock/desktop/analysis-skin-dark.png",
+              "alt": "Skin lesion upload",
+              "caption": "Skin lesion upload"
+            },
+            {
+              "light": "/projects/hygieia/mock/desktop/analysis-breast-light.png",
+              "dark": "/projects/hygieia/mock/desktop/analysis-breast-dark.png",
+              "alt": "Breast cancer prediction form",
+              "caption": "Breast cancer prediction"
+            },
+            {
+              "light": "/projects/hygieia/mock/desktop/result-heart-light.png",
+              "dark": "/projects/hygieia/mock/desktop/result-heart-dark.png",
+              "alt": "Heart result",
+              "caption": "Heart result"
+            },
+            {
+              "light": "/projects/hygieia/mock/desktop/result-diabetes-light.png",
+              "dark": "/projects/hygieia/mock/desktop/result-diabetes-dark.png",
+              "alt": "Diabetes result",
+              "caption": "Diabetes result"
+            },
+            {
+              "light": "/projects/hygieia/mock/desktop/result-breast-light.png",
+              "dark": "/projects/hygieia/mock/desktop/result-breast-dark.png",
+              "alt": "Breast tissue result",
+              "caption": "Breast tissue result"
+            },
+            {
+              "light": "/projects/hygieia/mock/desktop/history-light.png",
+              "dark": "/projects/hygieia/mock/desktop/history-dark.png",
+              "alt": "Analysis history",
+              "caption": "Analysis history"
+            },
+            {
+              "light": "/projects/hygieia/mock/desktop/chat-light.png",
+              "dark": "/projects/hygieia/mock/desktop/chat-dark.png",
+              "alt": "Dr. Hygieia",
+              "caption": "Dr. Hygieia"
+            },
+            {
+              "light": "/projects/hygieia/mock/desktop/admin-blockchain-light.png",
+              "dark": "/projects/hygieia/mock/desktop/admin-blockchain-dark.png",
+              "alt": "Blockchain verification",
+              "caption": "Blockchain verification"
+            },
+            {
+              "light": "/projects/hygieia/mock/desktop/admin-users-light.png",
+              "dark": "/projects/hygieia/mock/desktop/admin-users-dark.png",
+              "alt": "User management",
+              "caption": "User management"
+            },
+            {
+              "light": "/projects/hygieia/mock/desktop/profile-light.png",
+              "dark": "/projects/hygieia/mock/desktop/profile-dark.png",
+              "alt": "Profile",
+              "caption": "Profile"
+            },
+            {
+              "light": "/projects/hygieia/mock/desktop/docs-models-light.png",
+              "dark": "/projects/hygieia/mock/desktop/docs-models-dark.png",
+              "alt": "Model documentation",
+              "caption": "Model docs"
+            },
+            {
+              "light": "/projects/hygieia/mock/desktop/register-light.png",
+              "dark": "/projects/hygieia/mock/desktop/register-dark.png",
+              "alt": "Register",
+              "caption": "Register"
+            },
+            {
+              "light": "/projects/hygieia/mock/desktop/login-light.png",
+              "dark": "/projects/hygieia/mock/desktop/login-dark.png",
+              "alt": "Sign in",
+              "caption": "Sign in"
+            },
+            {
+              "light": "/projects/hygieia/mock/desktop/about-light.png",
+              "dark": "/projects/hygieia/mock/desktop/about-dark.png",
+              "alt": "About",
+              "caption": "About"
+            }
+          ]
+        },
+        {
+          "type": "markdown",
+          "head": {
+            "index": "09",
+            "label": "Model report",
+            "title": "The dermatology model,",
+            "accentWord": "in depth",
+            "lede": "Architecture, training, validation and calibration of the skin-lesion classifier."
+          },
+          "file": "/projects/hygieia/case-study.md"
+        },
+        {
+          "type": "outro",
+          "title": "Want the code, or the",
+          "accentWord": "next one?",
+          "actions": [
+            {
+              "label": "Repository",
+              "href": "https://github.com/Krishna-Vijay-G/Hygieia.git",
+              "external": true
+            },
+            {
+              "label": "Back to portfolio",
+              "href": "/#work",
+              "kind": "ghost"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": "proj-scholar-track",
+    "slug": "scholar-track",
+    "title": "Scholar Track: PhD Scholar Tracking Portal",
+    "tagline": "PhD Scholar Tracking Portal",
+    "summary": "A portal that carries a PhD scholar from admission to degree through four Doctoral Committee reviews, with two-step approvals, document uploads, an audit trail and templated email. GitHub-inspired interface in light and dark.",
+    "description": "Scholar Track replaces paper files and email threads with one source of truth for a research office: three roles (scholar, supervisor, R&D section), five gated milestones, presigned uploads to object storage with authenticated proxies, hashed portal keys and reset tokens, and a full audit log. Built with Next.js 14, Prisma on Neon Postgres, NextAuth, Tailwind and Brevo.",
+    "category": "Web",
+    "role": "Design + Full-stack",
+    "year": "2026",
+    "date": "September 2026",
+    "status": "Completed",
+    "featured": true,
+    "published": true,
+    "sortOrder": 20,
+    "tags": [
+      "Next.js",
+      "TypeScript",
+      "Prisma",
+      "PostgreSQL",
+      "Design System",
+      "Full-stack"
+    ],
+    "thumbnail": "/projects/scholar-track/thumbnail.png",
+    "cover": "/projects/scholar-track/cover.png",
+    "images": [],
+    "githubUrl": "https://github.com/Arkhins-0/scholar",
+    "liveUrl": null,
+    "markdownFile": "/projects/scholar-track/case-study.md",
+    "content": {
+      "version": 1,
+      "theme": {
+        "look": "ledger",
+        "accent": {
+          "hex": "#4493f8",
+          "rgb": "68 147 248"
+        },
+        "accent2": {
+          "hex": "#a78bfa",
+          "rgb": "167 139 250"
+        },
+        "watermark": "/projects/scholar-track/logo.png"
+      },
+      "screens": {
+        "default": "dark"
+      },
+      "hero": {
+        "eyebrow": "Web application · 2026",
+        "title": "The PhD journey,",
+        "accent": "from proposal to degree.",
+        "lede": "Scholar Track guides a research scholar through four Doctoral Committee reviews and a degree stage, with a two-step approval at every milestone. One portal, three roles, a full audit trail, and an interface that reads like a well-set journal.",
+        "badges": [
+          {
+            "label": "3 roles, 1 portal",
+            "tone": "accent"
+          },
+          {
+            "label": "5 gated milestones"
+          },
+          {
+            "label": "Server-side audit trail"
+          },
+          {
+            "label": "12 email notifications"
+          }
+        ],
+        "actions": [
+          {
+            "label": "View source",
+            "href": "https://github.com/Arkhins-0/scholar",
+            "external": true
+          },
+          {
+            "label": "Walk the workflow",
+            "href": "#s-workflow",
+            "kind": "ghost"
+          }
+        ],
+        "facts": [
+          {
+            "label": "Roles",
+            "value": "Scholar · Supervisor · R&D"
+          },
+          {
+            "label": "Stages",
+            "value": "Proposal → DC1–DC4 → Degree"
+          },
+          {
+            "label": "Themes",
+            "value": "Light & dark, first-class"
+          }
+        ],
+        "stage": {
+          "url": "scholar-track.app / student / dashboard",
+          "center": {
+            "light": "/projects/scholar-track/mock/wide/student-dashboard-light.png",
+            "dark": "/projects/scholar-track/mock/wide/student-dashboard-dark.png",
+            "alt": "Scholar overview"
+          },
+          "left": {
+            "light": "/projects/scholar-track/mock/wide/admin-dashboard-light.png",
+            "dark": "/projects/scholar-track/mock/wide/admin-dashboard-dark.png",
+            "alt": "R&D overview"
+          },
+          "right": {
+            "light": "/projects/scholar-track/mock/wide/public-login-light.png",
+            "dark": "/projects/scholar-track/mock/wide/public-login-dark.png",
+            "alt": "Sign in"
+          }
+        }
+      },
+      "sections": [
+        {
+          "type": "stats",
+          "items": [
+            {
+              "value": "5",
+              "label": "Milestones with required documents"
+            },
+            {
+              "value": "2-step",
+              "label": "Approval: supervisor, then R&D"
+            },
+            {
+              "value": "12",
+              "label": "Templated email notifications"
+            },
+            {
+              "value": "100%",
+              "label": "Server-side gating and audit"
+            }
+          ]
+        },
+        {
+          "type": "overview",
+          "head": {
+            "index": "01",
+            "label": "Overview",
+            "title": "Built for a research office,",
+            "accentWord": "designed like a product"
+          },
+          "paragraphs": [
+            "The portal replaces paper files and email threads with a single source of truth. Every transition is enforced on the server, every rejection carries remarks, and every step writes an audit row.",
+            "Scholars always know what to do next; supervisors and the R&D section always know what is waiting for them, with live counters in the navigation."
+          ],
+          "features": [
+            {
+              "icon": "GraduationCap",
+              "title": "Scholar",
+              "description": "Registers with a one-time portal key, files the proposal, uploads milestone documents and always sees the next step."
+            },
+            {
+              "icon": "Users",
+              "title": "Supervisor",
+              "description": "Constitutes the Doctoral Committee, assigns a co-supervisor and approves or returns each application with remarks."
+            },
+            {
+              "icon": "ShieldCheck",
+              "title": "R&D Section",
+              "description": "Issues portal keys, allocates supervisors, gives the final approval, records meetings and issues the degree."
+            },
+            {
+              "icon": "Mail",
+              "title": "Notified at every step",
+              "description": "Templated HTML email for onboarding, reviews, allocations, meetings, degrees and password flows."
+            },
+            {
+              "icon": "Lock",
+              "title": "Files never public",
+              "description": "Presigned uploads straight to object storage, then authenticated proxies stream every document."
+            },
+            {
+              "icon": "Palette",
+              "title": "GitHub-inspired UI",
+              "description": "Hairline borders, one accent, semantic state labels and serif headings, in light and dark."
+            }
+          ]
+        },
+        {
+          "type": "steps",
+          "head": {
+            "index": "02",
+            "label": "Workflow",
+            "title": "Every milestone follows the",
+            "accentWord": "same rhythm",
+            "lede": "DRAFT → SUBMITTED → SUPERVISOR_APPROVED → RND_APPROVED → MEETING_COMPLETED"
+          },
+          "items": [
+            {
+              "title": "The scholar uploads and submits",
+              "body": "Each stage lists exactly which documents are required. Uploads go straight to object storage through short-lived signed URLs, with progress, and the application cannot be submitted until every slot is filled.",
+              "ticks": [
+                "Required-document checklist",
+                "Direct-to-bucket uploads, 10MB, PDF/JPG/PNG",
+                "Application tracker with dates and remarks"
+              ],
+              "image": {
+                "light": "/projects/scholar-track/mock/desktop/student-milestone-dc2-light.png",
+                "dark": "/projects/scholar-track/mock/desktop/student-milestone-dc2-dark.png",
+                "alt": "DC2 application with four uploaded documents"
+              },
+              "tall": true
+            },
+            {
+              "title": "The supervisor reviews",
+              "body": "The scholar page puts the proposal, committee, documents and the decision form on one screen. Returning an application requires remarks, which land in the scholar's tracker and inbox.",
+              "ticks": [
+                "Committee picker, 2 to 5 members from the pool",
+                "Approve, or return with mandatory remarks",
+                "Email to the scholar and the R&D queue"
+              ],
+              "image": {
+                "light": "/projects/scholar-track/mock/desktop/staff-scholar-review-light.png",
+                "dark": "/projects/scholar-track/mock/desktop/staff-scholar-review-dark.png",
+                "alt": "Supervisor review page"
+              },
+              "tall": true
+            },
+            {
+              "title": "The R&D section closes the loop",
+              "body": "Queues with live counters show what is waiting: supervisor requests, final approvals, and meetings to record. Marking a meeting complete unlocks the next stage; on the last stage it issues the degree.",
+              "ticks": [
+                "Counters in the navigation",
+                "One click to record a meeting or issue a degree",
+                "Filterable scholar register with CSV export"
+              ],
+              "image": {
+                "light": "/projects/scholar-track/mock/desktop/admin-approvals-light.png",
+                "dark": "/projects/scholar-track/mock/desktop/admin-approvals-dark.png",
+                "alt": "R&D approvals queue"
+              }
+            },
+            {
+              "title": "And the journey ends with a degree",
+              "body": "The scholar's overview turns fully green, the completion record shows the issue date, and the final email congratulates the new doctor.",
+              "image": {
+                "light": "/projects/scholar-track/mock/desktop/graduate-dashboard-degree-light.png",
+                "dark": "/projects/scholar-track/mock/desktop/graduate-dashboard-degree-dark.png",
+                "alt": "Scholar overview after the degree is issued"
+              }
+            }
+          ]
+        },
+        {
+          "type": "compare",
+          "head": {
+            "index": "03",
+            "label": "Design system",
+            "title": "Light and dark, drawn from the",
+            "accentWord": "same tokens",
+            "lede": "A GitHub-inspired system: hairline borders, quiet surfaces, one accent, semantic state colours. Drag the handle to compare."
+          },
+          "image": {
+            "light": "/projects/scholar-track/mock/desktop/admin-dashboard-light.png",
+            "dark": "/projects/scholar-track/mock/desktop/admin-dashboard-dark.png",
+            "alt": "R&D overview"
+          }
+        },
+        {
+          "type": "phones",
+          "head": {
+            "index": "04",
+            "label": "Responsive",
+            "title": "Fits a phone without a",
+            "accentWord": "separate app",
+            "lede": "Tabs scroll, tables stack, and the full journey stays readable one-handed."
+          },
+          "items": [
+            {
+              "light": "/projects/scholar-track/mock/mobile/public-login-light.png",
+              "dark": "/projects/scholar-track/mock/mobile/public-login-dark.png",
+              "alt": "Sign in"
+            },
+            {
+              "light": "/projects/scholar-track/mock/mobile/student-dashboard-light.png",
+              "dark": "/projects/scholar-track/mock/mobile/student-dashboard-dark.png",
+              "alt": "Scholar overview"
+            },
+            {
+              "light": "/projects/scholar-track/mock/mobile/admin-dashboard-light.png",
+              "dark": "/projects/scholar-track/mock/mobile/admin-dashboard-dark.png",
+              "alt": "R&D overview"
+            },
+            {
+              "light": "/projects/scholar-track/mock/mobile/student-milestone-dc2-light.png",
+              "dark": "/projects/scholar-track/mock/mobile/student-milestone-dc2-dark.png",
+              "alt": "DC2 application"
+            },
+            {
+              "light": "/projects/scholar-track/mock/mobile/staff-dashboard-light.png",
+              "dark": "/projects/scholar-track/mock/mobile/staff-dashboard-dark.png",
+              "alt": "Supervisor dashboard"
+            }
+          ]
+        },
+        {
+          "type": "columns",
+          "head": {
+            "index": "05",
+            "label": "Under the hood",
+            "title": "Stack and",
+            "accentWord": "safeguards"
+          },
+          "columns": [
+            {
+              "title": "Built with",
+              "style": "chips",
+              "items": [
+                "Next.js 14",
+                "TypeScript",
+                "Prisma",
+                "Neon Postgres",
+                "NextAuth",
+                "Tailwind CSS",
+                "Zod",
+                "S3-compatible storage",
+                "Brevo email",
+                "Vercel"
+              ]
+            },
+            {
+              "title": "Security model",
+              "style": "ticks",
+              "items": [
+                "Role-based middleware and server-side stage gating",
+                "Files streamed through authenticated proxies, never public URLs",
+                "Presigned uploads verified with HeadObject before recording",
+                "Hashed portal keys and single-use, expiring reset tokens",
+                "bcrypt passwords, lockout after failed logins, strict CSP"
+              ]
+            }
+          ]
+        },
+        {
+          "type": "gallery",
+          "head": {
+            "index": "06",
+            "label": "Gallery",
+            "title": "Every screen,",
+            "accentWord": "both roles",
+            "lede": "Click any frame to open it full size."
+          },
+          "items": [
+            {
+              "light": "/projects/scholar-track/mock/desktop/student-dashboard-light.png",
+              "dark": "/projects/scholar-track/mock/desktop/student-dashboard-dark.png",
+              "alt": "Scholar overview",
+              "caption": "Scholar overview"
+            },
+            {
+              "light": "/projects/scholar-track/mock/desktop/student-milestone-dc2-light.png",
+              "dark": "/projects/scholar-track/mock/desktop/student-milestone-dc2-dark.png",
+              "alt": "DC2 application",
+              "caption": "DC2 application"
+            },
+            {
+              "light": "/projects/scholar-track/mock/desktop/student-milestone-dc1-complete-light.png",
+              "dark": "/projects/scholar-track/mock/desktop/student-milestone-dc1-complete-dark.png",
+              "alt": "Completed DC1",
+              "caption": "Completed DC1"
+            },
+            {
+              "light": "/projects/scholar-track/mock/desktop/student-proposal-light.png",
+              "dark": "/projects/scholar-track/mock/desktop/student-proposal-dark.png",
+              "alt": "Proposal",
+              "caption": "Proposal"
+            },
+            {
+              "light": "/projects/scholar-track/mock/desktop/graduate-dashboard-degree-light.png",
+              "dark": "/projects/scholar-track/mock/desktop/graduate-dashboard-degree-dark.png",
+              "alt": "Degree completed",
+              "caption": "Degree completed"
+            },
+            {
+              "light": "/projects/scholar-track/mock/desktop/staff-dashboard-light.png",
+              "dark": "/projects/scholar-track/mock/desktop/staff-dashboard-dark.png",
+              "alt": "Supervisor dashboard",
+              "caption": "Supervisor dashboard"
+            },
+            {
+              "light": "/projects/scholar-track/mock/desktop/staff-scholar-review-light.png",
+              "dark": "/projects/scholar-track/mock/desktop/staff-scholar-review-dark.png",
+              "alt": "Supervisor review",
+              "caption": "Supervisor review"
+            },
+            {
+              "light": "/projects/scholar-track/mock/desktop/admin-dashboard-light.png",
+              "dark": "/projects/scholar-track/mock/desktop/admin-dashboard-dark.png",
+              "alt": "R&D overview",
+              "caption": "R&D overview"
+            },
+            {
+              "light": "/projects/scholar-track/mock/desktop/admin-supervisor-requests-light.png",
+              "dark": "/projects/scholar-track/mock/desktop/admin-supervisor-requests-dark.png",
+              "alt": "Supervisor requests",
+              "caption": "Supervisor requests"
+            },
+            {
+              "light": "/projects/scholar-track/mock/desktop/admin-approvals-light.png",
+              "dark": "/projects/scholar-track/mock/desktop/admin-approvals-dark.png",
+              "alt": "R&D approvals",
+              "caption": "R&D approvals"
+            },
+            {
+              "light": "/projects/scholar-track/mock/desktop/admin-meetings-light.png",
+              "dark": "/projects/scholar-track/mock/desktop/admin-meetings-dark.png",
+              "alt": "Meetings & degrees",
+              "caption": "Meetings & degrees"
+            },
+            {
+              "light": "/projects/scholar-track/mock/desktop/admin-scholars-light.png",
+              "dark": "/projects/scholar-track/mock/desktop/admin-scholars-dark.png",
+              "alt": "Scholar register",
+              "caption": "Scholar register"
+            },
+            {
+              "light": "/projects/scholar-track/mock/desktop/admin-staff-light.png",
+              "dark": "/projects/scholar-track/mock/desktop/admin-staff-dark.png",
+              "alt": "Staff pool",
+              "caption": "Staff pool"
+            },
+            {
+              "light": "/projects/scholar-track/mock/desktop/admin-dc-members-light.png",
+              "dark": "/projects/scholar-track/mock/desktop/admin-dc-members-dark.png",
+              "alt": "DC members",
+              "caption": "DC members"
+            },
+            {
+              "light": "/projects/scholar-track/mock/desktop/admin-portal-keys-light.png",
+              "dark": "/projects/scholar-track/mock/desktop/admin-portal-keys-dark.png",
+              "alt": "Portal keys",
+              "caption": "Portal keys"
+            },
+            {
+              "light": "/projects/scholar-track/mock/desktop/public-login-light.png",
+              "dark": "/projects/scholar-track/mock/desktop/public-login-dark.png",
+              "alt": "Sign in",
+              "caption": "Sign in"
+            },
+            {
+              "light": "/projects/scholar-track/mock/desktop/public-register-light.png",
+              "dark": "/projects/scholar-track/mock/desktop/public-register-dark.png",
+              "alt": "Register",
+              "caption": "Register"
+            },
+            {
+              "light": "/projects/scholar-track/mock/desktop/public-forgot-password-light.png",
+              "dark": "/projects/scholar-track/mock/desktop/public-forgot-password-dark.png",
+              "alt": "Forgot password",
+              "caption": "Forgot password"
+            }
+          ]
+        },
+        {
+          "type": "markdown",
+          "head": {
+            "index": "07",
+            "label": "Case study",
+            "title": "How it was",
+            "accentWord": "built"
+          },
+          "file": "/projects/scholar-track/case-study.md"
+        },
+        {
+          "type": "outro",
+          "title": "Want the code, or the",
+          "accentWord": "next one?",
+          "actions": [
+            {
+              "label": "Repository",
+              "href": "https://github.com/Arkhins-0/scholar",
+              "external": true
+            },
+            {
+              "label": "Back to portfolio",
+              "href": "/#work",
+              "kind": "ghost"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": "proj-2",
+    "slug": "bidnest",
+    "title": "BidNest: Modern Chit Fund Management Platform",
+    "tagline": null,
+    "summary": "A modern chit fund management platform which allows users to manage their chit funds efficiently, with features like real-time updates, payment tracking and Auction management. Built with Next.js and TailwindCSS, featuring a responsive design and intuitive user interface.",
+    "description": "BidNest is a comprehensive chit fund management platform designed to streamline the administration of chit funds. It offers real-time updates, payment tracking, and auction management features, all built with Next.js and TailwindCSS for a responsive and user-friendly experience.",
+    "category": "Backend",
+    "role": "Product + Frontend",
+    "year": "2025",
+    "date": "May 2025",
+    "status": "Completed",
+    "featured": true,
+    "published": true,
+    "sortOrder": 30,
+    "tags": [
+      "Next.js",
+      "React",
+      "TailwindCSS",
+      "Web Development"
+    ],
+    "thumbnail": "/images/projects/BidNest.png",
+    "cover": "/images/projects/BidNest-1.png",
+    "images": [],
+    "githubUrl": "https://github.com/Krishna-Vijay-G/BidNest.git",
+    "liveUrl": "https://bidnest-omega.vercel.app",
+    "markdownFile": "/images/projects/BidNest.md",
+    "content": null
+  },
+  {
+    "id": "proj-3",
+    "slug": "ctr",
+    "title": "Chennai Turbo Riders - F4 Indian Championship",
+    "tagline": null,
+    "summary": "Built the Website for the Chennai Turbo Riders, a team participating in the F4 Indian Championship, showcasing team information, driver profiles, and updates.",
+    "description": "https://chennaiturboriders.racing. A comprehensive website for the Chennai Turbo Riders team participating in the F4 Indian Championship. The site showcases team information, driver profiles, and updates.",
+    "category": "Frontend",
+    "role": "Design + Frontend",
+    "year": "2025",
+    "date": "May 2025",
+    "status": "Completed",
+    "featured": true,
+    "published": true,
+    "sortOrder": 40,
+    "tags": [
+      "Next.js",
+      "React",
+      "TailwindCSS",
+      "Web Development"
+    ],
+    "thumbnail": "/images/projects/ctr.png",
+    "cover": "/images/projects/ctr.png",
+    "images": [],
+    "githubUrl": "https://github.com/Krishna-Vijay-G/CTR.git",
+    "liveUrl": "https://chennaiturboriders.racing",
+    "markdownFile": "/images/projects/ctr.md",
+    "content": null
+  },
+  {
+    "id": "proj-4",
+    "slug": "ctr-unified",
+    "title": "CTR - Indian National Car Racing Championship",
+    "tagline": null,
+    "summary": "The official portal of the CTR-JK Tyre FMSCI Indian National Car Racing Championship: newsroom, schedule with live round countdown, results, standings, drivers, teams, tickets and hospitality, videos, polls and a fan zone with accounts.",
+    "description": "https://www.ctrsports.in. The championship-first home of the 2026 INCRC - One Nation, One Championship. Built with Next.js and TailwindCSS as an editorial product rather than a brochure: a magazine-style Latest page with venue guides and category explainers, a ticker that always shows the current round and session, drivers' and teams' standings, four ticket and hospitality tiers, and a Fan Zone with sign-in, predictions, polls, favourites and a newsletter, across Kari Motor Speedway, Bren Raceway and the Madras International Circuit.",
+    "category": "Frontend",
+    "role": "Design + Frontend",
+    "year": "2026",
+    "date": "September 2026",
+    "status": "Live",
+    "featured": true,
+    "published": true,
+    "sortOrder": 50,
+    "tags": [
+      "Next.js",
+      "React",
+      "TailwindCSS",
+      "Fan Platform"
+    ],
+    "thumbnail": "/images/projects/ctrsports.png",
+    "cover": "/images/projects/ctrsports.png",
+    "images": [],
+    "githubUrl": null,
+    "liveUrl": "https://www.ctrsports.in",
+    "markdownFile": "/images/projects/ctrsports.md",
+    "content": null
+  },
+  {
+    "id": "proj-5",
+    "slug": "msft-stock",
+    "title": "Predicting Microsoft Stock Values",
+    "tagline": null,
+    "summary": "This project uses time series analysis and Keras to predict Microsoft stock values. The model was trained and evaluated, showing a Root Mean Squared Error (RMSE) of 16.94 (5.75% error) on data from 2020-2025.",
+    "description": "A comprehensive stock prediction system using deep learning techniques including LSTM networks for time series forecasting. The project handles data preprocessing, time filtering, and timezone considerations.",
+    "category": "AI/ML",
+    "role": "Data Science",
+    "year": "2025",
+    "date": "May 2025",
+    "status": "Completed",
+    "featured": false,
+    "published": true,
+    "sortOrder": 60,
+    "tags": [
+      "Machine Learning",
+      "Python",
+      "Keras",
+      "Data Science"
+    ],
+    "thumbnail": "/images/projects/stock-prediction.png",
+    "cover": "/images/projects/stock-prediction-1.png",
+    "images": [],
+    "githubUrl": "https://github.com/Krishna-Vijay-G/Predicting-the-Stocks-Values-of-Microsoft.git",
+    "liveUrl": null,
+    "markdownFile": "/images/projects/stock_prediction.md",
+    "content": null
+  },
+  {
+    "id": "proj-placeholder-1",
+    "slug": "placeholder-1",
+    "title": "Project Title",
+    "tagline": null,
+    "summary": "Short description of the project (2-3 sentences).",
+    "description": "Detailed description explaining the project goals, challenges, and solutions implemented.",
+    "category": "Category",
+    "role": null,
+    "year": null,
+    "date": "Month Year",
+    "status": "In Progress",
+    "featured": false,
+    "published": false,
+    "sortOrder": 70,
+    "tags": [
+      "Tag 1",
+      "Tag 2",
+      "Tag 3"
+    ],
+    "thumbnail": "/images/projects/placeholder.jpg",
+    "cover": "/images/projects/placeholder-1.jpg",
+    "images": [
+      "/images/projects/placeholder-2.jpg"
+    ],
+    "githubUrl": "https://github.com/username/repo",
+    "liveUrl": "https://live-demo.com",
+    "markdownFile": null,
+    "content": null
+  },
+  {
+    "id": "proj-placeholder-2",
+    "slug": "placeholder-2",
+    "title": "UI/UX Case Study",
+    "tagline": null,
+    "summary": "A comprehensive design case study showcasing user research and interface design.",
+    "description": "This case study covers the entire design process from user research, wireframing, prototyping, to final high-fidelity designs.",
+    "category": "Design",
+    "role": null,
+    "year": null,
+    "date": "Month Year",
+    "status": "Completed",
+    "featured": false,
+    "published": false,
+    "sortOrder": 80,
+    "tags": [
+      "Design",
+      "UI/UX",
+      "Figma"
+    ],
+    "thumbnail": "/images/projects/placeholder.jpg",
+    "cover": null,
+    "images": [],
+    "githubUrl": null,
+    "liveUrl": null,
+    "markdownFile": null,
+    "content": null
+  }
+]
