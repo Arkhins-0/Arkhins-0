@@ -2006,31 +2006,636 @@
   {
     "id": "proj-3",
     "slug": "ctr",
-    "title": "Chennai Turbo Riders - F4 Indian Championship",
-    "tagline": null,
-    "summary": "Built the Website for the Chennai Turbo Riders, a team participating in the F4 Indian Championship, showcasing team information, driver profiles, and updates.",
-    "description": "https://chennaiturboriders.racing. A comprehensive website for the Chennai Turbo Riders team participating in the F4 Indian Championship. The site showcases team information, driver profiles, and updates.",
-    "category": "Frontend",
-    "role": "Design + Frontend",
+    "title": "Chennai Turbo Riders: Team Site and Console",
+    "tagline": "A Formula 4 team's public site and the console that edits it, in one deployment",
+    "summary": "The public home of the Chennai Turbo Riders F4 team, rebuilt as an onboard broadcast feed, and the content console behind it. One Next.js build serves both, split by hostname; drivers, calendar, news, sponsors and the team itself live in Postgres and are edited without a deploy.",
+    "description": "chennaiturboriders.in is the Chennai Turbo Riders' Formula 4 team site: an onboard-feed hero, a grid walk of driver posters, the season calendar with a live countdown, news, sponsors and the car. Behind it sits a console on its own hostname, ported from the CTR Unified platform, with a media library on Neon object storage, a rich-text editor, roles and grants, previews, and revalidation that clears exactly the pages a change touches. The same Next.js build and process serves both; the Host header decides which one answers.",
+    "category": "Full-stack",
+    "role": "Design · Frontend · Console",
     "year": "2025",
-    "date": "May 2025",
-    "status": "Completed",
+    "date": "September 2025",
+    "status": "Live",
     "featured": true,
     "published": true,
     "sortOrder": 40,
     "tags": [
-      "Next.js",
-      "React",
-      "TailwindCSS",
-      "Web Development"
+      "Next.js 15",
+      "Framer Motion",
+      "Postgres · Neon",
+      "Object storage",
+      "Capacitor"
     ],
-    "thumbnail": "/images/projects/ctr.png",
-    "cover": "/images/projects/ctr.png",
+    "thumbnail": "/projects/ctr/thumbnail.png",
+    "cover": "/projects/ctr/cover.png",
     "images": [],
-    "githubUrl": "https://github.com/Krishna-Vijay-G/CTR.git",
-    "liveUrl": "https://chennaiturboriders.racing",
-    "markdownFile": "/images/projects/ctr.md",
-    "content": null
+    "githubUrl": "https://github.com/Arkhins-0/ChennaiTurboRiders",
+    "liveUrl": "https://www.chennaiturboriders.in",
+    "markdownFile": null,
+    "content": {
+      "version": 1,
+      "theme": {
+        "look": "pitwall",
+        "accent": {
+          "hex": "#f7d619",
+          "rgb": "247 214 25"
+        },
+        "accent2": {
+          "hex": "#c0c0c0",
+          "rgb": "192 192 192"
+        },
+        "watermark": "/projects/ctr/logo.png",
+        "backdrop": "/projects/ctr/backdrop.jpg"
+      },
+      "screens": {
+        "default": "dark"
+      },
+      "hero": {
+        "eyebrow": "Formula 4 · Indian Championship · 2025",
+        "title": "Chennai Turbo Riders,",
+        "accent": "on the feed.",
+        "lede": "The team's public site rebuilt as an onboard broadcast: video under scanlines, readouts in the corners, a grid walk of driver posters and a calendar that counts down to the next round. Behind it, on its own hostname, the console that edits every word of it without a deploy.",
+        "badges": [
+          {
+            "label": "One build, two hosts",
+            "tone": "accent"
+          },
+          {
+            "label": "Content in Postgres"
+          },
+          {
+            "label": "Media on object storage"
+          },
+          {
+            "label": "Android via Capacitor"
+          }
+        ],
+        "actions": [
+          {
+            "label": "Visit the site",
+            "href": "https://www.chennaiturboriders.in",
+            "external": true
+          },
+          {
+            "label": "View source",
+            "href": "https://github.com/Arkhins-0/ChennaiTurboRiders",
+            "external": true,
+            "kind": "ghost"
+          }
+        ],
+        "facts": [
+          {
+            "label": "Role",
+            "value": "Design, frontend, console port"
+          },
+          {
+            "label": "Stack",
+            "value": "Next.js 15 · Neon Postgres · S3"
+          },
+          {
+            "label": "Console",
+            "value": "Ported from CTR Unified"
+          },
+          {
+            "label": "Status",
+            "value": "Live at chennaiturboriders.in"
+          }
+        ],
+        "stage": {
+          "url": "chennaiturboriders.in",
+          "center": {
+            "light": "/projects/ctr/mock/desktop/home.png",
+            "alt": "The Chennai Turbo Riders home page: the onboard feed with the team's name arriving word by word"
+          },
+          "left": {
+            "light": "/projects/ctr/mock/desktop/drivers.png",
+            "alt": "The drivers page"
+          },
+          "right": {
+            "light": "/projects/ctr/mock/desktop/console-drivers.png",
+            "alt": "The console's drivers screen"
+          }
+        }
+      },
+      "sections": [
+        {
+          "type": "marquee",
+          "items": [
+            "Onboard feed",
+            "Grid walk",
+            "Round countdown",
+            "One build · two hosts",
+            "Content in Postgres",
+            "Media on object storage",
+            "Revalidate only what changed",
+            "Racing yellow on carbon"
+          ]
+        },
+        {
+          "type": "stats",
+          "items": [
+            {
+              "value": "2",
+              "label": "Front doors, one process"
+            },
+            {
+              "value": "25",
+              "label": "Versioned migrations"
+            },
+            {
+              "value": "7",
+              "label": "Console modules"
+            },
+            {
+              "value": "0",
+              "label": "Deploys to change a headline"
+            }
+          ]
+        },
+        {
+          "type": "overview",
+          "head": {
+            "index": "01",
+            "label": "Overview",
+            "title": "A brochure became",
+            "accentWord": "a broadcast."
+          },
+          "paragraphs": [
+            "The first version was a set of hand-built pages reading a checked-in JSON file. Changing a headline meant a commit and a deploy, and only somebody with the repository could do it. This rebuild keeps the F4 design language, racing yellow on carbon, and moves every word into Postgres behind a console.",
+            "The home page opens on the team's onboard video under scanlines and grain, framed by the readouts a broadcast puts in the corners. The three words of the name wipe in one at a time, the season's numbers count up along the baseline, and the drivers arrive as a grid walk: on a wide screen the section pins itself and the posters travel sideways as the page scrolls.",
+            "The console is not a rewrite. Every screen, the media library, the rich-text editor, the role model and the S3 pipeline are ported from the CTR Unified platform, so they arrive already working. What is new is the branding, the single-site shape, and the wiring from those tables into this site's own pages."
+          ],
+          "features": [
+            {
+              "icon": "Radio",
+              "title": "Onboard feed hero",
+              "description": "Video at full strength under scanlines and grain, corner readouts, the name wiped in word by word, numbers counting up."
+            },
+            {
+              "icon": "Users",
+              "title": "Grid walk",
+              "description": "Driver posters pinned and travelling sideways with the scroll; a snapping row on a phone and under reduced motion."
+            },
+            {
+              "icon": "Timer",
+              "title": "Round countdown",
+              "description": "The calendar and the home page read the same published season, so they can never disagree about the next round."
+            },
+            {
+              "icon": "Globe",
+              "title": "Two front doors",
+              "description": "The Host header decides: the admin hostname gets the console at its own root, every other host gets the site and nothing else."
+            },
+            {
+              "icon": "Image",
+              "title": "Media library",
+              "description": "Folders on Neon object storage, browser-side WebP conversion, presigned PUTs for video, and a usage scan before any delete."
+            },
+            {
+              "icon": "RefreshCw",
+              "title": "Surgical revalidation",
+              "description": "Saving an article clears the index, the home band, the sitemap and both the new and the old address after a rename."
+            }
+          ]
+        },
+        {
+          "type": "duo",
+          "head": {
+            "index": "02",
+            "label": "Two front doors",
+            "title": "Same build,",
+            "accentWord": "two hostnames.",
+            "lede": "One deployment, one process, one database connection. The middleware reads the Host header and mounts the console at the admin hostname's root; the mount folder itself 404s on every host, so the public domain carries no admin surface at all."
+          },
+          "sides": [
+            {
+              "eyebrow": "chennaiturboriders.in",
+              "title": "The site",
+              "body": "Server components reading one memoised query per request, the F4 design kept, every page cached for a minute and cleared the moment its content changes.",
+              "device": "browser",
+              "url": "chennaiturboriders.in/schedule",
+              "image": {
+                "light": "/projects/ctr/mock/desktop/schedule.png",
+                "alt": "The season calendar with the next round and its countdown"
+              },
+              "points": [
+                "Home, team, drivers, calendar, news, partners",
+                "Rajdhani display face, JetBrains Mono readouts",
+                "Session cookie is host-only and never reaches this domain",
+                "robots and sitemap built from SITE_URL"
+              ]
+            },
+            {
+              "eyebrow": "admin.chennaiturboriders.in",
+              "title": "The console",
+              "body": "A monochrome tool palette in IBM Plex Sans, so the tool never reads as part of the thing it edits. One bright colour: the yellow of the action that writes.",
+              "device": "browser",
+              "url": "admin.chennaiturboriders.in/site/ctr/events",
+              "image": {
+                "light": "/projects/ctr/mock/desktop/console-events.png",
+                "alt": "The console's season and rounds screen"
+              },
+              "points": [
+                "Team & site, drivers, sponsors, circuits, season, articles",
+                "Owner and member roles with per-module grants",
+                "Live previews drawn by the site's own render layer",
+                "Accounts, media and co-admins"
+              ]
+            }
+          ],
+          "shared": {
+            "title": "Shared by both",
+            "items": [
+              "one Next.js build",
+              "one process",
+              "ctr.* schema on Neon",
+              "MEDIA_PREFIX on one bucket",
+              "ctr.slugs: one address per thing",
+              "revalidatePath after every write",
+              "ADMIN_HOSTS read at build time",
+              "no domain in the source"
+            ]
+          }
+        },
+        {
+          "type": "tabs",
+          "head": {
+            "index": "03",
+            "label": "Under the hood",
+            "title": "What a save",
+            "accentWord": "sets in motion.",
+            "lede": "Three chains the console runs many times a week: publishing an article, uploading a photograph, and keeping an address alive after a rename."
+          },
+          "tabs": [
+            {
+              "id": "publish",
+              "label": "Publish",
+              "subtitle": "From the editor to the home page",
+              "steps": [
+                {
+                  "title": "Write in the rich-text editor",
+                  "description": "TipTap with headings, lists, links, images from the media picker, normalised to a bounded document before it is stored."
+                },
+                {
+                  "title": "Set the byline",
+                  "description": "Category, author and tags: the two columns this deployment added to the shared article schema so the pages could keep their design."
+                },
+                {
+                  "title": "Preview with the site's own renderer",
+                  "description": "The console draws the article with the same shell the public page uses, so what is previewed is what ships."
+                },
+                {
+                  "title": "Save through one repo",
+                  "description": "Every table has one server-only repository; a client import of it is a build error, not a leaked connection string."
+                },
+                {
+                  "title": "Revalidate exactly the pages that changed",
+                  "description": "The news index, the home page's latest band, the sitemap, and the article's own address, old and new."
+                }
+              ],
+              "detailsTitle": "Pieces",
+              "details": [
+                "@tiptap/react",
+                "normaliseRichText",
+                "articlesRepo",
+                "revalidatePath",
+                "React cache()",
+                "server-only",
+                "60 s page cache"
+              ]
+            },
+            {
+              "id": "media",
+              "label": "Media",
+              "subtitle": "From a file to a URL on a page",
+              "steps": [
+                {
+                  "title": "Convert in the browser",
+                  "description": "Photographs and logos become WebP and are capped before they leave the machine, so a few hundred kilobytes arrive, not a camera original."
+                },
+                {
+                  "title": "Sign a PUT for anything big",
+                  "description": "Video goes straight to the bucket with a presigned request; the serverless upload route refuses bodies over a few megabytes by design."
+                },
+                {
+                  "title": "File under one prefix",
+                  "description": "Every object this site writes sits under MEDIA_PREFIX, which is what keeps the library from listing another site's uploads."
+                },
+                {
+                  "title": "Serve immutable, cached for a year",
+                  "description": "Public objects carry max-age=31536000, immutable, straight from Neon object storage or a CDN in front of AWS."
+                },
+                {
+                  "title": "Scan before deleting",
+                  "description": "Six queries, however many keys: everything that points at a file is listed in the dialog, because a delete would otherwise surface months later as a missing picture."
+                }
+              ],
+              "detailsTitle": "Pieces",
+              "details": [
+                "@aws-sdk/client-s3",
+                "s3-request-presigner",
+                "browser WebP",
+                "MEDIA_PREFIX",
+                "mediaUsage scan",
+                "folders and breadcrumbs",
+                "storage:copy between buckets"
+              ]
+            },
+            {
+              "id": "slugs",
+              "label": "Addresses",
+              "subtitle": "One table for every URL the site publishes",
+              "steps": [
+                {
+                  "title": "Claim an address",
+                  "description": "PRIMARY KEY (site, entity type, slug): an address belongs to exactly one thing, so two drivers can never hold the same URL."
+                },
+                {
+                  "title": "Keep exactly one live address",
+                  "description": "A partial unique index over (entity type, entity id) WHERE is_current means a thing has one current slug and any number of former ones."
+                },
+                {
+                  "title": "Answer to the old one",
+                  "description": "A rename keeps the previous slug as a redirect, resolved by one indexed lookup instead of a JSONB scan."
+                },
+                {
+                  "title": "Clear both caches",
+                  "description": "After a rename the stale page sits under the address that is now a redirect, so the old path is revalidated along with the new."
+                }
+              ],
+              "detailsTitle": "Why",
+              "details": [
+                "ctr.slugs",
+                "partial unique index",
+                "former slugs as redirects",
+                "⚠ replaced a JSONB array with no unique index",
+                "docs/defaults-sync.md"
+              ]
+            }
+          ]
+        },
+        {
+          "type": "steps",
+          "head": {
+            "index": "04",
+            "label": "Key screens",
+            "title": "Lights out",
+            "accentWord": "to chequered flag."
+          },
+          "items": [
+            {
+              "title": "The onboard feed",
+              "body": "The full home page: the video hero, the tagline marquee, the team band, the grid walk, the car's specifications, the calendar with its countdown, the latest news and the partner marquee. Everything on it is a row in the console.",
+              "ticks": [
+                "Corner readouts: season, live marker, coordinates, founding year",
+                "Counters roll up along the baseline",
+                "Everything drifts up and fades as the page scrolls"
+              ],
+              "image": {
+                "light": "/projects/ctr/mock/desktop/home-full.png",
+                "alt": "The full home page"
+              },
+              "tall": true
+            },
+            {
+              "title": "The grid walk",
+              "body": "On a wide screen the drivers section pins itself and the posters travel sideways as the page is scrolled down, the pit lane seen from the pit wall. The distance is measured, not guessed: the track's real width less the window's, so the last poster stops flush with the edge.",
+              "ticks": [
+                "Framer Motion scroll transforms",
+                "A snapping row on phones",
+                "Honours prefers-reduced-motion"
+              ],
+              "image": {
+                "light": "/projects/ctr/mock/desktop/home-drivers.png",
+                "alt": "The drivers grid walk on the home page"
+              }
+            },
+            {
+              "title": "The calendar",
+              "body": "The season's rounds with their circuits, and a next-race panel whose countdown rolls each digit like a departures board. The home page reads the same published season, so the two can never disagree about which round is next.",
+              "ticks": [
+                "Seasons and rounds edited in the console",
+                "Circuit maps from the tracks module",
+                "Departures-board digits"
+              ],
+              "image": {
+                "light": "/projects/ctr/mock/desktop/schedule-full.png",
+                "alt": "The full schedule page"
+              },
+              "tall": true
+            },
+            {
+              "title": "A driver",
+              "body": "Each driver has a poster, a profile and highlights, edited on one console screen and drawn on the drivers page, the home reel and their own address, which survives a rename.",
+              "ticks": [
+                "Posters converted to WebP in the browser",
+                "Highlights as a repeater field",
+                "Former slugs keep old links alive"
+              ],
+              "image": {
+                "light": "/projects/ctr/mock/desktop/driver.png",
+                "alt": "A driver's page"
+              }
+            },
+            {
+              "title": "The console's drivers screen",
+              "body": "The tool palette is deliberately not the site's: warm greys one step apart, hairline separation, IBM Plex Sans, and a single yellow button for the action that writes to the database.",
+              "ticks": [
+                "Image fields open the media picker",
+                "Slug field with former addresses",
+                "Sort order by drag"
+              ],
+              "image": {
+                "light": "/projects/ctr/mock/desktop/console-drivers.png",
+                "alt": "The console's drivers screen"
+              }
+            },
+            {
+              "title": "The media library",
+              "body": "Folders, tiles, an upload zone and a breadcrumb over one prefix of the bucket. Deleting asks the usage scan first and lists every page that would lose a picture.",
+              "ticks": [
+                "Neon object storage or plain AWS",
+                "Presigned PUT for video, with a poster frame",
+                "Copy a whole prefix between buckets with one script"
+              ],
+              "image": {
+                "light": "/projects/ctr/mock/desktop/console-media.png",
+                "alt": "The console's media library"
+              }
+            }
+          ]
+        },
+        {
+          "type": "phones",
+          "head": {
+            "index": "05",
+            "label": "Trackside",
+            "title": "In the",
+            "accentWord": "grandstand.",
+            "lede": "The site on a phone, and the console too. A Capacitor shell wraps the same site for Android."
+          },
+          "items": [
+            {
+              "light": "/projects/ctr/mock/mobile/home.png",
+              "alt": "Home on a phone"
+            },
+            {
+              "light": "/projects/ctr/mock/mobile/drivers.png",
+              "alt": "Drivers on a phone"
+            },
+            {
+              "light": "/projects/ctr/mock/mobile/schedule.png",
+              "alt": "Calendar on a phone"
+            },
+            {
+              "light": "/projects/ctr/mock/mobile/about.png",
+              "alt": "The team page on a phone"
+            },
+            {
+              "light": "/projects/ctr/mock/mobile/console-drivers.png",
+              "alt": "The console on a phone"
+            }
+          ]
+        },
+        {
+          "type": "columns",
+          "head": {
+            "index": "06",
+            "label": "Stack and rules",
+            "title": "What holds it",
+            "accentWord": "on the track."
+          },
+          "columns": [
+            {
+              "title": "Two palettes that never mix",
+              "style": "ticks",
+              "items": [
+                "Site: racing yellow on carbon, Rajdhani and JetBrains Mono",
+                "Console: warm greys, one step apart, IBM Plex Sans",
+                "Yellow appears in the console only on the button that writes",
+                "Anything using both would look like neither"
+              ]
+            },
+            {
+              "title": "Boundaries",
+              "style": "ticks",
+              "items": [
+                "lib/ is browser-safe; lib/server/ imports server-only",
+                "The console mount folder is never a URL",
+                "The session cookie is host-only, no domain attribute",
+                "ADMIN_HOSTS unset means no host is the admin host",
+                "No domain is written down anywhere in the source"
+              ]
+            },
+            {
+              "title": "Stack",
+              "style": "chips",
+              "items": [
+                "Next.js 15",
+                "React 18",
+                "TypeScript",
+                "Tailwind CSS",
+                "Framer Motion",
+                "TipTap",
+                "Neon Postgres",
+                "@neondatabase/serverless",
+                "S3 · presigned PUT",
+                "Neon object storage",
+                "sharp · WebP",
+                "Capacitor · Android",
+                "React cache()",
+                "revalidatePath",
+                "lucide-react"
+              ]
+            },
+            {
+              "title": "Operations",
+              "style": "ticks",
+              "items": [
+                "25 numbered, checksummed migrations",
+                "Seed fires only on its own empty table",
+                "create-admin makes the first owner; a trigger keeps one",
+                "A second dist dir for verify builds",
+                "check:source and check:articles guard the content shape"
+              ]
+            }
+          ]
+        },
+        {
+          "type": "gallery",
+          "head": {
+            "index": "07",
+            "label": "More screens",
+            "title": "The rest of the",
+            "accentWord": "paddock."
+          },
+          "items": [
+            {
+              "light": "/projects/ctr/mock/desktop/about-full.png",
+              "alt": "The team page",
+              "caption": "The team"
+            },
+            {
+              "light": "/projects/ctr/mock/desktop/sponsors.png",
+              "alt": "Partners",
+              "caption": "Partners"
+            },
+            {
+              "light": "/projects/ctr/mock/desktop/news.png",
+              "alt": "News",
+              "caption": "News, awaiting its first article"
+            },
+            {
+              "light": "/projects/ctr/mock/desktop/console-login.png",
+              "alt": "Console sign-in",
+              "caption": "Console sign-in"
+            },
+            {
+              "light": "/projects/ctr/mock/desktop/console-identity.png",
+              "alt": "Team and site",
+              "caption": "Team & site"
+            },
+            {
+              "light": "/projects/ctr/mock/desktop/console-articles.png",
+              "alt": "Articles",
+              "caption": "Articles"
+            },
+            {
+              "light": "/projects/ctr/mock/desktop/console-sponsors.png",
+              "alt": "Sponsors",
+              "caption": "Sponsors"
+            },
+            {
+              "light": "/projects/ctr/mock/desktop/console-tracks.png",
+              "alt": "Circuits",
+              "caption": "Circuits"
+            }
+          ]
+        },
+        {
+          "type": "outro",
+          "title": "Want a site that runs like",
+          "accentWord": "a race weekend?",
+          "actions": [
+            {
+              "label": "Visit chennaiturboriders.in",
+              "href": "https://www.chennaiturboriders.in",
+              "external": true
+            },
+            {
+              "label": "Repository",
+              "href": "https://github.com/Arkhins-0/ChennaiTurboRiders",
+              "external": true,
+              "kind": "ghost"
+            },
+            {
+              "label": "Back to portfolio",
+              "href": "/#work",
+              "kind": "ghost"
+            }
+          ]
+        }
+      ]
+    }
   },
   {
     "id": "proj-4",

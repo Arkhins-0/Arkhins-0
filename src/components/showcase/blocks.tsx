@@ -263,6 +263,17 @@ export function BlockView({ block, index }: { block: Block; index: number }) {
         </section>
       );
 
+    case 'marquee':
+      return (
+        <div className="sc-marquee" aria-hidden="true">
+          <div className="sc-marquee-track animate-ticker">
+            {[...block.items, ...block.items].map((t, i) => (
+              <span key={i}><i /> {t}</span>
+            ))}
+          </div>
+        </div>
+      );
+
     case 'markdown':
       return <MarkdownBlock head={block.head} file={block.file} id={id} />;
 

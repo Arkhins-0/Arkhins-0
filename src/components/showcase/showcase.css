@@ -9,6 +9,8 @@
   --sc-shadow: 0 30px 80px -30px rgba(0, 0, 0, 0.85), 0 12px 30px -16px rgba(0, 0, 0, 0.6);
   position: relative;
   isolation: isolate;
+  /* tilted frames and the stage wings may poke past the viewport; keep them from widening the page */
+  overflow-x: clip;
 }
 
 /* ---------------------------------------------------------------- looks */
@@ -200,6 +202,129 @@
   border-radius: 6px;
   color: var(--fg-dim);
 }
+
+
+/* pitwall: a race weekend's broadcast graphics. Carbon black, one racing yellow, a condensed
+   uppercase display face, hard corners with one chamfer, grain and scanlines over the photograph. */
+.sc[data-look='pitwall'] {
+  --bg: #070707;
+  --bg-raise: #0c0e11;
+  --bg-sink: #000;
+  --fg: #ffffff;
+  --fg-dim: #c2c9d4;
+  --fg-faint: #98a1af;
+  --glass-line: rgba(255, 255, 255, 0.12);
+  --font-display: var(--font-condensed), 'Oswald', system-ui, sans-serif;
+  --sc-radius: 4px;
+  --sc-surface: #0c0e11;
+  --sc-surface-2: #12161b;
+  --sc-line: #2a3038;
+  --sc-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.9);
+  background: var(--bg);
+}
+.sc[data-look='pitwall'] .sc-bg {
+  background:
+    radial-gradient(50% 36% at 50% 0%, rgb(var(--accent-rgb) / 0.12), transparent 70%),
+    repeating-linear-gradient(-45deg, rgb(var(--accent-rgb) / 0.022) 0 14px, transparent 14px 46px);
+  mask-image: linear-gradient(180deg, #000 0%, rgba(0, 0, 0, 0.35) 22%, transparent 50%);
+}
+.sc[data-look='pitwall']::before {
+  /* scanlines */
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.35;
+  background: repeating-linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 0 1px, transparent 1px 4px);
+  mask-image: linear-gradient(180deg, #000 0%, #000 40%, transparent 100%);
+}
+.sc[data-look='pitwall'] .sc-watermark { opacity: 0.05; filter: none; }
+.sc[data-look='pitwall'] .sc-hero { isolation: isolate; }
+.sc[data-look='pitwall'] .sc-backdrop {
+  display: block;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 65% center;
+  opacity: 0.32;
+  z-index: -1;
+  pointer-events: none;
+  filter: saturate(0.7) contrast(1.05);
+  mask-image: linear-gradient(180deg, #000 20%, rgba(0, 0, 0, 0.5) 60%, transparent 100%);
+}
+
+/* type: condensed, uppercase, tight leading */
+.sc[data-look='pitwall'] :is(h1, h2, h3).font-display,
+.sc[data-look='pitwall'] .font-display.text-2xl,
+.sc[data-look='pitwall'] .font-display.text-3xl { text-transform: uppercase; letter-spacing: 0.01em; }
+.sc[data-look='pitwall'] .tracking-tightest { letter-spacing: 0; }
+.sc[data-look='pitwall'] .neon-text { font-style: normal; text-shadow: 0 0 22px rgb(var(--accent-rgb) / 0.45); }
+.sc[data-look='pitwall'] .sc-hero h1 { font-weight: 700; line-height: 0.9; }
+
+/* surfaces: hard corners, one chamfer, no glass */
+.sc[data-look='pitwall'] .sc-card {
+  border-radius: 0;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  clip-path: polygon(0 0, calc(100% - 18px) 0, 100% 18px, 100% 100%, 0 100%);
+  box-shadow: inset 0 0 0 1px var(--sc-line);
+  border-color: transparent;
+}
+.sc[data-look='pitwall'] .sc-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 18px;
+  height: 18px;
+  background: linear-gradient(225deg, transparent 50%, rgb(var(--accent-rgb) / 0.55) 50%);
+  pointer-events: none;
+}
+.sc[data-look='pitwall'] .sc-frame { border-radius: 2px; border-color: rgba(255, 255, 255, 0.18); background: #000; }
+.sc[data-look='pitwall'] .sc-browser { border-radius: 0; }
+.sc[data-look='pitwall'] .sc-browser span { border-radius: 2px; }
+.sc[data-look='pitwall'] .sc-phone { border-radius: 28px; }
+.sc[data-look='pitwall'] .sc-phone-screen { border-radius: 20px; }
+.sc[data-look='pitwall'] .neon-fill { background: var(--accent); color: #0a0a0a; }
+.sc[data-look='pitwall'] .glass { background: rgba(12, 14, 17, 0.8); backdrop-filter: none; -webkit-backdrop-filter: none; }
+.sc[data-look='pitwall'] .glass-fill,
+.sc[data-look='pitwall'] .glass-fill-solid { background: #0c0e11; backdrop-filter: none; -webkit-backdrop-filter: none; }
+.sc[data-look='pitwall'] .rounded-full { border-radius: 2px; }
+.sc[data-look='pitwall'] .sc-gallery figcaption { border-radius: 0; background: rgb(var(--accent-rgb) / 0.92); color: #0a0a0a; font-weight: 700; text-transform: uppercase; font-size: 11px; letter-spacing: 0.06em; }
+.sc[data-look='pitwall'] .sc-ticks li::before { border-color: var(--accent); }
+
+/* --------------------------------------------------------------- marquee */
+
+.sc-marquee {
+  position: relative;
+  overflow: hidden;
+  margin-top: 4rem;
+  border-top: 1px solid var(--sc-line);
+  border-bottom: 1px solid var(--sc-line);
+  padding: 0.85rem 0;
+  --ticker-dur: 42s;
+}
+.sc-marquee-track {
+  display: inline-flex;
+  white-space: nowrap;
+  gap: 2.5rem;
+  padding-right: 2.5rem;
+  font-family: var(--font-display);
+  font-size: clamp(0.95rem, 1.6vw, 1.25rem);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--fg);
+  will-change: transform;
+}
+.sc-marquee-track span { display: inline-flex; align-items: center; gap: 1rem; }
+.sc-marquee-track i { width: 8px; height: 8px; transform: rotate(45deg); background: var(--accent); display: inline-block; }
+.sc[data-look='pitwall'] .sc-marquee { background: var(--accent); border-color: var(--accent); }
+.sc[data-look='pitwall'] .sc-marquee-track { color: #0a0a0a; }
+.sc[data-look='pitwall'] .sc-marquee-track i { background: #0a0a0a; }
 
 /* plain: the site's default glass */
 .sc[data-look='plain'] .sc-bg {

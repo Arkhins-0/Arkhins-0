@@ -39,6 +39,14 @@ import {
   Upload,
   Wallet,
   WifiOff,
+  Flag,
+  Gauge,
+  Image as ImageIcon,
+  Map,
+  Newspaper,
+  Radio,
+  Trophy,
+  Video,
 } from 'lucide-react';
 import content from '@/data/content.json';
 import { cn, fill } from '@/lib/utils';
@@ -52,6 +60,7 @@ const ICONS: Record<string, React.ElementType> = {
   CheckCircle, Cpu, Droplets, GraduationCap, Heart, Link2, Lock, Mail, MessageCircle,
   Monitor, Palette, Ribbon, Scan, Server, ShieldCheck, Sparkles, Users,
   Bell, BookOpen, Database, EyeOff, FileText, Fingerprint, Globe, KeyRound, Layers, RefreshCw, Smartphone, Timer, Upload, Wallet, WifiOff,
+  Flag, Gauge, Image: ImageIcon, Map, Newspaper, Radio, Trophy, Video,
 };
 
 export function Icon({ name, size = 17, className }: { name?: string; size?: number; className?: string }) {

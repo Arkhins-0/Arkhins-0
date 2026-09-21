@@ -22,15 +22,17 @@ content = {
   theme:   { look, accent, accent2, watermark?, backdrop? },  // per-project look, scoped CSS variables
   screens: { default: "dark" | "light" },                     // which screenshot variant to show first
   hero:    { title, accent, lede, badges, facts, stage: { center, left, right } },
-  sections: [ { type: "stats" | "overview" | "cards" | "table" | "tabs" | "steps" | "duo"
+  sections: [ { type: "stats" | "overview" | "cards" | "table" | "tabs" | "steps" | "duo" | "marquee"
                     | "compare" | "phones" | "gallery" | "columns" | "markdown" | "outro", … } ]
 }
 ```
 
 Looks: `clinic` (Hygieia: glass, large radii, dotted grid), `ledger` (Scholar Track: ruled lines, hairline
-surfaces), `folio` (Bookisham: paper ground, serif display type, a night-band hero over `backdrop`) and
-`plain` (the site's default glass, used by generic pages). A `duo` block puts two builds of one product
-side by side, one in a browser frame and one in a phone, with a strip of what they share.
+surfaces), `folio` (Bookisham: paper ground, serif display type, a night-band hero over `backdrop`),
+`pitwall` (Chennai Turbo Riders: carbon black, racing yellow, condensed uppercase type, chamfered cards,
+scanlines over `backdrop`) and `plain` (the site's default glass, used by generic pages). A `duo` block
+puts two builds of one product side by side in browser or phone frames, with a strip of what they share;
+a `marquee` is a scrolling strip of short phrases.
 
 Screenshots are `{ light, dark, alt }` pairs. The page renders one variant at a time and offers a
 "Screens: light / dark" switch instead of listing every screen twice. A `compare` block shows both
