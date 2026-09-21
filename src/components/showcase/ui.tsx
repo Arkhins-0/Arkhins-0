@@ -24,6 +24,21 @@ import {
   X,
   ChevronLeft,
   ChevronRight,
+  Bell,
+  BookOpen,
+  Database,
+  EyeOff,
+  FileText,
+  Fingerprint,
+  Globe,
+  KeyRound,
+  Layers,
+  RefreshCw,
+  Smartphone,
+  Timer,
+  Upload,
+  Wallet,
+  WifiOff,
 } from 'lucide-react';
 import content from '@/data/content.json';
 import { cn, fill } from '@/lib/utils';
@@ -36,6 +51,7 @@ const COPY = content.projectPage;
 const ICONS: Record<string, React.ElementType> = {
   CheckCircle, Cpu, Droplets, GraduationCap, Heart, Link2, Lock, Mail, MessageCircle,
   Monitor, Palette, Ribbon, Scan, Server, ShieldCheck, Sparkles, Users,
+  Bell, BookOpen, Database, EyeOff, FileText, Fingerprint, Globe, KeyRound, Layers, RefreshCw, Smartphone, Timer, Upload, Wallet, WifiOff,
 };
 
 export function Icon({ name, size = 17, className }: { name?: string; size?: number; className?: string }) {
@@ -214,20 +230,25 @@ export function Compare({ image }: { image: ThemedImage }) {
 export function Phones({ items }: { items: ThemedImage[] }) {
   return (
     <div className="sc-phones">
-      {items.slice(0, 5).map((img, i) => (
-        <figure key={i} className="sc-phone">
-          <div className="sc-phone-screen">
-            <ThemedImg
-              image={img}
-              onLoad={(el) => {
-                const screen = el.closest('.sc-phone-screen') as HTMLElement | null;
-                if (screen) el.style.setProperty('--d', `${Math.max(0, el.offsetHeight - screen.clientHeight)}px`);
-              }}
-            />
-          </div>
-        </figure>
-      ))}
+      {items.slice(0, 5).map((img, i) => <PhoneFrame key={i} image={img} />)}
     </div>
+  );
+}
+
+/** One phone bezel; the screenshot scrolls inside it on hover. */
+export function PhoneFrame({ image, className }: { image: ThemedImage; className?: string }) {
+  return (
+    <figure className={cn('sc-phone', className)}>
+      <div className="sc-phone-screen">
+        <ThemedImg
+          image={image}
+          onLoad={(el) => {
+            const screen = el.closest('.sc-phone-screen') as HTMLElement | null;
+            if (screen) el.style.setProperty('--d', `${Math.max(0, el.offsetHeight - screen.clientHeight)}px`);
+          }}
+        />
+      </div>
+    </figure>
   );
 }
 

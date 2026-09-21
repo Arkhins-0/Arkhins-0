@@ -852,6 +852,646 @@
     }
   },
   {
+    "id": "proj-9",
+    "slug": "bookisham",
+    "title": "Bookisham: Private Reading Room",
+    "tagline": "A private reading room, on the web and on Android",
+    "summary": "A members' library where books are read, never downloaded. An installable Next.js web app and a native Kotlin app share one server, one-device sessions, an encrypted shelf on S3 and a canvas reader that keeps the text off the clipboard.",
+    "description": "Bookisham is a private reading room: readers sign up, buy or are given books, and read them page by page on any device without ever holding the file. A Next.js 15 PWA and a Jetpack Compose Android app talk to the same server, which paginates PDF, EPUB and Word uploads into fixed pages, encrypts everything before it reaches S3, renders pages on demand, and wraps each page with a key tied to the session before it is painted onto a canvas.",
+    "category": "Full-stack",
+    "role": "Design · Full-stack · Android",
+    "year": "2025",
+    "date": "September 2025",
+    "status": "Live",
+    "featured": true,
+    "published": true,
+    "sortOrder": 12,
+    "tags": [
+      "Next.js 15",
+      "Kotlin · Compose",
+      "Postgres",
+      "S3 · AES-GCM",
+      "PWA"
+    ],
+    "thumbnail": "/projects/bookisham/thumbnail.png",
+    "cover": "/projects/bookisham/cover.png",
+    "images": [],
+    "githubUrl": "https://github.com/Arkhins-0/bookisham",
+    "liveUrl": "https://bookisham.arkhins.com",
+    "markdownFile": null,
+    "content": {
+      "version": 1,
+      "theme": {
+        "look": "folio",
+        "accent": {
+          "hex": "#c2410c",
+          "rgb": "194 65 12"
+        },
+        "accent2": {
+          "hex": "#d4a24c",
+          "rgb": "212 162 76"
+        },
+        "backdrop": "/projects/bookisham/banner.jpg"
+      },
+      "screens": {
+        "default": "light"
+      },
+      "hero": {
+        "eyebrow": "Web + Android · 2025",
+        "title": "Your books,",
+        "accent": "wherever you are.",
+        "lede": "Bookisham is a members' library that never hands over a file. Readers sign in on any device and read page by page from a canvas; an admin runs the shelf, the readers and the purchases. One Next.js server, two front doors: an installable web app and a native Android app.",
+        "badges": [
+          {
+            "label": "PWA + Kotlin app",
+            "tone": "accent"
+          },
+          {
+            "label": "Books never downloaded"
+          },
+          {
+            "label": "One device at a time"
+          },
+          {
+            "label": "AES-256-GCM at rest"
+          }
+        ],
+        "actions": [
+          {
+            "label": "Open the reading room",
+            "href": "https://bookisham.arkhins.com",
+            "external": true
+          },
+          {
+            "label": "Web source",
+            "href": "https://github.com/Arkhins-0/bookisham",
+            "external": true,
+            "kind": "ghost"
+          },
+          {
+            "label": "Android source",
+            "href": "https://github.com/Arkhins-0/bookisham-app",
+            "external": true,
+            "kind": "ghost"
+          }
+        ],
+        "facts": [
+          {
+            "label": "Role",
+            "value": "Design, full-stack, Android"
+          },
+          {
+            "label": "Server",
+            "value": "Next.js 15 · Postgres on Neon · S3"
+          },
+          {
+            "label": "App",
+            "value": "Kotlin · Jetpack Compose · Material 3"
+          },
+          {
+            "label": "Status",
+            "value": "Live, v1.0.5 on Android"
+          }
+        ],
+        "stage": {
+          "url": "bookisham.arkhins.com",
+          "center": {
+            "light": "/projects/bookisham/mock/desktop/landing.png",
+            "alt": "Bookisham landing page: a bookshelf photograph with the sign-in and create-account buttons"
+          },
+          "left": {
+            "light": "/projects/bookisham/mock/desktop/library.png",
+            "alt": "A reader's library with cover art and reading progress"
+          },
+          "right": {
+            "light": "/projects/bookisham/mock/desktop/reader.png",
+            "alt": "The night-mode reader with a page scrubber"
+          }
+        }
+      },
+      "sections": [
+        {
+          "type": "stats",
+          "items": [
+            {
+              "value": "2",
+              "label": "Apps, one server"
+            },
+            {
+              "value": "3",
+              "label": "Formats: PDF, EPUB, Word"
+            },
+            {
+              "value": "48 h",
+              "label": "Session, one device"
+            },
+            {
+              "value": "0",
+              "label": "Files ever downloaded"
+            }
+          ]
+        },
+        {
+          "type": "overview",
+          "head": {
+            "index": "01",
+            "label": "Overview",
+            "title": "A library that",
+            "accentWord": "lends, never gives."
+          },
+          "paragraphs": [
+            "Most reading apps hand the reader a file and hope for the best. Bookisham keeps the file: every book is paginated on upload, stored encrypted, and served one rendered page at a time through a session that belongs to exactly one device.",
+            "Readers create their own account, browse the shelf with prices and discounts up front, pay by UPI and attach the screenshot; an admin approves the request by eye and the book appears on the reader's shelf with a notification. The page they stop on is saved as they go, so a reload, or another device, lands on the same line.",
+            "The web app installs as a PWA and the Android app is native Kotlin with Jetpack Compose. Both speak to the same JSON routes, share the same one-device rule, and paint pages the same way: unwrapped in memory, drawn, and dropped."
+          ],
+          "features": [
+            {
+              "icon": "BookOpen",
+              "title": "Read, never download",
+              "description": "Pages are rendered on the server and painted onto a canvas. There is no file, no image URL and no text in the DOM."
+            },
+            {
+              "icon": "KeyRound",
+              "title": "One device at a time",
+              "description": "A login ends every other session for that account. Sessions last 48 hours, whether or not the reader is active."
+            },
+            {
+              "icon": "EyeOff",
+              "title": "Text off the clipboard",
+              "description": "Selection, copy, print and dev-tools shortcuts are swallowed; the page is covered when the window is not in front."
+            },
+            {
+              "icon": "Wallet",
+              "title": "UPI purchases",
+              "description": "Prices and discounts per book, a QR to pay, a screenshot as proof, and an admin decision that notifies the reader."
+            },
+            {
+              "icon": "Lock",
+              "title": "Encrypted shelf",
+              "description": "Books, covers and rendered pages are AES-256-GCM encrypted in the app before they reach S3. A public bucket would leak ciphertext."
+            },
+            {
+              "icon": "RefreshCw",
+              "title": "Updates from GitHub Releases",
+              "description": "A tagged push builds and signs the APK; the app checks the release feed, downloads inside the app and hands off to the installer."
+            }
+          ]
+        },
+        {
+          "type": "duo",
+          "head": {
+            "index": "02",
+            "label": "Two front doors",
+            "title": "Same shelf,",
+            "accentWord": "every device.",
+            "lede": "The server renders its pages for the browser and exposes the same shapes as JSON for the phone. Whichever door a reader walks through, the shelf, the progress and the rules are identical."
+          },
+          "sides": [
+            {
+              "eyebrow": "In the browser · Next.js 15",
+              "title": "An installable web app",
+              "body": "Server-rendered pages on warm paper, with a service worker that keeps the shell offline-ready and stays away from anything that carries a page of a book.",
+              "device": "browser",
+              "url": "bookisham.arkhins.com/browse",
+              "image": {
+                "light": "/projects/bookisham/mock/desktop/browse.png",
+                "alt": "Browsing every book in the library, with prices and locked covers"
+              },
+              "points": [
+                "App Router, React 18, Tailwind",
+                "Fraunces for display, Inter for body",
+                "Install button and manifest for the home screen",
+                "Cache-Control: no-store on every page of a book"
+              ]
+            },
+            {
+              "eyebrow": "On the phone · Kotlin",
+              "title": "Native on Android",
+              "body": "Shown here: the web app installed on a phone. The Android app mirrors every screen in Jetpack Compose with no third-party UI library, and adds what only a native app can.",
+              "device": "phone",
+              "image": {
+                "light": "/projects/bookisham/mock/mobile/library.png",
+                "alt": "The library on a phone"
+              },
+              "points": [
+                "FLAG_SECURE: the OS refuses screenshots and recording",
+                "Pinch and double-tap zoom about the fingers",
+                "Pages held in an LruCache bounded to a third of the heap",
+                "Notifications raised in the tray by a background worker"
+              ]
+            }
+          ],
+          "shared": {
+            "title": "Shared by both",
+            "items": [
+              "POST /api/auth/login",
+              "GET /api/me",
+              "GET /api/library",
+              "GET /api/browse",
+              "GET /api/books/:id",
+              "GET /api/read/:book/:page",
+              "POST /api/progress",
+              "POST /api/purchase-requests",
+              "GET /api/notifications",
+              "/api/admin/*",
+              "bk_session cookie · 48 h",
+              "one device per account"
+            ]
+          }
+        },
+        {
+          "type": "tabs",
+          "head": {
+            "index": "03",
+            "label": "Under the hood",
+            "title": "Three pipelines,",
+            "accentWord": "one promise.",
+            "lede": "Upload, read, protect. Each is a small chain of steps, and each ends with the same outcome: the reader sees the page and nobody holds the file."
+          },
+          "tabs": [
+            {
+              "id": "upload",
+              "label": "Upload",
+              "subtitle": "From a file to numbered pages",
+              "steps": [
+                {
+                  "title": "Accept PDF, EPUB or Word",
+                  "description": "The admin drops a file with an optional cover, title, author, price and discount."
+                },
+                {
+                  "title": "Lay out reflowable formats",
+                  "description": "Word goes through mammoth to HTML; EPUB and HTML are laid out at A4 so every book has fixed, numbered pages."
+                },
+                {
+                  "title": "Paginate with MuPDF",
+                  "description": "The page count is stored with the book; it is what progress and the scrubber count against."
+                },
+                {
+                  "title": "Encrypt, then upload",
+                  "description": "Each object is sealed with AES-256-GCM using a key only the server holds, then put under one prefix in the bucket."
+                },
+                {
+                  "title": "Render covers and pages on demand",
+                  "description": "The first request for a page renders it at the asked scale and caches the result, encrypted, next to the book."
+                }
+              ],
+              "detailsTitle": "Pieces",
+              "details": [
+                "mupdf",
+                "mammoth",
+                "sharp",
+                "AES-256-GCM",
+                "@aws-sdk/client-s3",
+                "Neon Postgres",
+                "schema applied on first boot",
+                "stateless with S3"
+              ]
+            },
+            {
+              "id": "reader",
+              "label": "Reader",
+              "subtitle": "From a request to a painted page",
+              "steps": [
+                {
+                  "title": "Open through the session",
+                  "description": "The page route checks the reader may open this book, then hands the browser the start page, the page count and a per-session key."
+                },
+                {
+                  "title": "Fetch one page at a time",
+                  "description": "Slots near the viewport ask for their page at scale 2 on phones and 3 on wide screens, the sharpest the server renders."
+                },
+                {
+                  "title": "Unwrap in memory",
+                  "description": "Page bytes arrive wrapped with the session key and are unwrapped just before painting. There is no URL that returns an image."
+                },
+                {
+                  "title": "Paint onto a canvas",
+                  "description": "No <img>, no text in the DOM. Bitmaps live in a small cache and are closed when the reader unmounts."
+                },
+                {
+                  "title": "Remember the line",
+                  "description": "The slot crossing the middle of the viewport is the current page: saved locally at once and posted to the server after 600 ms of quiet."
+                }
+              ],
+              "detailsTitle": "Details",
+              "details": [
+                "canvas only",
+                "ImageBitmap cache",
+                "page scrubber",
+                "fit-to-width zoom",
+                "keyboard paging",
+                "no service worker on /read",
+                "Cache-Control: no-store"
+              ]
+            },
+            {
+              "id": "shield",
+              "label": "Shield",
+              "subtitle": "Keeping the text off the clipboard",
+              "steps": [
+                {
+                  "title": "Block the obvious",
+                  "description": "Selection, drag, right-click, copy, cut, save, print and view-source are refused on the reading surface."
+                },
+                {
+                  "title": "Watch for the tools",
+                  "description": "Dev-tools shortcuts are swallowed and the window size is polled; when the tools look open, the pages are covered."
+                },
+                {
+                  "title": "Cover when you look away",
+                  "description": "Losing focus, hiding the tab or pressing PrintScreen covers every page, and the clipboard is overwritten."
+                },
+                {
+                  "title": "Sign every page",
+                  "description": "The reader's own email is tiled faintly across each page. Whatever leaves, leaves with a name on it."
+                },
+                {
+                  "title": "Go further on Android",
+                  "description": "FLAG_SECURE makes the OS itself refuse screenshots and recording, and blanks the app in the recents switcher."
+                }
+              ],
+              "detailsTitle": "Honest limits",
+              "details": [
+                "Permissions-Policy: display-capture=()",
+                "no-store everywhere",
+                "⚠ cannot stop a camera",
+                "⚠ cannot stop a rooted phone",
+                "deterrent, not a guarantee"
+              ]
+            }
+          ]
+        },
+        {
+          "type": "steps",
+          "head": {
+            "index": "04",
+            "label": "Key screens",
+            "title": "From the front door",
+            "accentWord": "to the last page."
+          },
+          "items": [
+            {
+              "title": "The front door",
+              "body": "One photograph, edge to edge, and the two things a visitor came for: how to reach us and where to sign in. The shelf is listed for everyone, with prices, so a visitor knows what is inside before creating an account.",
+              "ticks": [
+                "WhatsApp or email contact menu",
+                "Install prompt for the PWA",
+                "Three steps, terms and privacy"
+              ],
+              "image": {
+                "light": "/projects/bookisham/mock/desktop/landing-full.png",
+                "alt": "The full landing page"
+              },
+              "tall": true
+            },
+            {
+              "title": "The shelf",
+              "body": "A reader sees only the books they have been given, each with an ember progress bar and the page they are on. An admin sees every book, which is how they check what a reader will see.",
+              "ticks": [
+                "Progress saved per reader per book",
+                "Opens on the page you left",
+                "Session expiry shown plainly"
+              ],
+              "image": {
+                "light": "/projects/bookisham/mock/desktop/library.png",
+                "alt": "The library page"
+              }
+            },
+            {
+              "title": "The reader, at night",
+              "body": "A near-black surface so a white page does not glare in a dark room, one floating bar with zoom and a page scrubber, and a column of pages painted from bitmaps that never touch the disk.",
+              "ticks": [
+                "Canvas pages, no image URLs",
+                "Scrubber, page jump, keyboard paging",
+                "Email watermark tiled across every page"
+              ],
+              "image": {
+                "light": "/projects/bookisham/mock/desktop/reader.png",
+                "alt": "The reader"
+              }
+            },
+            {
+              "title": "When you look away",
+              "body": "The moment the window loses focus, the tab is hidden, the developer tools open or PrintScreen is pressed, the pages disappear behind a cover. Come back and they return where they were.",
+              "ticks": [
+                "Blur, visibility and size polling",
+                "Clipboard overwritten on PrintScreen",
+                "Same rule as FLAG_SECURE on Android"
+              ],
+              "image": {
+                "light": "/projects/bookisham/mock/desktop/reader-shield.png",
+                "alt": "The reader with its pages covered"
+              }
+            },
+            {
+              "title": "The admin's desk",
+              "body": "Everyone with an account, when they were last seen and how many books they hold. A new reader's password is shown exactly once; from a reader's page the admin ticks books, resets the password, signs a device out or disables the account.",
+              "ticks": [
+                "Password shown once, sent on by hand",
+                "Sign out device ends the session at once",
+                "Per-reader book access"
+              ],
+              "image": {
+                "light": "/projects/bookisham/mock/desktop/admin-readers.png",
+                "alt": "The admin readers table"
+              }
+            },
+            {
+              "title": "Books and purchases",
+              "body": "Upload a PDF, EPUB or Word file with a cover, a price and a discount; edit or replace it later. Purchase requests arrive with the reader's UPI screenshot and are approved or rejected by eye, which grants the book and notifies the reader.",
+              "ticks": [
+                "Prices and discounts per book",
+                "Manual UPI review, no gateway",
+                "Release notes broadcast to every reader"
+              ],
+              "image": {
+                "light": "/projects/bookisham/mock/desktop/admin-books-full.png",
+                "alt": "The admin books page"
+              },
+              "tall": true
+            }
+          ]
+        },
+        {
+          "type": "phones",
+          "head": {
+            "index": "05",
+            "label": "In the pocket",
+            "title": "Installed,",
+            "accentWord": "not bookmarked.",
+            "lede": "The web app on a phone: the same paper, the same shelf, the same reader. The native Android app follows these screens one for one."
+          },
+          "items": [
+            {
+              "light": "/projects/bookisham/mock/mobile/landing.png",
+              "alt": "Landing on a phone"
+            },
+            {
+              "light": "/projects/bookisham/mock/mobile/browse.png",
+              "alt": "Browse on a phone"
+            },
+            {
+              "light": "/projects/bookisham/mock/mobile/reader.png",
+              "alt": "The reader on a phone"
+            },
+            {
+              "light": "/projects/bookisham/mock/mobile/library.png",
+              "alt": "The library on a phone"
+            },
+            {
+              "light": "/projects/bookisham/mock/mobile/account.png",
+              "alt": "Account on a phone"
+            }
+          ]
+        },
+        {
+          "type": "columns",
+          "head": {
+            "index": "06",
+            "label": "Threat model and stack",
+            "title": "What it stops,",
+            "accentWord": "and what it can't."
+          },
+          "columns": [
+            {
+              "title": "It stops",
+              "style": "ticks",
+              "items": [
+                "Downloading or saving the file",
+                "Selecting, copying or printing text",
+                "Image URLs that can be shared",
+                "Reading on two devices at once",
+                "Reading past a disabled account or reset password",
+                "Reading a bucket object without the server's key"
+              ]
+            },
+            {
+              "title": "It cannot stop, so the watermark exists",
+              "style": "ticks",
+              "items": [
+                "A camera pointed at the screen",
+                "A hardware screenshot on the web (Android refuses via FLAG_SECURE)",
+                "A screen recorder outside the browser",
+                "A rooted phone reading its own memory"
+              ]
+            },
+            {
+              "title": "Stack",
+              "style": "chips",
+              "items": [
+                "Next.js 15",
+                "React 18",
+                "TypeScript",
+                "Tailwind CSS",
+                "Postgres on Neon",
+                "pg",
+                "S3 · @aws-sdk",
+                "MuPDF",
+                "mammoth",
+                "sharp",
+                "Web Crypto",
+                "Service worker",
+                "Kotlin",
+                "Jetpack Compose",
+                "Material 3",
+                "OkHttp",
+                "kotlinx.serialization",
+                "Navigation Compose",
+                "WorkManager",
+                "GitHub Actions"
+              ]
+            },
+            {
+              "title": "Operations",
+              "style": "ticks",
+              "items": [
+                "Schema applied on first start; first admin created from env",
+                "Stateless server once S3 is configured",
+                "Tagged push builds, signs and publishes the APK with SHA256SUMS",
+                "App checks GitHub Releases and installs in place",
+                "New release broadcast to every reader once"
+              ]
+            }
+          ]
+        },
+        {
+          "type": "gallery",
+          "head": {
+            "index": "07",
+            "label": "More screens",
+            "title": "The rest of the",
+            "accentWord": "room."
+          },
+          "items": [
+            {
+              "light": "/projects/bookisham/mock/desktop/signup.png",
+              "alt": "Create account",
+              "caption": "Sign up with terms agreement"
+            },
+            {
+              "light": "/projects/bookisham/mock/desktop/login.png",
+              "alt": "Sign in",
+              "caption": "Sign in"
+            },
+            {
+              "light": "/projects/bookisham/mock/desktop/browse.png",
+              "alt": "Browse",
+              "caption": "Browse every book"
+            },
+            {
+              "light": "/projects/bookisham/mock/desktop/account.png",
+              "alt": "Account",
+              "caption": "Account, with copyable IDs"
+            },
+            {
+              "light": "/projects/bookisham/mock/desktop/notifications.png",
+              "alt": "Notifications",
+              "caption": "Notifications"
+            },
+            {
+              "light": "/projects/bookisham/mock/desktop/admin-reader.png",
+              "alt": "One reader",
+              "caption": "A reader's books and actions"
+            },
+            {
+              "light": "/projects/bookisham/mock/desktop/admin-purchases.png",
+              "alt": "Purchases",
+              "caption": "Purchase requests"
+            },
+            {
+              "light": "/projects/bookisham/mock/desktop/terms.png",
+              "alt": "Terms",
+              "caption": "Terms and conditions"
+            }
+          ]
+        },
+        {
+          "type": "outro",
+          "title": "Want a reading room of",
+          "accentWord": "your own?",
+          "actions": [
+            {
+              "label": "Web repository",
+              "href": "https://github.com/Arkhins-0/bookisham",
+              "external": true
+            },
+            {
+              "label": "Android repository",
+              "href": "https://github.com/Arkhins-0/bookisham-app",
+              "external": true,
+              "kind": "ghost"
+            },
+            {
+              "label": "Back to portfolio",
+              "href": "/#work",
+              "kind": "ghost"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
     "id": "proj-scholar-track",
     "slug": "scholar-track",
     "title": "Scholar Track: PhD Scholar Tracking Portal",

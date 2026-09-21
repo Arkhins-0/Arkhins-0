@@ -1,8 +1,18 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import { Fraunces } from 'next/font/google';
 import { Footer } from '@/components/layout';
 import { Showcase } from '@/components/showcase/Showcase';
 import { defaultShowcase, getProject, listProjectSlugs } from '@/lib/content';
+
+/** Serif display face, exposed as --font-serif for looks that want one (the folio look uses it). */
+const serif = Fraunces({
+  subsets: ['latin'],
+  weight: ['500', '600', '700'],
+  style: ['normal', 'italic'],
+  variable: '--font-serif',
+  display: 'swap',
+});
 
 export const dynamicParams = false;
 
@@ -28,9 +38,9 @@ export default async function ProjectPage({ params }: { params: { slug: string }
   if (!project) notFound();
   const doc = project.content ?? defaultShowcase(project);
   return (
-    <>
+    <div className={serif.variable}>
       <Showcase project={project} doc={doc} />
       <Footer />
-    </>
+    </div>
   );
 }
