@@ -1,184 +1,110 @@
-# Krishna Vijay G — Portfolio
+<div align="center">
 
-A dark, glass-and-neon personal site built with Next.js 14 (App Router), Tailwind CSS
-and Framer Motion. Content is data-driven; the visual system lives in CSS variables.
+<img src=".github/background.webp" width="100%" alt="YoRHa No.2 Type B, blade drawn, in overgrown ruins" />
 
-Live: **arkhins.com**
+<br />
 
----
+# ![Arkhins](.github/arkhins.svg)
 
-## Getting started
+**YoRHa-class builder. Type: Full-stack. Model: Designer.**
+Deployed at: Chennai, India · Status: Full-stack Developer, Chennai Turbo Riders · Emotions: not prohibited
 
-```bash
-npm install
-npm run dev      # http://localhost:3000
-npm run build    # production build
-```
+[![arkhins.com](.github/badge-site.svg)](https://arkhins.com)
+[![Instagram](https://img.shields.io/badge/INSTAGRAM-E4405F?style=for-the-badge&logo=instagram&logoColor=white)](https://www.instagram.com/arkhins/)
+[![Email](https://img.shields.io/badge/ARKHINS%40ARKHINS.COM-EA4335?style=for-the-badge&logo=maildotru&logoColor=white)](mailto:arkhins@arkhins.com)
 
----
-
-## Add your portrait
-
-The hero composites a **transparent cut-out PNG** of you — the rim glow and the
-duotone echo behind you are both masked from that same file, and the bottom
-dissolves into a gradient so the crop never reads as a hard cut.
-
-```
-public/images/hero/portrait.png
-```
-
-Guidance:
-
-- Transparent background, subject cropped tight, **facing/lit from the left**
-  (the accent echo is offset to the right).
-- Roughly 3:4, at least 1200 px tall, ideally under ~600 KB.
-- Until the file exists the hero shows a dashed "portrait slot" placeholder — the
-  layout does not break, and nothing else needs changing.
-
-The path is configurable at `basics.portrait` in `src/data/portfolio.json`.
+</div>
 
 ---
 
-## Structure
+> *Everything that lives is designed to end. We are perpetually trapped in a never-ending spiral of shipping and refactoring.*
+> *This unit does not mind. Glory to Mankind.*
 
-```
-src/
-  app/
-    layout.tsx                    root shell: fonts, providers, backdrop, boot
-    page.tsx                      the one-page site
-    globals.css                   the whole design system
-    projects/
-      page.tsx                    /projects — archive index
-      hygieia/                    one folder per case study
-        page.tsx                  /projects/hygieia
-        layout.tsx                per-project metadata
-        hygieia.json              all of that project's copy and data
-    api/submit-google-form/       contact form relay
-  components/
-    fx/                           design primitives (see below)
-    layout/                       Navigation, Footer, Boot, ProjectBar
-    sections/                     Hero, About, Projects, Experience,
-                                  Skills, Certifications, Beyond, Contact
-  context/UIContext.tsx           accent palette + effects toggle
-  data/portfolio.json             who you are: bio, roles, projects, skills…
-  data/content.json               every word the interface says
-public/
-  projects/<slug>/                per-project assets, co-located
-  images/                         shared assets (skills, certs, logos, hero)
-```
+## // Unit data
 
-### Where copy lives
+- **Current deployment.** Assigned to [Chennai Turbo Riders](https://www.chennaiturboriders.in), a Formula 4 team, as Full-stack Developer. Building and running the systems behind the team.
+- **Origin.** B.Tech in Computer Science, AI specialisation, Bharath Institute of Higher Education and Research.
+- **Combat doctrine.** Recon first: research and Figma. Then engage: Next.js, Postgres, and Kotlin when the terrain demands it.
+- **Field record.** Most recent deployments are production systems for motorsport organisations and institutions, with real operators relying on them.
+- **Squad.** Core team member, Google Developer Student Clubs. Runs workshops and events so newer units survive their first sortie.
+- **Current directive.** Scouting generative AI, IoT automation and cloud infrastructure. Accepting new orders.
 
-No component contains a rendered string. Two files hold everything:
+## // Mission log
 
-- **`src/data/portfolio.json`** — your data. Bio, education, experience,
-  projects, skills, certifications, links, plus `meta` (title, description,
-  `siteUrl`, OG image).
-- **`src/data/content.json`** — the interface's own words. Section headings,
-  button labels, aria-labels, form fields and placeholders, status messages,
-  the accent palette, storage keys, and the glyph alphabets the scramble
-  effects churn through.
+| Operation | Report | Loadout | Access |
+|---|---|---|---|
+| **Spartan** | Open-source command platform for motorsport championships, race teams, circuits and marshal signups. Twelve ADRs. Roughly two hundred tests. CI quality gates stand guard. | Next.js 16 · MUI v7 · Prisma 7 · Neon · Auth.js · Bun · Stripe Connect | [Live](https://spartan.arkhins.com) · [Repo](https://github.com/Arkhins-0/spartan) |
+| **CTR Sports** | Official portal of the Indian National Car Racing Championship. Newsroom, live round countdown, results, standings engine, fan zone. A role-based CMS holds the rear line on its own hostname. | Next.js · Postgres · Neon object storage · .docx import | [Live](https://www.ctrsports.in) · [Repo](https://github.com/Arkhins-0/CTRSports-new) |
+| **Chennai Turbo Riders** | A Formula 4 team's public site and its content console. One build serves both, split by hostname. | Next.js · Postgres · rich-text editor · targeted revalidation | [Live](https://www.chennaiturboriders.in) · [Repo](https://github.com/Arkhins-0/ChennaiTurboRiders) |
+| **Bookisham** | A private reading room. Books are read page by page, never downloaded. Web PWA and native Android share one server, an encrypted shelf on S3 and a session-keyed canvas reader. | Next.js 15 · Kotlin · Jetpack Compose · S3 | [Live](https://bookisham.arkhins.com) · [Web](https://github.com/Arkhins-0/bookisham) · [Android](https://github.com/Arkhins-0/bookisham-app) |
+| **Scholar Track** | PhD scholar tracking portal for a research office. Three roles, five gated milestones, presigned uploads, audit log, templated email. | Next.js 14 · Prisma · Neon · NextAuth · Brevo | [Live](https://scholar.arkhins.com) · [Repo](https://github.com/Arkhins-0/scholar) |
 
-A project page keeps its own copy beside it: `src/app/projects/<slug>/<slug>.json`
-holds that project's `sections` (headings) and `labels` alongside its data.
+Full mission archives, with screenshots, are stored at [arkhins.com/projects](https://arkhins.com/projects).
 
-Strings that need a value spliced in use `{token}` placeholders resolved by
-`fill()` in `src/lib/utils.ts` — for example
-`"homeAria": "{name} — home"`. To reword anything on the site, edit JSON; you
-should never need to open a `.tsx` file.
+## // Equipment
 
-The contact form's upstream field ids live in `content.contact.formEntries` and
-are read by both the client form and the API route, so the two cannot drift.
+**Primary weapons · frontend**
+![Next.js](https://img.shields.io/badge/Next.js-000?style=flat-square&logo=nextdotjs&logoColor=white)
+![React](https://img.shields.io/badge/React-20232A?style=flat-square&logo=react&logoColor=61DAFB)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black)
+![Angular](https://img.shields.io/badge/Angular-DD0031?style=flat-square&logo=angular&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white)
+![MUI](https://img.shields.io/badge/MUI-007FFF?style=flat-square&logo=mui&logoColor=white)
 
-### Long-form write-ups
+**Secondary weapons · backend and data**
+![Node.js](https://img.shields.io/badge/Node.js-339933?style=flat-square&logo=nodedotjs&logoColor=white)
+![NestJS](https://img.shields.io/badge/NestJS-E0234E?style=flat-square&logo=nestjs&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white)
+![Java](https://img.shields.io/badge/Java-ED8B00?style=flat-square&logo=openjdk&logoColor=white)
+![Prisma](https://img.shields.io/badge/Prisma-2D3748?style=flat-square&logo=prisma&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/Postgres%20%2F%20Neon-4169E1?style=flat-square&logo=postgresql&logoColor=white)
+![MongoDB](https://img.shields.io/badge/MongoDB-47A248?style=flat-square&logo=mongodb&logoColor=white)
+![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=flat-square&logo=mysql&logoColor=white)
+![Firebase](https://img.shields.io/badge/Firebase-FFCA28?style=flat-square&logo=firebase&logoColor=black)
+![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=flat-square&logo=supabase&logoColor=white)
 
-A project with a `markdownFile` gets a **Case notes** action on its card, which
-opens a slide-over reader. The file is fetched on open rather than bundled, so
-the notes cost nothing until someone asks for them. Images inside the markdown
-may use paths relative to `public/` — the reader rewrites them to root-absolute.
+**Pod programs · mobile, AI and tools**
+![Kotlin](https://img.shields.io/badge/Kotlin-7F52FF?style=flat-square&logo=kotlin&logoColor=white)
+![Android](https://img.shields.io/badge/Android-3DDC84?style=flat-square&logo=android&logoColor=white)
+![TensorFlow](https://img.shields.io/badge/TensorFlow-FF6F00?style=flat-square&logo=tensorflow&logoColor=white)
+![Figma](https://img.shields.io/badge/Figma-F24E1E?style=flat-square&logo=figma&logoColor=white)
+![Adobe XD](https://img.shields.io/badge/Adobe%20XD-470137?style=flat-square&logo=adobexd&logoColor=FF61F6)
+![Git](https://img.shields.io/badge/Git-F05032?style=flat-square&logo=git&logoColor=white)
+![Vercel](https://img.shields.io/badge/Vercel-000?style=flat-square&logo=vercel&logoColor=white)
+![Power BI](https://img.shields.io/badge/Power%20BI-F2C811?style=flat-square&logo=powerbi&logoColor=black)
 
-Use `markdownFile` for a quick write-up and `pageUrl` for a full designed case
-study; a project can have both.
+## // Authorisations
 
-### Adding a project
+Google UX Design (Grow with Google) · Foundations of AI (Microsoft, Edunet) · Android Developer (AICTE Eduskills) · Python Full Stack (AICTE Eduskills) · .NET Full Stack (Wipro TalentNext) · Quantum Computing (IIT Roorkee, C-DAC) · Introduction to IoT and Big Data Computing (NPTEL) · JLPT N3 (Japan Foundation)
 
-1. Add an entry to `projects` in `src/data/portfolio.json`. It shows up in the
-   home index and on `/projects` automatically.
-2. Drop its assets in `public/projects/<slug>/`.
-3. For a full case study, copy `src/app/projects/hygieia/` to
-   `src/app/projects/<slug>/`, swap the JSON, and set `"pageUrl":
-   "/projects/<slug>"` on the project entry. Without `pageUrl` the card links
-   straight to the live site or repo instead.
+## // Off duty
 
-`/hygieia` permanently redirects to `/projects/hygieia`, so old links keep working.
+> **Pod:** Proposal. Unit should rest.
+> **2B:** Denied. Next episode is loading.
 
----
+Anime and manga, in quantities Command would not approve. Game and level design. Books. Travel to places that look like they were rendered. Languages installed: Tamil, English, Kannada and Japanese, N3 certified, so the subtitles are optional.
 
-## Design system
+## // Comm channels
 
-Everything is driven by CSS custom properties in `src/app/globals.css`.
+<img src=".github/avatar.png" width="200" align="left" alt="Arkhins" />
 
-**Palette** — four neon hues (`rose`, `cyan`, `lime`, `violet`). One is promoted
-to `--accent` at a time via `data-accent` on `<html>`; the swatch control in the
-nav switches it live and the whole site recolours. `--accent-2` is the paired
-secondary.
+[![Google Developers](https://img.shields.io/badge/G.DEV%2FARKHINS-4285F4?style=for-the-badge&logo=google&logoColor=white)](https://g.dev/arkhins)
+[![Telegram](https://img.shields.io/badge/TELEGRAM-26A5E4?style=for-the-badge&logo=telegram&logoColor=white)](https://t.me/arkhins)
+[![Discord](https://img.shields.io/badge/DISCORD%20%C2%B7%20arkhins.-5865F2?style=for-the-badge&logo=discord&logoColor=white)](https://discord.com/users/arkhins.)
 
-**Effects budget** — `--fx` is `1` or `0`. Every glow, blur, sweep and particle
-multiplies its intensity by it, so the lightning-bolt toggle in the nav (and
-`prefers-reduced-motion`) genuinely turns the spectacle down rather than just
-stopping one animation.
+Any channel reaches this unit. Response time: after the current episode.
 
-**Primitives** (`src/components/fx/`)
-
-| | |
-|---|---|
-| `Backdrop` | fixed stack: vignette → aurora → grid → flow field → halftone → grain |
-| `FlowField` | canvas particles advected through a sine flow field, additive neon trails |
-| `Panel` | the structural surface — 1px gradient edge clipped to a chamfer, frosted fill inset |
-| `SectionHead` | the schematic sheet header every band opens with |
-| `Scramble` | decode-on-scroll heading text |
-| `Reveal` / `Stack` | scroll-entrance wrappers |
-| `Magnetic`, `Cursor`, `Ticker`, `NeonButton`, `ScrollRail` | interaction bits |
-
-**Type** — Syne (display), Space Grotesk (UI), JetBrains Mono (HUD labels).
-
-The site is dark-only by design; neon over glass has no honest light-mode
-counterpart.
+<br clear="all" />
 
 ---
 
-## The boot screen
+<div align="center">
 
-`ARKHINS` is an exact anagram of `KRISHNA`. The intro holds the handle, glitches
-it, then flies the same seven letter elements into their new slots — no
-cross-fade, the letters actually travel. Runs once per tab in production, and on
-every refresh in development.
+<img src=".github/footer.webp" width="100%" alt="YoRHa No.2 Type B in a field of red flowers, swords planted in the ground" />
 
----
+<br />
 
-## Contact form
-
-Submissions relay to a Google Form. Two paths, picked automatically:
-
-- `POST /api/submit-google-form` when a server runtime is available (Vercel).
-- A direct browser POST into a hidden iframe when `NEXT_PUBLIC_GOOGLE_FORM_DIRECT=true`,
-  for static hosting.
-
-Field ids live once, in `contact.formEntries` in `src/data/content.json`; the
-client form and the API route both read them.
-
-`.env`:
-
-```
-GOOGLE_FORM_ACTION=...
-NEXT_PUBLIC_GOOGLE_FORM_ACTION=...
-NEXT_PUBLIC_GOOGLE_FORM_DIRECT=true
-```
-
----
-
-## Deploy
-
-Vercel picks up the App Router build as-is. `npm run predeploy` + `npm run deploy`
-publishes to GitHub Pages, but note the contact API route needs a server runtime —
-on a static host, keep `NEXT_PUBLIC_GOOGLE_FORM_DIRECT=true`.
+<sub>This repository is also the source of <a href="https://arkhins.com">arkhins.com</a>, a Next.js 14 site. Setup and structure are in <a href="docs/DEVELOPMENT.md">docs/DEVELOPMENT.md</a>.</sub>
+<br /><sub>Glory to Mankind.</sub>
+</div>
