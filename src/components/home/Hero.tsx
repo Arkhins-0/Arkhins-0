@@ -32,10 +32,11 @@ export function Hero({ site }: { site: Site }) {
       </div>
       <Sakura count={10} />
 
-      {/* One column, top to bottom: name, then the picture, then the rest, so the art is never cropped at the side. */}
-      <div className="ak-shell relative flex flex-col items-center pb-20 text-center lg:pb-24">
-        <div className="relative z-10 w-full">
-          <div className="flex flex-wrap items-center justify-center gap-3">
+      {/* Phones: one column, name, then the picture, then the rest. Desktop: words on the left, the
+          character on the right, spanning both rows. */}
+      <div className="ak-shell relative grid items-center pb-20 text-center lg:grid-cols-[1.1fr_0.9fr] lg:gap-x-12 lg:pb-24 lg:text-left">
+        <div className="relative z-10 w-full lg:col-start-1 lg:row-start-1 lg:self-end">
+          <div className="flex flex-wrap items-center justify-center gap-3 lg:justify-start">
             <span className="ak-episode">
               <span>{hero.episode}</span>
               <span lang="ja">{series.kana}</span>
@@ -59,7 +60,7 @@ export function Hero({ site }: { site: Site }) {
           </h1>
         </div>
 
-        <div className="relative mx-auto mt-10 w-full max-w-[460px] text-left">
+        <div className="relative mx-auto mt-10 w-full max-w-[460px] text-left lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:mt-0 lg:max-w-[500px]">
           <div aria-hidden="true" className="ak-halo absolute left-1/2 top-[8%] aspect-square w-[88%] -translate-x-1/2 bg-white">
             <span className="ak-halftone-pink absolute inset-0 rounded-full" />
           </div>
@@ -85,19 +86,19 @@ export function Hero({ site }: { site: Site }) {
           )}
         </div>
 
-        <div className="relative z-10 mt-8 w-full">
-          <div className="ak-bubble ak-bubble-none mt-2 inline-block min-h-[3.6rem] min-w-[17rem] max-w-full">
+        <div className="relative z-10 mt-8 w-full lg:col-start-1 lg:row-start-2 lg:self-start">
+          <div className="ak-bubble ak-bubble-none ak-bubble-lg-tail mt-2 inline-block min-h-[3.6rem] min-w-[17rem] max-w-full">
             <p className="text-sm font-bold text-[color:var(--ak-ink-2)]">{profile.headline}</p>
             <p className="ak-display text-xl md:text-2xl">
               <RoleCycler roles={profile.roles} />
             </p>
           </div>
 
-          <p className="mx-auto mt-8 max-w-2xl text-base font-medium leading-relaxed text-[color:var(--ak-ink-2)] md:text-lg">
+          <p className="mx-auto mt-8 max-w-2xl text-base font-medium leading-relaxed text-[color:var(--ak-ink-2)] md:text-lg lg:mx-0 lg:max-w-xl">
             {fill(copy.blurb, { tagline: profile.tagline ?? '', city: profile.city })}
           </p>
 
-          <div className="mt-8 flex flex-wrap justify-center gap-4">
+          <div className="mt-8 flex flex-wrap justify-center gap-4 lg:justify-start">
             <Link href={copy.primaryHref} className="ak-btn">
               {copy.primaryAction}
               <ArrowRight size={18} />
@@ -111,7 +112,7 @@ export function Hero({ site }: { site: Site }) {
           </div>
 
           {hero.stats.length > 0 && (
-            <dl className="mx-auto mt-10 grid max-w-xl grid-cols-3 gap-3">
+            <dl className="mx-auto mt-10 grid max-w-xl grid-cols-3 gap-3 lg:mx-0">
               {hero.stats.map((s) => (
                 <div key={s.label} className="ak-cel-sm flex flex-col px-3 py-3 text-center">
                   <dt className="order-2 mt-1 text-[0.7rem] font-bold leading-tight text-[color:var(--ak-ink-2)]">{s.label}</dt>

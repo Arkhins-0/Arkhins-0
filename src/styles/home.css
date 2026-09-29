@@ -276,6 +276,13 @@ button:where(.ak-btn) {
 .ak-bubble-none::after {
   display: none;
 }
+/* Tail-less on phones, where the bubble is centred; the tail comes back beside the desktop hero. */
+@media (min-width: 1024px) {
+  .ak-bubble-lg-tail::before,
+  .ak-bubble-lg-tail::after {
+    display: block;
+  }
+}
 
 /* ------------------------------------------------------------ hero sky */
 
