@@ -1055,7 +1055,7 @@
 }
 
 /* phones */
-.pg-scholar .st-phones {
+.pg-scholar .st-phone-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(118px, 1fr));
   gap: 1.1rem;
@@ -1072,7 +1072,7 @@
   border-radius: 14px;
 }
 @media (max-width: 480px) {
-  .pg-scholar .st-phones {
+  .pg-scholar .st-phone-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }

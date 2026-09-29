@@ -1,6 +1,6 @@
 ![BidNest — Modern Chit Fund Management](/projects/bidnest/thumbnail.png)
 
-https://bid-nest-omega.vercel.app
+https://bidnest.arkhins.com
 
 # BidNest — My Most Significant Financial Platform
 

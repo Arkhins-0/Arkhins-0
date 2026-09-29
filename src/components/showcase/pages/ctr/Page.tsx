@@ -18,7 +18,8 @@ const serif = Newsreader({
 const grot = Archivo({ subsets: ['latin'], weight: ['500', '700', '800'], variable: '--ctr-grot', display: 'swap' });
 
 /** Decorative masthead of the imaginary racing weekly this page is printed in. */
-const MAG = 'TURBO';
+/** Masthead name: CTR, short for Chennai Turbo Riders. */
+const MAG = 'CTR';
 
 /**
  * Sprite spots in page order. The first four are the strongest (cover star, spec sheet, numbers, pull

@@ -2716,7 +2716,7 @@
     "cover": "/projects/bidnest/cover.png",
     "images": [],
     "githubUrl": "https://github.com/Krishna-Vijay-G/BidNest.git",
-    "liveUrl": "https://bidnest-omega.vercel.app",
+    "liveUrl": "https://bidnest.arkhins.com",
     "markdownFile": "/projects/bidnest/case-study.md",
     "content": null
   },
@@ -3378,7 +3378,7 @@
     "cover": "/projects/ctr-unified/cover.png",
     "images": [],
     "githubUrl": "https://github.com/Arkhins-0/CTRSports-new",
-    "liveUrl": "https://www.ctrsports.in",
+    "liveUrl": "https://ctr.arkhins.com",
     "markdownFile": null,
     "content": {
       "version": 1,
@@ -3419,8 +3419,8 @@
         ],
         "actions": [
           {
-            "label": "Visit ctrsports.in",
-            "href": "https://www.ctrsports.in",
+            "label": "Visit ctr.arkhins.com",
+            "href": "https://ctr.arkhins.com",
             "external": true
           },
           {
@@ -3449,7 +3449,7 @@
           }
         ],
         "stage": {
-          "url": "ctrsports.in",
+          "url": "ctr.arkhins.com",
           "center": {
             "light": "/projects/ctr-unified/mock/desktop/home.png",
             "alt": "The ctrsports.in home page: a magazine lead story under the round ticker"
@@ -4132,8 +4132,8 @@
           "accentWord": "runs itself?",
           "actions": [
             {
-              "label": "Visit ctrsports.in",
-              "href": "https://www.ctrsports.in",
+              "label": "Visit ctr.arkhins.com",
+              "href": "https://ctr.arkhins.com",
               "external": true
             },
             {

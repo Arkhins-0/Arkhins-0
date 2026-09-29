@@ -608,7 +608,7 @@ function BlockView({
           <div id={`${id}-h`}><SectionHead head={b.head} num={num} /></div>
           {b.head.lede && <p className="st-lede">{b.head.lede}</p>}
           <figure className="st-figure">
-            <div className="st-phones">
+            <div className="st-phone-grid">
               {b.items.map((img, k) => (
                 <div className="st-sub" key={k}>
                   <Plate items={b.items} index={k} className="st-plate st-phone">
