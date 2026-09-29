@@ -1,7 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import { Magnetic } from './Magnetic';
 import { cn } from '@/lib/utils';
 
 type Variant = 'solid' | 'ghost';
@@ -11,7 +10,6 @@ type Common = {
   variant?: Variant;
   className?: string;
   icon?: React.ReactNode;
-  magnetic?: boolean;
 };
 
 type AsLink = Common & {
@@ -37,7 +35,7 @@ const skin: Record<Variant, string> = {
   ghost: 'border border-white/15 text-ink hover:border-accent/60 hover:text-accent glass',
 };
 
-/** Shared button interior: hover shine sweep, solid-variant glow, label, and icon. */
+/** Shared button interior: solid-variant hover glow, label, and icon. */
 function Inner({
   children,
   icon,
@@ -49,15 +47,11 @@ function Inner({
 }) {
   return (
     <>
-      <span
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 -translate-x-full skew-x-12 bg-white/25 transition-transform duration-700 ease-swift group-hover/btn:translate-x-full"
-      />
       {variant === 'solid' && (
         <span
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover/btn:opacity-100"
-          style={{ boxShadow: '0 0 34px rgb(var(--accent-rgb) / 0.85)' }}
+          style={{ boxShadow: '0 0 18px rgb(var(--accent-rgb) / 0.4)' }}
         />
       )}
       <span className="relative">{children}</span>
@@ -70,20 +64,18 @@ function Inner({
   );
 }
 
-/** Notched neon CTA rendered as a link, external anchor, or button, optionally magnetic. */
+/** Notched neon CTA rendered as a link, external anchor, or button. */
 export function NeonButton(props: AsLink | AsButton) {
   const {
     children,
     variant = 'solid',
     className,
     icon,
-    magnetic = true,
   } = props;
   const cls = cn(base, skin[variant], className);
   const style = { ['--notch' as string]: '12px' };
 
-  const node =
-    'href' in props && props.href !== undefined ? (
+  return 'href' in props && props.href !== undefined ? (
       props.external ? (
         <a
           href={props.href}
@@ -116,12 +108,4 @@ export function NeonButton(props: AsLink | AsButton) {
         </Inner>
       </button>
     );
-
-  return magnetic ? (
-    <Magnetic strength={0.22} className="inline-flex">
-      {node}
-    </Magnetic>
-  ) : (
-    node
-  );
 }

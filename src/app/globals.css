@@ -246,9 +246,7 @@ video {
 
   .neon-text {
     color: var(--accent);
-    text-shadow:
-      0 0 calc(14px * var(--fx)) rgb(var(--accent-rgb) / 0.75),
-      0 0 calc(46px * var(--fx)) rgb(var(--accent-rgb) / 0.32);
+    text-shadow: 0 0 calc(12px * var(--fx)) rgb(var(--accent-rgb) / 0.35);
   }
 
   .neon-line {
@@ -259,7 +257,7 @@ video {
       rgb(var(--accent-2-rgb) / 0.85) 78%,
       transparent
     );
-    box-shadow: 0 0 calc(18px * var(--fx)) rgb(var(--accent-rgb) / 0.6);
+    box-shadow: 0 0 calc(8px * var(--fx)) rgb(var(--accent-rgb) / 0.35);
   }
 
   .neon-fill {
@@ -332,53 +330,7 @@ video {
   }
 }
 
-/* ------------------------------------------------------- staged boot: page hidden while only the emblem is on stage, looping animations parked until the curtain tears */
-
-html[data-stage='emblem'] :is(header, main, footer) {
-  content-visibility: hidden;
-}
-
-html[data-stage='emblem'] :is(header, main, footer) *,
-html[data-stage='boot'] :is(header, main, footer) * {
-  animation-play-state: paused !important;
-}
-
 /* ------------------------------------------------------------ motion */
-
-@keyframes drift-a {
-  0%,
-  100% {
-    transform: translate3d(0, 0, 0) scale(1);
-  }
-  33% {
-    transform: translate3d(6%, -8%, 0) scale(1.14);
-  }
-  66% {
-    transform: translate3d(-5%, 5%, 0) scale(0.94);
-  }
-}
-
-@keyframes drift-b {
-  0%,
-  100% {
-    transform: translate3d(0, 0, 0) scale(1.05);
-  }
-  40% {
-    transform: translate3d(-9%, 6%, 0) scale(0.9);
-  }
-  75% {
-    transform: translate3d(7%, 9%, 0) scale(1.2);
-  }
-}
-
-@keyframes rail-run {
-  0% {
-    background-position: 0% 0;
-  }
-  100% {
-    background-position: -200% 0;
-  }
-}
 
 @keyframes ticker {
   from {
@@ -401,42 +353,10 @@ html[data-stage='boot'] :is(header, main, footer) * {
   }
 }
 
-@keyframes flicker {
-  0%,
-  92%,
-  100% {
-    opacity: 1;
-  }
-  93% {
-    opacity: 0.42;
-  }
-  95% {
-    opacity: 0.92;
-  }
-  97% {
-    opacity: 0.55;
-  }
-}
-
-@keyframes rotate360 {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
 /* Horizontal turn for the nav emblem — a flat spin about the Y axis. */
 @keyframes spin-y {
   to {
     transform: rotateY(360deg);
-  }
-}
-
-@keyframes grid-slide {
-  from {
-    background-position: 0 0;
-  }
-  to {
-    background-position: 0 44px;
   }
 }
 
@@ -519,12 +439,6 @@ html[data-stage='boot'] :is(header, main, footer) * {
 .prose-neon img {
   border: 1px solid var(--glass-line);
   margin-bottom: 1em;
-}
-
-/* While the custom cursor is live, suppress every native cursor */
-.cursor-hidden,
-.cursor-hidden * {
-  cursor: none !important;
 }
 
 /* Any element that should scroll on its own without a visible bar */

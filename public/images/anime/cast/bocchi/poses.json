@@ -1,0 +1,55 @@
+{
+  "poses": [
+    "/images/anime/cast/bocchi/pose-01.webp",
+    "/images/anime/cast/bocchi/pose-02.webp",
+    "/images/anime/cast/bocchi/pose-03.webp",
+    "/images/anime/cast/bocchi/pose-04.webp",
+    "/images/anime/cast/bocchi/pose-05.webp",
+    "/images/anime/cast/bocchi/pose-06.webp",
+    "/images/anime/cast/bocchi/pose-07.webp",
+    "/images/anime/cast/bocchi/pose-08.webp"
+  ],
+  "face": "/images/anime/cast/bocchi/face.webp",
+  "credits": [
+    {
+      "file": "pose-01.webp",
+      "source": "https://bocchi-the-rock.fandom.com/wiki/File:Hitori_Gotoh_Character_Design_1.png",
+      "kind": "cutout"
+    },
+    {
+      "file": "pose-02.webp",
+      "source": "https://bocchi-the-rock.fandom.com/wiki/File:Bocchi_the_Rock!_Anime_Character_Key_Visual.png",
+      "kind": "cutout"
+    },
+    {
+      "file": "pose-03.webp",
+      "source": "https://bocchi-the-rock.fandom.com/wiki/File:Hitori_Gotoh_Model_Sheet_2.png",
+      "kind": "cutout"
+    },
+    {
+      "file": "pose-04.webp",
+      "source": "https://bocchi-the-rock.fandom.com/wiki/File:Bocchi_the_Rock!_Re-_Celebration_Illustration_4.png",
+      "kind": "cutout"
+    },
+    {
+      "file": "pose-05.webp",
+      "source": "https://bocchi-the-rock.fandom.com/wiki/File:Hitori_Gotoh_Model_Sheet_2.png",
+      "kind": "cutout"
+    },
+    {
+      "file": "pose-06.webp",
+      "source": "https://bocchi-the-rock.fandom.com/wiki/File:Hitori_Gotoh_Character_Design_2.png",
+      "kind": "cutout"
+    },
+    {
+      "file": "pose-07.webp",
+      "source": "https://bocchi-the-rock.fandom.com/wiki/File:Hitori_Gotoh_Model_Sheet_2.png",
+      "kind": "cutout"
+    },
+    {
+      "file": "pose-08.webp",
+      "source": "https://bocchi-the-rock.fandom.com/wiki/File:Hitori_movie.png",
+      "kind": "cutout"
+    }
+  ]
+}

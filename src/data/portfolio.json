@@ -21,14 +21,14 @@
     ],
     "author": "Krishna Vijay G",
     "siteUrl": "https://arkhins.com",
-    "ogImage": "/images/OG.png",
-    "ogAlt": "Krishna Vijay G — Portfolio"
+    "ogImage": "/images/og-anime.png",
+    "ogAlt": "Krishna Vijay G, anime title card: UI/UX, Full-stack, AI/ML"
   },
   "basics": {
     "name": "Krishna Vijay G",
     "headline": "Versatile Tech Fresher",
     "tagline": "Crafting Digital Experiences with Code & Design",
-    "email": "krishnavijay.gkv@gmail.com",
+    "email": "arkhins@arkhins.com",
     "location": {
       "city": "Chennai",
       "state": "Tamil Nadu",

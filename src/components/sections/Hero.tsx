@@ -1,13 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import {
-  AnimatePresence,
-  motion,
-  useMotionValue,
-  useSpring,
-  useTransform,
-} from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { ArrowUpRight, MapPin, MoveDown } from 'lucide-react';
 import { FaGithub, FaInstagram, FaLinkedin, FaTelegram } from 'react-icons/fa6';
 import { FaDiscord } from 'react-icons/fa';
@@ -15,7 +9,6 @@ import { SiGoogle } from 'react-icons/si';
 import portfolioData from '@/data/portfolio.json';
 import content from '@/data/content.json';
 import { NeonButton, Ticker } from '@/components/fx';
-import { useUI } from '@/context/UIContext';
 import { cn, fill } from '@/lib/utils';
 
 const { basics, socialLinks } = portfolioData;
@@ -51,7 +44,7 @@ const FADE =
   'linear-gradient(to bottom, #000 66%, rgba(0,0,0,0.45) 86%, transparent 99%)';
 
 /** Portrait: transparent PNG with duotone echoes, rim glow and bottom fade. */
-function Portrait({ src, tilt }: { src: string; tilt: { rx: any; ry: any } }) {
+function Portrait({ src }: { src: string }) {
   const [failed, setFailed] = useState(false);
   const imgRef = useRef<HTMLImageElement>(null);
 
@@ -103,10 +96,7 @@ function Portrait({ src, tilt }: { src: string; tilt: { rx: any; ry: any } }) {
   }
 
   return (
-    <motion.div
-      style={{ rotateX: tilt.rx, rotateY: tilt.ry, transformPerspective: 1200 }}
-      className="relative mx-auto w-full max-w-[36rem] lg:ml-auto lg:mr-[-3rem] lg:max-w-[42rem] xl:mr-[-4.5rem]"
-    >
+    <div className="relative mx-auto w-full max-w-[36rem] lg:ml-auto lg:mr-[-3rem] lg:max-w-[42rem] xl:mr-[-4.5rem]">
       <div
         aria-hidden="true"
         className="absolute inset-x-2 bottom-[6%] h-40 rounded-[50%] opacity-[calc(0.75*var(--fx))] blur-[46px]"
@@ -152,7 +142,7 @@ function Portrait({ src, tilt }: { src: string; tilt: { rx: any; ry: any } }) {
         }}
         draggable={false}
       />
-    </motion.div>
+    </div>
   );
 }
 
@@ -219,75 +209,11 @@ function HudChip({
 
 /** Hero: full-viewport intro with portrait, role roller and marquee. */
 export function Hero() {
-  const { fx } = useUI();
-
-  const px = useMotionValue(0);
-  const py = useMotionValue(0);
-  const sx = useSpring(px, { stiffness: 90, damping: 20 });
-  const sy = useSpring(py, { stiffness: 90, damping: 20 });
-
-  const rx = useTransform(sy, [-0.5, 0.5], [7, -7]);
-  const ry = useTransform(sx, [-0.5, 0.5], [-9, 9]);
-  const haloX = useTransform(sx, [-0.5, 0.5], [26, -26]);
-  const haloY = useTransform(sy, [-0.5, 0.5], [18, -18]);
-
-  useEffect(() => {
-    if (!fx) return;
-    const onMove = (e: PointerEvent) => {
-      if (e.pointerType !== 'mouse') return;
-      px.set(e.clientX / window.innerWidth - 0.5);
-      py.set(e.clientY / window.innerHeight - 0.5);
-    };
-    window.addEventListener('pointermove', onMove, { passive: true });
-    return () => window.removeEventListener('pointermove', onMove);
-  }, [fx, px, py]);
-
   return (
     <section
       id="home"
       className="relative flex min-h-[100svh] flex-col justify-between overflow-hidden pb-0 pt-28 md:pt-36"
     >
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 bottom-0 h-[42vh] opacity-[calc(0.8*var(--fx))]"
-        style={{ perspective: '240px', perspectiveOrigin: '50% 0%' }}
-      >
-        <div
-          className="absolute inset-0 origin-bottom animate-grid-slide"
-          style={{
-            transform: 'rotateX(74deg)',
-            backgroundImage:
-              'linear-gradient(rgb(var(--accent-rgb) / 0.38) 1px, transparent 1px), linear-gradient(90deg, rgb(var(--accent-rgb) / 0.22) 1px, transparent 1px)',
-            backgroundSize: '44px 44px',
-            maskImage: 'linear-gradient(to top, #000 5%, transparent 78%)',
-            WebkitMaskImage:
-              'linear-gradient(to top, #000 5%, transparent 78%)',
-          }}
-        />
-      </div>
-
-      <motion.div
-        aria-hidden="true"
-        style={{ x: haloX, y: haloY }}
-        className="pointer-events-none absolute right-[6%] top-[16%] hidden h-[34rem] w-[34rem] lg:block xl:right-[10%]"
-      >
-        <div
-          className="absolute inset-0 animate-orbit-slow rounded-full opacity-[calc(0.4*var(--fx))] blur-[2px]"
-          style={{
-            background:
-              'conic-gradient(from 0deg, transparent 0deg, rgb(var(--accent-rgb) / 0.55) 40deg, transparent 120deg, rgb(var(--accent-2-rgb) / 0.4) 220deg, transparent 300deg)',
-            maskImage:
-              'radial-gradient(circle, transparent 61%, #000 62%, #000 66%, transparent 67%)',
-            WebkitMaskImage:
-              'radial-gradient(circle, transparent 61%, #000 62%, #000 66%, transparent 67%)',
-          }}
-        />
-        <div className="absolute inset-[9%] rounded-full border border-white/8" />
-        <div
-          className="absolute inset-[16%] animate-orbit-rev rounded-full border border-dashed border-accent/25"
-        />
-      </motion.div>
-
       <div className="shell relative z-10 flex-1">
         <div className="relative grid items-center gap-10 lg:grid-cols-[1fr_1.12fr] lg:gap-4">
           <div className="relative z-10 order-1 lg:order-1">
@@ -312,7 +238,7 @@ export function Hero() {
               className="mt-6 font-display text-[clamp(2.9rem,9.5vw,7.2rem)] font-extrabold leading-[0.86] tracking-tightest"
             >
               <span className="block">{FIRST.toUpperCase()}</span>
-              <span className="stroke-text block whitespace-nowrap animate-flicker">
+              <span className="stroke-text block whitespace-nowrap">
                 {SURNAME.toUpperCase()}
               </span>
             </motion.h1>
@@ -402,17 +328,14 @@ export function Hero() {
           >
             <motion.div
               aria-hidden="true"
-              initial={{ opacity: 0, scale: 1.12, x: '-50%', y: '-50%' }}
-              animate={{ opacity: 1, scale: 1, x: '-50%', y: '-50%' }}
-              transition={{ delay: 0.45, duration: 1.4, ease: [0.22, 1, 0.36, 1] }}
+              initial={{ opacity: 0, x: '-50%', y: '-50%' }}
+              animate={{ opacity: 1, x: '-50%', y: '-50%' }}
+              transition={{ delay: 0.45, duration: 0.8 }}
               className="pointer-events-none absolute left-[97%] top-[36%] -z-10 aspect-[473/512] w-[62%] opacity-[calc(0.3*var(--fx))]"
-              style={{ perspective: '1400px' }}
             >
               <div
                 className="h-full w-full"
                 style={{
-                  animation: 'spin-y 20s linear infinite',
-                  transformStyle: 'preserve-3d',
                   WebkitMaskImage: `url(${BRAND.emblem})`,
                   maskImage: `url(${BRAND.emblem})`,
                   WebkitMaskSize: 'contain',
@@ -429,7 +352,7 @@ export function Hero() {
               />
             </motion.div>
 
-            <Portrait src={basics.portrait} tilt={{ rx, ry }} />
+            <Portrait src={basics.portrait} />
 
             {COPY.chips.map((chip, i) => (
               <HudChip

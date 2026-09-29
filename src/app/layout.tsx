@@ -2,10 +2,9 @@ import type { Metadata, Viewport } from 'next';
 import { Syne, Space_Grotesk, JetBrains_Mono } from 'next/font/google';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import './globals.css';
+import './anime.css';
 import { UIProvider } from '@/context/UIContext';
-import { Backdrop, Cursor, ScrollRail } from '@/components/fx';
-import { Boot } from '@/components/layout/Boot';
-import portfolioData from '@/data/portfolio.json';
+import { getSiteDoc, type Portfolio } from '@/lib/site';
 import content from '@/data/content.json';
 
 const display = Syne({
@@ -28,9 +27,10 @@ const mono = JetBrains_Mono({
   display: 'swap',
 });
 
-const { meta, basics, socialLinks } = portfolioData;
-
-export const metadata: Metadata = {
+/** Title, description and sharing tags come from the profile document, so they are editable in /admin. */
+export async function generateMetadata(): Promise<Metadata> {
+  const { meta, basics } = await getSiteDoc('portfolio');
+  return {
   metadataBase: new URL(meta.siteUrl),
   title: {
     default: meta.title,
@@ -68,10 +68,11 @@ export const metadata: Metadata = {
     description: meta.description,
     images: [meta.ogImage],
   },
-};
+  };
+}
 
 // Person schema so search engines associate "Krishna Vijay" / "Krishna Vijay G." queries with this site
-const personJsonLd = {
+const personJsonLd = ({ meta, basics, socialLinks }: Portfolio) => ({
   '@context': 'https://schema.org',
   '@type': 'Person',
   name: basics.name,
@@ -88,20 +89,21 @@ const personJsonLd = {
     addressCountry: basics.location.country,
   },
   sameAs: socialLinks.map((link) => link.url),
-};
+});
 
 export const viewport: Viewport = {
-  themeColor: content.theme.accents[0].swatch,
+  themeColor: '#ff4f8b',
   width: 'device-width',
   initialScale: 1,
   colorScheme: 'dark',
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const portfolio = await getSiteDoc('portfolio');
   return (
     <html
       lang="en"
@@ -110,16 +112,23 @@ export default function RootLayout({
       className={`${display.variable} ${sans.variable} ${mono.variable}`}
       suppressHydrationWarning
     >
+      <head>
+        {/* Anime theme faces (Dela Gothic One, M PLUS Rounded 1c). Both carry Japanese glyphs split into
+            hundreds of unicode-range slices, so they load from Google on demand instead of via next/font. */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        {/* eslint-disable-next-line @next/next/no-page-custom-font -- loaded once in the root layout */}
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=M+PLUS+Rounded+1c:wght@400;500;700;800;900&display=swap"
+        />
+      </head>
       <body className="min-h-screen overflow-x-hidden bg-bg text-ink antialiased">
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd(portfolio)) }}
         />
         <UIProvider>
-          <Backdrop />
-          <ScrollRail />
-          <Cursor />
-          <Boot />
           {children}
         </UIProvider>
         <SpeedInsights />

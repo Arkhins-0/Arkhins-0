@@ -365,7 +365,6 @@
   },
   "storage": {
     "accent": "ui:accent",
-    "effects": "ui:effects",
-    "introSeen": "ui:intro-seen"
+    "effects": "ui:effects"
   }
 }

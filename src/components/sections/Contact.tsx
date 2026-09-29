@@ -304,7 +304,6 @@ export function Contact() {
                   <NeonButton
                     type="submit"
                     disabled={status === 'sending'}
-                    magnetic={false}
                     icon={<Send size={14} />}
                   >
                     {status === 'sending' ? COPY.sendingLabel : COPY.submitLabel}

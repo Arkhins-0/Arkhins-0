@@ -1,7 +1,6 @@
 'use client';
 
 import { Reveal } from './Reveal';
-import { Scramble } from './Scramble';
 import { cn } from '@/lib/utils';
 
 /** Schematic section header: index chip, hazard tape, mono label, edge rule, then title and lede. */
@@ -49,7 +48,7 @@ export function SectionHead({
             centered && 'text-center'
           )}
         >
-          <Scramble text={title} speed={1} />
+          {title}
           {accentWord && (
             <>
               {' '}

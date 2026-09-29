@@ -1,11 +1,10 @@
 import { NextResponse } from 'next/server';
-import content from '@/data/content.json';
-
-const ENTRY = content.contact.formEntries;
+import { getSiteDoc } from '@/lib/site';
 
 /** Relays a contact submission to the form endpoint configured in the environment. */
 export async function POST(req: Request) {
   try {
+    const ENTRY = (await getSiteDoc('copy')).contact.formEntries;
     const body = await req.json();
     const { name, email, subject, message } = body || {};
 

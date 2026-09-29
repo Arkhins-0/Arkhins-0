@@ -1,11 +1,20 @@
 -- Portfolio content schema (Postgres / Neon).
 --
--- Not wired up yet: today the site reads the same rows from src/data/db/*.json through
--- src/lib/content.ts. When the database and the admin dashboard land, only that module changes.
--- Column names are snake_case here; the repository maps them to the camelCase row types in
--- src/types/content.ts (e.g. github_url -> githubUrl).
+-- Read by src/lib/content.ts (projects, education) and src/lib/site.ts (site_documents); written by
+-- the /admin dashboard. Apply and seed with `npm run db:setup`. Column names are snake_case here;
+-- src/lib/tables.ts maps them to the camelCase row types in src/types/content.ts.
 
 create extension if not exists pgcrypto;
+
+-- ------------------------------------------------------------ site documents
+-- Whole JSON documents edited as a unit: `portfolio` (profile, experience, skills …),
+-- `anime` (theme images, labels, section titles) and `copy` (interface strings).
+-- Defaults live in src/data/{portfolio,anime,content}.json.
+create table if not exists site_documents (
+  key         text primary key,
+  data        jsonb       not null,
+  updated_at  timestamptz not null default now()
+);
 
 -- ---------------------------------------------------------------- education
 create table if not exists education (

@@ -1,0 +1,66 @@
+{
+  "poses": [
+    "/images/anime/cast/megumin/pose-01.webp",
+    "/images/anime/cast/megumin/pose-02.webp",
+    "/images/anime/cast/megumin/pose-03.webp",
+    "/images/anime/cast/megumin/pose-04.webp",
+    "/images/anime/cast/megumin/pose-05.webp",
+    "/images/anime/cast/megumin/pose-06.webp",
+    "/images/anime/cast/megumin/pose-07.webp",
+    "/images/anime/cast/megumin/pose-08.webp",
+    "/images/anime/cast/megumin/pose-09.webp"
+  ],
+  "face": "/images/anime/cast/megumin/face.webp",
+  "credits": [
+    {
+      "file": "pose-01.webp",
+      "source": "https://konosuba.fandom.com/wiki/File:LN_Megumin.png",
+      "kind": "cutout"
+    },
+    {
+      "file": "pose-02.webp",
+      "source": "https://konofan.fandom.com/wiki/File:Megumin_-_Starter.png",
+      "kind": "cutout"
+    },
+    {
+      "file": "pose-03.webp",
+      "source": "https://konosuba.fandom.com/wiki/File:Megumin_FD.png",
+      "kind": "cutout"
+    },
+    {
+      "file": "pose-04.webp",
+      "source": "https://konofan.fandom.com/wiki/File:Megumin_-_Arc_Wizard.png",
+      "kind": "cutout"
+    },
+    {
+      "file": "pose-05.webp",
+      "source": "https://konosuba.fandom.com/wiki/File:Megumin_Uchi_Hime_4.png",
+      "kind": "cutout"
+    },
+    {
+      "file": "pose-06.webp",
+      "source": "https://konosuba.fandom.com/wiki/File:Megumin_RPG_Game.png",
+      "kind": "cutout"
+    },
+    {
+      "file": "pose-07.webp",
+      "source": "https://konosuba.fandom.com/wiki/File:Megumin_Artwork_03.png",
+      "kind": "cutout"
+    },
+    {
+      "file": "pose-08.webp",
+      "source": "https://konosuba.fandom.com/wiki/File:Megumin_Uchi_Hime_1.png",
+      "kind": "cutout"
+    },
+    {
+      "file": "pose-09.webp",
+      "source": "https://konofan.fandom.com/wiki/File:Megumin_-_Chuunibyou_Girl.png",
+      "kind": "cutout"
+    },
+    {
+      "file": "face.webp",
+      "source": "https://konosuba.fandom.com/wiki/File:Megumin_3rd.png",
+      "kind": "cutout"
+    }
+  ]
+}

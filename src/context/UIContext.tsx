@@ -20,10 +20,6 @@ const DEFAULT_ACCENT = ACCENT_IDS[0];
 export const swatchFor = (id: Accent) =>
   ACCENTS.find((a) => a.id === id)?.swatch ?? ACCENTS[0].swatch;
 
-/** Boot stages: 'emblem' (curtain + emblem only), 'boot' (page lays out behind the curtain), 'live' (everything runs). */
-export type BootStage = 'emblem' | 'boot' | 'live';
-const STAGE_ORDER: BootStage[] = ['emblem', 'boot', 'live'];
-
 type UIState = {
   accent: Accent;
   setAccent: (a: Accent) => void;
@@ -31,32 +27,17 @@ type UIState = {
   fx: boolean;
   toggleFx: () => void;
   ready: boolean;
-  bootStage: BootStage;
-  setBootStage: (s: BootStage) => void;
 };
 
 const Ctx = createContext<UIState | null>(null);
 
 const { accent: KEY_ACCENT, effects: KEY_FX } = content.storage;
 
-/** Provides accent, FX toggle, hydration readiness, and the forward-only boot stage. */
+/** Provides accent, FX toggle and hydration readiness. */
 export function UIProvider({ children }: { children: React.ReactNode }) {
   const [accent, setAccentState] = useState<Accent>(DEFAULT_ACCENT);
   const [fx, setFx] = useState(true);
   const [ready, setReady] = useState(false);
-  const [bootStage, setBootStageState] = useState<BootStage>('emblem');
-
-  const setBootStage = useCallback(
-    (s: BootStage) =>
-      setBootStageState((prev) =>
-        STAGE_ORDER.indexOf(s) > STAGE_ORDER.indexOf(prev) ? s : prev
-      ),
-    []
-  );
-
-  useEffect(() => {
-    document.documentElement.dataset.stage = bootStage;
-  }, [bootStage]);
 
   useEffect(() => {
     const saved = localStorage.getItem(KEY_ACCENT);
@@ -102,8 +83,6 @@ export function UIProvider({ children }: { children: React.ReactNode }) {
         fx,
         toggleFx,
         ready,
-        bootStage,
-        setBootStage,
       }}
     >
       {children}

@@ -214,7 +214,6 @@ export function Navigation() {
                 href={`/#${SECTIONS[SECTIONS.length - 1].id}`}
                 variant="ghost"
                 className="!px-4 !py-2.5"
-                magnetic={false}
                 icon={<Sparkles size={13} />}
               >
                 {nav.cta}

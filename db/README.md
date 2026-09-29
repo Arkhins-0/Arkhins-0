@@ -44,11 +44,17 @@ side by side with a slider. Types live in `src/types/content.ts`; the renderer i
 A project whose `content` is `null` still gets a page at `/projects/<slug>`: hero from the row, its
 images as a gallery, the markdown case study inline, and the outro.
 
-## Moving to Neon + object storage + admin
+## Neon, object storage and /admin
 
-1. Run `schema.sql` against the Neon database.
-2. Import the two JSON files (rows map 1:1; convert camelCase keys to snake_case).
-3. Replace the JSON reads in `src/lib/content.ts` with queries. The function signatures are already
-   async and return the same row types, so pages and components do not change.
-4. Upload images to the bucket, write `assets` rows, and point `content` URLs at them.
-5. The admin dashboard edits rows; `content` can be edited as a JSON document per block.
+- `npm run db:setup` applies `schema.sql` and seeds empty tables from the JSON files
+  (`-- --force` overwrites the database with the JSON).
+- `site_documents` holds three whole documents edited from /admin: `portfolio` (profile, experience,
+  skills, certifications …), `anime` (theme images, section titles, Japanese labels, credits) and
+  `copy` (interface strings). Stored values are laid over the bundled JSON, so new default keys appear
+  without a migration.
+- When `DATABASE_URL` is missing or a query fails, every reader falls back to the bundled JSON.
+- Uploads go to the S3-compatible bucket in `S3_BUCKET` / `AWS_*` and are served through
+  `/api/media/<key>`, so the bucket stays private. Each upload also writes an `assets` row.
+- Saving in /admin calls `revalidatePath('/', 'layout')`, so edits are live on the next request.
+- /admin has no login yet. `src/lib/admin.ts` (`guard`) is the single place to add auth;
+  `ADMIN_DISABLED=true` turns the dashboard and its API off.

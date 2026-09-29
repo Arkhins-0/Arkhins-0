@@ -8,10 +8,10 @@ const EASE = [0.22, 1, 0.36, 1] as const;
 type Dir = 'up' | 'down' | 'left' | 'right' | 'none';
 
 const offset: Record<Dir, { x: number; y: number }> = {
-  up: { x: 0, y: 34 },
-  down: { x: 0, y: -34 },
-  left: { x: 40, y: 0 },
-  right: { x: -40, y: 0 },
+  up: { x: 0, y: 16 },
+  down: { x: 0, y: -16 },
+  left: { x: 20, y: 0 },
+  right: { x: -20, y: 0 },
   none: { x: 0, y: 0 },
 };
 
@@ -36,10 +36,10 @@ export function Reveal({
   return (
     <M
       className={className}
-      initial={{ opacity: 0, x, y, filter: 'blur(6px)' }}
-      whileInView={{ opacity: 1, x: 0, y: 0, filter: 'blur(0px)' }}
+      initial={{ opacity: 0, x, y }}
+      whileInView={{ opacity: 1, x: 0, y: 0 }}
       viewport={{ once: true, amount }}
-      transition={{ duration: 0.75, delay, ease: EASE }}
+      transition={{ duration: 0.5, delay, ease: EASE }}
     >
       {children}
     </M>
@@ -54,12 +54,11 @@ export const stackParent: Variants = {
 
 /** Child variants paired with stackParent. */
 export const stackChild: Variants = {
-  hidden: { opacity: 0, y: 26, filter: 'blur(5px)' },
+  hidden: { opacity: 0, y: 12 },
   show: {
     opacity: 1,
     y: 0,
-    filter: 'blur(0px)',
-    transition: { duration: 0.65, ease: EASE },
+    transition: { duration: 0.45, ease: EASE },
   },
 };
 

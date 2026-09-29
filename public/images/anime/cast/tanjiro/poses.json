@@ -1,0 +1,36 @@
+{
+  "poses": [
+    "/images/anime/cast/tanjiro/pose-01.webp",
+    "/images/anime/cast/tanjiro/pose-02.webp",
+    "/images/anime/cast/tanjiro/pose-03.webp",
+    "/images/anime/cast/tanjiro/pose-04.webp"
+  ],
+  "face": "/images/anime/cast/tanjiro/face.webp",
+  "credits": [
+    {
+      "file": "pose-01.webp",
+      "source": "https://kimetsu-no-yaiba.fandom.com/wiki/File:Tanjiro_anime_right_face.png",
+      "kind": "cutout"
+    },
+    {
+      "file": "pose-02.webp",
+      "source": "https://kimetsu-no-yaiba.fandom.com/wiki/File:Tanjiro_(Kimetsu_Academy)_visual_Hinokami_Chronicles.png",
+      "kind": "cutout"
+    },
+    {
+      "file": "pose-03.webp",
+      "source": "https://kimetsu-no-yaiba.fandom.com/wiki/File:Final_Selection_Tanjiro_design.png",
+      "kind": "cutout"
+    },
+    {
+      "file": "pose-04.webp",
+      "source": "https://kimetsu-no-yaiba.fandom.com/wiki/File:Chibi_Tanjiro_Acrylic_Stand_Render_1.png",
+      "kind": "cutout"
+    },
+    {
+      "file": "face.webp",
+      "source": "https://kimetsu-no-yaiba.fandom.com/wiki/File:Tanjiro_anime_right_face.png",
+      "kind": "cutout"
+    }
+  ]
+}

@@ -59,15 +59,8 @@ const config: Config = {
         xs: '420px',
       },
       animation: {
-        'drift-a': 'drift-a 26s ease-in-out infinite',
-        'drift-b': 'drift-b 34s ease-in-out infinite',
-        'rail-run': 'rail-run 3.2s linear infinite',
         ticker: 'ticker var(--ticker-dur, 38s) linear infinite',
         'pulse-ring': 'pulse-ring 2.4s cubic-bezier(0,0,.2,1) infinite',
-        flicker: 'flicker 7s linear infinite',
-        'grid-slide': 'grid-slide 3.6s linear infinite',
-        'orbit-slow': 'rotate360 26s linear infinite',
-        'orbit-rev': 'rotate360 60s linear infinite reverse',
         'spin-y': 'spin-y 9s linear infinite',
       },
       transitionTimingFunction: {

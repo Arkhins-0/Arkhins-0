@@ -74,5 +74,5 @@ This project is for educational and demonstrative purposes only. Stock market pr
 This project, titled "PREDICTING THE STOCK VALUES OF MICROSOFT USING LSTM NEURAL NETWORK," was presented by:
 
 -   **Name:** Krishna Vijay. G
--   **Email ID:** krishnavijay.gkv@gmail.com
+-   **Email ID:** arkhins@arkhins.com
 -   **LinkedIn:** https://www.linkedin.com/in/krishna-vijay/

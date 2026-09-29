@@ -33,3 +33,6 @@ Thumbs.db
 
 # Testing
 coverage/
+
+# Local env (holds DB + storage secrets)
+.env

@@ -1,34 +1,49 @@
 /**
- * Content repository. The single place that knows where rows come from.
- * Today: JSON files that mirror db/schema.sql. Later: Neon queries with the same signatures.
+ * Content repository. The single place that knows where rows come from:
+ * the Neon tables in db/schema.sql, or the bundled JSON when there is no database.
  */
+import 'server-only';
+import { cache } from 'react';
 import educationRows from '@/data/db/education.json';
 import projectRows from '@/data/db/projects.json';
 import type { EducationRow, ProjectRow, ShowcaseDoc } from '@/types/content';
 import { getAssetPath } from '@/lib/utils';
+import { query, tryQuery } from '@/lib/db';
+import { TABLES, fromDb } from '@/lib/tables';
 
 const PROJECTS = projectRows as unknown as ProjectRow[];
 const EDUCATION = educationRows as unknown as EducationRow[];
 
 const bySort = <T extends { sortOrder: number }>(a: T, b: T) => a.sortOrder - b.sortOrder;
 
+const allProjects = cache(() =>
+  tryQuery(async () => {
+    const rows = await query('select * from projects order by sort_order, created_at');
+    return rows.length ? rows.map((r) => fromDb<ProjectRow>(TABLES.projects, r)) : PROJECTS;
+  }, PROJECTS)
+);
+
 /** Published projects in display order. */
 export async function listProjects(): Promise<ProjectRow[]> {
-  return PROJECTS.filter((p) => p.published).sort(bySort);
+  return (await allProjects()).filter((p) => p.published).sort(bySort);
 }
 
-/** Every slug, including unpublished ones, for static generation. */
+/** Every published slug, for static generation. */
 export async function listProjectSlugs(): Promise<string[]> {
-  return PROJECTS.filter((p) => p.published).map((p) => p.slug);
+  return (await listProjects()).map((p) => p.slug);
 }
 
 export async function getProject(slug: string): Promise<ProjectRow | null> {
-  return PROJECTS.find((p) => p.slug === slug && p.published) ?? null;
+  return (await listProjects()).find((p) => p.slug === slug) ?? null;
 }
 
-export async function listEducation(): Promise<EducationRow[]> {
-  return [...EDUCATION].sort(bySort);
-}
+export const listEducation = cache(async (): Promise<EducationRow[]> => {
+  const rows = await tryQuery(async () => {
+    const r = await query('select * from education order by sort_order, created_at');
+    return r.length ? r.map((x) => fromDb<EducationRow>(TABLES.education, x)) : EDUCATION;
+  }, EDUCATION);
+  return [...rows].sort(bySort);
+});
 
 /**
  * A project without a `content` document still gets a page: hero from the row,

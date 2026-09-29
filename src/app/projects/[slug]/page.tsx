@@ -1,9 +1,13 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { Exo_2, Fraunces, IBM_Plex_Sans, Rajdhani } from 'next/font/google';
-import { Footer } from '@/components/layout';
+import { AnimeFooter } from '@/components/anime/Footer';
+import { Backdrop, ScrollRail } from '@/components/fx';
 import { Showcase } from '@/components/showcase/Showcase';
+import { loadShowcasePage } from '@/components/showcase/pages';
 import { defaultShowcase, getProject, listProjectSlugs } from '@/lib/content';
+import { ShowcaseGuest } from '@/components/anime/ShowcaseGuest';
+import { getSite, guestsFor } from '@/lib/site';
 
 /** Serif display face, exposed as --font-serif for looks that want one (the folio look uses it). */
 const serif = Fraunces({
@@ -39,7 +43,9 @@ const plex = IBM_Plex_Sans({
   display: 'swap',
 });
 
-export const dynamicParams = false;
+/** New slugs saved from /admin render on first request instead of 404ing until the next build. */
+export const dynamicParams = true;
+export const revalidate = 300;
 
 export async function generateStaticParams() {
   return (await listProjectSlugs()).map((slug) => ({ slug }));
@@ -62,10 +68,28 @@ export default async function ProjectPage({ params }: { params: { slug: string }
   const project = await getProject(params.slug);
   if (!project) notFound();
   const doc = project.content ?? defaultShowcase(project);
+  // Same assignment as the project grids, so a project keeps its guest everywhere.
+  const [{ anime }, slugs, Custom] = await Promise.all([getSite(), listProjectSlugs(), loadShowcasePage(project.slug)]);
+  const guest = guestsFor(slugs, anime.projectCast)[project.slug];
   return (
     <div className={`${serif.variable} ${condensed.variable} ${exo.variable} ${plex.variable}`}>
-      <Showcase project={project} doc={doc} />
-      <Footer />
+      {Custom ? (
+        <Custom
+          project={project}
+          doc={doc}
+          guest={guest ? { name: guest.name, series: guest.series, poses: guest.poses ?? [] } : undefined}
+        />
+      ) : (
+        <>
+          <Backdrop />
+          <ScrollRail />
+          <Showcase project={project} doc={doc} />
+        </>
+      )}
+      <AnimeFooter />
+      {guest && (
+        <ShowcaseGuest guest={guest} label={anime.projectCast.label} closeLabel={anime.nav.closeMenu} />
+      )}
     </div>
   );
 }
