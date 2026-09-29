@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { notFound } from 'next/navigation';
 import { Exo_2, Fraunces, IBM_Plex_Sans, Rajdhani } from 'next/font/google';
 import { AnimeFooter } from '@/components/home/Footer';
@@ -49,6 +49,13 @@ export const revalidate = 300;
 
 export async function generateStaticParams() {
   return (await listProjectSlugs()).map((slug) => ({ slug }));
+}
+
+/** Tints the browser tab / address bar to the project's own look, not the home page's pink. */
+export async function generateViewport({ params }: { params: { slug: string } }): Promise<Viewport> {
+  const p = await getProject(params.slug);
+  const color = p?.themeColor ?? p?.content?.theme.accent.hex;
+  return color ? { themeColor: color } : {};
 }
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {

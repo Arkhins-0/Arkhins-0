@@ -25,6 +25,7 @@
     "githubUrl": "https://github.com/Krishna-Vijay-G/Hygieia.git",
     "liveUrl": null,
     "markdownFile": "/projects/hygieia/case-study.md",
+    "themeColor": "#e7f5ef",
     "content": {
       "version": 1,
       "theme": {
@@ -877,6 +878,7 @@
     "githubUrl": "https://github.com/Arkhins-0/bookisham",
     "liveUrl": "https://bookisham.arkhins.com",
     "markdownFile": null,
+    "themeColor": "#46181e",
     "content": {
       "version": 1,
       "theme": {
@@ -1517,6 +1519,7 @@
     "githubUrl": "https://github.com/Arkhins-0/scholar",
     "liveUrl": null,
     "markdownFile": "/projects/scholar-track/case-study.md",
+    "themeColor": "#e6e0d2",
     "content": {
       "version": 1,
       "theme": {
@@ -1998,6 +2001,7 @@
     "githubUrl": "https://github.com/Arkhins-0/spartan",
     "liveUrl": "https://spartan.arkhins.com",
     "markdownFile": null,
+    "themeColor": "#11092e",
     "content": {
       "version": 1,
       "theme": {
@@ -2718,6 +2722,7 @@
     "githubUrl": "https://github.com/Krishna-Vijay-G/BidNest.git",
     "liveUrl": "https://bidnest.arkhins.com",
     "markdownFile": "/projects/bidnest/case-study.md",
+    "themeColor": "#081b14",
     "content": null
   },
   {
@@ -2747,6 +2752,7 @@
     "githubUrl": "https://github.com/Arkhins-0/ChennaiTurboRiders",
     "liveUrl": "https://www.chennaiturboriders.in",
     "markdownFile": null,
+    "themeColor": "#141210",
     "content": {
       "version": 1,
       "theme": {
@@ -3380,6 +3386,7 @@
     "githubUrl": "https://github.com/Arkhins-0/CTRSports-new",
     "liveUrl": "https://ctr.arkhins.com",
     "markdownFile": null,
+    "themeColor": "#05070f",
     "content": {
       "version": 1,
       "theme": {
@@ -4178,6 +4185,7 @@
     "githubUrl": "https://github.com/Krishna-Vijay-G/Predicting-the-Stocks-Values-of-Microsoft.git",
     "liveUrl": null,
     "markdownFile": "/projects/msft-stock/case-study.md",
+    "themeColor": "#ffb000",
     "content": null
   }
 ]

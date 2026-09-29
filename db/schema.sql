@@ -214,6 +214,7 @@ create table if not exists projects (
   github_url    text,
   live_url      text,
   markdown_file text,
+  theme_color   text,                             -- browser tab / address-bar tint on the project page
   content       jsonb,
   created_at    timestamptz not null default now(),
   updated_at    timestamptz not null default now()
@@ -285,6 +286,9 @@ begin
     execute format('create trigger %I before update on %I for each row execute function touch_updated_at()', t || '_touch', t);
   end loop;
 end $$;
+
+-- Columns added after the first release.
+alter table projects add column if not exists theme_color text;
 
 -- Leftover from the single-document era.
 alter table if exists assets drop column if exists project_id;

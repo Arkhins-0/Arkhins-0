@@ -162,14 +162,14 @@ export const TABLES = {
     hint: 'Cards on the home page and /projects, and each /projects/<slug> page. Unpublished rows are hidden everywhere.',
     fields: [
       'slug', 'title', 'tagline', 'summary', 'description', 'category', 'role', 'year', 'date', 'status', 'featured', 'published',
-      'tags', 'thumbnail', 'cover', 'images', 'githubUrl', 'liveUrl', 'markdownFile', 'content',
+      'tags', 'thumbnail', 'cover', 'images', 'githubUrl', 'liveUrl', 'markdownFile', 'themeColor', 'content',
     ],
     casts: { tags: 'text[]', images: 'text[]', content: 'jsonb', featured: 'boolean', published: 'boolean' },
     json: ['content'],
     blank: {
       slug: 'new-project', title: 'New project', tagline: null, summary: 'One or two lines for the card.', description: null, category: 'Web',
       role: null, year: year(), date: null, status: 'In progress', featured: false, published: false, tags: [], thumbnail: '', cover: null,
-      images: [], githubUrl: null, liveUrl: null, markdownFile: null, content: null,
+      images: [], githubUrl: null, liveUrl: null, markdownFile: null, themeColor: null, content: null,
     },
   },
   cast_members: {

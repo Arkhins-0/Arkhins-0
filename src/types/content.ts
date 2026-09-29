@@ -44,6 +44,8 @@ export interface ProjectRow {
   githubUrl: string | null;
   liveUrl: string | null;
   markdownFile: string | null;
+  /** Browser tab / address-bar tint on the project page; falls back to the page accent. */
+  themeColor: string | null;
   content: ShowcaseDoc | null;
 }
 
