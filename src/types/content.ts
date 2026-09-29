@@ -183,3 +183,156 @@ export interface ShowcaseDoc {
   hero: Hero;
   sections: Block[];
 }
+
+// ----------------------------------------------------------------- résumé rows
+// One interface per table in db/schema.sql (camelCase here, snake_case there).
+
+export interface BaseRow {
+  id: string;
+  sortOrder: number;
+}
+
+export interface ProfileRow extends BaseRow {
+  name: string;
+  headline: string;
+  tagline: string | null;
+  email: string;
+  city: string;
+  state: string | null;
+  country: string;
+  bio: string;
+  /** Typed out one after another in the hero. */
+  roles: string[];
+  resumeUrl: string | null;
+  availability: string;
+  portrait: string | null;
+  profilePicture: string | null;
+  metaTitle: string;
+  metaDescription: string;
+  keywords: string[];
+  siteUrl: string;
+  ogImage: string | null;
+  ogAlt: string | null;
+}
+
+export interface SocialLinkRow extends BaseRow {
+  name: string;
+  username: string;
+  url: string;
+  icon: string;
+}
+
+export interface ExperienceRow extends BaseRow {
+  company: string;
+  position: string;
+  location: string | null;
+  startDate: string;
+  endDate: string | null;
+  current: boolean;
+  type: string | null;
+  description: string | null;
+  highlights: string[];
+  technologies: string[];
+  logo: string | null;
+  url: string | null;
+}
+
+export interface SkillCategoryRow extends BaseRow {
+  name: string;
+  description: string | null;
+}
+
+export interface SkillRow extends BaseRow {
+  category: string;
+  name: string;
+  /** Icon name under /images/skills, or a full path / URL. */
+  icon: string;
+  level: number;
+}
+
+export interface TechStackRow extends BaseRow {
+  name: string;
+  icon: string;
+}
+
+export interface CertificationRow extends BaseRow {
+  name: string;
+  issuer: string;
+  date: string;
+  category: string;
+  description: string | null;
+  credentialId: string | null;
+  credentialUrl: string | null;
+  badge: string | null;
+}
+
+export interface VolunteeringRow extends BaseRow {
+  organization: string;
+  role: string;
+  startDate: string;
+  endDate: string | null;
+  current: boolean;
+  description: string | null;
+  logo: string | null;
+}
+
+export interface WorkshopRow extends BaseRow {
+  name: string;
+  organizer: string;
+  date: string;
+  description: string | null;
+  certificateUrl: string | null;
+}
+
+export interface InterestRow extends BaseRow {
+  name: string;
+  description: string | null;
+}
+
+export interface LanguageRow extends BaseRow {
+  name: string;
+  proficiency: string;
+  /** 1–5 stars. */
+  level: number;
+}
+
+/** A role-picker character: stands for one role, with the skills and projects behind it. */
+export interface CastMemberRow extends BaseRow {
+  name: string;
+  kana: string | null;
+  series: string;
+  role: string;
+  pitch: string;
+  skills: string[];
+  projects: string[];
+  image: string;
+  face: string | null;
+  color: string;
+}
+
+/** A project's guest character. `projectSlug` null = spare, assigned to the next project without one. */
+export interface GuestRow extends BaseRow {
+  projectSlug: string | null;
+  name: string;
+  series: string;
+  line: string;
+  image: string;
+  face: string | null;
+  poses: string[];
+}
+
+/** The résumé as the pages read it, assembled from the tables above. */
+export interface Portfolio {
+  profile: ProfileRow;
+  socialLinks: SocialLinkRow[];
+  experience: ExperienceRow[];
+  skills: {
+    categories: (SkillCategoryRow & { skills: SkillRow[] })[];
+    techStack: TechStackRow[];
+  };
+  certifications: CertificationRow[];
+  volunteering: VolunteeringRow[];
+  workshops: WorkshopRow[];
+  interests: InterestRow[];
+  languages: LanguageRow[];
+}

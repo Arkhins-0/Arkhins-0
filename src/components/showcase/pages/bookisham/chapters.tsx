@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import type { Action, Block, Head, ThemedImage } from '@/types/content';
 import type { ProjectRow } from '@/types/content';
-import { Icon } from '../../ui';
+import { Icon } from '../../primitives';
 import { CastSprite } from '../cast';
 import type { PageGuest } from '../types';
 import { Manuscript, Plate, RibbonTabs } from './client';

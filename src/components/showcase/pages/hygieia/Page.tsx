@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import { IBM_Plex_Mono, IBM_Plex_Sans } from 'next/font/google';
 import type { Action, Block, Head, ThemedImage } from '@/types/content';
-import { Icon } from '../../ui';
+import { Icon } from '../../primitives';
 import { CastSprite, castSpots } from '../cast';
 import type { PageGuest, ShowcasePageProps } from '../types';
 import { ChartTabs, DoctorsNotes, LightBox, ShiftCompare } from './client';

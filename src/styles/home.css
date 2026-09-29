@@ -1,0 +1,564 @@
+/*
+ * Home page theme (anime look). Everything is scoped under .ak so the per-project showcase pages keep their own looks.
+ * Base classes are wrapped in :where() so Tailwind utilities on the same element win.
+ * Vocabulary: cel-shaded surfaces with ink outlines and hard offset shadows, halftone screentone,
+ * speed lines, sakura petals, speech bubbles and episode title cards.
+ */
+
+/* Families come from the Google Fonts link in app/layout.tsx. */
+:root {
+  --font-ak-display: 'Dela Gothic One';
+  --font-ak-body: 'M PLUS Rounded 1c';
+}
+
+.ak {
+  --ak-paper: #fff7ea;
+  --ak-paper-2: #ffeccc;
+  --ak-ink: #1c1633;
+  --ak-ink-2: #4a4368;
+  --ak-sakura: #ff4f8b;
+  --ak-sakura-soft: #ffd3e2;
+  --ak-sky: #2f8cff;
+  --ak-sky-soft: #cfe6ff;
+  --ak-sun: #ffcc29;
+  --ak-mint: #1fcf9a;
+  --ak-lilac: #9a7bff;
+  --ak-line: 3px;
+  --ak-shadow: 6px 6px 0 var(--ak-ink);
+  --ak-shadow-sm: 3px 3px 0 var(--ak-ink);
+
+  position: relative;
+  min-height: 100vh;
+  background: var(--ak-paper);
+  color: var(--ak-ink);
+  font-family: var(--font-ak-body), system-ui, sans-serif;
+  color-scheme: light;
+  overflow-x: clip;
+}
+
+body:has(.ak) {
+  background: #fff7ea;
+}
+
+.ak ::selection {
+  background: var(--ak-sakura);
+  color: #fff;
+}
+
+.ak *:focus-visible {
+  outline: 3px solid var(--ak-sky);
+  outline-offset: 3px;
+}
+
+.ak-display {
+  font-family: var(--font-ak-display), var(--font-ak-body), system-ui, sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+}
+
+.ak-shell {
+  width: 100%;
+  max-width: 1240px;
+  margin-inline: auto;
+  padding-inline: 16px;
+}
+@media (min-width: 768px) {
+  .ak-shell {
+    padding-inline: 32px;
+  }
+}
+
+.ak-section {
+  position: relative;
+  padding-block: 96px;
+  scroll-margin-top: 72px;
+}
+@media (max-width: 767px) {
+  .ak-section {
+    padding-block: 72px;
+  }
+}
+
+/* ------------------------------------------------------------ surfaces */
+
+:where(.ak-cel) {
+  background: #fff;
+  border: var(--ak-line) solid var(--ak-ink);
+  border-radius: 18px;
+  box-shadow: var(--ak-shadow);
+}
+
+:where(.ak-cel-sm) {
+  background: #fff;
+  border: 2px solid var(--ak-ink);
+  border-radius: 12px;
+  box-shadow: var(--ak-shadow-sm);
+}
+
+.ak-lift {
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.ak-lift:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: 9px 9px 0 var(--ak-ink);
+}
+
+.ak-halftone {
+  background-image: radial-gradient(circle, rgb(28 22 51 / 0.16) 1.3px, transparent 1.6px);
+  background-size: 10px 10px;
+}
+
+.ak-halftone-pink {
+  background-image: radial-gradient(circle, rgb(255 79 139 / 0.35) 1.6px, transparent 2px);
+  background-size: 12px 12px;
+}
+
+.ak-grid-paper {
+  background-image:
+    linear-gradient(rgb(47 140 255 / 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(47 140 255 / 0.08) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+/* project panel screen patterns, one per panel variant */
+.ak-stripes {
+  background: repeating-linear-gradient(-45deg, rgb(255 204 41 / 0.55) 0 10px, transparent 10px 20px);
+}
+.ak-waves {
+  background:
+    radial-gradient(circle at 10px 0, transparent 9px, rgb(154 123 255 / 0.45) 10px 12px, transparent 13px) 0 0 / 20px 14px;
+}
+.ak-stars {
+  background:
+    radial-gradient(circle, #fff 1px, transparent 1.5px) 0 0 / 22px 22px,
+    radial-gradient(circle, rgb(255 204 41 / 0.9) 1.2px, transparent 1.8px) 11px 11px / 22px 22px,
+    linear-gradient(transparent, rgb(28 22 51 / 0.85));
+}
+.ak-checker {
+  background: repeating-conic-gradient(rgb(47 140 255 / 0.35) 0 25%, transparent 0 50%) 0 0 / 22px 22px;
+}
+.ak-rays {
+  background: repeating-conic-gradient(from 0deg at 50% 110%, rgb(31 207 154 / 0.45) 0 5deg, transparent 5deg 14deg);
+}
+.ak-burst {
+  clip-path: polygon(50% 0, 61% 18%, 82% 10%, 79% 32%, 100% 40%, 84% 55%, 96% 75%, 73% 76%, 68% 98%, 50% 85%, 32% 98%, 27% 76%, 4% 75%, 16% 55%, 0 40%, 21% 32%, 18% 10%, 39% 18%);
+  box-shadow: none !important;
+  width: 4.2rem !important;
+  height: 4.2rem !important;
+}
+
+/* ------------------------------------------------------------ type bits */
+
+.ak-outline-text {
+  color: #fff;
+  -webkit-text-stroke: 2px var(--ak-ink);
+  paint-order: stroke fill;
+  text-shadow: 4px 4px 0 var(--ak-ink);
+}
+@media (min-width: 768px) {
+  .ak-outline-text {
+    -webkit-text-stroke: 3px var(--ak-ink);
+    text-shadow: 6px 6px 0 var(--ak-ink);
+  }
+}
+
+.ak-marker {
+  background: linear-gradient(transparent 58%, var(--ak-sun) 58%, var(--ak-sun) 92%, transparent 92%);
+  padding-inline: 0.12em;
+}
+
+:where(.ak-tag),
+button:where(.ak-tag) {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 2px solid var(--ak-ink);
+  border-radius: 999px;
+  padding: 3px 12px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  line-height: 1.4;
+  background: #fff;
+  white-space: nowrap;
+}
+
+.ak-kana {
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+  letter-spacing: 0.1em;
+}
+
+/* ------------------------------------------------------------ buttons */
+
+:where(.ak-btn),
+button:where(.ak-btn) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border: var(--ak-line) solid var(--ak-ink);
+  border-radius: 999px;
+  padding: 12px 24px;
+  font-weight: 800;
+  font-size: 0.95rem;
+  line-height: 1.2;
+  background: var(--ak-sakura);
+  color: #fff;
+  box-shadow: 4px 4px 0 var(--ak-ink);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+  cursor: pointer;
+}
+:where(.ak-btn):hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--ak-ink);
+}
+:where(.ak-btn):active {
+  transform: translate(3px, 3px);
+  box-shadow: 1px 1px 0 var(--ak-ink);
+}
+:where(.ak-btn):disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+.ak-btn-ghost {
+  background: #fff;
+  color: var(--ak-ink);
+}
+.ak-btn-sun {
+  background: var(--ak-sun);
+  color: var(--ak-ink);
+}
+
+/* ------------------------------------------------------------ speech bubble */
+
+:where(.ak-bubble) {
+  position: relative;
+  background: #fff;
+  border: var(--ak-line) solid var(--ak-ink);
+  border-radius: 22px;
+  padding: 16px 20px;
+  box-shadow: var(--ak-shadow-sm);
+}
+:where(.ak-bubble)::after,
+:where(.ak-bubble)::before {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-style: solid;
+}
+/* tail pointing down-left by default */
+:where(.ak-bubble)::before {
+  left: 28px;
+  bottom: -20px;
+  border-width: 20px 18px 0 0;
+  border-color: var(--ak-ink) transparent transparent transparent;
+}
+:where(.ak-bubble)::after {
+  left: 31px;
+  bottom: -13px;
+  border-width: 14px 12px 0 0;
+  border-color: #fff transparent transparent transparent;
+}
+.ak-bubble-right::before {
+  left: auto;
+  right: 28px;
+  border-width: 20px 0 0 18px;
+  border-color: var(--ak-ink) transparent transparent transparent;
+}
+.ak-bubble-right::after {
+  left: auto;
+  right: 31px;
+  border-width: 14px 0 0 12px;
+  border-color: #fff transparent transparent transparent;
+}
+.ak-bubble-none::before,
+.ak-bubble-none::after {
+  display: none;
+}
+
+/* ------------------------------------------------------------ hero sky */
+
+.ak-sky {
+  background:
+    radial-gradient(120% 80% at 70% 0%, #ffffff 0%, transparent 55%),
+    linear-gradient(180deg, #6fc3ff 0%, #a9dcff 42%, #ffe3ef 78%, var(--ak-paper) 100%);
+}
+
+.ak-sunburst {
+  position: absolute;
+  inset: -40%;
+  background: repeating-conic-gradient(from 0deg, rgb(255 255 255 / 0.28) 0deg 6deg, transparent 6deg 16deg);
+  -webkit-mask-image: radial-gradient(circle at center, #000 0%, transparent 62%);
+  mask-image: radial-gradient(circle at center, #000 0%, transparent 62%);
+}
+
+.ak-speedlines {
+  position: absolute;
+  inset: 0;
+  background: repeating-conic-gradient(from 3deg at 50% 50%, rgb(28 22 51 / 0.07) 0deg 0.6deg, transparent 0.6deg 7deg);
+  -webkit-mask-image: radial-gradient(circle at center, transparent 30%, #000 75%);
+  mask-image: radial-gradient(circle at center, transparent 30%, #000 75%);
+  pointer-events: none;
+}
+
+.ak-cloud {
+  position: absolute;
+  border-radius: 999px;
+  background: #fff;
+  filter: drop-shadow(0 6px 0 rgb(47 140 255 / 0.15));
+}
+.ak-cloud::before,
+.ak-cloud::after {
+  content: '';
+  position: absolute;
+  background: #fff;
+  border-radius: 999px;
+}
+.ak-cloud::before {
+  width: 55%;
+  height: 170%;
+  left: 14%;
+  bottom: 20%;
+}
+.ak-cloud::after {
+  width: 40%;
+  height: 130%;
+  right: 12%;
+  bottom: 25%;
+}
+
+:where(.ak-halo) {
+  position: absolute;
+  border-radius: 999px;
+  border: var(--ak-line) solid var(--ak-ink);
+  background: var(--ak-sun);
+  box-shadow: var(--ak-shadow);
+}
+
+/* ------------------------------------------------------------ sakura */
+
+.ak-petal {
+  position: absolute;
+  top: -5%;
+  width: var(--s, 14px);
+  height: calc(var(--s, 14px) * 0.8);
+  background: linear-gradient(135deg, #ffd6e6, #ff8db6);
+  border-radius: 100% 0 100% 0;
+  opacity: 0.7;
+  animation:
+    ak-fall var(--fall, 14s) linear var(--delay, 0s) infinite,
+    ak-sway var(--sway, 3s) ease-in-out var(--delay, 0s) infinite alternate;
+  pointer-events: none;
+}
+
+/* ------------------------------------------------------------ ribbon / marquee */
+
+:where(.ak-ribbon) {
+  border-block: var(--ak-line) solid var(--ak-ink);
+  background: var(--ak-sun);
+  overflow: hidden;
+}
+.ak-ribbon-track {
+  display: flex;
+  width: max-content;
+  animation: ak-marquee var(--dur, 40s) linear infinite;
+}
+
+/* ------------------------------------------------------------ episode card */
+
+:where(.ak-episode) {
+  display: inline-flex;
+  align-items: stretch;
+  border: var(--ak-line) solid var(--ak-ink);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: var(--ak-shadow-sm);
+  background: #fff;
+  font-weight: 800;
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+}
+:where(.ak-episode) > span {
+  padding: 5px 12px;
+  color: var(--ak-ink);
+}
+:where(.ak-episode) > span:first-child {
+  background: var(--ak-ink);
+  color: #fff;
+}
+
+/* ------------------------------------------------------------ manga panels */
+
+:where(.ak-panel) {
+  position: relative;
+  background: #fff;
+  border: var(--ak-line) solid var(--ak-ink);
+  box-shadow: var(--ak-shadow);
+  overflow: hidden;
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 22px), calc(100% - 22px) 100%, 0 100%);
+}
+.ak-panel-img {
+  position: relative;
+  overflow: hidden;
+  border-bottom: var(--ak-line) solid var(--ak-ink);
+  background: var(--ak-sky-soft);
+}
+.ak-panel-img img {
+  transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+:where(.ak-panel):hover .ak-panel-img img {
+  transform: scale(1.05);
+}
+
+/* ------------------------------------------------------------ stat bars */
+
+.ak-bar {
+  height: 14px;
+  border: 2px solid var(--ak-ink);
+  border-radius: 999px;
+  background: #fff;
+  overflow: hidden;
+}
+.ak-bar > span {
+  display: block;
+  height: 100%;
+  border-right: 2px solid var(--ak-ink);
+  background: repeating-linear-gradient(
+    -45deg,
+    var(--c, var(--ak-sakura)) 0 8px,
+    color-mix(in srgb, var(--c, var(--ak-sakura)) 78%, #fff) 8px 16px
+  );
+  transform-origin: left;
+  transform: scaleX(0);
+  transition: transform 1.1s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.ak-in .ak-bar > span {
+  transform: scaleX(1);
+}
+
+/* ------------------------------------------------------------ trading cards */
+
+.ak-card-ssr {
+  background: linear-gradient(160deg, #fff 0%, #fff4cf 100%);
+}
+
+.ak-stamp {
+  display: inline-block;
+  border: 3px double currentColor;
+  border-radius: 8px;
+  padding: 2px 8px;
+  font-weight: 900;
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transform: rotate(-8deg);
+}
+
+/* ------------------------------------------------------------ reveal */
+
+.ak-pop {
+  opacity: 0;
+  transform: translateY(26px) scale(0.98);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--d, 0s);
+}
+.ak-pop.ak-in {
+  opacity: 1;
+  transform: none;
+}
+
+.ak-float {
+  animation: ak-float var(--dur, 6s) ease-in-out infinite;
+}
+
+.ak-wiggle:hover {
+  animation: ak-wiggle 0.5s ease-in-out;
+}
+
+/* ------------------------------------------------------------ keyframes */
+
+@keyframes ak-fall {
+  from {
+    top: -5%;
+  }
+  to {
+    top: 105%;
+  }
+}
+@keyframes ak-sway {
+  from {
+    transform: translateX(-20px) rotate(0deg);
+  }
+  to {
+    transform: translateX(40px) rotate(220deg);
+  }
+}
+@keyframes ak-marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+@keyframes ak-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+@keyframes ak-wiggle {
+  0%,
+  100% {
+    transform: rotate(0);
+  }
+  25% {
+    transform: rotate(-4deg);
+  }
+  75% {
+    transform: rotate(4deg);
+  }
+}
+@keyframes ak-cast-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 40px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0) scale(1);
+  }
+}
+@keyframes ak-cast-info {
+  from {
+    opacity: 0;
+    transform: translateX(24px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes ak-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ak-pop {
+    opacity: 1;
+    transform: none;
+  }
+  .ak-bar > span {
+    transform: scaleX(1);
+  }
+  .ak-petal {
+    display: none;
+  }
+  .ak-ribbon-track,
+  .ak-float {
+    animation: none;
+  }
+}

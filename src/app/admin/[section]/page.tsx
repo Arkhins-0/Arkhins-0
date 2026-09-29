@@ -4,7 +4,7 @@ import { AdminApp } from '@/components/admin/AdminApp';
 import { sectionBySlug } from '@/components/admin/sections';
 import { hasDb } from '@/lib/db';
 import { hasStorage } from '@/lib/storage';
-import '../admin.css';
+import '@/styles/admin.css';
 
 export const dynamic = 'force-dynamic';
 

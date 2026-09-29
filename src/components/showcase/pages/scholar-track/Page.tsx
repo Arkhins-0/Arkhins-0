@@ -1,7 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import { Fragment } from 'react';
 import { IBM_Plex_Mono, Source_Serif_4 } from 'next/font/google';
-import portfolio from '@/data/portfolio.json';
 import type { Action, Block, Head, ShowcaseDoc, ThemedImage } from '@/types/content';
 import type { PageGuest, ShowcasePageProps } from '../types';
 import { CastSprite, castSpots } from '../cast';
@@ -27,8 +26,6 @@ const mono = IBM_Plex_Mono({
   variable: '--st-mono',
   display: 'swap',
 });
-
-const AUTHOR = portfolio.basics?.name ?? '';
 
 // ------------------------------------------------------------------ helpers
 
@@ -87,7 +84,8 @@ class Counter {
 
 // ------------------------------------------------------------------ page
 
-export default function Page({ project, doc, guest }: ShowcasePageProps) {
+export default function Page({ project, doc, guest, author }: ShowcasePageProps) {
+  const AUTHOR = author ?? '';
   const { hero } = doc;
   const year = project.year ?? (project.date?.match(/\d{4}/)?.[0] || '');
   const doi = `10.${year || '0000'}/${project.slug}`;

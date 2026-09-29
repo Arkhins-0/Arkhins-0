@@ -1,0 +1,142 @@
+[
+  {
+    "name": "Next.js",
+    "icon": "/images/skills/nextjs.png",
+    "sortOrder": 10
+  },
+  {
+    "name": "React",
+    "icon": "/images/skills/react.png",
+    "sortOrder": 20
+  },
+  {
+    "name": "JavaScript",
+    "icon": "/images/skills/javascript.png",
+    "sortOrder": 30
+  },
+  {
+    "name": "Angular",
+    "icon": "/images/skills/angular.png",
+    "sortOrder": 40
+  },
+  {
+    "name": "HTML5",
+    "icon": "/images/skills/html5.png",
+    "sortOrder": 50
+  },
+  {
+    "name": "CSS3",
+    "icon": "/images/skills/css3.png",
+    "sortOrder": 60
+  },
+  {
+    "name": "Node.js",
+    "icon": "/images/skills/nodejs.png",
+    "sortOrder": 70
+  },
+  {
+    "name": "NestJS",
+    "icon": "/images/skills/nestjs.png",
+    "sortOrder": 80
+  },
+  {
+    "name": "Python",
+    "icon": "/images/skills/python.png",
+    "sortOrder": 90
+  },
+  {
+    "name": "Java",
+    "icon": "/images/skills/java.png",
+    "sortOrder": 100
+  },
+  {
+    "name": "C++",
+    "icon": "/images/skills/cpp.png",
+    "sortOrder": 110
+  },
+  {
+    "name": "Kotlin",
+    "icon": "/images/skills/kotlin.png",
+    "sortOrder": 120
+  },
+  {
+    "name": "Figma",
+    "icon": "/images/skills/figma.png",
+    "sortOrder": 130
+  },
+  {
+    "name": "TailwindCSS",
+    "icon": "/images/skills/tailwindcss.png",
+    "sortOrder": 140
+  },
+  {
+    "name": "Git",
+    "icon": "/images/skills/git.png",
+    "sortOrder": 150
+  },
+  {
+    "name": "MongoDB",
+    "icon": "/images/skills/mongodb.png",
+    "sortOrder": 160
+  },
+  {
+    "name": "NeonDB",
+    "icon": "/images/skills/neondb.png",
+    "sortOrder": 170
+  },
+  {
+    "name": "TensorFlow",
+    "icon": "/images/skills/tensorflow.png",
+    "sortOrder": 180
+  },
+  {
+    "name": "Firebase",
+    "icon": "/images/skills/firebase.png",
+    "sortOrder": 190
+  },
+  {
+    "name": "MySQL",
+    "icon": "/images/skills/mysql.png",
+    "sortOrder": 200
+  },
+  {
+    "name": "Supabase",
+    "icon": "/images/skills/supabase.png",
+    "sortOrder": 210
+  },
+  {
+    "name": "Vercel",
+    "icon": "/images/skills/vercel.png",
+    "sortOrder": 220
+  },
+  {
+    "name": "VS Code",
+    "icon": "/images/skills/vscode.png",
+    "sortOrder": 230
+  },
+  {
+    "name": "Adobe XD",
+    "icon": "/images/skills/adobexd.png",
+    "sortOrder": 240
+  },
+  {
+    "name": "Photoshop",
+    "icon": "/images/skills/photoshop.png",
+    "sortOrder": 250
+  },
+  {
+    "name": "Illustrator",
+    "icon": "/images/skills/illustrator.png",
+    "sortOrder": 260
+  },
+  {
+    "name": "Power BI",
+    "icon": "/images/skills/powerbi.png",
+    "sortOrder": 270
+  },
+  {
+    "name": "Android",
+    "icon": "/images/skills/android.png",
+    "sortOrder": 280
+  }
+]

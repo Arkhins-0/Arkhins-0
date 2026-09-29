@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { useLightbox } from '../../ui';
+import { useLightbox } from '../../primitives';
 import type { Block, ThemedImage } from '@/types/content';
 
 /** A screenshot that opens the shared lightbox. Overlays (tags, captions) arrive as children. */

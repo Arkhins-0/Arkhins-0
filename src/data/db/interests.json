@@ -1,0 +1,62 @@
+[
+  {
+    "name": "Generative AI",
+    "description": "Fascinated by the potential of generative AI models and their applications in Content Creation.",
+    "sortOrder": 10
+  },
+  {
+    "name": "IoT Automation",
+    "description": "A technology enthusiast with a strong interest in and focus on the field of IoT automation.",
+    "sortOrder": 20
+  },
+  {
+    "name": "Game Designing",
+    "description": "Passionate about the art and technology of game development with a keen interest in Level Design.",
+    "sortOrder": 30
+  },
+  {
+    "name": "Anime",
+    "description": "Enjoys watching anime for inspiration, storytelling, and creative world-building.",
+    "sortOrder": 40
+  },
+  {
+    "name": "Web Development",
+    "description": "Building responsive and interactive web applications using modern frameworks and technologies.",
+    "sortOrder": 50
+  },
+  {
+    "name": "UI/UX Design",
+    "description": "Creating intuitive and visually appealing user experiences through thoughtful design practices.",
+    "sortOrder": 60
+  },
+  {
+    "name": "Mobile App Development",
+    "description": "Developing cross-platform mobile applications with focus on user engagement and performance.",
+    "sortOrder": 70
+  },
+  {
+    "name": "Manga",
+    "description": "Avid reader of manga, appreciating unique art styles and engaging narratives.",
+    "sortOrder": 80
+  },
+  {
+    "name": "Cloud Computing",
+    "description": "Exploring cloud platforms and services to build scalable and reliable applications.",
+    "sortOrder": 90
+  },
+  {
+    "name": "Open Source Contribution",
+    "description": "Passionate about contributing to open source projects and giving back to the developer community.",
+    "sortOrder": 100
+  },
+  {
+    "name": "Books",
+    "description": "Loves reading books across genres to expand knowledge and imagination.",
+    "sortOrder": 110
+  },
+  {
+    "name": "Travel",
+    "description": "Passionate about exploring new places, cultures, and experiences through travel.",
+    "sortOrder": 120
+  }
+]

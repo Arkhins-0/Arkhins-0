@@ -2,8 +2,7 @@
   "series": {
     "title": "ARKHINS",
     "kana": "アーキンズ",
-    "nameKana": "クリシュナ",
-    "tagline": "The Series"
+    "nameKana": "クリシュナ"
   },
   "nav": {
     "items": [
@@ -143,7 +142,10 @@
     "statusLabel": "Status",
     "languagesLabel": "Languages",
     "educationLabel": "Training grounds",
-    "interestsLabel": "Likes"
+    "interestsLabel": "Likes",
+    "sheetTitle": "Profile",
+    "sheetKana": "プロフィール",
+    "idLabel": "ID / {year}"
   },
   "story": {
     "image": "/images/anime/story.png",
@@ -200,7 +202,7 @@
         "url": "https://www.fandom.com/"
       },
       {
-        "label": "Hero: Wikipe-tan by David Revoy",
+        "label": "Wiki-chan (role picker): Wikipe-tan by David Revoy",
         "license": "CC BY-SA 4.0",
         "url": "https://commons.wikimedia.org/wiki/File:Wikipe-tan,_reading_and_editing_a_page_with_transparent_background.png"
       },
@@ -237,265 +239,9 @@
     "proofLabel": "Proof",
     "hireAction": "Hire me for this",
     "workAction": "See all work",
-    "subjectTemplate": "Hiring: {role}",
-    "members": [
-      {
-        "name": "Zero Two",
-        "kana": "ゼロツー",
-        "series": "Darling in the Franxx",
-        "role": "UI/UX Design",
-        "pitch": "Interfaces with a strong first impression and a flow people remember: research, wireframes, design systems and the polish on top.",
-        "skills": [
-          "Figma",
-          "Adobe XD",
-          "Illustrator",
-          "Photoshop"
-        ],
-        "projects": [
-          "bookisham",
-          "scholar-track",
-          "hygieia"
-        ],
-        "image": "/images/anime/cast/zero-two.webp",
-        "face": "/images/anime/cast/faces/zero-two.webp",
-        "color": "#ff4f8b"
-      },
-      {
-        "name": "2B",
-        "kana": "ツービー",
-        "series": "NieR:Automata",
-        "role": "Full-stack",
-        "pitch": "One person from the database to the last pixel: Next.js front ends, typed APIs, auth, deployment and the admin tools behind them.",
-        "skills": [
-          "Next.js",
-          "React",
-          "Node.js",
-          "NestJS"
-        ],
-        "projects": [
-          "spartan",
-          "ctr",
-          "ctr-unified"
-        ],
-        "image": "/images/anime/cast/2b.webp",
-        "face": "/images/anime/cast/faces/2b.webp",
-        "color": "#3a3355"
-      },
-      {
-        "name": "Rem",
-        "kana": "レム",
-        "series": "Re:Zero",
-        "role": "Backend",
-        "pitch": "Services that quietly never let you down: data models, business rules, payments and audit trails that hold up in production.",
-        "skills": [
-          "Node.js",
-          "NestJS",
-          "Python",
-          "Java"
-        ],
-        "projects": [
-          "bidnest",
-          "spartan",
-          "bookisham"
-        ],
-        "image": "/images/anime/cast/rem.webp",
-        "face": "/images/anime/cast/faces/rem.webp",
-        "color": "#2f8cff"
-      },
-      {
-        "name": "Komi",
-        "kana": "古見",
-        "series": "Komi Can't Communicate",
-        "role": "Data & databases",
-        "pitch": "Schemas that say more than the docs do: Postgres on Neon, MongoDB, Firebase and MySQL, modelled to be queried and kept.",
-        "skills": [
-          "NeonDB",
-          "MongoDB",
-          "Firebase",
-          "MySQL"
-        ],
-        "projects": [
-          "ctr-unified",
-          "bidnest",
-          "scholar-track"
-        ],
-        "image": "/images/anime/cast/komi.webp",
-        "face": "/images/anime/cast/faces/komi.webp",
-        "color": "#9a7bff"
-      },
-      {
-        "name": "Wiki-chan",
-        "kana": "ウィキたん",
-        "series": "Original character",
-        "role": "AI / ML",
-        "pitch": "Models trained, evaluated and shipped behind a real interface: ensembles for diagnosis, time series for markets.",
-        "skills": [
-          "Python",
-          "TensorFlow",
-          "Keras",
-          "Data Science"
-        ],
-        "projects": [
-          "hygieia",
-          "msft-stock"
-        ],
-        "image": "/images/anime/hero.png",
-        "face": "/images/anime/cast/faces/wiki-chan.webp",
-        "color": "#1fcf9a"
-      }
-    ]
+    "subjectTemplate": "Hiring: {role}"
   },
   "projectCast": {
-    "label": "Guest star",
-    "bySlug": {
-      "hygieia": {
-        "name": "Frieren",
-        "series": "Frieren: Beyond Journey's End",
-        "line": "A thousand years of study, five models deep.",
-        "image": "/images/anime/cast/frieren.webp",
-        "poses": [
-          "/images/anime/cast/frieren/pose-01.webp",
-          "/images/anime/cast/frieren/pose-02.webp",
-          "/images/anime/cast/frieren/pose-03.webp",
-          "/images/anime/cast/frieren/pose-04.webp",
-          "/images/anime/cast/frieren/pose-05.webp",
-          "/images/anime/cast/frieren/pose-06.webp",
-          "/images/anime/cast/frieren/pose-07.webp"
-        ],
-        "face": "/images/anime/cast/frieren/face.webp"
-      },
-      "bookisham": {
-        "name": "Bocchi",
-        "series": "Bocchi the Rock!",
-        "line": "A quiet room of my own to read in.",
-        "image": "/images/anime/cast/bocchi.webp",
-        "poses": [
-          "/images/anime/cast/bocchi/pose-01.webp",
-          "/images/anime/cast/bocchi/pose-02.webp",
-          "/images/anime/cast/bocchi/pose-03.webp",
-          "/images/anime/cast/bocchi/pose-04.webp",
-          "/images/anime/cast/bocchi/pose-05.webp",
-          "/images/anime/cast/bocchi/pose-06.webp",
-          "/images/anime/cast/bocchi/pose-07.webp",
-          "/images/anime/cast/bocchi/pose-08.webp"
-        ],
-        "face": "/images/anime/cast/bocchi/face.webp"
-      },
-      "scholar-track": {
-        "name": "Kaguya",
-        "series": "Kaguya-sama: Love Is War",
-        "line": "Every approval, exactly on schedule.",
-        "image": "/images/anime/cast/kaguya.webp",
-        "poses": [
-          "/images/anime/cast/kaguya/pose-01.webp",
-          "/images/anime/cast/kaguya/pose-02.webp",
-          "/images/anime/cast/kaguya/pose-03.webp",
-          "/images/anime/cast/kaguya/pose-04.webp",
-          "/images/anime/cast/kaguya/pose-05.webp",
-          "/images/anime/cast/kaguya/pose-06.webp"
-        ],
-        "face": "/images/anime/cast/kaguya/face.webp"
-      },
-      "spartan": {
-        "name": "Gojo",
-        "series": "Jujutsu Kaisen",
-        "line": "Open source? Throughout heaven and earth.",
-        "image": "/images/anime/cast/gojo.webp",
-        "poses": [
-          "/images/anime/cast/gojo/pose-01.webp",
-          "/images/anime/cast/gojo/pose-02.webp",
-          "/images/anime/cast/gojo/pose-03.webp",
-          "/images/anime/cast/gojo/pose-04.webp",
-          "/images/anime/cast/gojo/pose-05.webp",
-          "/images/anime/cast/gojo/pose-06.webp",
-          "/images/anime/cast/gojo/pose-07.webp",
-          "/images/anime/cast/gojo/pose-08.webp"
-        ],
-        "face": "/images/anime/cast/gojo/face.webp"
-      },
-      "bidnest": {
-        "name": "Anya",
-        "series": "Spy x Family",
-        "line": "Waku waku! Who bids next?",
-        "image": "/images/anime/cast/anya.webp",
-        "poses": [
-          "/images/anime/cast/anya/pose-01.webp",
-          "/images/anime/cast/anya/pose-02.webp",
-          "/images/anime/cast/anya/pose-03.webp",
-          "/images/anime/cast/anya/pose-04.webp",
-          "/images/anime/cast/anya/pose-05.webp",
-          "/images/anime/cast/anya/pose-06.webp",
-          "/images/anime/cast/anya/pose-07.webp",
-          "/images/anime/cast/anya/pose-08.webp",
-          "/images/anime/cast/anya/pose-09.webp",
-          "/images/anime/cast/anya/pose-10.webp"
-        ],
-        "face": "/images/anime/cast/anya/face.webp"
-      },
-      "ctr": {
-        "name": "Tanjiro",
-        "series": "Demon Slayer",
-        "line": "The whole team, one lap at a time.",
-        "image": "/images/anime/cast/tanjiro.webp",
-        "poses": [
-          "/images/anime/cast/tanjiro/pose-01.webp",
-          "/images/anime/cast/tanjiro/pose-02.webp",
-          "/images/anime/cast/tanjiro/pose-03.webp",
-          "/images/anime/cast/tanjiro/pose-04.webp"
-        ],
-        "face": "/images/anime/cast/tanjiro/face.webp"
-      },
-      "ctr-unified": {
-        "name": "Yor",
-        "series": "Spy x Family",
-        "line": "Results posted before the flag drops.",
-        "image": "/images/anime/cast/yor.webp",
-        "poses": [
-          "/images/anime/cast/yor/pose-01.webp",
-          "/images/anime/cast/yor/pose-02.webp",
-          "/images/anime/cast/yor/pose-03.webp",
-          "/images/anime/cast/yor/pose-04.webp",
-          "/images/anime/cast/yor/pose-05.webp",
-          "/images/anime/cast/yor/pose-06.webp",
-          "/images/anime/cast/yor/pose-07.webp",
-          "/images/anime/cast/yor/pose-08.webp",
-          "/images/anime/cast/yor/pose-09.webp",
-          "/images/anime/cast/yor/pose-10.webp"
-        ],
-        "face": "/images/anime/cast/yor/face.webp"
-      },
-      "msft-stock": {
-        "name": "Megumin",
-        "series": "KonoSuba",
-        "line": "One chart. One explosion of insight.",
-        "image": "/images/anime/cast/megumin.webp",
-        "poses": [
-          "/images/anime/cast/megumin/pose-01.webp",
-          "/images/anime/cast/megumin/pose-02.webp",
-          "/images/anime/cast/megumin/pose-03.webp",
-          "/images/anime/cast/megumin/pose-04.webp",
-          "/images/anime/cast/megumin/pose-05.webp",
-          "/images/anime/cast/megumin/pose-06.webp",
-          "/images/anime/cast/megumin/pose-07.webp",
-          "/images/anime/cast/megumin/pose-08.webp",
-          "/images/anime/cast/megumin/pose-09.webp"
-        ],
-        "face": "/images/anime/cast/megumin/face.webp"
-      }
-    },
-    "spares": [
-      {
-        "name": "Chika",
-        "series": "Kaguya-sama: Love Is War",
-        "line": "Ta-dah! A brand new project!",
-        "image": "/images/anime/cast/chika.webp"
-      },
-      {
-        "name": "Denji",
-        "series": "Chainsaw Man",
-        "line": "Shipping it. Right now.",
-        "image": "/images/anime/cast/denji.webp"
-      }
-    ]
+    "label": "Guest star"
   }
 }

@@ -9,4 +9,4 @@ export type PageGuest = { name: string; series: string; poses: string[] };
  * from them, so edits made in /admin keep showing up whatever the design. `guest` carries the guest
  * character's pose pictures; place them with `castSpots` from ./cast so every pose is used.
  */
-export type ShowcasePageProps = { project: ProjectRow; doc: ShowcaseDoc; guest?: PageGuest };
+export type ShowcasePageProps = { project: ProjectRow; doc: ShowcaseDoc; guest?: PageGuest; /** The site owner's name, for bylines. */ author?: string };

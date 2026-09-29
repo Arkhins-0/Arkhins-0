@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Tamil",
+    "proficiency": "Native",
+    "level": 5,
+    "sortOrder": 10
+  },
+  {
+    "name": "English",
+    "proficiency": "Professional",
+    "level": 4,
+    "sortOrder": 20
+  },
+  {
+    "name": "Japanese",
+    "proficiency": "JLPT N3",
+    "level": 3,
+    "sortOrder": 30
+  },
+  {
+    "name": "Kannada",
+    "proficiency": "Bilingual",
+    "level": 4,
+    "sortOrder": 40
+  }
+]

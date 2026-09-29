@@ -1,0 +1,45 @@
+[
+  {
+    "name": "Krishna Vijay G",
+    "headline": "Versatile Tech Fresher",
+    "tagline": "Crafting Digital Experiences with Code & Design",
+    "email": "arkhins@arkhins.com",
+    "city": "Chennai",
+    "state": "Tamil Nadu",
+    "country": "India",
+    "bio": "A skilled and curious tech enthusiast with hands-on experience in designing and developing user interfaces and a strong interest in exploring diverse areas of technology. Continuously stays updated with emerging trends by participating in workshops and technical learning opportunities, while actively experimenting with new tools and frameworks. Driven by a passion for solving real-world problems through technology, with a growing focus on fields such as IoT Automation, Generative AI, and Web Development. Dedicated to building innovative, efficient, and user-friendly digital solutions while constantly expanding technical knowledge and practical experience.",
+    "roles": [
+      "UI/UX Designer",
+      "Full-Stack Developer",
+      "AI/ML Practitioner",
+      "IoT Tinkerer"
+    ],
+    "resumeUrl": "https://katb.in/gkvresume",
+    "availability": "Open to Opportunities",
+    "portrait": "/images/hero/portrait.png",
+    "profilePicture": "/images/profile.jpg",
+    "metaTitle": "Krishna Vijay G | Arkhins — Portfolio",
+    "metaDescription": "Krishna Vijay G (Arkhins) is a versatile Tech Fresher from Chennai, India specializing in UI/UX Design, AI/ML, and Full-Stack Development.",
+    "keywords": [
+      "Krishna Vijay",
+      "Krishna Vijay G",
+      "Krishna Vijay Chennai",
+      "Krishna Vijay portfolio",
+      "Krishna Vijay developer",
+      "Arkhins",
+      "arkhins.com",
+      "developer",
+      "designer",
+      "portfolio",
+      "AI",
+      "ML",
+      "UX",
+      "UI/UX Designer",
+      "Full-Stack Developer"
+    ],
+    "siteUrl": "https://arkhins.com",
+    "ogImage": "/images/og-anime.png",
+    "ogAlt": "Krishna Vijay G, anime title card: UI/UX, Full-stack, AI/ML",
+    "sortOrder": 10
+  }
+]

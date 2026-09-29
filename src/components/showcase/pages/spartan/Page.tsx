@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import { Press_Start_2P, VT323 } from 'next/font/google';
 import type { Action, Block, Head, ThemedImage } from '@/types/content';
-import { Icon } from '../../ui';
+import { Icon } from '../../primitives';
 import { CastSprite, castSpots } from '../cast';
 import type { PageGuest, ShowcasePageProps } from '../types';
 import { CartridgeShelf, Scroll, WorldSelect } from './Client';

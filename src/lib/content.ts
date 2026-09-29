@@ -1,31 +1,104 @@
 /**
  * Content repository. The single place that knows where rows come from:
- * the Neon tables in db/schema.sql, or the bundled JSON when there is no database.
+ * the Neon tables in db/schema.sql, or the bundled JSON under src/data/db when there is no database.
  */
 import 'server-only';
 import { cache } from 'react';
-import educationRows from '@/data/db/education.json';
-import projectRows from '@/data/db/projects.json';
-import type { EducationRow, ProjectRow, ShowcaseDoc } from '@/types/content';
+import castMembers from '@/data/db/cast_members.json';
+import certifications from '@/data/db/certifications.json';
+import education from '@/data/db/education.json';
+import experience from '@/data/db/experience.json';
+import guests from '@/data/db/guests.json';
+import interests from '@/data/db/interests.json';
+import languages from '@/data/db/languages.json';
+import profile from '@/data/db/profile.json';
+import projects from '@/data/db/projects.json';
+import skillCategories from '@/data/db/skill_categories.json';
+import skills from '@/data/db/skills.json';
+import socialLinks from '@/data/db/social_links.json';
+import techStack from '@/data/db/tech_stack.json';
+import volunteering from '@/data/db/volunteering.json';
+import workshops from '@/data/db/workshops.json';
+import type {
+  BaseRow,
+  CastMemberRow,
+  CertificationRow,
+  EducationRow,
+  ExperienceRow,
+  GuestRow,
+  InterestRow,
+  LanguageRow,
+  ProfileRow,
+  ProjectRow,
+  ShowcaseDoc,
+  SkillCategoryRow,
+  SkillRow,
+  SocialLinkRow,
+  TechStackRow,
+  VolunteeringRow,
+  WorkshopRow,
+} from '@/types/content';
 import { getAssetPath } from '@/lib/utils';
 import { query, tryQuery } from '@/lib/db';
-import { TABLES, fromDb } from '@/lib/tables';
+import { TABLES, type TableKey, fromDb } from '@/lib/tables';
 
-const PROJECTS = projectRows as unknown as ProjectRow[];
-const EDUCATION = educationRows as unknown as EducationRow[];
+/** Row type for each table key. */
+export type RowOf = {
+  profile: ProfileRow;
+  social_links: SocialLinkRow;
+  experience: ExperienceRow;
+  education: EducationRow;
+  skill_categories: SkillCategoryRow;
+  skills: SkillRow;
+  tech_stack: TechStackRow;
+  certifications: CertificationRow;
+  volunteering: VolunteeringRow;
+  workshops: WorkshopRow;
+  interests: InterestRow;
+  languages: LanguageRow;
+  projects: ProjectRow;
+  cast_members: CastMemberRow;
+  guests: GuestRow;
+};
 
-const bySort = <T extends { sortOrder: number }>(a: T, b: T) => a.sortOrder - b.sortOrder;
+/** Bundled seeds. They carry no ids; `listRows` gives them stable ones. */
+const SEEDS: { [K in TableKey]: Omit<RowOf[K], 'id'>[] } = {
+  profile: profile as never,
+  social_links: socialLinks as never,
+  experience: experience as never,
+  education: education as never,
+  skill_categories: skillCategories as never,
+  skills: skills as never,
+  tech_stack: techStack as never,
+  certifications: certifications as never,
+  volunteering: volunteering as never,
+  workshops: workshops as never,
+  interests: interests as never,
+  languages: languages as never,
+  projects: projects as never,
+  cast_members: castMembers as never,
+  guests: guests as never,
+};
 
-const allProjects = cache(() =>
-  tryQuery(async () => {
-    const rows = await query('select * from projects order by sort_order, created_at');
-    return rows.length ? rows.map((r) => fromDb<ProjectRow>(TABLES.projects, r)) : PROJECTS;
-  }, PROJECTS)
-);
+const bySort = <T extends BaseRow>(a: T, b: T) => a.sortOrder - b.sortOrder;
+
+function seeded<K extends TableKey>(table: K): RowOf[K][] {
+  return (SEEDS[table] as Omit<RowOf[K], 'id'>[]).map((r, i) => ({ ...r, id: `${table}-${i + 1}` }) as RowOf[K]);
+}
+
+/** Every row of a table in display order, from the database or the bundled JSON. */
+export const listRows = cache(async <K extends TableKey>(table: K): Promise<RowOf[K][]> => {
+  const spec = TABLES[table];
+  const rows = await tryQuery(async () => {
+    const r = await query(`select * from ${spec.name} order by sort_order, created_at`);
+    return r.length ? r.map((x) => fromDb<RowOf[K]>(spec, x)) : seeded(table);
+  }, seeded(table));
+  return [...rows].sort(bySort);
+});
 
 /** Published projects in display order. */
 export async function listProjects(): Promise<ProjectRow[]> {
-  return (await allProjects()).filter((p) => p.published).sort(bySort);
+  return (await listRows('projects')).filter((p) => p.published);
 }
 
 /** Every published slug, for static generation. */
@@ -37,13 +110,7 @@ export async function getProject(slug: string): Promise<ProjectRow | null> {
   return (await listProjects()).find((p) => p.slug === slug) ?? null;
 }
 
-export const listEducation = cache(async (): Promise<EducationRow[]> => {
-  const rows = await tryQuery(async () => {
-    const r = await query('select * from education order by sort_order, created_at');
-    return r.length ? r.map((x) => fromDb<EducationRow>(TABLES.education, x)) : EDUCATION;
-  }, EDUCATION);
-  return [...rows].sort(bySort);
-});
+export const listEducation = () => listRows('education');
 
 /**
  * A project without a `content` document still gets a page: hero from the row,

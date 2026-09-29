@@ -1,10 +1,10 @@
 import type { Metadata } from 'next';
-import { AnimeFooter } from '@/components/anime/Footer';
-import { Nav } from '@/components/anime/Nav';
-import { Pop } from '@/components/anime/Pop';
-import { ProjectPanel } from '@/components/anime/ProjectPanel';
-import { Sakura } from '@/components/anime/ui';
-import { listProjects } from '@/lib/content';
+import { AnimeFooter } from '@/components/home/Footer';
+import { Nav } from '@/components/home/Nav';
+import { Pop } from '@/components/home/Pop';
+import { ProjectPanel } from '@/components/home/ProjectPanel';
+import { Sakura } from '@/components/home/primitives';
+import { listProjects, listRows } from '@/lib/content';
 import { getSite, guestsFor } from '@/lib/site';
 
 export const revalidate = 300;
@@ -15,9 +15,9 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function ProjectsIndex() {
-  const [{ anime, copy }, projects] = await Promise.all([getSite(), listProjects()]);
+  const [{ anime, copy }, projects, guestRows] = await Promise.all([getSite(), listProjects(), listRows('guests')]);
   const COPY = copy.projectsIndex;
-  const guests = guestsFor(projects.map((p) => p.slug), anime.projectCast);
+  const guests = guestsFor(projects.map((p) => p.slug), guestRows);
 
   return (
     <div className="ak">
@@ -32,7 +32,7 @@ export default async function ProjectsIndex() {
       />
       <main>
         <section className="ak-sky relative overflow-hidden pb-16 pt-36 md:pt-44">
-          <Sakura count={12} />
+          <Sakura count={8} />
           <div className="ak-shell relative">
             <Pop>
               <span className="ak-episode">
@@ -52,7 +52,14 @@ export default async function ProjectsIndex() {
             <ul className="grid gap-7 md:grid-cols-2">
               {projects.map((p, i) => (
                 <Pop as="li" key={p.id} delay={(i % 2) * 0.06}>
-                  <ProjectPanel project={p} index={i} openLabel={copy.work.caseStudyAction} featuredLabel={copy.work.featuredBadge.replace(/^★\s*/, '')} guest={guests[p.slug]} guestLabel={anime.projectCast.label} />
+                  <ProjectPanel
+                    project={p}
+                    index={i}
+                    openLabel={copy.work.caseStudyAction}
+                    featuredLabel={copy.work.featuredBadge}
+                    guest={guests[p.slug]}
+                    guestLabel={anime.projectCast.label}
+                  />
                 </Pop>
               ))}
             </ul>

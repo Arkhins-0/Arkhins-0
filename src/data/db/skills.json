@@ -1,0 +1,142 @@
+[
+  {
+    "category": "Frontend Development",
+    "name": "Next.js",
+    "icon": "nextjs",
+    "level": 85,
+    "sortOrder": 10
+  },
+  {
+    "category": "Frontend Development",
+    "name": "React",
+    "icon": "react",
+    "level": 88,
+    "sortOrder": 20
+  },
+  {
+    "category": "Frontend Development",
+    "name": "JavaScript",
+    "icon": "javascript",
+    "level": 90,
+    "sortOrder": 30
+  },
+  {
+    "category": "Frontend Development",
+    "name": "Angular",
+    "icon": "angular",
+    "level": 75,
+    "sortOrder": 40
+  },
+  {
+    "category": "Backend Development",
+    "name": "Node.js",
+    "icon": "nodejs",
+    "level": 80,
+    "sortOrder": 50
+  },
+  {
+    "category": "Backend Development",
+    "name": "NestJS",
+    "icon": "nestjs",
+    "level": 72,
+    "sortOrder": 60
+  },
+  {
+    "category": "Backend Development",
+    "name": "Python",
+    "icon": "python",
+    "level": 90,
+    "sortOrder": 70
+  },
+  {
+    "category": "Backend Development",
+    "name": "Java",
+    "icon": "java",
+    "level": 75,
+    "sortOrder": 80
+  },
+  {
+    "category": "UI/UX Design",
+    "name": "Figma",
+    "icon": "figma",
+    "level": 85,
+    "sortOrder": 90
+  },
+  {
+    "category": "UI/UX Design",
+    "name": "Adobe XD",
+    "icon": "adobexd",
+    "level": 75,
+    "sortOrder": 100
+  },
+  {
+    "category": "UI/UX Design",
+    "name": "Photoshop",
+    "icon": "photoshop",
+    "level": 75,
+    "sortOrder": 110
+  },
+  {
+    "category": "UI/UX Design",
+    "name": "Illustrator",
+    "icon": "illustrator",
+    "level": 80,
+    "sortOrder": 120
+  },
+  {
+    "category": "Data Management",
+    "name": "MongoDB",
+    "icon": "mongodb",
+    "level": 80,
+    "sortOrder": 130
+  },
+  {
+    "category": "Data Management",
+    "name": "NeonDB",
+    "icon": "neondb",
+    "level": 72,
+    "sortOrder": 140
+  },
+  {
+    "category": "Data Management",
+    "name": "Firebase",
+    "icon": "firebase",
+    "level": 85,
+    "sortOrder": 150
+  },
+  {
+    "category": "Data Management",
+    "name": "MySQL",
+    "icon": "mysql",
+    "level": 78,
+    "sortOrder": 160
+  },
+  {
+    "category": "Tools & Platforms",
+    "name": "Supabase",
+    "icon": "supabase",
+    "level": 75,
+    "sortOrder": 170
+  },
+  {
+    "category": "Tools & Platforms",
+    "name": "Git",
+    "icon": "git",
+    "level": 88,
+    "sortOrder": 180
+  },
+  {
+    "category": "Tools & Platforms",
+    "name": "VS Code",
+    "icon": "vscode",
+    "level": 95,
+    "sortOrder": 190
+  },
+  {
+    "category": "Tools & Platforms",
+    "name": "Vercel",
+    "icon": "vercel",
+    "level": 82,
+    "sortOrder": 200
+  }
+]

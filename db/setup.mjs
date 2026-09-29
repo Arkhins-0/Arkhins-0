@@ -1,7 +1,8 @@
-// Applies db/schema.sql and seeds empty tables from the bundled JSON.
+// Applies db/schema.sql and seeds empty tables from src/data/db/<table>.json.
 //   npm run db:setup            create tables, seed whatever is empty
-//   npm run db:setup -- --force overwrite the database with the JSON files
-import { readFileSync, existsSync } from 'node:fs';
+//   npm run db:setup -- --force overwrite every table and document with the bundled JSON
+import { readFileSync } from 'node:fs';
+import { existsSync } from 'node:fs';
 import { Pool } from '@neondatabase/serverless';
 
 if (existsSync('.env')) process.loadEnvFile('.env');
@@ -13,45 +14,50 @@ if (!url) {
 
 const force = process.argv.includes('--force');
 const json = (p) => JSON.parse(readFileSync(new URL(p, import.meta.url), 'utf8'));
+const snake = (s) => s.replace(/[A-Z]/g, (c) => '_' + c.toLowerCase());
 const pool = new Pool({ connectionString: url });
 
-const DOCS = {
-  portfolio: '../src/data/portfolio.json',
-  anime: '../src/data/anime.json',
-  copy: '../src/data/content.json',
-};
+/** Seeded in this order; each has a matching JSON file. */
+const TABLES = [
+  'profile', 'social_links', 'experience', 'education', 'skill_categories', 'skills', 'tech_stack',
+  'certifications', 'volunteering', 'workshops', 'interests', 'languages', 'projects', 'cast_members', 'guests',
+];
 
-const PROJECT_COLS = {
-  slug: 'slug', title: 'title', tagline: 'tagline', summary: 'summary', description: 'description',
-  category: 'category', role: 'role', year: 'year', date: 'date', status: 'status', featured: 'featured',
-  published: 'published', sortOrder: 'sort_order', tags: 'tags', thumbnail: 'thumbnail', cover: 'cover',
-  images: 'images', githubUrl: 'github_url', liveUrl: 'live_url', markdownFile: 'markdown_file', content: 'content',
-};
-const EDU_COLS = {
-  institution: 'institution', degree: 'degree', field: 'field', score: 'score', startYear: 'start_year',
-  endYear: 'end_year', current: 'current', description: 'description', logo: 'logo', sortOrder: 'sort_order',
-};
+const DOCS = { anime: '../src/data/anime.json', copy: '../src/data/copy.json' };
 
-async function insertRows(table, cols, rows) {
+async function insertRows(table, rows) {
   for (const row of rows) {
-    const keys = Object.keys(cols).filter((k) => k in row);
-    const values = keys.map((k) => (k === 'content' && row[k] != null ? JSON.stringify(row[k]) : row[k]));
-    const marks = keys.map((k, i) => `$${i + 1}${k === 'content' ? '::jsonb' : ''}`);
+    const keys = Object.keys(row);
+    // Postgres infers parameter types from the target columns, so arrays and booleans need no casts;
+    // objects (the project `content` document) go in as JSON text.
+    const values = keys.map((k) => (row[k] !== null && typeof row[k] === 'object' && !Array.isArray(row[k]) ? JSON.stringify(row[k]) : row[k]));
     await pool.query(
-      `insert into ${table} (${keys.map((k) => cols[k]).join(', ')}) values (${marks.join(', ')})`,
+      `insert into ${table} (${keys.map(snake).join(', ')}) values (${keys.map((_, i) => `$${i + 1}`).join(', ')})`,
       values
     );
   }
 }
 
-async function empty(table) {
+async function count(table) {
   const { rows } = await pool.query(`select count(*)::int as n from ${table}`);
-  return rows[0].n === 0;
+  return rows[0].n;
 }
 
 try {
   await pool.query(readFileSync(new URL('./schema.sql', import.meta.url), 'utf8'));
   console.log('schema applied');
+
+  for (const table of TABLES) {
+    if (force) await pool.query(`delete from ${table}`);
+    const n = await count(table);
+    if (n === 0) {
+      const rows = json(`../src/data/db/${table}.json`);
+      await insertRows(table, rows);
+      console.log(`${table}: seeded ${rows.length} rows`);
+    } else {
+      console.log(`${table}: ${n} rows, kept`);
+    }
+  }
 
   for (const [key, file] of Object.entries(DOCS)) {
     const res = await pool.query(
@@ -62,19 +68,13 @@ try {
     console.log(`site_documents.${key}: ${res.rowCount ? 'written' : 'kept'}`);
   }
 
-  for (const [table, cols, file] of [
-    ['projects', PROJECT_COLS, '../src/data/db/projects.json'],
-    ['education', EDU_COLS, '../src/data/db/education.json'],
-  ]) {
-    if (force) await pool.query(`delete from ${table}`);
-    if (await empty(table)) {
-      const rows = json(file);
-      await insertRows(table, cols, rows);
-      console.log(`${table}: seeded ${rows.length} rows`);
-    } else {
-      console.log(`${table}: has rows, kept`);
-    }
-  }
+  // The single-document era: the résumé blob is now rows, and characters left the theme document.
+  const gone = await pool.query(`delete from site_documents where key = 'portfolio'`);
+  if (gone.rowCount) console.log('site_documents.portfolio: removed (now the profile and résumé tables)');
+  await pool.query(`update site_documents set data = data - 'cast' - 'projectCast' || $1::jsonb where key = 'anime'`, [
+    JSON.stringify({ cast: json(DOCS.anime).cast, projectCast: json(DOCS.anime).projectCast }),
+  ]);
+  await pool.query(`update site_documents set data = data - 'fx' - 'theme' - 'storage' - 'path' - 'beyond' where key = 'copy'`);
 } finally {
   await pool.end();
 }

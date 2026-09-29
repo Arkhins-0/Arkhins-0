@@ -1,13 +1,13 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { Exo_2, Fraunces, IBM_Plex_Sans, Rajdhani } from 'next/font/google';
-import { AnimeFooter } from '@/components/anime/Footer';
-import { Backdrop, ScrollRail } from '@/components/fx';
+import { AnimeFooter } from '@/components/home/Footer';
+import { Backdrop, ScrollRail } from '@/components/showcase/fx';
 import { Showcase } from '@/components/showcase/Showcase';
 import { loadShowcasePage } from '@/components/showcase/pages';
-import { defaultShowcase, getProject, listProjectSlugs } from '@/lib/content';
-import { ShowcaseGuest } from '@/components/anime/ShowcaseGuest';
-import { getSite, guestsFor } from '@/lib/site';
+import { defaultShowcase, getProject, listProjectSlugs, listRows } from '@/lib/content';
+import { GuestCorner } from '@/components/showcase/GuestCorner';
+import { getProfile, getSite, guestsFor } from '@/lib/site';
 
 /** Serif display face, exposed as --font-serif for looks that want one (the folio look uses it). */
 const serif = Fraunces({
@@ -69,14 +69,15 @@ export default async function ProjectPage({ params }: { params: { slug: string }
   if (!project) notFound();
   const doc = project.content ?? defaultShowcase(project);
   // Same assignment as the project grids, so a project keeps its guest everywhere.
-  const [{ anime }, slugs, Custom] = await Promise.all([getSite(), listProjectSlugs(), loadShowcasePage(project.slug)]);
-  const guest = guestsFor(slugs, anime.projectCast)[project.slug];
+  const [{ anime }, profile, slugs, guests, Custom] = await Promise.all([getSite(), getProfile(), listProjectSlugs(), listRows('guests'), loadShowcasePage(project.slug)]);
+  const guest = guestsFor(slugs, guests)[project.slug];
   return (
     <div className={`${serif.variable} ${condensed.variable} ${exo.variable} ${plex.variable}`}>
       {Custom ? (
         <Custom
           project={project}
           doc={doc}
+          author={profile.name}
           guest={guest ? { name: guest.name, series: guest.series, poses: guest.poses ?? [] } : undefined}
         />
       ) : (
@@ -88,7 +89,7 @@ export default async function ProjectPage({ params }: { params: { slug: string }
       )}
       <AnimeFooter />
       {guest && (
-        <ShowcaseGuest guest={guest} label={anime.projectCast.label} closeLabel={anime.nav.closeMenu} />
+        <GuestCorner guest={guest} label={anime.projectCast.label} closeLabel={anime.nav.closeMenu} />
       )}
     </div>
   );

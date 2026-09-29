@@ -5,7 +5,7 @@ import { Check, Trophy } from 'lucide-react';
 import type { Action, Block, Head, ThemedImage } from '@/types/content';
 import type { PageGuest, ShowcasePageProps } from '../types';
 import { CastSprite, castSpots } from '../cast';
-import { Icon, LightboxProvider } from '../../ui';
+import { Icon, LightboxProvider } from '../../primitives';
 import { Garage, MarkdownScreen, SettingsScreen, Shot } from './client';
 import './ctru.css';
 import './cast.css';

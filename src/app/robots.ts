@@ -1,14 +1,10 @@
 import type { MetadataRoute } from 'next';
-import portfolioData from '@/data/portfolio.json';
+import { getProfile } from '@/lib/site';
 
-export default function robots(): MetadataRoute.Robots {
-  const { siteUrl } = portfolioData.meta;
-
+export default async function robots(): Promise<MetadataRoute.Robots> {
+  const { siteUrl } = await getProfile();
   return {
-    rules: {
-      userAgent: '*',
-      allow: '/',
-    },
+    rules: { userAgent: '*', allow: '/', disallow: ['/admin', '/api/'] },
     sitemap: `${siteUrl}/sitemap.xml`,
   };
 }

@@ -2,12 +2,12 @@
 /* eslint-disable @next/next/no-img-element */
 
 import { useRef } from 'react';
-import { Reveal } from '@/components/fx';
-import { ProjectBar } from '@/components/layout/ProjectBar';
+import { Reveal } from '@/components/showcase/fx';
+import { ProjectBar } from '@/components/showcase/ProjectBar';
 import { cn } from '@/lib/utils';
 import type { ProjectRow, ShowcaseDoc, ThemedImage } from '@/types/content';
 import { ActionButton, BlockView } from './blocks';
-import { Frame, LightboxProvider, ScreensProvider, ScreensSwitch, ThemedImg } from './ui';
+import { Frame, LightboxProvider, ScreensProvider, ScreensSwitch, ThemedImg } from './primitives';
 import './showcase.css';
 
 /** Does any image in the document carry a dark variant? Decides whether the screens switch shows. */

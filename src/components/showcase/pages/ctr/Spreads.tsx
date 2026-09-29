@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import type { Block, ThemedImage } from '@/types/content';
-import { Icon } from '../../ui';
+import { Icon } from '../../primitives';
 import { MarkdownColumns } from './Markdown';
 import { Zoom } from './Lightbox';
 import { ActionLink, Barcode, CastRow, Headline, Plate, Star, Tear, hash, rng } from './print';

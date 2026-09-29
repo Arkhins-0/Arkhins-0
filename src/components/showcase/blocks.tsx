@@ -5,11 +5,11 @@ import { AnimatePresence, motion } from 'framer-motion';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { ArrowUpRight, Github } from 'lucide-react';
-import content from '@/data/content.json';
-import { NeonButton, Panel, Reveal, SectionHead, Stack, stackChild } from '@/components/fx';
+import content from '@/data/copy.json';
+import { NeonButton, Panel, Reveal, SectionHead, Stack, stackChild } from '@/components/showcase/fx';
 import { cn } from '@/lib/utils';
 import type { Action, Block, Head } from '@/types/content';
-import { Compare, Frame, Gallery, Icon, PhoneFrame, Phones } from './ui';
+import { Compare, Frame, Gallery, Icon, PhoneFrame, Phones } from './primitives';
 
 const COPY = content.projectPage;
 

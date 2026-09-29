@@ -1,6 +1,5 @@
 [
   {
-    "id": "proj-1",
     "slug": "hygieia",
     "title": "HYGIEIA: Multi Disease Diagnosis Framework",
     "tagline": "Multi-Disease Diagnosis Framework",
@@ -852,7 +851,6 @@
     }
   },
   {
-    "id": "proj-9",
     "slug": "bookisham",
     "title": "Bookisham: Private Reading Room",
     "tagline": "A private reading room, on the web and on Android",
@@ -865,7 +863,7 @@
     "status": "Live",
     "featured": true,
     "published": true,
-    "sortOrder": 12,
+    "sortOrder": 20,
     "tags": [
       "Next.js 15",
       "Kotlin · Compose",
@@ -1492,7 +1490,6 @@
     }
   },
   {
-    "id": "proj-scholar-track",
     "slug": "scholar-track",
     "title": "Scholar Track: PhD Scholar Tracking Portal",
     "tagline": "PhD Scholar Tracking Portal",
@@ -1503,9 +1500,9 @@
     "year": "2026",
     "date": "September 2026",
     "status": "Completed",
-    "featured": true,
+    "featured": false,
     "published": true,
-    "sortOrder": 20,
+    "sortOrder": 30,
     "tags": [
       "Next.js",
       "TypeScript",
@@ -1975,7 +1972,6 @@
     }
   },
   {
-    "id": "proj-10",
     "slug": "spartan",
     "title": "Spartan: Open-Source Motorsport Management",
     "tagline": "A free platform for running championships, race teams, circuits and marshal signups",
@@ -1988,7 +1984,7 @@
     "status": "Live · v0.70",
     "featured": true,
     "published": true,
-    "sortOrder": 22,
+    "sortOrder": 40,
     "tags": [
       "Next.js 16",
       "Prisma · Neon",
@@ -2697,7 +2693,6 @@
     }
   },
   {
-    "id": "proj-2",
     "slug": "bidnest",
     "title": "BidNest: Modern Chit Fund Management Platform",
     "tagline": null,
@@ -2708,25 +2703,24 @@
     "year": "2025",
     "date": "May 2025",
     "status": "Completed",
-    "featured": true,
+    "featured": false,
     "published": true,
-    "sortOrder": 30,
+    "sortOrder": 50,
     "tags": [
       "Next.js",
       "React",
       "TailwindCSS",
       "Web Development"
     ],
-    "thumbnail": "/images/projects/BidNest.png",
-    "cover": "/images/projects/BidNest-1.png",
+    "thumbnail": "/projects/bidnest/thumbnail.png",
+    "cover": "/projects/bidnest/cover.png",
     "images": [],
     "githubUrl": "https://github.com/Krishna-Vijay-G/BidNest.git",
     "liveUrl": "https://bidnest-omega.vercel.app",
-    "markdownFile": "/images/projects/BidNest.md",
+    "markdownFile": "/projects/bidnest/case-study.md",
     "content": null
   },
   {
-    "id": "proj-3",
     "slug": "ctr",
     "title": "Chennai Turbo Riders: Team Site and Console",
     "tagline": "A Formula 4 team's public site and the console that edits it, in one deployment",
@@ -2737,9 +2731,9 @@
     "year": "2025",
     "date": "September 2025",
     "status": "Live",
-    "featured": true,
+    "featured": false,
     "published": true,
-    "sortOrder": 40,
+    "sortOrder": 60,
     "tags": [
       "Next.js 15",
       "Framer Motion",
@@ -3360,7 +3354,6 @@
     }
   },
   {
-    "id": "proj-4",
     "slug": "ctr-unified",
     "title": "CTR Sports: Championship Portal and CMS",
     "tagline": "The home of the Indian National Car Racing Championship, and the newsroom that runs it",
@@ -3373,7 +3366,7 @@
     "status": "Live",
     "featured": true,
     "published": true,
-    "sortOrder": 50,
+    "sortOrder": 70,
     "tags": [
       "Next.js 15",
       "Drizzle · Neon",
@@ -4160,7 +4153,6 @@
     }
   },
   {
-    "id": "proj-5",
     "slug": "msft-stock",
     "title": "Predicting Microsoft Stock Values",
     "tagline": null,
@@ -4173,77 +4165,19 @@
     "status": "Completed",
     "featured": false,
     "published": true,
-    "sortOrder": 60,
+    "sortOrder": 80,
     "tags": [
       "Machine Learning",
       "Python",
       "Keras",
       "Data Science"
     ],
-    "thumbnail": "/images/projects/stock-prediction.png",
-    "cover": "/images/projects/stock-prediction-1.png",
+    "thumbnail": "/projects/msft-stock/thumbnail.png",
+    "cover": "/projects/msft-stock/cover.png",
     "images": [],
     "githubUrl": "https://github.com/Krishna-Vijay-G/Predicting-the-Stocks-Values-of-Microsoft.git",
     "liveUrl": null,
-    "markdownFile": "/images/projects/stock_prediction.md",
-    "content": null
-  },
-  {
-    "id": "proj-placeholder-1",
-    "slug": "placeholder-1",
-    "title": "Project Title",
-    "tagline": null,
-    "summary": "Short description of the project (2-3 sentences).",
-    "description": "Detailed description explaining the project goals, challenges, and solutions implemented.",
-    "category": "Category",
-    "role": null,
-    "year": null,
-    "date": "Month Year",
-    "status": "In Progress",
-    "featured": false,
-    "published": false,
-    "sortOrder": 70,
-    "tags": [
-      "Tag 1",
-      "Tag 2",
-      "Tag 3"
-    ],
-    "thumbnail": "/images/projects/placeholder.jpg",
-    "cover": "/images/projects/placeholder-1.jpg",
-    "images": [
-      "/images/projects/placeholder-2.jpg"
-    ],
-    "githubUrl": "https://github.com/username/repo",
-    "liveUrl": "https://live-demo.com",
-    "markdownFile": null,
-    "content": null
-  },
-  {
-    "id": "proj-placeholder-2",
-    "slug": "placeholder-2",
-    "title": "UI/UX Case Study",
-    "tagline": null,
-    "summary": "A comprehensive design case study showcasing user research and interface design.",
-    "description": "This case study covers the entire design process from user research, wireframing, prototyping, to final high-fidelity designs.",
-    "category": "Design",
-    "role": null,
-    "year": null,
-    "date": "Month Year",
-    "status": "Completed",
-    "featured": false,
-    "published": false,
-    "sortOrder": 80,
-    "tags": [
-      "Design",
-      "UI/UX",
-      "Figma"
-    ],
-    "thumbnail": "/images/projects/placeholder.jpg",
-    "cover": null,
-    "images": [],
-    "githubUrl": null,
-    "liveUrl": null,
-    "markdownFile": null,
+    "markdownFile": "/projects/msft-stock/case-study.md",
     "content": null
   }
 ]

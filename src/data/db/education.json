@@ -1,6 +1,5 @@
 [
   {
-    "id": "edu-1",
     "institution": "Bharath Institute of Higher Education and Research",
     "degree": "Bachelor of Technology",
     "field": "Computer Science (AI Specialization)",
@@ -13,7 +12,6 @@
     "sortOrder": 10
   },
   {
-    "id": "edu-2",
     "institution": "SSV Institutions",
     "degree": "+2 Board Exam",
     "field": "Computer Science",
@@ -26,7 +24,6 @@
     "sortOrder": 20
   },
   {
-    "id": "edu-3",
     "institution": "SSV Institutions",
     "degree": "10th Board Exam",
     "field": "School",

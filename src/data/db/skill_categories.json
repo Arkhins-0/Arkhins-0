@@ -1,0 +1,27 @@
+[
+  {
+    "name": "Frontend Development",
+    "description": "Building responsive and interactive interfaces with modern web technologies.",
+    "sortOrder": 10
+  },
+  {
+    "name": "Backend Development",
+    "description": "Server-side frameworks and languages for building scalable APIs and services.",
+    "sortOrder": 20
+  },
+  {
+    "name": "UI/UX Design",
+    "description": "Crafting intuitive, accessible, and beautiful user experiences.",
+    "sortOrder": 30
+  },
+  {
+    "name": "Data Management",
+    "description": "Relational and non-relational databases for modern data-driven applications.",
+    "sortOrder": 40
+  },
+  {
+    "name": "Tools & Platforms",
+    "description": "Development tools, version control, and deployment platforms.",
+    "sortOrder": 50
+  }
+]

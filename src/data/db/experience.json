@@ -1,0 +1,71 @@
+[
+  {
+    "company": "Google Developer Students Club (GDSC)",
+    "position": "Core Team Member",
+    "location": "Chennai, India",
+    "startDate": "Sep 2024",
+    "endDate": null,
+    "current": true,
+    "type": "Student Club",
+    "description": "Contributing as a core team member to organize, promote, and execute technical events, workshops, and community initiatives for GDSC at my institution.",
+    "highlights": [
+      "Organized and promoted technical events and workshops",
+      "Collaborated with students and faculty to grow the developer community",
+      "Supported peers in learning new technologies and Google developer tools"
+    ],
+    "technologies": [
+      "Community",
+      "Event Management",
+      "Google Technologies"
+    ],
+    "logo": "/images/companies/gdsc.png",
+    "url": "https://gdsc.community.dev/",
+    "sortOrder": 10
+  },
+  {
+    "company": "TT Infotech",
+    "position": "Intern",
+    "location": "Chennai, India",
+    "startDate": "Jul 2023",
+    "endDate": "Sep 2023",
+    "current": false,
+    "type": "Internship",
+    "description": "Analyzed problems and worked with teams to develop solutions. Sorted and organized files, spreadsheets, and reports. Prepared project presentations and reports to assist senior staff.",
+    "highlights": [
+      "Analyzed problems and worked with teams to develop solutions",
+      "Sorted and organized files, spreadsheets, and reports",
+      "Prepared project presentations and reports to assist senior staff"
+    ],
+    "technologies": [
+      "Data Analysis",
+      "Team Collaboration",
+      "Documentation"
+    ],
+    "logo": "/images/companies/tt.png",
+    "url": "https://ttinfotech.com/",
+    "sortOrder": 20
+  },
+  {
+    "company": "Teachnook",
+    "position": "Data Science Intern",
+    "location": "Chennai, India",
+    "startDate": "Dec 2022",
+    "endDate": "Feb 2023",
+    "current": false,
+    "type": "Internship",
+    "description": "Compiled, cleaned and manipulated data for proper handling. Modeled predictions with feature selection algorithms.",
+    "highlights": [
+      "Compiled, cleaned and manipulated data for proper handling",
+      "Modeled predictions with feature selection algorithms",
+      "Proven ability to learn quickly and adapt to new situations"
+    ],
+    "technologies": [
+      "Python",
+      "Data Science",
+      "Machine Learning"
+    ],
+    "logo": "/images/companies/teachnook.png",
+    "url": "https://teachnook.com/",
+    "sortOrder": 30
+  }
+]

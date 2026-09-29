@@ -1,17 +1,18 @@
 import 'server-only';
 import { cache } from 'react';
-import portfolioDefault from '@/data/portfolio.json';
-import copyDefault from '@/data/content.json';
+import copyDefault from '@/data/copy.json';
 import animeDefault from '@/data/anime.json';
+import type { Guest } from '@/types/guest';
+import type { GuestRow, Portfolio, ProfileRow } from '@/types/content';
 import { execute, query, tryQuery } from '@/lib/db';
+import { listRows } from '@/lib/content';
 
-export type Portfolio = typeof portfolioDefault;
+export type { Guest };
 export type Copy = typeof copyDefault;
 export type Anime = typeof animeDefault;
 
 /** Editable site documents, stored as rows of `site_documents` keyed by name. */
 export const SITE_DOCS = {
-  portfolio: { label: 'Profile & résumé', fallback: portfolioDefault },
   anime: { label: 'Anime theme', fallback: animeDefault },
   copy: { label: 'Interface copy', fallback: copyDefault },
 } as const;
@@ -52,44 +53,88 @@ export async function readSiteDocFresh<K extends SiteDocKey>(key: K): Promise<(t
   return overlay(SITE_DOCS[key].fallback, rows[0]?.data);
 }
 
+/** The one profile row (the bundled one when the table is empty). */
+export const getProfile = cache(async (): Promise<ProfileRow> => (await listRows('profile'))[0]);
+
+/** The résumé, assembled from its tables in the shape the sections read. */
+export const getPortfolio = cache(async (): Promise<Portfolio> => {
+  const [profile, socialLinks, experience, categories, skills, techStack, certifications, volunteering, workshops, interests, languages] =
+    await Promise.all([
+      getProfile(),
+      listRows('social_links'),
+      listRows('experience'),
+      listRows('skill_categories'),
+      listRows('skills'),
+      listRows('tech_stack'),
+      listRows('certifications'),
+      listRows('volunteering'),
+      listRows('workshops'),
+      listRows('interests'),
+      listRows('languages'),
+    ]);
+
+  // Skills join their card by category name; a name without a card still gets one.
+  const cards = categories.map((c) => ({ ...c, skills: skills.filter((s) => s.category === c.name) }));
+  for (const s of skills) {
+    if (cards.some((c) => c.name === s.category)) continue;
+    cards.push({
+      id: `category-${s.category}`,
+      name: s.category,
+      description: null,
+      sortOrder: 1000 + cards.length,
+      skills: skills.filter((x) => x.category === s.category),
+    });
+  }
+
+  return {
+    profile,
+    socialLinks,
+    experience,
+    skills: { categories: cards.filter((c) => c.skills.length), techStack },
+    certifications,
+    volunteering,
+    workshops,
+    interests,
+    languages,
+  };
+});
+
 export const getSite = cache(async () => {
-  const [portfolio, anime, copy] = await Promise.all([
-    getSiteDoc('portfolio'),
-    getSiteDoc('anime'),
-    getSiteDoc('copy'),
-  ]);
+  const [portfolio, anime, copy] = await Promise.all([getPortfolio(), getSiteDoc('anime'), getSiteDoc('copy')]);
   return { portfolio, anime, copy };
 });
 
 export type Site = Awaited<ReturnType<typeof getSite>>;
 
-/** Placeholder rows in the résumé file ("Your Company Name" …) are kept as templates, never shown. */
-export const isReal = (row: { id?: string }) => !row.id?.includes('placeholder');
-
-import type { Guest } from '@/types/anime';
-export type { Guest };
+const toGuest = (g: GuestRow): Guest => ({
+  name: g.name,
+  series: g.series,
+  line: g.line,
+  image: g.image,
+  face: g.face ?? undefined,
+  poses: g.poses,
+});
 
 /**
- * One guest character per project, never repeated: the slug's own entry when it has one,
+ * One guest character per project, never repeated: the slug's own row when it has one,
  * otherwise the next unused spare. Projects left over once spares run out get no guest.
  */
-export function guestsFor(slugs: string[], cast: Anime['projectCast']): Record<string, Guest> {
-  const bySlug = cast.bySlug as Record<string, Guest>;
+export function guestsFor(slugs: string[], guests: GuestRow[]): Record<string, Guest> {
   const used = new Set<string>();
   const out: Record<string, Guest> = {};
   for (const slug of slugs) {
-    const g = bySlug[slug];
+    const g = guests.find((x) => x.projectSlug === slug);
     if (g?.image && !used.has(g.name)) {
-      out[slug] = g;
+      out[slug] = toGuest(g);
       used.add(g.name);
     }
   }
-  const spares = (cast.spares as Guest[]).filter((g) => g.image && !used.has(g.name));
+  const spares = guests.filter((g) => !g.projectSlug && g.image && !used.has(g.name));
   for (const slug of slugs) {
     if (out[slug]) continue;
     const g = spares.shift();
     if (!g) break;
-    out[slug] = g;
+    out[slug] = toGuest(g);
     used.add(g.name);
   }
   return out;

@@ -1,0 +1,172 @@
+[
+  {
+    "projectSlug": "hygieia",
+    "name": "Frieren",
+    "series": "Frieren: Beyond Journey's End",
+    "line": "A thousand years of study, five models deep.",
+    "image": "/images/anime/cast/frieren.webp",
+    "face": "/images/anime/cast/frieren/face.webp",
+    "poses": [
+      "/images/anime/cast/frieren/pose-01.webp",
+      "/images/anime/cast/frieren/pose-02.webp",
+      "/images/anime/cast/frieren/pose-03.webp",
+      "/images/anime/cast/frieren/pose-04.webp",
+      "/images/anime/cast/frieren/pose-05.webp",
+      "/images/anime/cast/frieren/pose-06.webp",
+      "/images/anime/cast/frieren/pose-07.webp"
+    ],
+    "sortOrder": 10
+  },
+  {
+    "projectSlug": "bookisham",
+    "name": "Bocchi",
+    "series": "Bocchi the Rock!",
+    "line": "A quiet room of my own to read in.",
+    "image": "/images/anime/cast/bocchi.webp",
+    "face": "/images/anime/cast/bocchi/face.webp",
+    "poses": [
+      "/images/anime/cast/bocchi/pose-01.webp",
+      "/images/anime/cast/bocchi/pose-02.webp",
+      "/images/anime/cast/bocchi/pose-03.webp",
+      "/images/anime/cast/bocchi/pose-04.webp",
+      "/images/anime/cast/bocchi/pose-05.webp",
+      "/images/anime/cast/bocchi/pose-06.webp",
+      "/images/anime/cast/bocchi/pose-07.webp",
+      "/images/anime/cast/bocchi/pose-08.webp"
+    ],
+    "sortOrder": 20
+  },
+  {
+    "projectSlug": "scholar-track",
+    "name": "Kaguya",
+    "series": "Kaguya-sama: Love Is War",
+    "line": "Every approval, exactly on schedule.",
+    "image": "/images/anime/cast/kaguya.webp",
+    "face": "/images/anime/cast/kaguya/face.webp",
+    "poses": [
+      "/images/anime/cast/kaguya/pose-01.webp",
+      "/images/anime/cast/kaguya/pose-02.webp",
+      "/images/anime/cast/kaguya/pose-03.webp",
+      "/images/anime/cast/kaguya/pose-04.webp",
+      "/images/anime/cast/kaguya/pose-05.webp",
+      "/images/anime/cast/kaguya/pose-06.webp"
+    ],
+    "sortOrder": 30
+  },
+  {
+    "projectSlug": "spartan",
+    "name": "Gojo",
+    "series": "Jujutsu Kaisen",
+    "line": "Open source? Throughout heaven and earth.",
+    "image": "/images/anime/cast/gojo.webp",
+    "face": "/images/anime/cast/gojo/face.webp",
+    "poses": [
+      "/images/anime/cast/gojo/pose-01.webp",
+      "/images/anime/cast/gojo/pose-02.webp",
+      "/images/anime/cast/gojo/pose-03.webp",
+      "/images/anime/cast/gojo/pose-04.webp",
+      "/images/anime/cast/gojo/pose-05.webp",
+      "/images/anime/cast/gojo/pose-06.webp",
+      "/images/anime/cast/gojo/pose-07.webp",
+      "/images/anime/cast/gojo/pose-08.webp"
+    ],
+    "sortOrder": 40
+  },
+  {
+    "projectSlug": "bidnest",
+    "name": "Anya",
+    "series": "Spy x Family",
+    "line": "Waku waku! Who bids next?",
+    "image": "/images/anime/cast/anya.webp",
+    "face": "/images/anime/cast/anya/face.webp",
+    "poses": [
+      "/images/anime/cast/anya/pose-01.webp",
+      "/images/anime/cast/anya/pose-02.webp",
+      "/images/anime/cast/anya/pose-03.webp",
+      "/images/anime/cast/anya/pose-04.webp",
+      "/images/anime/cast/anya/pose-05.webp",
+      "/images/anime/cast/anya/pose-06.webp",
+      "/images/anime/cast/anya/pose-07.webp",
+      "/images/anime/cast/anya/pose-08.webp",
+      "/images/anime/cast/anya/pose-09.webp",
+      "/images/anime/cast/anya/pose-10.webp"
+    ],
+    "sortOrder": 50
+  },
+  {
+    "projectSlug": "ctr",
+    "name": "Tanjiro",
+    "series": "Demon Slayer",
+    "line": "The whole team, one lap at a time.",
+    "image": "/images/anime/cast/tanjiro.webp",
+    "face": "/images/anime/cast/tanjiro/face.webp",
+    "poses": [
+      "/images/anime/cast/tanjiro/pose-01.webp",
+      "/images/anime/cast/tanjiro/pose-02.webp",
+      "/images/anime/cast/tanjiro/pose-03.webp",
+      "/images/anime/cast/tanjiro/pose-04.webp"
+    ],
+    "sortOrder": 60
+  },
+  {
+    "projectSlug": "ctr-unified",
+    "name": "Yor",
+    "series": "Spy x Family",
+    "line": "Results posted before the flag drops.",
+    "image": "/images/anime/cast/yor.webp",
+    "face": "/images/anime/cast/yor/face.webp",
+    "poses": [
+      "/images/anime/cast/yor/pose-01.webp",
+      "/images/anime/cast/yor/pose-02.webp",
+      "/images/anime/cast/yor/pose-03.webp",
+      "/images/anime/cast/yor/pose-04.webp",
+      "/images/anime/cast/yor/pose-05.webp",
+      "/images/anime/cast/yor/pose-06.webp",
+      "/images/anime/cast/yor/pose-07.webp",
+      "/images/anime/cast/yor/pose-08.webp",
+      "/images/anime/cast/yor/pose-09.webp",
+      "/images/anime/cast/yor/pose-10.webp"
+    ],
+    "sortOrder": 70
+  },
+  {
+    "projectSlug": "msft-stock",
+    "name": "Megumin",
+    "series": "KonoSuba",
+    "line": "One chart. One explosion of insight.",
+    "image": "/images/anime/cast/megumin.webp",
+    "face": "/images/anime/cast/megumin/face.webp",
+    "poses": [
+      "/images/anime/cast/megumin/pose-01.webp",
+      "/images/anime/cast/megumin/pose-02.webp",
+      "/images/anime/cast/megumin/pose-03.webp",
+      "/images/anime/cast/megumin/pose-04.webp",
+      "/images/anime/cast/megumin/pose-05.webp",
+      "/images/anime/cast/megumin/pose-06.webp",
+      "/images/anime/cast/megumin/pose-07.webp",
+      "/images/anime/cast/megumin/pose-08.webp",
+      "/images/anime/cast/megumin/pose-09.webp"
+    ],
+    "sortOrder": 80
+  },
+  {
+    "projectSlug": null,
+    "name": "Chika",
+    "series": "Kaguya-sama: Love Is War",
+    "line": "Ta-dah! A brand new project!",
+    "image": "/images/anime/cast/chika.webp",
+    "face": null,
+    "poses": [],
+    "sortOrder": 90
+  },
+  {
+    "projectSlug": null,
+    "name": "Denji",
+    "series": "Chainsaw Man",
+    "line": "Shipping it. Right now.",
+    "image": "/images/anime/cast/denji.webp",
+    "face": null,
+    "poses": [],
+    "sortOrder": 100
+  }
+]

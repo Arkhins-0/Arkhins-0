@@ -1,117 +1,81 @@
 import type { Metadata, Viewport } from 'next';
 import { Syne, Space_Grotesk, JetBrains_Mono } from 'next/font/google';
 import { SpeedInsights } from '@vercel/speed-insights/next';
-import './globals.css';
-import './anime.css';
-import { UIProvider } from '@/context/UIContext';
-import { getSiteDoc, type Portfolio } from '@/lib/site';
-import content from '@/data/content.json';
+import '@/styles/globals.css';
+import '@/styles/home.css';
+import { listRows } from '@/lib/content';
+import { getProfile, getSiteDoc } from '@/lib/site';
+import type { ProfileRow, SocialLinkRow } from '@/types/content';
 
-const display = Syne({
-  subsets: ['latin'],
-  weight: ['600', '700', '800'],
-  variable: '--font-display',
-  display: 'swap',
-});
+const display = Syne({ subsets: ['latin'], weight: ['600', '700', '800'], variable: '--font-display', display: 'swap' });
+const sans = Space_Grotesk({ subsets: ['latin'], variable: '--font-sans', display: 'swap' });
+const mono = JetBrains_Mono({ subsets: ['latin'], weight: ['400', '500', '700'], variable: '--font-mono', display: 'swap' });
 
-const sans = Space_Grotesk({
-  subsets: ['latin'],
-  variable: '--font-sans',
-  display: 'swap',
-});
-
-const mono = JetBrains_Mono({
-  subsets: ['latin'],
-  weight: ['400', '500', '700'],
-  variable: '--font-mono',
-  display: 'swap',
-});
-
-/** Title, description and sharing tags come from the profile document, so they are editable in /admin. */
+/** Title, description and sharing tags come from the profile row, so they are editable in /admin. */
 export async function generateMetadata(): Promise<Metadata> {
-  const { meta, basics } = await getSiteDoc('portfolio');
+  const p = await getProfile();
+  const ogImage = p.ogImage ?? p.profilePicture ?? undefined;
   return {
-  metadataBase: new URL(meta.siteUrl),
-  title: {
-    default: meta.title,
-    template: `%s — ${basics.name}`,
-  },
-  description: meta.description,
-  keywords: meta.keywords,
-  authors: [{ name: meta.author, url: meta.siteUrl }],
-  creator: meta.author,
-  publisher: meta.author,
-  alternates: {
-    canonical: meta.siteUrl,
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
+    metadataBase: new URL(p.siteUrl),
+    title: { default: p.metaTitle, template: `%s — ${p.name}` },
+    description: p.metaDescription,
+    keywords: p.keywords,
+    authors: [{ name: p.name, url: p.siteUrl }],
+    creator: p.name,
+    publisher: p.name,
+    alternates: { canonical: p.siteUrl },
+    robots: {
       index: true,
       follow: true,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
+      googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1 },
     },
-  },
-  openGraph: {
-    title: meta.title,
-    description: meta.description,
-    url: meta.siteUrl,
-    siteName: meta.title,
-    type: 'website',
-    images: [{ url: meta.ogImage, alt: meta.ogAlt }],
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: meta.title,
-    description: meta.description,
-    images: [meta.ogImage],
-  },
+    openGraph: {
+      title: p.metaTitle,
+      description: p.metaDescription,
+      url: p.siteUrl,
+      siteName: p.metaTitle,
+      type: 'website',
+      images: ogImage ? [{ url: ogImage, alt: p.ogAlt ?? p.name }] : undefined,
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: p.metaTitle,
+      description: p.metaDescription,
+      images: ogImage ? [ogImage] : undefined,
+    },
   };
 }
 
-// Person schema so search engines associate "Krishna Vijay" / "Krishna Vijay G." queries with this site
-const personJsonLd = ({ meta, basics, socialLinks }: Portfolio) => ({
+/** Person schema so search engines associate the name and the alias with this site. */
+const personJsonLd = (p: ProfileRow, links: SocialLinkRow[], alias: string) => ({
   '@context': 'https://schema.org',
   '@type': 'Person',
-  name: basics.name,
-  alternateName: ['Krishna Vijay', 'Krishna Vijay G', 'Arkhins'],
-  url: meta.siteUrl,
-  image: `${meta.siteUrl}${basics.profilePicture}`,
-  jobTitle: basics.headline,
-  description: meta.description,
-  email: `mailto:${basics.email}`,
+  name: p.name,
+  alternateName: Array.from(new Set([p.name.split(' ').slice(0, 2).join(' '), alias])).filter(Boolean),
+  url: p.siteUrl,
+  ...(p.profilePicture ? { image: `${p.siteUrl}${p.profilePicture}` } : {}),
+  jobTitle: p.headline,
+  description: p.metaDescription,
+  email: `mailto:${p.email}`,
   address: {
     '@type': 'PostalAddress',
-    addressLocality: basics.location.city,
-    addressRegion: basics.location.state,
-    addressCountry: basics.location.country,
+    addressLocality: p.city,
+    ...(p.state ? { addressRegion: p.state } : {}),
+    addressCountry: p.country,
   },
-  sameAs: socialLinks.map((link) => link.url),
+  sameAs: links.map((l) => l.url),
 });
 
 export const viewport: Viewport = {
   themeColor: '#ff4f8b',
   width: 'device-width',
   initialScale: 1,
-  colorScheme: 'dark',
 };
 
-export default async function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  const portfolio = await getSiteDoc('portfolio');
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const [profile, links, anime] = await Promise.all([getProfile(), listRows('social_links'), getSiteDoc('anime')]);
   return (
-    <html
-      lang="en"
-      data-accent={content.theme.accents[0].id}
-      data-fx="on"
-      className={`${display.variable} ${sans.variable} ${mono.variable}`}
-      suppressHydrationWarning
-    >
+    <html lang="en" className={`${display.variable} ${sans.variable} ${mono.variable}`} suppressHydrationWarning>
       <head>
         {/* Anime theme faces (Dela Gothic One, M PLUS Rounded 1c). Both carry Japanese glyphs split into
             hundreds of unicode-range slices, so they load from Google on demand instead of via next/font. */}
@@ -126,11 +90,9 @@ export default async function RootLayout({
       <body className="min-h-screen overflow-x-hidden bg-bg text-ink antialiased">
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd(portfolio)) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd(profile, links, anime.series.title)) }}
         />
-        <UIProvider>
-          {children}
-        </UIProvider>
+        {children}
         <SpeedInsights />
       </body>
     </html>

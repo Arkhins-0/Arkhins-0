@@ -36,3 +36,6 @@ coverage/
 
 # Local env (holds DB + storage secrets)
 .env
+
+# Browser screenshots taken during review
+.playwright-mcp/

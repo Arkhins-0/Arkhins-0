@@ -1,12 +1,10 @@
 import type { MetadataRoute } from 'next';
-import portfolioData from '@/data/portfolio.json';
 import { listProjectSlugs } from '@/lib/content';
+import { getProfile } from '@/lib/site';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const { siteUrl } = portfolioData.meta;
+  const [{ siteUrl }, slugs] = await Promise.all([getProfile(), listProjectSlugs()]);
   const now = new Date();
-  const slugs = await listProjectSlugs();
-
   return [
     { url: siteUrl, lastModified: now, changeFrequency: 'monthly', priority: 1 },
     { url: `${siteUrl}/projects`, lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
