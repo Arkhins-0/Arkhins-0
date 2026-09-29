@@ -8,9 +8,8 @@ import type { Guest } from '@/types/guest';
 
 /**
  * The project's guest character in the bottom corner of its showcase page, with a one-line bubble.
- * On wide screens the full figure stands in the margin. On phones there is no margin, so the
- * figure would cover the text; there it shrinks to a round face badge that opens the bubble on tap.
- * The × sends the guest away.
+ * The bubble opens on arrival; on phones it tucks away once the reader scrolls, and tapping the
+ * character brings it back. The × sends the guest away.
  */
 export function GuestCorner({ guest, label, closeLabel }: { guest: Guest; label: string; closeLabel: string }) {
   const [shown, setShown] = useState(false);
@@ -63,31 +62,13 @@ export function GuestCorner({ guest, label, closeLabel }: { guest: Guest; label:
     <aside
       aria-label={`${label}: ${guest.name}`}
       className={cn(
-        'pointer-events-none fixed bottom-3 right-3 z-40 transition-all duration-700 ease-out lg:bottom-0 lg:right-6',
+        'pointer-events-none fixed bottom-0 right-2 z-40 transition-all duration-700 ease-out md:right-6',
         shown ? 'translate-y-0 opacity-100' : 'translate-y-full opacity-0'
       )}
     >
-      {/* Phones and tablets: a face badge; the bubble opens above it. */}
-      <div className="flex flex-col items-end gap-3 lg:hidden">
-        {talking && bubble}
-        <button
-          type="button"
-          onClick={() => setTalking((v) => !v)}
-          aria-expanded={talking}
-          aria-label={`${guest.name}: ${guest.line}`}
-          className="pointer-events-auto h-14 w-14 overflow-hidden rounded-full border-[3px] border-[#1c1633] bg-[#ffd3e2] shadow-[3px_3px_0_#1c1633]"
-        >
-          {guest.face ? (
-            <img src={guest.face} alt="" className="h-full w-full object-cover" />
-          ) : (
-            <img src={guest.image} alt="" className="h-[260%] w-auto max-w-none -translate-x-[20%] object-cover object-top" />
-          )}
-        </button>
-      </div>
-
-      {/* Wide screens: the full figure in the margin, bubble beside it. */}
-      <div className="hidden items-end lg:flex">
-        {talking && <div className="mb-24 mr-[-12px]">{bubble}</div>}
+      {/* One figure on every screen. Phones stack the bubble above it; wide screens set it beside. */}
+      <div className="flex flex-col items-end lg:flex-row">
+        {talking && <div className="mb-2 lg:mb-24 lg:mr-[-12px]">{bubble}</div>}
         <button
           type="button"
           onClick={() => setTalking((v) => !v)}
