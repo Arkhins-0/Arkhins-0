@@ -7,51 +7,51 @@
   {
     "name": "Game Designing",
     "description": "Passionate about the art and technology of game development with a keen interest in Level Design.",
-    "sortOrder": 20
+    "sortOrder": 30
   },
   {
     "name": "Anime",
     "description": "Enjoys watching anime for inspiration, storytelling, and creative world-building.",
-    "sortOrder": 30
+    "sortOrder": 40
   },
   {
     "name": "Web Development",
     "description": "Building responsive and interactive web applications using modern frameworks and technologies.",
-    "sortOrder": 40
+    "sortOrder": 50
   },
   {
     "name": "UI/UX Design",
     "description": "Creating intuitive and visually appealing user experiences through thoughtful design practices.",
-    "sortOrder": 50
+    "sortOrder": 60
   },
   {
     "name": "Mobile App Development",
     "description": "Developing cross-platform mobile applications with focus on user engagement and performance.",
-    "sortOrder": 60
+    "sortOrder": 70
   },
   {
     "name": "Manga",
     "description": "Avid reader of manga, appreciating unique art styles and engaging narratives.",
-    "sortOrder": 70
+    "sortOrder": 80
   },
   {
     "name": "Cloud Computing",
     "description": "Exploring cloud platforms and services to build scalable and reliable applications.",
-    "sortOrder": 80
+    "sortOrder": 90
   },
   {
     "name": "Open Source Contribution",
     "description": "Passionate about contributing to open source projects and giving back to the developer community.",
-    "sortOrder": 90
+    "sortOrder": 100
   },
   {
     "name": "Books",
     "description": "Loves reading books across genres to expand knowledge and imagination.",
-    "sortOrder": 100
+    "sortOrder": 110
   },
   {
     "name": "Travel",
     "description": "Passionate about exploring new places, cultures, and experiences through travel.",
-    "sortOrder": 110
+    "sortOrder": 120
   }
 ]

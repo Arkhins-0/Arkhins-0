@@ -25,6 +25,9 @@ export default async function Home() {
     listRows('guests'),
   ]);
   const { anime, copy, portfolio } = site;
+  // The home page shows the featured projects; /projects lists every published one.
+  const featured = projects.filter((p) => p.featured);
+  const shown = featured.length ? featured : projects;
 
   return (
     <div className="ak">
@@ -46,7 +49,7 @@ export default async function Home() {
           <div className="ak-shell">
             <EpisodeHead copy={anime.sections.work} />
             <Work
-              projects={projects}
+              projects={shown}
               copy={copy.work}
               githubUrl={portfolio.socialLinks.find((s) => s.icon === 'github')?.url}
               allHref="/projects"

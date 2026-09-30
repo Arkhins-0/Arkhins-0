@@ -100,7 +100,7 @@ export function ProjectPanel({
           <span className="text-[0.55rem] leading-none">No.</span>
           <span className="text-xl leading-none">{String(index + 1).padStart(2, '0')}</span>
         </span>
-        {p.featured && (
+        {p.featured && featuredLabel && (
           <span className={cn('ak-tag absolute bottom-3 z-20 bg-[color:var(--ak-sun)] text-[color:var(--ak-ink)] shadow-[2px_2px_0_var(--ak-ink)]', v.side === 'right' ? 'left-3' : 'right-3')}>
             ★ {featuredLabel}
           </span>

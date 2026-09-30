@@ -55,7 +55,8 @@ src/
   types/content.ts            row types and the ShowcaseDoc; types/guest.ts the guest character
 public/
   projects/<slug>/            each project's thumbnail, cover, screenshots and case study
-  images/                     shared art: anime characters, skill icons, logos, badges
+  images/anime/               section art and characters/<name>/ (figure, face, poses); see its README
+  images/                     shared art: skill icons, logos, badges
 _legacy/                      the previous design, kept only until it is deleted (see below)
 ```
 

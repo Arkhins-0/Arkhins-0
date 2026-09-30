@@ -1,0 +1,14 @@
+{
+  "credits": [
+    {
+      "file": "pose-01.webp",
+      "source": "https://roshidere.fandom.com/wiki/File:Alisa_Design_S1.png",
+      "kind": "cutout"
+    },
+    {
+      "file": "pose-02.webp",
+      "source": "https://roshidere.fandom.com/wiki/File:Alya's_outside_clothing.png",
+      "kind": "cutout from a white background"
+    }
+  ]
+}

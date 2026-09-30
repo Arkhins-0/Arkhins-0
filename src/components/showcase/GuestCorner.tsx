@@ -9,12 +9,11 @@ import type { Guest } from '@/types/guest';
 /**
  * The project's guest character in the bottom corner of its showcase page, with a one-line bubble.
  * The bubble opens on arrival; on phones it tucks away once the reader scrolls, and tapping the
- * character brings it back. The × sends the guest away.
+ * character brings it back. The × closes the bubble only; the character stays.
  */
 export function GuestCorner({ guest, label, closeLabel }: { guest: Guest; label: string; closeLabel: string }) {
   const [shown, setShown] = useState(false);
   const [talking, setTalking] = useState(false);
-  const [gone, setGone] = useState(false);
 
   useEffect(() => {
     // The guest arrives talking on every screen size.
@@ -39,13 +38,11 @@ export function GuestCorner({ guest, label, closeLabel }: { guest: Guest; label:
     };
   }, []);
 
-  if (gone) return null;
-
   const bubble = (
     <div className="pointer-events-auto relative max-w-[220px] rounded-2xl border-[3px] border-[#1c1633] bg-white px-4 py-3 text-[#1c1633] shadow-[3px_3px_0_#1c1633] [font-family:var(--font-ak-body),system-ui]">
       <button
         type="button"
-        onClick={() => setGone(true)}
+        onClick={() => setTalking(false)}
         aria-label={closeLabel}
         className="absolute -right-2 -top-2 flex h-6 w-6 items-center justify-center rounded-full border-2 border-[#1c1633] bg-[#ffcc29]"
       >

@@ -9,7 +9,8 @@
     "lint": "next lint",
     "predeploy": "npm run build && node -e \"require('fs').writeFileSync('out/.nojekyll', '')\"",
     "deploy": "gh-pages -d out --dotfiles",
-    "db:setup": "node db/setup.mjs"
+    "db:setup": "node db/setup.mjs",
+    "db:pull": "node db/pull.mjs"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1142.0",

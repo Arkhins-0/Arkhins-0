@@ -47,7 +47,7 @@ export function About({ site, education }: { site: Site; education: EducationRow
           <Pop className="relative">
             <div className="ak-cel ak-grid-paper relative overflow-hidden px-6 pb-24 pt-10">
               <span className="ak-tag absolute left-4 top-4 z-20 -rotate-3 bg-[color:var(--ak-ink)] text-white">{about.badge}</span>
-              <Character src={about.image} alt={about.imageAlt} disc="var(--ak-sakura-soft)" className="mx-auto max-w-[340px]" />
+              <Character src={about.image} alt={about.imageAlt} disc="var(--ak-sakura-soft)" className="mx-auto max-w-[340px]" imgClassName="max-h-[440px] w-auto md:max-h-[520px]" />
               <div className="absolute inset-x-4 bottom-4 z-20 rounded-xl border-[3px] border-[color:var(--ak-ink)] bg-[color:var(--ak-sun)] px-4 py-3 shadow-[3px_3px_0_var(--ak-ink)]">
                 <p className="ak-display text-xl leading-tight md:text-2xl">{profile.name}</p>
                 <p lang="ja" className="text-sm font-bold text-[color:var(--ak-ink-2)]">

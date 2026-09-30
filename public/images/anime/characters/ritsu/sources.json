@@ -1,0 +1,31 @@
+{
+  "series": "K-On!",
+  "poses": [
+    "/images/anime/characters/ritsu/pose-01.webp",
+    "/images/anime/characters/ritsu/pose-02.webp",
+    "/images/anime/characters/ritsu/pose-03.webp",
+    "/images/anime/characters/ritsu/pose-04.webp"
+  ],
+  "credits": [
+    {
+      "file": "pose-01.webp",
+      "source": "https://k-on.fandom.com/wiki/File:Ritsu_Tainaka_artwork.png",
+      "kind": "cutout from a white background"
+    },
+    {
+      "file": "pose-02.webp",
+      "source": "https://k-on.fandom.com/wiki/File:Ritsu_with_her_drumsticks.png",
+      "kind": "cutout from a white background"
+    },
+    {
+      "file": "pose-03.webp",
+      "source": "https://k-on.fandom.com/wiki/File:Ritsu_in_PJs.png",
+      "kind": "cutout from a white background"
+    },
+    {
+      "file": "pose-04.webp",
+      "source": "https://k-on.fandom.com/wiki/File:Ritsu_Dont_Say_Lazy.png",
+      "kind": "cutout from a white background"
+    }
+  ]
+}

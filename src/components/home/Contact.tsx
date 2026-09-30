@@ -23,7 +23,7 @@ export function Contact({ site }: { site: Site }) {
           <Pop className="space-y-6">
             {contact.image && (
               <div className="relative mx-auto max-w-[280px]">
-                <img src={contact.image} alt={contact.imageAlt} loading="lazy" className="h-auto w-full drop-shadow-[5px_6px_0_rgba(28,22,51,0.18)]" />
+                <img src={contact.image} alt={contact.imageAlt} loading="lazy" className="mx-auto h-auto max-h-[340px] w-auto max-w-full drop-shadow-[5px_6px_0_rgba(28,22,51,0.18)] md:max-h-[400px]" />
                 {contact.signText && box && (
                   <span
                     className="ak-display absolute flex items-center justify-center bg-white text-center text-[clamp(1.2rem,4vw,2rem)] leading-tight text-[color:var(--ak-sakura)]"

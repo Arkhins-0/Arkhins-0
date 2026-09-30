@@ -47,10 +47,24 @@ export const getSiteDoc = cache(async <K extends SiteDocKey>(key: K): Promise<(t
   return overlay(fallback, rows[0]?.data);
 });
 
+/**
+ * Keeps only the keys the bundled document has, so stored leftovers from older designs never reach
+ * the admin form (and are dropped on the next save). Lists are kept whole.
+ */
+function known<T extends object>(base: T, doc: T): T {
+  const out: Record<string, unknown> = {};
+  for (const [k, b] of Object.entries(base)) {
+    const v = (doc as Record<string, unknown>)[k];
+    out[k] = b && typeof b === 'object' && !Array.isArray(b) && v && typeof v === 'object' && !Array.isArray(v) ? known(b as object, v as object) : v;
+  }
+  return out as T;
+}
+
 /** The admin's view of a document: straight from the database, never from the page cache. */
 export async function readSiteDocFresh<K extends SiteDocKey>(key: K): Promise<(typeof SITE_DOCS)[K]['fallback']> {
   const rows = await execute<{ data: unknown }>('select data from site_documents where key = $1', [key]);
-  return overlay(SITE_DOCS[key].fallback, rows[0]?.data);
+  const fallback = SITE_DOCS[key].fallback;
+  return known(fallback, overlay(fallback, rows[0]?.data));
 }
 
 /** The one profile row (the bundled one when the table is empty). */

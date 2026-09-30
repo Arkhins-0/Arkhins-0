@@ -16,8 +16,8 @@
       "scholar-track",
       "hygieia"
     ],
-    "image": "/images/anime/cast/zero-two.webp",
-    "face": "/images/anime/cast/faces/zero-two.webp",
+    "image": "/images/anime/characters/zero-two/figure.webp",
+    "face": "/images/anime/characters/zero-two/face.webp",
     "color": "#ff4f8b",
     "sortOrder": 10
   },
@@ -38,8 +38,8 @@
       "ctr",
       "ctr-unified"
     ],
-    "image": "/images/anime/cast/2b.webp",
-    "face": "/images/anime/cast/faces/2b.webp",
+    "image": "/images/anime/characters/2b/figure.webp",
+    "face": "/images/anime/characters/2b/face.webp",
     "color": "#3a3355",
     "sortOrder": 20
   },
@@ -60,8 +60,8 @@
       "spartan",
       "bookisham"
     ],
-    "image": "/images/anime/cast/rem.webp",
-    "face": "/images/anime/cast/faces/rem.webp",
+    "image": "/images/anime/characters/rem/figure.webp",
+    "face": "/images/anime/characters/rem/face.webp",
     "color": "#2f8cff",
     "sortOrder": 30
   },
@@ -82,15 +82,15 @@
       "bidnest",
       "scholar-track"
     ],
-    "image": "/images/anime/cast/komi.webp",
-    "face": "/images/anime/cast/faces/komi.webp",
+    "image": "/images/anime/characters/komi/figure.webp",
+    "face": "/images/anime/characters/komi/face.webp",
     "color": "#9a7bff",
     "sortOrder": 40
   },
   {
-    "name": "Wiki-chan",
-    "kana": "ウィキたん",
-    "series": "Original character",
+    "name": "Megumin",
+    "kana": "めぐみん",
+    "series": "KonoSuba",
     "role": "AI / ML",
     "pitch": "Models trained, evaluated and shipped behind a real interface: ensembles for diagnosis, time series for markets.",
     "skills": [
@@ -103,9 +103,9 @@
       "hygieia",
       "msft-stock"
     ],
-    "image": "/images/anime/hero.png",
-    "face": "/images/anime/cast/faces/wiki-chan.webp",
-    "color": "#1fcf9a",
+    "image": "/images/anime/characters/megumin/figure.webp",
+    "face": "/images/anime/characters/megumin/face.webp",
+    "color": "#d6334f",
     "sortOrder": 50
   }
 ]

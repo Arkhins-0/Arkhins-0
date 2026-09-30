@@ -22,7 +22,7 @@
     "allFilter": "All",
     "emptyState": "Nothing filed under “{filter}” yet.",
     "caseStudyAction": "Open project",
-    "featuredBadge": "Featured",
+    "featuredBadge": "★ Featured",
     "outroCopy": "More experiments, half-finished ideas and commit history live on GitHub.",
     "outroAction": "Browse the repos"
   },
@@ -88,7 +88,7 @@
     "title": "Selected",
     "accentWord": "work",
     "lede": "Everything below shipped, broke, or taught me something. Case studies get their own page; the rest link straight to the live build or the repo.",
-    "allLabel": "All projects"
+    "allLabel": "See all projects"
   },
   "projectPage": {
     "backHref": "/#work",

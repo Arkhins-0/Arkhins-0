@@ -95,7 +95,7 @@
     "description": "Certificate of completion in Python from GUVI Geek Networks, an IIT-M and HCL incubated platform.",
     "credentialId": "497P918BJm712469oi",
     "credentialUrl": "https://www.guvi.in/certificate?id=497P918BJm712469oi",
-    "badge": null,
+    "badge": "/images/certifications/guvi.png",
     "sortOrder": 90
   },
   {
@@ -106,7 +106,7 @@
     "description": "Two-month internship in Artificial Intelligence, run from November to December 2022.",
     "credentialId": "TNINTC22-727",
     "credentialUrl": null,
-    "badge": null,
+    "badge": "/images/certifications/teachnook.png",
     "sortOrder": 100
   },
   {

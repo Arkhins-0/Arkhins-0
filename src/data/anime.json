@@ -45,7 +45,7 @@
     "closeMenu": "Close menu"
   },
   "hero": {
-    "image": "/images/anime/cast/zero-two.webp",
+    "image": "/images/anime/characters/zero-two/figure.webp",
     "imageAlt": "Zero Two from Darling in the Franxx",
     "episode": "EP.00 — PILOT",
     "greeting": "Yoroshiku!",
@@ -134,7 +134,7 @@
   "about": {
     "badge": "MAIN CHARACTER",
     "nowLabel": "now",
-    "image": "/images/anime/about.png",
+    "image": "/images/anime/sections/about.png",
     "imageAlt": "Anime character in a casual outfit, hand on hip",
     "classLabel": "Class",
     "baseLabel": "Base",
@@ -148,14 +148,14 @@
     "idLabel": "ID / {year}"
   },
   "story": {
-    "image": "/images/anime/story.png",
+    "image": "/images/anime/sections/story.png",
     "imageAlt": "Anime student carrying a school bag",
     "arcLabel": "ARC",
     "nowLabel": "Now airing",
     "bubble": "Every arc levelled me up a little. The next one could be at your studio."
   },
   "skills": {
-    "image": "/images/anime/skills.png",
+    "image": "/images/anime/sections/skills.png",
     "imageAlt": "Anime character raising a finger to make a point",
     "tip": "Pro tip: the stack changes, the fundamentals don't.",
     "stackLabel": "Equipment"
@@ -175,7 +175,7 @@
     "certificate": "Certificate"
   },
   "contact": {
-    "image": "/images/anime/contact.png",
+    "image": "/images/anime/sections/contact.png",
     "imageAlt": "Anime character holding up a sign",
     "signText": "",
     "signBox": {
@@ -189,7 +189,7 @@
     "copied": "Copied!"
   },
   "footer": {
-    "image": "/images/anime/footer.png",
+    "image": "/images/anime/sections/footer.png",
     "imageAlt": "Anime character bowing politely",
     "toBeContinued": "To be continued",
     "thanks": "Thanks for watching!",
@@ -197,14 +197,9 @@
     "creditsLabel": "Art credits",
     "credits": [
       {
-        "label": "Zero Two, 2B, Rem, Komi and the project guest stars belong to their creators and studios; used here as fan art",
+        "label": "Zero Two, 2B, Rem, Komi, Megumin and the project guest stars belong to their creators and studios; used here as fan art",
         "license": "Fan use",
         "url": "https://www.fandom.com/"
-      },
-      {
-        "label": "Wiki-chan (role picker): Wikipe-tan by David Revoy",
-        "license": "CC BY-SA 4.0",
-        "url": "https://commons.wikimedia.org/wiki/File:Wikipe-tan,_reading_and_editing_a_page_with_transparent_background.png"
       },
       {
         "label": "Profile: Wikipe-tan casual by Kasuga",
