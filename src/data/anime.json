@@ -72,8 +72,8 @@
         "label": "Certifications"
       },
       {
-        "value": "3",
-        "label": "Internships & teams"
+        "value": "4",
+        "label": "Roles & internships"
       },
       {
         "value": "N3",
@@ -104,7 +104,7 @@
       "episode": "EP.03",
       "kana": "経歴",
       "title": "Story arcs",
-      "lede": "Internships, a developer community and school, in the order they happened."
+      "lede": "A contract role, a career break spent levelling up, a developer community and internships, newest first."
     },
     "skills": {
       "episode": "EP.04",

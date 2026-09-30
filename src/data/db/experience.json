@@ -1,11 +1,59 @@
 [
   {
+    "company": "Chennai Turbo Riders",
+    "position": "Full-Stack Developer",
+    "location": "Chennai, India",
+    "startDate": "Sep 2025",
+    "endDate": null,
+    "current": true,
+    "type": "Contract",
+    "description": "Building and running the web systems behind a Formula 4 team: the public site, the content console that edits it, and the championship portal and CMS.",
+    "highlights": [
+      "Rebuilt the team site and its content console as one Next.js deployment, split by hostname",
+      "Drivers, calendar, news and sponsors live in Postgres and are edited without a deploy",
+      "Built the championship portal and CMS: results, standings, newsroom and role-based access"
+    ],
+    "technologies": [
+      "Next.js",
+      "Postgres · Neon",
+      "Object storage",
+      "CMS"
+    ],
+    "logo": "/projects/ctr/logo.png",
+    "url": "https://www.chennaiturboriders.in",
+    "sortOrder": 10
+  },
+  {
+    "company": "Career break",
+    "position": "Professional development",
+    "location": "Chennai, India",
+    "startDate": "Jan 2025",
+    "endDate": "Sep 2025",
+    "current": false,
+    "type": null,
+    "description": "A planned break to study and certify across development, AI and Japanese before the next role.",
+    "highlights": [
+      "Android Developer and Python Full Stack internships through AICTE Eduskills",
+      "Quantum Computing with C-DAC and IIT Roorkee, and Foundations of AI with Microsoft and Edunet",
+      "Passed JLPT N3 Japanese, and attended ISRO IIRS workshops on AI/ML and space technology"
+    ],
+    "technologies": [
+      "Android",
+      "Python",
+      "AI",
+      "Japanese"
+    ],
+    "logo": null,
+    "url": null,
+    "sortOrder": 20
+  },
+  {
     "company": "Google Developer Students Club (GDSC)",
     "position": "Core Team Member",
     "location": "Chennai, India",
     "startDate": "Sep 2024",
-    "endDate": null,
-    "current": true,
+    "endDate": "Jan 2025",
+    "current": false,
     "type": "Student Club",
     "description": "Contributing as a core team member to organize, promote, and execute technical events, workshops, and community initiatives for GDSC at my institution.",
     "highlights": [
@@ -20,7 +68,7 @@
     ],
     "logo": "/images/companies/gdsc.png",
     "url": "https://gdsc.community.dev/",
-    "sortOrder": 10
+    "sortOrder": 30
   },
   {
     "company": "TT Infotech",
@@ -43,7 +91,7 @@
     ],
     "logo": "/images/companies/tt.png",
     "url": "https://ttinfotech.com/",
-    "sortOrder": 20
+    "sortOrder": 40
   },
   {
     "company": "Teachnook",
@@ -66,6 +114,6 @@
     ],
     "logo": "/images/companies/teachnook.png",
     "url": "https://teachnook.com/",
-    "sortOrder": 30
+    "sortOrder": 50
   }
 ]
