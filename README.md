@@ -27,7 +27,7 @@ Deployed at: Chennai, India · Status: Full-stack Developer, Chennai Turbo Rider
 - **Combat doctrine.** Recon first: research and Figma. Then engage: Next.js, Postgres, and Kotlin when the terrain demands it.
 - **Field record.** Most recent deployments are production systems for motorsport organisations and institutions, with real operators relying on them.
 - **Squad.** Core team member, Google Developer Student Clubs. Runs workshops and events so newer units survive their first sortie.
-- **Current directive.** Scouting generative AI, IoT automation and cloud infrastructure. Accepting new orders.
+- **Current directive.** Scouting generative AI, web platforms and cloud infrastructure. Accepting new orders.
 
 ## // Mission log
 

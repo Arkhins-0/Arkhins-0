@@ -20,7 +20,7 @@ db/
   schema.sql                  every table, with comments
   setup.mjs                   applies the schema, seeds empty tables (`-- --force` overwrites)
   README.md                   the data model
-design/og.html                source of the share image (public/images/og-anime.png)
+design/og.html                source of the share image (public/images/og.png)
 src/
   app/
     layout.tsx                fonts, metadata from the profile row, JSON-LD
