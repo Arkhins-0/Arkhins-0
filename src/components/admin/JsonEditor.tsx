@@ -15,15 +15,26 @@ type Props = {
   value: Json;
   onChange: (v: Json) => void;
   depth?: number;
+  /** Allowed values per field name; those fields render as a dropdown. */
+  options?: Record<string, string[]>;
+  /** Available skill icon names per field name; those fields get an icon picker with a preview. */
+  icons?: Record<string, string[]>;
 };
 
 /** Edits any JSON value: text, numbers, switches, image fields with upload, lists and nested groups. */
-export function JsonEditor({ name, value, onChange, depth = 0 }: Props) {
+export function JsonEditor({ name, value, onChange, depth = 0, options, icons }: Props) {
   if (Array.isArray(value)) return <ArrayEditor name={name} value={value} onChange={onChange} depth={depth} />;
-  if (value && typeof value === 'object') return <ObjectEditor name={name} value={value} onChange={onChange} depth={depth} />;
+  if (value && typeof value === 'object') return <ObjectEditor name={name} value={value} onChange={onChange} depth={depth} options={options} icons={icons} />;
+  if (icons?.[name] && (value === null || typeof value === 'string')) {
+    return (
+      <Field label={humanize(name)}>
+        <IconField value={value ?? ''} onChange={onChange} available={icons[name]} />
+      </Field>
+    );
+  }
   return (
     <Field label={humanize(name)}>
-      <ScalarEditor name={name} value={value} onChange={onChange} />
+      <ScalarEditor name={name} value={value} onChange={onChange} choices={options?.[name]} />
     </Field>
   );
 }
@@ -37,7 +48,20 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
   );
 }
 
-export function ScalarEditor({ name, value, onChange }: { name: string; value: Json; onChange: (v: Json) => void }) {
+export function ScalarEditor({ name, value, onChange, choices }: { name: string; value: Json; onChange: (v: Json) => void; choices?: string[] }) {
+  if (choices && (value === null || typeof value === 'string')) {
+    const current = value ?? '';
+    return (
+      <select className={inputCls} value={current} onChange={(e) => onChange(e.target.value)}>
+        {!choices.includes(current) && <option value={current}>{current ? `${current} (not in the list)` : 'Choose…'}</option>}
+        {choices.map((c) => (
+          <option key={c} value={c}>
+            {c}
+          </option>
+        ))}
+      </select>
+    );
+  }
   if (typeof value === 'boolean') {
     return (
       <button
@@ -65,6 +89,38 @@ export function ScalarEditor({ name, value, onChange }: { name: string; value: J
         <textarea className={cn(inputCls, 'min-h-[110px] resize-y leading-relaxed')} value={text} onChange={(e) => onChange(e.target.value)} />
       ) : (
         <input className={inputCls} value={text} placeholder={value === null ? '(empty)' : ''} onChange={(e) => onChange(e.target.value)} />
+      )}
+    </div>
+  );
+}
+
+/** Where a bare icon name points (same rule as copy.json → stack.iconPathTemplate); a full path is used as is. */
+const iconSrc = (v: string) => (v.includes('/') ? v : `/images/skills/${v}.png`);
+
+/** A skill icon name with a live preview, and the matching icons from /images/skills to click. */
+function IconField({ value, onChange, available }: { value: string; onChange: (v: Json) => void; available: string[] }) {
+  const [broken, setBroken] = useState(false);
+  useEffect(() => setBroken(false), [value]);
+  const q = value.trim().toLowerCase();
+  const matches = available.filter((n) => n !== value && (!q || n.includes(q) || q.includes(n)));
+
+  return (
+    <div className="space-y-2">
+      <div className="flex items-center gap-3">
+        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg border-2 border-[#1c1633]/15 bg-white p-1.5">
+          {value && !broken ? <img src={iconSrc(value)} alt="" onError={() => setBroken(true)} className="max-h-full max-w-full object-contain" /> : <ImagePlus size={18} className="text-[#1c1633]/30" />}
+        </div>
+        <input className={inputCls} value={value} placeholder="Type to search: react, python…" onChange={(e) => onChange(e.target.value.trim())} />
+      </div>
+      {value && broken && <p className="text-xs font-bold text-red-600">No icon at {iconSrc(value)}. Pick one below or add the file to public/images/skills.</p>}
+      {matches.length > 0 && (
+        <div className="flex max-h-40 flex-wrap gap-1.5 overflow-y-auto">
+          {matches.map((n) => (
+            <button key={n} type="button" onClick={() => onChange(n)} className="inline-flex items-center gap-1.5 rounded-lg border-2 border-[#1c1633]/10 bg-white px-2 py-1 text-xs font-bold hover:border-[#ff4f8b]">
+              <img src={iconSrc(n)} alt="" className="h-4 w-4 object-contain" /> {n}
+            </button>
+          ))}
+        </div>
       )}
     </div>
   );
@@ -135,13 +191,13 @@ export function ImageField({ value, onChange, nullable }: { value: string; onCha
   );
 }
 
-function ObjectEditor({ name, value, onChange, depth }: Omit<Props, 'value'> & { value: { [k: string]: Json } }) {
+function ObjectEditor({ name, value, onChange, depth, options, icons }: Omit<Props, 'value'> & { value: { [k: string]: Json } }) {
   const entries = Object.entries(value);
   const body = (
     <div className={cn('grid gap-4', entries.every(([, v]) => v === null || typeof v !== 'object') && entries.length > 1 && 'md:grid-cols-2')}>
       {entries.map(([k, v]) => (
         <div key={k} className={cn((v !== null && typeof v === 'object') || (typeof v === 'string' && (v.length > 90 || isImageField(k, v))) ? 'md:col-span-2' : '')}>
-          <JsonEditor name={k} value={v} depth={depth! + 1} onChange={(nv) => onChange({ ...value, [k]: nv })} />
+          <JsonEditor name={k} value={v} depth={depth! + 1} options={options} icons={icons} onChange={(nv) => onChange({ ...value, [k]: nv })} />
         </div>
       ))}
     </div>

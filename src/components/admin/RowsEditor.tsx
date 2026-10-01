@@ -14,6 +14,13 @@ type Row = Record<string, Json> & { id: string };
 
 const pretty = (v: Json | undefined) => (v == null ? '' : JSON.stringify(v, null, 2));
 
+/** Every row as one JSON list: just the editable fields, no id or sort order (the list order is the sort order). */
+const prettyAll = (rows: Row[], spec: TableSpec) =>
+  JSON.stringify(rows.map((r) => Object.fromEntries(spec.fields.map((f) => [f, r[f] ?? null]))), null, 2);
+
+/** The field that tells rows apart in the all-rows JSON: the slug for projects, otherwise the title. */
+const matchKey = (spec: TableSpec) => (spec.fields.includes('slug') ? 'slug' : spec.titleField);
+
 /**
  * List-and-form editor for one table. Plain fields are a form; JSON fields (a project's `content`,
  * the whole showcase page) get a code editor; the whole row can also be edited as one JSON object.
@@ -27,10 +34,13 @@ export function RowsEditor({ table, spec }: { table: TableKey; spec: TableSpec }
   const [draft, setDraft] = useState<Record<string, Json> | null>(null);
   const [docs, setDocs] = useState<Record<string, string>>({});
   const [rowRaw, setRowRaw] = useState<string | null>(null);
+  const [allRaw, setAllRaw] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
   const [dragFrom, setDragFrom] = useState<number | null>(null);
   const [dragOver, setDragOver] = useState<number | null>(null);
+  const [choices, setChoices] = useState<Record<string, string[]>>({});
+  const [icons, setIcons] = useState<Record<string, string[]>>({});
   const toast = useToast();
 
   const load = useCallback(
@@ -56,6 +66,25 @@ export function RowsEditor({ table, spec }: { table: TableKey; spec: TableSpec }
     load();
   }, [load]);
 
+  // Dropdown values for fields that point at another table (a skill's category).
+  useEffect(() => {
+    const lookups = Object.entries(spec.options ?? {});
+    setChoices({});
+    lookups.forEach(([field, { table: from, field: col }]) =>
+      api<{ rows: Row[] }>(`/api/admin/rows/${from}`)
+        .then((r) => setChoices((c) => ({ ...c, [field]: r.rows.map((x) => String(x[col] ?? '')).filter(Boolean) })))
+        .catch(() => {})
+    );
+  }, [spec.options]);
+
+  useEffect(() => {
+    setIcons({});
+    if (!spec.icons?.length) return;
+    api<{ icons: string[] }>('/api/admin/icons')
+      .then((r) => setIcons(Object.fromEntries(spec.icons!.map((f) => [f, r.icons]))))
+      .catch(() => {});
+  }, [spec.icons]);
+
   const original = rows?.find((r) => r.id === selected) ?? null;
 
   useEffect(() => {
@@ -66,17 +95,21 @@ export function RowsEditor({ table, spec }: { table: TableKey; spec: TableSpec }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [original]);
 
+  const allProblem = allRaw !== null ? locateJsonError(allRaw) : null;
   const rawProblem = rowRaw !== null ? locateJsonError(rowRaw) : null;
   const docProblems = jsonFields.map((f) => (docs[f]?.trim() ? locateJsonError(docs[f]) : null));
-  const invalid = !!rawProblem || docProblems.some(Boolean);
+  const invalid = !!rawProblem || !!allProblem || docProblems.some(Boolean);
+
+  const allDirty = allRaw !== null && !!rows && allRaw !== prettyAll(rows, spec);
 
   const dirty =
-    !!draft &&
+    allDirty ||
+    (!!draft &&
     !!original &&
     (rowRaw !== null
       ? true
       : formFields.some((f) => JSON.stringify(draft[f] ?? null) !== JSON.stringify(original[f] ?? null)) ||
-        jsonFields.some((f) => docs[f] !== pretty(original[f])));
+        jsonFields.some((f) => docs[f] !== pretty(original[f]))));
 
   useEffect(() => {
     if (!dirty) return;
@@ -118,6 +151,64 @@ export function RowsEditor({ table, spec }: { table: TableKey; spec: TableSpec }
       await load(original.id);
     } catch (e) {
       toast((e as Error).message, 'error');
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  /** Applies the whole-list JSON: changed rows are updated, rows without an id are created, rows left out are deleted, then the order is saved. */
+  const saveAll = async () => {
+    if (!rows || allRaw === null) return;
+    let items: Record<string, Json>[];
+    try {
+      if (allProblem) throw new Error(`line ${allProblem.line}, column ${allProblem.col}: ${allProblem.message}`);
+      const parsed = JSON.parse(allRaw) as unknown;
+      if (!Array.isArray(parsed) || parsed.some((x) => !x || typeof x !== 'object' || Array.isArray(x))) {
+        throw new Error('this must be a list of objects: [ { … }, { … } ]');
+      }
+      items = (parsed as Record<string, Json>[]).map(({ id: _id, sortOrder: _sort, ...fields }) => fields);
+    } catch (e) {
+      return toast(`Fix the JSON first: ${(e as Error).message}`, 'error');
+    }
+    // Pair each entry with an existing row: first by name (slug for projects), then any renamed
+    // entries with the leftover rows in order. Entries left over are new; rows left over are deleted.
+    const key = matchKey(spec);
+    const match: (Row | undefined)[] = items.map(() => undefined);
+    let unused = [...rows];
+    const take = (i: number, r: Row | undefined) => {
+      if (!r) return;
+      match[i] = r;
+      unused = unused.filter((x) => x !== r);
+    };
+    items.forEach((it, i) => take(i, unused.find((x) => it[key] != null && x[key] === it[key])));
+    items.forEach((_, i) => !match[i] && take(i, unused[0]));
+    const gone = unused;
+    if (gone.length && !confirm(`This deletes ${gone.length} ${spec.singular}${gone.length === 1 ? '' : 's'} (${gone.map((r) => String(r[spec.titleField])).join(', ')}). Continue?`)) return;
+    setBusy(true);
+    try {
+      // Deletes first, so a renamed entry never collides with a unique name that is going away.
+      for (const r of gone) await api(`/api/admin/rows/${table}/${r.id}`, { method: 'DELETE' });
+      const ids: string[] = [];
+      for (let i = 0; i < items.length; i++) {
+        const fields = items[i];
+        const before = match[i];
+        if (before) {
+          if (JSON.stringify(fields) !== JSON.stringify(Object.fromEntries(Object.keys(fields).map((k) => [k, before[k] ?? null])))) {
+            await api(`/api/admin/rows/${table}/${before.id}`, { method: 'PUT', body: JSON.stringify(fields) });
+          }
+          ids.push(before.id);
+        } else {
+          const r = await api<{ row: Row }>(`/api/admin/rows/${table}`, { method: 'POST', body: JSON.stringify(fields) });
+          ids.push(r.row.id);
+        }
+      }
+      if (ids.length) await api(`/api/admin/rows/${table}/reorder`, { method: 'POST', body: JSON.stringify({ ids }) });
+      toast('Saved. The site is updated.');
+      const r = await api<{ rows: Row[] }>(`/api/admin/rows/${table}`);
+      setRows(r.rows);
+      setAllRaw(prettyAll(r.rows, spec));
+    } catch (e) {
+      toast(`${(e as Error).message}. Some rows may already be saved: reload to see.`, 'error');
     } finally {
       setBusy(false);
     }
@@ -169,6 +260,15 @@ export function RowsEditor({ table, spec }: { table: TableKey; spec: TableSpec }
     }
   };
 
+  const toggleAllJson = () => {
+    if (allRaw !== null) {
+      if (allDirty && !confirm('Discard unsaved changes?')) return;
+      return setAllRaw(null);
+    }
+    if (dirty) return toast('Save or discard your changes first.', 'error');
+    if (rows) setAllRaw(prettyAll(rows, spec));
+  };
+
   const toggleRowJson = () => {
     if (rowRaw === null) {
       try {
@@ -197,32 +297,46 @@ export function RowsEditor({ table, spec }: { table: TableKey; spec: TableSpec }
           <h1 className="text-xl font-extrabold">{spec.label}</h1>
           <p className="text-xs text-[#1c1633]/60">{spec.hint}</p>
         </div>
-        {original && typeof original.slug === 'string' && (
+        {original && allRaw === null && typeof original.slug === 'string' && (
           <a href={`/projects/${original.slug}`} target="_blank" rel="noopener noreferrer" className="adm-btn">
             {original.published === false ? <EyeOff size={14} /> : <Eye size={14} />} View <ExternalLink size={12} />
           </a>
         )}
-        {original && (
+        {list && (
+          <button type="button" className="adm-btn" onClick={toggleAllJson} disabled={busy}>
+            <Braces size={14} /> {allRaw === null ? 'Edit as JSON' : 'Back to form'}
+          </button>
+        )}
+        {!list && original && (
           <button type="button" className="adm-btn" onClick={toggleRowJson} disabled={rowRaw !== null && !!rawProblem}>
             <Braces size={14} /> {rowRaw === null ? 'Edit as JSON' : 'Back to form'}
           </button>
         )}
-        {list && (
+        {list && allRaw === null && (
           <button type="button" className="adm-btn" onClick={create} disabled={busy}>
             <Plus size={14} /> New {spec.singular}
           </button>
         )}
-        {list && original && (
+        {list && original && allRaw === null && (
           <button type="button" className="adm-btn hover:!bg-red-50 hover:!text-red-700" onClick={remove} disabled={busy}>
             <Trash2 size={14} /> Delete
           </button>
         )}
-        <button type="button" className={cn('adm-btn adm-btn-primary', (!dirty || invalid) && 'opacity-50')} onClick={save} disabled={busy || !dirty || invalid} title={invalid ? 'Fix the JSON to save' : undefined}>
+        <button type="button" className={cn('adm-btn adm-btn-primary', (!dirty || invalid) && 'opacity-50')} onClick={allRaw !== null ? saveAll : save} disabled={busy || !dirty || invalid} title={invalid ? 'Fix the JSON to save' : undefined}>
           {busy ? <Loader2 size={14} className="animate-spin" /> : <Save size={14} />} {dirty ? 'Save changes' : 'Saved'}
         </button>
       </div>
 
-      <div className={cn('grid gap-6', list && 'lg:grid-cols-[260px_1fr]')}>
+      {allRaw !== null && (
+        <div className="min-w-0 space-y-3">
+          <p className="px-1 text-xs text-[#1c1633]/60">
+            Every {spec.singular} in one list, in the order the site shows them. Edit, reorder, add or delete entries, then save.
+          </p>
+          <CodeEditor value={allRaw} onChange={setAllRaw} onSave={saveAll} minHeight={560} />
+        </div>
+      )}
+
+      <div className={cn('grid gap-6', list && 'lg:grid-cols-[260px_1fr]', allRaw !== null && 'hidden')}>
         {list && (
           <div className="h-fit lg:sticky lg:top-20">
             <p className="mb-2 px-1 text-[0.7rem] font-bold text-[#1c1633]/50">Drag rows or use the arrows to reorder. The site shows them in this order.</p>
@@ -295,7 +409,7 @@ export function RowsEditor({ table, spec }: { table: TableKey; spec: TableSpec }
             ) : (
               <>
                 <div className="adm-card p-5">
-                  <JsonEditor name="row" value={draft} depth={0} onChange={(v) => setDraft(v as Record<string, Json>)} />
+                  <JsonEditor name="row" value={draft} depth={0} options={choices} icons={icons} onChange={(v) => setDraft(v as Record<string, Json>)} />
                 </div>
                 {jsonFields.map((f) => (
                   <div key={f} className="adm-card p-5">

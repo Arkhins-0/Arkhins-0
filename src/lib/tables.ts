@@ -19,6 +19,10 @@ export type TableSpec = {
   casts?: Record<string, Cast>;
   /** Fields edited as a JSON document rather than a form field. */
   json?: readonly string[];
+  /** Fields picked from a dropdown of another table's values, e.g. a skill's category. */
+  options?: Record<string, { table: string; field: string }>;
+  /** Fields holding a skill icon name (nextjs = /images/skills/nextjs.png): a picker with a preview. */
+  icons?: readonly string[];
   /** Blank row the admin starts a new entry from. */
   blank: Record<string, unknown>;
   /** Exactly one row: the admin shows a form, not a list. */
@@ -96,6 +100,8 @@ export const TABLES = {
     hint: 'Level 0-100. Icon is a name under /images/skills (nextjs = /images/skills/nextjs.png) or a full path.',
     fields: ['category', 'name', 'icon', 'level'],
     casts: { level: 'integer' },
+    options: { category: { table: 'skill_categories', field: 'name' } },
+    icons: ['icon'],
     blank: { category: 'Frontend Development', name: 'Skill', icon: 'react', level: 70 },
   },
   tech_stack: {
