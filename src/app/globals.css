@@ -85,27 +85,66 @@
     font-weight: 600;
   }
 
-  /* Shiki emits both themes; show the one that matches the page. */
-  .prose pre.shiki {
-    @apply rounded-md border;
-    background-color: var(--shiki-light-bg) !important;
-  }
-
-  .prose pre.shiki span {
-    color: var(--shiki-light);
-  }
-
-  .dark .prose pre.shiki {
-    background-color: var(--shiki-dark-bg) !important;
-  }
-
-  .dark .prose pre.shiki span {
-    color: var(--shiki-dark);
-  }
-
   .prose :is(a) {
     @apply inline;
   }
+}
+
+/*
+ * Code blocks dressed as a VS Code "Dark Modern" editor in both site themes: Dark+ token colours from Shiki,
+ * the #1f1f1f editor, #181818 tab bar, #2b2b2b borders and the blue active-tab line.
+ * Unlayered on purpose, so it wins over the typography plugin's `pre` styles in the utilities layer.
+ */
+.prose pre.shiki {
+  position: relative;
+  margin-block: 1.75em;
+  padding: 3.1rem 1.25rem 1.1rem;
+  border: 1px solid #2b2b2b;
+  border-radius: 0.5rem;
+  background-color: #1f1f1f !important;
+  color: #cccccc;
+  font-size: 0.875rem;
+  line-height: 1.65;
+  box-shadow: 0 8px 24px rgb(0 0 0 / 0.18);
+}
+
+/* The tab bar along the top of the editor. */
+.prose pre.shiki::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 2.1rem;
+  background: #181818;
+  border-bottom: 1px solid #2b2b2b;
+  border-radius: 0.5rem 0.5rem 0 0;
+}
+
+/* The active tab, named after the block's language. */
+.prose pre.shiki[data-language]::after {
+  content: attr(data-language);
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 2.1rem;
+  padding: 0 1.1rem;
+  display: flex;
+  align-items: center;
+  background: #1f1f1f;
+  border-top: 1px solid #0078d4;
+  border-right: 1px solid #2b2b2b;
+  border-top-left-radius: 0.5rem;
+  color: #ffffff;
+  font-size: 0.75rem;
+  letter-spacing: 0.02em;
+}
+
+.prose pre.shiki code {
+  font-family: var(--font-code);
+}
+
+.prose pre.shiki::selection,
+.prose pre.shiki *::selection {
+  background: #264f78;
 }
 
 @keyframes fade-in {

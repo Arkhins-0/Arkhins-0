@@ -2,13 +2,21 @@ import rehypeShiki from "@shikijs/rehype"
 import { MarkdownAsync } from "react-markdown"
 import rehypeSlug from "rehype-slug"
 import remarkGfm from "remark-gfm"
+import type { ShikiTransformer } from "shiki"
 
 interface Props {
   children: string
   className?: string
 }
 
-const isExternal = (href?: string) => !!href && /^https?:\/\//.test(href)
+/** Tags each block with its language, which the editor tab in globals.css prints. */
+const languageTab: ShikiTransformer = {
+  pre(node) {
+    node.properties["data-language"] = this.options.lang
+  },
+}
+
+const isExternal =(href?: string) => !!href && /^https?:\/\//.test(href)
 
 export default async function Markdown({ children, className = "" }: Props) {
   return (
@@ -19,7 +27,14 @@ export default async function Markdown({ children, className = "" }: Props) {
         remarkPlugins={[remarkGfm]}
         rehypePlugins={[
           rehypeSlug,
-          [rehypeShiki, { themes: { light: "github-light", dark: "github-dark" }, defaultColor: false }],
+          [
+            rehypeShiki,
+            {
+              // VS Code's Dark+ token colours; globals.css adds the Dark Modern editor around them.
+              theme: "dark-plus",
+              transformers: [languageTab],
+            },
+          ],
         ]}
         components={{
           a: ({ href, children }) =>
