@@ -19,13 +19,17 @@ export const site = {
   ],
 } as const
 
-/** The PDF lives on the repo's `assets` branch: the blob page opens GitHub's viewer, raw downloads the file. */
+/**
+ * The PDF lives on the repo's `assets` branch. jsDelivr serves it as application/pdf, so it opens in the
+ * browser's PDF viewer; raw.githubusercontent serves it as a download. jsDelivr caches a branch for up to
+ * 12 hours: after replacing the file, purge it at https://purge.jsdelivr.net/gh/Arkhins-0/Arkhins-0@assets/<file>.
+ */
 const RESUME_FILE = "Krishna%20Vijay%20G.pdf"
 
 export const resume = {
   filename: "Krishna Vijay G.pdf",
   detail: "pdf · 2 pages",
-  openUrl: `https://github.com/Arkhins-0/Arkhins-0/blob/assets/${RESUME_FILE}`,
+  openUrl: `https://cdn.jsdelivr.net/gh/Arkhins-0/Arkhins-0@assets/${RESUME_FILE}`,
   downloadUrl: `https://raw.githubusercontent.com/Arkhins-0/Arkhins-0/assets/${RESUME_FILE}`,
 } as const
 
