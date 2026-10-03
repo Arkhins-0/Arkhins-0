@@ -159,20 +159,25 @@
 }
 
 /*
- * Certificate previews on the certification and workshop rows. On touch screens the card simply sits under the
- * row, lined up past the logo. Where there is a pointer, it waits face-down beside the date and flips over
- * from its back when the row is hovered or focused.
+ * Certificate previews on the certification and workshop rows: the certificate alone, no frame. On touch screens
+ * it simply sits under the row, lined up past the logo. Where there is a pointer, it waits face-down beside the
+ * date, fitted inside the row's own height, and flips over from its back when the row is hovered or focused.
  */
 .certificate-preview {
   display: block;
-  width: 8rem;
+  width: fit-content;
+  height: 4.5rem;
   margin-left: 3.5rem;
-  padding: 0.25rem;
-  background: #ffffff;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  box-shadow: 0 10px 30px rgb(0 0 0 / 0.18);
   text-decoration: none;
+}
+
+.certificate-preview img {
+  height: 100%;
+  width: auto;
+  /* Tall rows (workshops, with their descriptions) would make wide certificates run into the text. */
+  max-width: 10rem;
+  object-fit: contain;
+  border-radius: 2px;
 }
 
 @media (hover: hover) and (min-width: 40rem) {
@@ -180,35 +185,46 @@
     position: relative;
   }
 
+  /* Pinned to the row's top and bottom (with a little air), so it is exactly as tall as the row allows. */
   .certificate-preview {
     position: absolute;
-    top: 50%;
+    top: 0.5rem;
+    bottom: 0.5rem;
     right: 7.5rem;
     z-index: 10;
-    width: 9.5rem;
+    height: auto;
     margin: 0;
     opacity: 0;
     pointer-events: none;
     backface-visibility: hidden;
-    transform: translateY(-50%) perspective(700px) rotateY(-180deg);
+    transform: perspective(700px) rotateY(-180deg);
     transition:
       transform 0.6s cubic-bezier(0.2, 0.75, 0.25, 1),
       opacity 0.25s ease;
+  }
+
+  /* The first and last rows have no outer padding; keep the preview inside their text height. */
+  .certificate-row:first-child .certificate-preview {
+    top: 0;
+  }
+
+  .certificate-row:last-child .certificate-preview {
+    bottom: 0;
   }
 
   .certificate-row:hover .certificate-preview,
   .certificate-row:focus-within .certificate-preview {
     opacity: 1;
     pointer-events: auto;
-    transform: translateY(-50%) perspective(700px) rotateY(0deg);
+    transform: perspective(700px) rotateY(0deg);
   }
 
-  /* No flip for reduced motion: the card just fades in. */
+  /* No flip for reduced motion: it just fades in. */
   @media (prefers-reduced-motion: reduce) {
     .certificate-preview,
     .certificate-row:hover .certificate-preview,
     .certificate-row:focus-within .certificate-preview {
-      transform: translateY(-50%);
+      transform: none;
       transition: opacity 0.2s ease;
     }
   }

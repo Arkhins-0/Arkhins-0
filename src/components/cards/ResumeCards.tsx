@@ -85,7 +85,7 @@ function VerifyLink({ href }: { href: string }) {
 }
 
 /**
- * The certificate itself, flipped in from its back when the row is hovered (styles in globals.css).
+ * The certificate itself, no frame, flipped in from its back when the row is hovered (styles in globals.css).
  * Opens the file in the browser's PDF viewer, the way the résumé does. On touch screens it simply sits under the row.
  */
 function CertificatePreview({ certificate, name }: { certificate: CertificateFile; name: string }) {
@@ -105,7 +105,6 @@ function CertificatePreview({ certificate, name }: { certificate: CertificateFil
         width={width}
         height={height}
         sizes="160px"
-        className="aspect-[1.414] w-full object-contain"
       />
     </a>
   )
