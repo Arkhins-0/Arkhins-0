@@ -1,31 +1,11 @@
-import fs from "node:fs"
-import path from "node:path"
-
 import { ImageResponse } from "next/og"
 
 import { site } from "@/data/site"
+import { dataUri, OG_SIZE, ogFonts, STONE } from "@/lib/og"
 
 export const alt = `${site.name}: ${site.tagline}`
-export const size = { width: 1200, height: 630 }
+export const size = OG_SIZE
 export const contentType = "image/png"
-
-/** A Google font cut down to the glyphs used; null if the fetch fails, so the build falls back to the built-in face. */
-async function loadFont(query: string, text: string): Promise<ArrayBuffer | null> {
-  try {
-    const css = await fetch(`https://fonts.googleapis.com/css2?family=${query}&text=${encodeURIComponent(text)}`).then(
-      (r) => r.text()
-    )
-    const url = css.match(/src: url\((.+?)\) format\('(?:opentype|truetype)'\)/)?.[1]
-    return url ? await fetch(url).then((r) => r.arrayBuffer()) : null
-  } catch {
-    return null
-  }
-}
-
-const dataUri = (src: string) => {
-  const file = path.join(process.cwd(), "public", src)
-  return `data:image/png;base64,${fs.readFileSync(file).toString("base64")}`
-}
 
 /** Three recent builds, fanned like prints on a desk. Back to front. */
 const SHOTS = [
@@ -34,22 +14,15 @@ const SHOTS = [
   { src: "/projects/spartan/thumbnail.png", rotate: 2, top: 180, left: 610 },
 ]
 
-const STONE = { 950: "#0c0a09", 700: "#44403c", 400: "#a8a29e", 300: "#d6d3d1", 50: "#fafaf9" }
-
 export default async function OpengraphImage() {
   const name = ["krishna", "vijay g"]
   const roles = ["designer · full-stack developer", "ai/ml practitioner · web developer"]
 
-  const [fraunces, loraItalic, lora] = await Promise.all([
-    loadFont("Fraunces:wght@600", `${name.join("")}arkhins.com`),
-    loadFont("Lora:ital@1", "hi, my name is"),
-    loadFont("Lora", roles.join("")),
-  ])
-  const fonts = [
-    fraunces && { name: "Fraunces", data: fraunces, weight: 600 as const, style: "normal" as const },
-    loraItalic && { name: "Lora", data: loraItalic, weight: 400 as const, style: "italic" as const },
-    lora && { name: "Lora", data: lora, weight: 400 as const, style: "normal" as const },
-  ].filter((font) => !!font)
+  const fonts = await ogFonts({
+    heading: `${name.join("")}arkhins.com`,
+    italic: "hi, my name is",
+    body: roles.join(""),
+  })
 
   return new ImageResponse(
     (

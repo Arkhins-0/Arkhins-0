@@ -1,4 +1,5 @@
 import Contact from "@/components/contact/Contact"
+import SectionNav from "@/components/layout/SectionNav"
 import About from "@/components/sections/About"
 import Hero from "@/components/sections/Hero"
 import {
@@ -29,6 +30,8 @@ export default function HomePage() {
         <Resume />
         <Contact />
       </div>
+
+      <SectionNav />
     </>
   )
 }

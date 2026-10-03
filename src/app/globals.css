@@ -52,6 +52,17 @@
     color-scheme: dark;
   }
 
+  /* Jumping to a section (header links, the section rail) lands with a little air above its heading. */
+  section[id] {
+    scroll-margin-top: 2.5rem;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
   body {
     @apply font-body bg-background text-foreground antialiased;
   }
@@ -147,10 +158,13 @@
   background: #264f78;
 }
 
+/*
+ * Opacity only: a held transform on <main> would make it the containing block for fixed children,
+ * pinning the section rail inside the column instead of to the window.
+ */
 @keyframes fade-in {
   from {
     opacity: 0;
-    transform: translateY(4px);
   }
 }
 

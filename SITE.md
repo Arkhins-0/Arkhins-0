@@ -1,8 +1,7 @@
 # arkhins.com
 
-The simple corner of the web for Krishna Vijay G, also known as Arkhins. A Next.js port of the v3 Astro site
-(itself based on the [amruthpillai.com](https://github.com/amruthpillai/amruthpillai) template), carrying the
-projects, screenshots and résumé from the anime portfolio at [ani.arkhins.com](https://ani.arkhins.com).
+The simple corner of the web for Krishna Vijay G, also known as Arkhins. A Next.js port of the v3 Astro site,
+carrying the projects, screenshots and résumé from the anime portfolio at [ani.arkhins.com](https://ani.arkhins.com).
 
 ```sh
 npm install
