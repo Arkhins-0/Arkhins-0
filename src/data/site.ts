@@ -2,7 +2,7 @@ export const site = {
   name: "Krishna Vijay G",
   alias: "Arkhins",
   email: "arkhins@arkhins.com",
-  tagline: "designer · full-stack developer · ai/ml practitioner · web developer",
+  tagline: "designer · full-stack developer · app & software artisan · web developer",
   description:
     "Krishna Vijay G (Arkhins) is a full-stack developer and designer in Chennai who ships production web platforms for motorsport, education and finance.",
   url: "https://arkhins.com",
@@ -13,7 +13,8 @@ export const site = {
     "arkhins",
     "full-stack developer",
     "ui/ux designer",
-    "ai/ml",
+    "app developer",
+    "software developer",
     "next.js",
     "chennai",
   ],
