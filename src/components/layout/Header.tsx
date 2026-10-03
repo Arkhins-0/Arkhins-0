@@ -38,8 +38,14 @@ export default function Header() {
           ))}
         </ul>
 
-        <ThemeToggle />
+        {/* Holds the toggle's place while the header still reaches the window edge, so the links never sit under it. */}
+        <span className="size-8 shrink-0 lg:hidden" aria-hidden />
       </nav>
+
+      {/* Pinned to the window's top-right corner, so the theme can change from anywhere on the page. */}
+      <div className="fixed top-2.5 right-4 z-20 rounded-md bg-background/85 backdrop-blur-sm lg:right-6">
+        <ThemeToggle />
+      </div>
     </header>
   )
 }
