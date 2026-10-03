@@ -4,6 +4,7 @@ import {
   AwardIcon,
   BookOpenIcon,
   BriefcaseIcon,
+  DownloadIcon,
   FileTextIcon,
   FolderGitIcon,
   GraduationCapIcon,
@@ -102,7 +103,7 @@ export function Languages() {
 }
 
 export function Resume() {
-  const { filename, detail, url } = resume
+  const { filename, detail, openUrl, downloadUrl } = resume
 
   return (
     <section id="resume" className="space-y-8">
@@ -111,18 +112,24 @@ export function Resume() {
         <p className="max-w-lg leading-relaxed text-pretty">
           Looking for a printable format or want to know more about my experience, skills and certifications?
         </p>
-        <a
-          href={url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center gap-x-6 rounded-md border px-5 py-3 no-underline! hover:border-foreground"
-        >
-          <div className="space-y-1">
-            <span className="block font-heading text-base leading-none font-semibold tracking-tight">{filename}</span>
-            <span className="block text-xs leading-none text-muted uppercase">{detail}</span>
-          </div>
-          <ArrowUpRightIcon size={20} strokeWidth={1.5} aria-hidden />
-        </a>
+        <div className="flex flex-col items-start gap-y-3 sm:items-end">
+          <a
+            href={openUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-x-6 rounded-md border px-5 py-3 no-underline! hover:border-foreground"
+          >
+            <div className="space-y-1">
+              <span className="block font-heading text-base leading-none font-semibold tracking-tight">{filename}</span>
+              <span className="block text-xs leading-none text-muted uppercase">{detail}</span>
+            </div>
+            <ArrowUpRightIcon size={20} strokeWidth={1.5} aria-hidden />
+          </a>
+          <a href={downloadUrl} className="text-sm">
+            download
+            <DownloadIcon size={14} strokeWidth={1.5} aria-hidden />
+          </a>
+        </div>
       </div>
     </section>
   )

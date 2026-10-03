@@ -19,10 +19,14 @@ export const site = {
   ],
 } as const
 
+/** The PDF lives on the repo's `assets` branch: the blob page opens GitHub's viewer, raw downloads the file. */
+const RESUME_FILE = "Krishna%20Vijay%20G.pdf"
+
 export const resume = {
-  filename: "resume.pdf",
-  detail: "pdf · katb.in",
-  url: "https://katb.in/gkvresume",
+  filename: "Krishna Vijay G.pdf",
+  detail: "pdf · 2 pages",
+  openUrl: `https://github.com/Arkhins-0/Arkhins-0/blob/assets/${RESUME_FILE}`,
+  downloadUrl: `https://raw.githubusercontent.com/Arkhins-0/Arkhins-0/assets/${RESUME_FILE}`,
 } as const
 
 export const contactForm = {
