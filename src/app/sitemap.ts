@@ -1,18 +1,17 @@
-import type { MetadataRoute } from 'next';
-import { listProjectSlugs } from '@/lib/content';
-import { getProfile } from '@/lib/site';
+import type { MetadataRoute } from "next"
 
-export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const [{ siteUrl }, slugs] = await Promise.all([getProfile(), listProjectSlugs()]);
-  const now = new Date();
+import { site } from "@/data/site"
+import { getBlogPosts } from "@/lib/blog"
+import { getProjects } from "@/lib/content"
+
+export default function sitemap(): MetadataRoute.Sitemap {
+  const url = (path: string) => new URL(path, site.url).toString()
+
   return [
-    { url: siteUrl, lastModified: now, changeFrequency: 'monthly', priority: 1 },
-    { url: `${siteUrl}/projects`, lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
-    ...slugs.map((slug) => ({
-      url: `${siteUrl}/projects/${slug}`,
-      lastModified: now,
-      changeFrequency: 'monthly' as const,
-      priority: 0.6,
-    })),
-  ];
+    { url: url("/"), changeFrequency: "monthly", priority: 1 },
+    { url: url("/projects"), changeFrequency: "monthly", priority: 0.8 },
+    { url: url("/blog"), changeFrequency: "weekly", priority: 0.7 },
+    ...getProjects().map((p) => ({ url: url(`/projects/${p.slug}`), priority: 0.6 })),
+    ...getBlogPosts().map((post) => ({ url: url(`/blog/${post.slug}`), lastModified: post.publishedAt, priority: 0.5 })),
+  ]
 }

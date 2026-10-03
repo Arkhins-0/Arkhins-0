@@ -1,100 +1,65 @@
-import type { Metadata, Viewport } from 'next';
-import { Syne, Space_Grotesk, JetBrains_Mono } from 'next/font/google';
-import { SpeedInsights } from '@vercel/speed-insights/next';
-import '@/styles/globals.css';
-import '@/styles/home.css';
-import { listRows } from '@/lib/content';
-import { getProfile, getSiteDoc } from '@/lib/site';
-import type { ProfileRow, SocialLinkRow } from '@/types/content';
+import "./globals.css"
 
-const display = Syne({ subsets: ['latin'], weight: ['600', '700', '800'], variable: '--font-display', display: 'swap' });
-const sans = Space_Grotesk({ subsets: ['latin'], variable: '--font-sans', display: 'swap' });
-const mono = JetBrains_Mono({ subsets: ['latin'], weight: ['400', '500', '700'], variable: '--font-mono', display: 'swap' });
+import { SpeedInsights } from "@vercel/speed-insights/next"
+import type { Metadata, Viewport } from "next"
+import { Fraunces, IBM_Plex_Mono, Lora } from "next/font/google"
 
-/** Title, description and sharing tags come from the profile row, so they are editable in /admin. */
-export async function generateMetadata(): Promise<Metadata> {
-  const p = await getProfile();
-  const ogImage = p.ogImage ?? p.profilePicture ?? undefined;
-  return {
-    metadataBase: new URL(p.siteUrl),
-    title: { default: p.metaTitle, template: `%s — ${p.name}` },
-    description: p.metaDescription,
-    keywords: p.keywords,
-    authors: [{ name: p.name, url: p.siteUrl }],
-    creator: p.name,
-    publisher: p.name,
-    alternates: { canonical: p.siteUrl },
-    robots: {
-      index: true,
-      follow: true,
-      googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1 },
-    },
-    openGraph: {
-      title: p.metaTitle,
-      description: p.metaDescription,
-      url: p.siteUrl,
-      siteName: p.metaTitle,
-      type: 'website',
-      images: ogImage ? [{ url: ogImage, alt: p.ogAlt ?? p.name }] : undefined,
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: p.metaTitle,
-      description: p.metaDescription,
-      images: ogImage ? [ogImage] : undefined,
-    },
-  };
+import Footer from "@/components/layout/Footer"
+import Header from "@/components/layout/Header"
+import { themeScript } from "@/components/layout/ThemeToggle"
+import { site, websiteSchema } from "@/data/site"
+
+const lora = Lora({ subsets: ["latin"], style: ["normal", "italic"], variable: "--font-lora", display: "swap" })
+const fraunces = Fraunces({ subsets: ["latin"], variable: "--font-fraunces", display: "swap", preload: false })
+const plexMono = IBM_Plex_Mono({
+  subsets: ["latin"],
+  weight: ["400", "600"],
+  variable: "--font-ibm-plex-mono",
+  display: "swap",
+  preload: false,
+})
+
+const defaultTitle = `${site.name} · ${site.tagline}`
+
+export const metadata: Metadata = {
+  metadataBase: new URL(site.url),
+  title: { default: defaultTitle, template: "%s · krishna vijay g" },
+  description: site.description,
+  keywords: [...site.keywords],
+  authors: [{ name: site.name, url: site.url }],
+  alternates: {
+    canonical: "./",
+    types: { "application/rss+xml": [{ url: "/rss.xml", title: site.name }] },
+  },
+  openGraph: { type: "website", siteName: site.name, locale: site.locale, url: "./" },
+  twitter: { card: "summary_large_image" },
+  robots: { index: true, follow: true },
 }
 
-/** Person schema so search engines associate the name and the alias with this site. */
-const personJsonLd = (p: ProfileRow, links: SocialLinkRow[], alias: string) => ({
-  '@context': 'https://schema.org',
-  '@type': 'Person',
-  name: p.name,
-  alternateName: Array.from(new Set([p.name.split(' ').slice(0, 2).join(' '), alias])).filter(Boolean),
-  url: p.siteUrl,
-  ...(p.profilePicture ? { image: `${p.siteUrl}${p.profilePicture}` } : {}),
-  jobTitle: p.headline,
-  description: p.metaDescription,
-  email: `mailto:${p.email}`,
-  address: {
-    '@type': 'PostalAddress',
-    addressLocality: p.city,
-    ...(p.state ? { addressRegion: p.state } : {}),
-    addressCountry: p.country,
-  },
-  sameAs: links.map((l) => l.url),
-});
-
 export const viewport: Viewport = {
-  themeColor: '#ff4f8b',
-  width: 'device-width',
-  initialScale: 1,
-};
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#f5f5f4" },
+    { media: "(prefers-color-scheme: dark)", color: "#0c0a09" },
+  ],
+}
 
-export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const [profile, links, anime] = await Promise.all([getProfile(), listRows('social_links'), getSiteDoc('anime')]);
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${display.variable} ${sans.variable} ${mono.variable}`} suppressHydrationWarning>
+    <html
+      lang={site.locale}
+      suppressHydrationWarning
+      className={`${lora.variable} ${fraunces.variable} ${plexMono.variable}`}
+    >
       <head>
-        {/* Anime theme faces (Dela Gothic One, M PLUS Rounded 1c). Both carry Japanese glyphs split into
-            hundreds of unicode-range slices, so they load from Google on demand instead of via next/font. */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        {/* eslint-disable-next-line @next/next/no-page-custom-font -- loaded once in the root layout */}
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=M+PLUS+Rounded+1c:wght@400;500;700;800;900&display=swap"
-        />
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }} />
       </head>
-      <body className="min-h-screen overflow-x-hidden bg-bg text-ink antialiased">
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd(profile, links, anime.series.title)) }}
-        />
-        {children}
+      <body>
+        <Header />
+        <main className="mx-auto max-w-3xl px-4 lg:px-0">{children}</main>
+        <Footer />
         <SpeedInsights />
       </body>
     </html>
-  );
+  )
 }

@@ -1,45 +1,36 @@
 {
-  "name": "krishna-portfolio",
+  "name": "arkhins",
+  "description": "The simple corner of the web for Krishna Vijay G, also known as Arkhins.",
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --hostname 0.0.0.0",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "predeploy": "npm run build && node -e \"require('fs').writeFileSync('out/.nojekyll', '')\"",
-    "deploy": "gh-pages -d out --dotfiles",
-    "db:setup": "node db/setup.mjs",
-    "db:pull": "node db/pull.mjs"
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "^3.1142.0",
-    "@neondatabase/serverless": "^1.1.0",
+    "@shikijs/rehype": "^4.5.0",
     "@vercel/speed-insights": "^2.0.0",
-    "clsx": "^2.1.1",
-    "framer-motion": "^11.11.0",
-    "lucide-react": "^0.453.0",
-    "next": "^14.2.35",
-    "qrcode": "^1.5.4",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "react-icons": "^5.5.0",
+    "gray-matter": "^4.0.3",
+    "lucide-react": "^1.51.0",
+    "next": "^16.3.8",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
     "react-markdown": "^10.1.0",
+    "reading-time": "^1.5.0",
+    "rehype-slug": "^6.0.0",
     "remark-gfm": "^4.0.1",
     "server-only": "^0.0.1",
-    "tailwind-merge": "^2.5.4"
+    "shiki": "^4.5.0"
   },
   "devDependencies": {
+    "@tailwindcss/postcss": "^4.3.3",
+    "@tailwindcss/typography": "^0.5.20",
     "@types/node": "^22.0.0",
-    "@types/qrcode": "^1.5.6",
-    "@types/react": "^18.3.12",
-    "@types/react-dom": "^18.3.1",
-    "autoprefixer": "^10.4.20",
-    "eslint": "^8.57.0",
-    "eslint-config-next": "^14.2.35",
-    "gh-pages": "^6.3.0",
-    "postcss": "^8.4.47",
-    "tailwindcss": "^3.4.14",
-    "typescript": "^5.6.3"
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "tailwindcss": "^4.3.3",
+    "typescript": "^5.9.3"
   }
 }

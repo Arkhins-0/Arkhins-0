@@ -1,72 +1,28 @@
-import type { Metadata } from 'next';
-import { AnimeFooter } from '@/components/home/Footer';
-import { Nav } from '@/components/home/Nav';
-import { Pop } from '@/components/home/Pop';
-import { ProjectPanel } from '@/components/home/ProjectPanel';
-import { Sakura } from '@/components/home/primitives';
-import { listProjects, listRows } from '@/lib/content';
-import { getSite, guestsFor } from '@/lib/site';
+import type { Metadata } from "next"
 
-export const revalidate = 300;
+import ProjectCard from "@/components/cards/ProjectCard"
+import { getProjects } from "@/lib/content"
 
-export async function generateMetadata(): Promise<Metadata> {
-  const { copy } = await getSite();
-  return { title: copy.projectsIndex.metaTitle, description: copy.projectsIndex.metaDescription };
+export const metadata: Metadata = {
+  title: "projects",
+  description: "Production web platforms, apps and models, each with screenshots and the story behind it.",
 }
 
-export default async function ProjectsIndex() {
-  const [{ anime, copy }, projects, guestRows] = await Promise.all([getSite(), listProjects(), listRows('guests')]);
-  const COPY = copy.projectsIndex;
-  const guests = guestsFor(projects.map((p) => p.slug), guestRows);
-
+export default function ProjectsPage() {
   return (
-    <div className="ak">
-      <Nav
-        title={anime.series.title}
-        kana={anime.series.kana}
-        items={anime.nav.items}
-        cta={anime.nav.cta}
-        ctaHref={anime.nav.ctaHref}
-        openMenu={anime.nav.openMenu}
-        closeMenu={anime.nav.closeMenu}
-      />
-      <main>
-        <section className="ak-sky relative overflow-hidden pb-16 pt-36 md:pt-44">
-          <Sakura count={8} />
-          <div className="ak-shell relative">
-            <Pop>
-              <span className="ak-episode">
-                <span>{String(projects.length).padStart(2, '0')}</span>
-                <span>{COPY.eyebrow}</span>
-              </span>
-              <h1 className="ak-display ak-outline-text mt-6 text-[clamp(2.8rem,9vw,6rem)] leading-[0.95]">
-                {COPY.title} <span className="text-[color:var(--ak-sakura)]">{COPY.accentWord}</span>
-              </h1>
-              <p className="mt-6 max-w-xl text-lg font-medium leading-relaxed text-[color:var(--ak-ink-2)]">{COPY.lede}</p>
-            </Pop>
-          </div>
-        </section>
+    <section className="my-18 space-y-18 sm:my-30 sm:space-y-30">
+      <header className="space-y-3">
+        <h1 className="text-5xl leading-none font-semibold tracking-tight">projects</h1>
+        <p className="max-w-prose leading-relaxed text-pretty text-muted">
+          production web platforms, apps and models, each with screenshots and the story behind it.
+        </p>
+      </header>
 
-        <section className="ak-section pt-10">
-          <div className="ak-shell">
-            <ul className="grid gap-7 md:grid-cols-2">
-              {projects.map((p, i) => (
-                <Pop as="li" key={p.id} delay={(i % 2) * 0.06}>
-                  <ProjectPanel
-                    project={p}
-                    index={i}
-                    openLabel={copy.work.caseStudyAction}
-                    featuredLabel={copy.work.featuredBadge}
-                    guest={guests[p.slug]}
-                    guestLabel={anime.projectCast.label}
-                  />
-                </Pop>
-              ))}
-            </ul>
-          </div>
-        </section>
-      </main>
-      <AnimeFooter />
-    </div>
-  );
+      <div className="grid gap-x-8 gap-y-14 sm:grid-cols-2">
+        {getProjects().map((project, i) => (
+          <ProjectCard key={project.slug} project={project} priority={i < 2} />
+        ))}
+      </div>
+    </section>
+  )
 }
