@@ -7,7 +7,7 @@
     "description": "Completed a 10-week Android Developer Virtual Internship through AICTE - EduSkills with an Excellent Grade.",
     "credentialId": null,
     "credentialUrl": "https://aictecert.eduskillsfoundation.org/pages/home/verify.php?cert=f1b9e17df1ca6599410874ecc7e926ca",
-    "badge": "/images/certifications/aicte.png",
+    "badge": "/certifications/aicte-eduskills.png",
     "sortOrder": 10
   },
   {
@@ -18,7 +18,7 @@
     "description": "Quantum Computing with merit from Centre for Development of Advanced Computing & IIT Roorkee, with a score of 82.78%.",
     "credentialId": "CDACH/QML/160",
     "credentialUrl": null,
-    "badge": "/images/certifications/cdac.png",
+    "badge": "/certifications/cdac-iit-roorkee.png",
     "sortOrder": 20
   },
   {
@@ -29,7 +29,7 @@
     "description": "Completed a 4-week Foundations of AI internship, a Microsoft initiative implemented by Edunet Foundation in collaboration with AICTE.",
     "credentialId": null,
     "credentialUrl": null,
-    "badge": "/images/certifications/ai.png",
+    "badge": "/certifications/edunet-microsoft.png",
     "sortOrder": 30
   },
   {
@@ -40,7 +40,7 @@
     "description": "Certified for completing a 12-week course in Introduction to IoT by implementing IoT and Python.",
     "credentialId": null,
     "credentialUrl": "https://internalapp.nptel.ac.in/noc/Ecertificate/?q=NPTEL25CS44S14321082304360624",
-    "badge": "/images/certifications/iot.png",
+    "badge": "/certifications/nptel-iot.png",
     "sortOrder": 40
   },
   {
@@ -51,7 +51,7 @@
     "description": "Certified for completing an 8-week course in Big Data Computing using Python.",
     "credentialId": null,
     "credentialUrl": "https://nptel.ac.in/noc/E_Certificate/NPTEL24CS130S45251025804102050",
-    "badge": "/images/certifications/bigdata.png",
+    "badge": "/certifications/nptel-big-data.png",
     "sortOrder": 50
   },
   {
@@ -62,7 +62,7 @@
     "description": "Holding a Google UX Design certificate, possessing practical UI/UX skills.",
     "credentialId": null,
     "credentialUrl": "https://coursera.org/verify/professional-cert/K4AZ37ZXB5ZA",
-    "badge": "/images/certifications/google-ux.png",
+    "badge": "/certifications/google-ux.png",
     "sortOrder": 60
   },
   {
@@ -73,7 +73,7 @@
     "description": "Eight-week internship credential covering FastAPI, Pydantic, SQLAlchemy and React, closing with an e-commerce capstone and a chat log analyzer.",
     "credentialId": "2026-C574876F52",
     "credentialUrl": "https://lmsapi.eduskills.academy/verify/2026-C574876F52",
-    "badge": "/images/certifications/aicte.png",
+    "badge": "/certifications/aicte-eduskills.png",
     "sortOrder": 70
   },
   {
@@ -84,7 +84,7 @@
     "description": "Digital Skills Readiness Program run July to October 2025, covering the .NET stack end to end.",
     "credentialId": "TNext_SE_25_N_250220038",
     "credentialUrl": null,
-    "badge": "/images/certifications/wipro.png",
+    "badge": "/certifications/wipro.png",
     "sortOrder": 80
   },
   {
@@ -95,7 +95,7 @@
     "description": "Certificate of completion in Python from GUVI Geek Networks, an IIT-M and HCL incubated platform.",
     "credentialId": "497P918BJm712469oi",
     "credentialUrl": "https://www.guvi.in/certificate?id=497P918BJm712469oi",
-    "badge": "/images/certifications/guvi.png",
+    "badge": "/certifications/guvi.png",
     "sortOrder": 90
   },
   {
@@ -106,7 +106,7 @@
     "description": "Two-month internship in Artificial Intelligence, run from November to December 2022.",
     "credentialId": "TNINTC22-727",
     "credentialUrl": null,
-    "badge": "/images/certifications/teachnook.png",
+    "badge": "/certifications/teachnook.png",
     "sortOrder": 100
   },
   {
@@ -117,7 +117,7 @@
     "description": "Passed level N3 of the Japanese-Language Proficiency Test in the July 2025 sitting, jointly administered by the Japan Foundation and JEES.",
     "credentialId": "N3A543410A",
     "credentialUrl": null,
-    "badge": "/images/certifications/japan.svg",
+    "badge": "/certifications/jlpt.svg",
     "sortOrder": 110
   }
 ]

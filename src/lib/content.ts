@@ -13,6 +13,31 @@ import type { Certification, Education, Experience, Language, Project } from "./
 
 const bySortOrder = <T extends { sortOrder: number }>(a: T, b: T) => a.sortOrder - b.sortOrder
 
+/**
+ * /public is laid out like the page (brand, projects, experience, education, certifications), but the JSON is
+ * copied from the anime site, which keeps its logos under /images. Old paths from a fresh copy are moved here.
+ */
+const MOVED_ASSETS: Record<string, string> = {
+  "/projects/ctr/logo.png": "/experience/chennai-turbo-riders.png",
+  "/images/companies/gdsc.png": "/experience/gdsc.png",
+  "/images/companies/teachnook.png": "/experience/teachnook.png",
+  "/images/companies/tt.png": "/experience/tt-infotech.png",
+  "/images/education/Bharath.png": "/education/bharath.png",
+  "/images/education/SSV.png": "/education/ssv.png",
+  "/images/certifications/ai.png": "/certifications/edunet-microsoft.png",
+  "/images/certifications/aicte.png": "/certifications/aicte-eduskills.png",
+  "/images/certifications/bigdata.png": "/certifications/nptel-big-data.png",
+  "/images/certifications/cdac.png": "/certifications/cdac-iit-roorkee.png",
+  "/images/certifications/google-ux.png": "/certifications/google-ux.png",
+  "/images/certifications/guvi.png": "/certifications/guvi.png",
+  "/images/certifications/iot.png": "/certifications/nptel-iot.png",
+  "/images/certifications/japan.svg": "/certifications/jlpt.svg",
+  "/images/certifications/teachnook.png": "/certifications/teachnook.png",
+  "/images/certifications/wipro.png": "/certifications/wipro.png",
+}
+
+const asset = (src: string | null) => (src ? (MOVED_ASSETS[src] ?? src) : src)
+
 /** "June 2025" -> a sortable timestamp. */
 const toTime = (value: string) => new Date(`1 ${value}`).getTime() || 0
 
@@ -21,12 +46,16 @@ export const getProjects = (): Project[] =>
 
 export const getProject = (slug: string) => getProjects().find((p) => p.slug === slug) ?? null
 
-export const getExperiences = (): Experience[] => [...(experience as Experience[])].sort(bySortOrder)
+export const getExperiences = (): Experience[] =>
+  (experience as Experience[]).map((e) => ({ ...e, logo: asset(e.logo) })).sort(bySortOrder)
 
-export const getEducation = (): Education[] => education as Education[]
+export const getEducation = (): Education[] =>
+  (education as Education[]).map((e) => ({ ...e, logo: asset(e.logo) ?? e.logo }))
 
 export const getCertifications = (): Certification[] =>
-  [...(certifications as Certification[])].sort((a, b) => toTime(b.date) - toTime(a.date))
+  (certifications as Certification[])
+    .map((c) => ({ ...c, badge: asset(c.badge) }))
+    .sort((a, b) => toTime(b.date) - toTime(a.date))
 
 export const getLanguages = (): Language[] => [...(languages as Language[])].sort(bySortOrder)
 

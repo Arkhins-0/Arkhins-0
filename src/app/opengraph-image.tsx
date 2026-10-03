@@ -82,7 +82,7 @@ export default async function OpengraphImage() {
           }}
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={dataUri("/emblem.png")} width={46} height={50} alt="" />
+          <img src={dataUri("/brand/emblem.png")} width={46} height={50} alt="" />
 
           <div style={{ display: "flex", flexDirection: "column" }}>
             <div style={{ fontSize: 30, fontStyle: "italic", color: STONE[300] }}>hi, my name is</div>

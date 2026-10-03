@@ -18,7 +18,22 @@ npm run build      # every page is prerendered
 | Projects, experience, certifications, languages | `src/content/*.json`, exported from the anime site's tables |
 | Education | `src/content/education.json` |
 | Blog posts | `src/content/blog/*.md` (front matter: `title`, `description`, `publishedAt`) |
-| Project screenshots and case studies | `public/projects/<slug>/` |
+| Résumé PDF | `assets` branch, served by jsDelivr (links in `src/data/site.ts`) |
+
+## `public/`, laid out like the page
+
+```
+public/
+├── brand/            emblem.png: header, footer, share images
+├── projects/<slug>/  thumbnail.png, cover.png, mock/{desktop,mobile}/*, case-study.md
+├── experience/       one logo per employer, named after it
+├── education/        one logo per institution
+└── certifications/   one badge per issuer, named after it
+```
+
+Names are lowercase and say whose mark it is (`nptel-iot.png`, `tt-infotech.png`), not what it was called in the
+anime site. When the JSON is copied over from there, `src/lib/content.ts` maps its old `/images/...` paths onto
+these, so a fresh copy still finds every logo.
 
 Project pages render each project's showcase document (`content` in `projects.json`) as plain reading:
 overview, stats, tables, steps, galleries and phone screens. Screenshots that have light and dark captures follow

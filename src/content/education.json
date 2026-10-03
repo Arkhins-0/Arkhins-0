@@ -6,7 +6,7 @@
     "score": "87.0%",
     "startYear": "2022",
     "endYear": "2026",
-    "logo": "/images/education/Bharath.png"
+    "logo": "/education/bharath.png"
   },
   {
     "degree": "Higher Secondary, Computer Science",
@@ -15,7 +15,7 @@
     "score": "87.3%",
     "startYear": "2020",
     "endYear": "2022",
-    "logo": "/images/education/SSV.png"
+    "logo": "/education/ssv.png"
   },
   {
     "degree": "Secondary School",
@@ -24,6 +24,6 @@
     "score": "98.8%",
     "startYear": "2018",
     "endYear": "2020",
-    "logo": "/images/education/SSV.png"
+    "logo": "/education/ssv.png"
   }
 ]

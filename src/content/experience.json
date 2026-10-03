@@ -19,7 +19,7 @@
       "Object storage",
       "CMS"
     ],
-    "logo": "/projects/ctr/logo.png",
+    "logo": "/experience/chennai-turbo-riders.png",
     "url": "https://www.chennaiturboriders.in",
     "sortOrder": 10
   },
@@ -66,7 +66,7 @@
       "Event Management",
       "Google Technologies"
     ],
-    "logo": "/images/companies/gdsc.png",
+    "logo": "/experience/gdsc.png",
     "url": "https://gdsc.community.dev/",
     "sortOrder": 30
   },
@@ -89,7 +89,7 @@
       "Team Collaboration",
       "Documentation"
     ],
-    "logo": "/images/companies/tt.png",
+    "logo": "/experience/tt-infotech.png",
     "url": "https://ttinfotech.com/",
     "sortOrder": 40
   },
@@ -112,7 +112,7 @@
       "Data Science",
       "Machine Learning"
     ],
-    "logo": "/images/companies/teachnook.png",
+    "logo": "/experience/teachnook.png",
     "url": "https://teachnook.com/",
     "sortOrder": 50
   }
