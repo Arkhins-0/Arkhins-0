@@ -57,7 +57,6 @@ public/
   projects/<slug>/            each project's thumbnail, cover, screenshots and case study
   images/anime/               section art and characters/<name>/ (figure, face, poses); see its README
   images/                     shared art: skill icons, logos, badges
-_legacy/                      the previous design, kept only until it is deleted (see below)
 ```
 
 ## Content
@@ -79,13 +78,3 @@ name in `src/lib/tables.ts`. The API, the seeds and the admin form pick it up fr
 | `ADMIN_DISABLED=true` | turns /admin and its API off |
 
 `.env` is git-ignored; `.env.example` lists the keys.
-
-## Legacy
-
-`_legacy/` holds the previous neon design (components, the accent/effects context) and its unused
-assets (hero videos, old share images). Nothing imports it and TypeScript excludes it. Delete it
-whenever convenient:
-
-```bash
-git rm -r _legacy
-```
