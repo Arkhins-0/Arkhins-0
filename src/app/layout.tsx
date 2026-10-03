@@ -4,6 +4,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next"
 import type { Metadata, Viewport } from "next"
 import { Fraunces, IBM_Plex_Mono, Lora } from "next/font/google"
 
+import CornerEmblem from "@/components/layout/CornerEmblem"
 import Footer from "@/components/layout/Footer"
 import Header from "@/components/layout/Header"
 import { themeScript } from "@/components/layout/ThemeToggle"
@@ -58,6 +59,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Header />
         <main className="mx-auto max-w-3xl px-4 lg:px-0">{children}</main>
         <Footer />
+        <CornerEmblem />
         <SpeedInsights />
       </body>
     </html>

@@ -191,7 +191,7 @@ function Watermark({ emblem }: { emblem: string }) {
 
 export default async function PostOpengraphImage({ params }: { params: Promise<{ slug: string }> }) {
   const post = getBlogPost((await params).slug)
-  const emblem = dataUri("/brand/emblem.png")
+  const emblem = dataUri("/brand/emblem-white.png")
   const title = post?.title ?? "krishna vijay g"
   const description = post?.description ?? ""
   const meta = post ? `writing · ${post.formattedDate.toLowerCase()}` : "writing"

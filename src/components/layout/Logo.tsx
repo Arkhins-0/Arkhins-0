@@ -8,7 +8,7 @@ interface Props {
 export default function Logo({ size = 24, className = "" }: Props) {
   return (
     <Image
-      src="/brand/emblem.png"
+      src="/brand/emblem-white.png"
       width={Math.round(size * (473 / 512))}
       height={size}
       alt="Arkhins - Emblem"
