@@ -59,7 +59,15 @@ export type Block =
   | {
       type: "duo"
       head: Head
-      sides: { eyebrow: string; title: string; body: string; image: ThemedImage; url?: string; points: string[] }[]
+      sides: {
+        eyebrow: string
+        title: string
+        body: string
+        device: "browser" | "phone"
+        image: ThemedImage
+        url?: string
+        points: string[]
+      }[]
       shared?: { title: string; items: string[] }
     }
   | { type: "marquee"; items: string[] }

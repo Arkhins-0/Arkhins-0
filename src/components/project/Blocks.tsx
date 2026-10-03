@@ -6,7 +6,7 @@ import ThemedImage from "@/components/ThemedImage"
 import { readPublicText } from "@/lib/content"
 import type { Block, Head, ThemedImage as Themed } from "@/lib/types"
 
-const frame = "overflow-hidden rounded-md border"
+import Lightbox, { type LightboxItem } from "./Lightbox"
 
 function SectionHead({ head }: { head: Head }) {
   return (
@@ -47,29 +47,39 @@ function Chips({ items }: { items: string[] }) {
   )
 }
 
-function Figure({ image, sizes }: { image: Themed; sizes?: string }) {
-  return (
-    <figure className="space-y-2">
-      <a href={image.light} target="_blank" rel="noopener noreferrer" className={`block ${frame}`}>
-        <ThemedImage image={image} sizes={sizes} />
-      </a>
-      {image.caption && <figcaption className="text-sm text-muted italic">{image.caption}</figcaption>}
-    </figure>
-  )
+/** Every desktop capture sits in the same 16:10 frame, every phone capture in the same phone-shaped one. */
+const WIDE = "aspect-[16/10] rounded-md border"
+const TALL = "aspect-[9/19.5] rounded-xl border"
+
+const FULL_SIZES = "(min-width: 1280px) 1200px, 94vw"
+
+function zoomable(image: Themed, thumbSizes: string, phone = false): LightboxItem {
+  return {
+    alt: image.alt,
+    caption: image.caption ?? (phone ? image.alt : undefined),
+    thumb: <ThemedImage image={image} sizes={thumbSizes} />,
+    full: (
+      <ThemedImage
+        image={image}
+        sizes={phone ? "400px" : FULL_SIZES}
+        className={phone ? "mx-auto max-w-sm rounded-xl border" : "rounded-md border"}
+      />
+    ),
+  }
+}
+
+function Figure({ image }: { image: Themed }) {
+  return <Lightbox items={[zoomable(image, "(min-width: 768px) 768px, 100vw")]} frameClassName={WIDE} />
 }
 
 function Phones({ items }: { items: Themed[] }) {
   return (
-    <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-      {items.map((image) => (
-        <figure key={image.light} className="space-y-2">
-          <div className="aspect-[9/19.5] overflow-hidden rounded-xl border [&_img]:h-full [&_img]:object-cover [&_img]:object-top">
-            <ThemedImage image={image} sizes="(min-width: 640px) 180px, 45vw" />
-          </div>
-          <figcaption className="text-center text-xs text-muted italic">{image.alt}</figcaption>
-        </figure>
-      ))}
-    </div>
+    <Lightbox
+      items={items.map((image) => zoomable(image, "(min-width: 640px) 180px, 45vw", true))}
+      className="grid grid-cols-2 gap-4 sm:grid-cols-4"
+      frameClassName={TALL}
+      captionClassName="text-center text-xs"
+    />
   )
 }
 
@@ -254,11 +264,11 @@ export function BlockView({ block }: { block: Block }) {
       return (
         <section className="space-y-6">
           <SectionHead head={{ ...block.head, lede: "Open any screen to see it full size." }} />
-          <div className="grid gap-x-6 gap-y-8 sm:grid-cols-2">
-            {block.items.map((image) => (
-              <Figure key={image.light} image={image} sizes="(min-width: 640px) 372px, 100vw" />
-            ))}
-          </div>
+          <Lightbox
+            items={block.items.map((image) => zoomable(image, "(min-width: 640px) 372px, 100vw"))}
+            className="grid gap-x-6 gap-y-8 sm:grid-cols-2"
+            frameClassName={WIDE}
+          />
         </section>
       )
 
@@ -284,9 +294,15 @@ export function BlockView({ block }: { block: Block }) {
           <div className="grid gap-x-8 gap-y-10 sm:grid-cols-2">
             {block.sides.map((side) => (
               <article key={side.title} className="space-y-3">
-                <div className={`${frame} max-h-[28rem] [&_img]:object-top`}>
-                  <ThemedImage image={side.image} sizes="(min-width: 640px) 372px, 100vw" />
-                </div>
+                {side.device === "phone" ? (
+                  <Lightbox
+                    items={[zoomable(side.image, "220px", true)]}
+                    className="mx-auto max-w-[220px] [&_figcaption]:hidden"
+                    frameClassName={TALL}
+                  />
+                ) : (
+                  <Lightbox items={[zoomable(side.image, "(min-width: 640px) 372px, 100vw")]} frameClassName={WIDE} />
+                )}
                 <p className="font-mono text-xs tracking-wide text-muted uppercase">{side.eyebrow}</p>
                 <h3 className="text-xl font-semibold tracking-tight">{side.title}</h3>
                 <p className="leading-relaxed text-pretty">{side.body}</p>
