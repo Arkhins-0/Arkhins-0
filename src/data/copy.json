@@ -1,6 +1,6 @@
 {
   "brand": {
-    "domain": "arkhins.com"
+    "domain": "ani.arkhins.com"
   },
   "nav": {
     "footerNavLabel": "Footer"
@@ -13,8 +13,8 @@
   },
   "about": {
     "qr": {
-      "value": "https://arkhins.com",
-      "aria": "QR code linking to https://arkhins.com"
+      "value": "https://ani.arkhins.com",
+      "aria": "QR code linking to https://ani.arkhins.com"
     },
     "timezoneLabel": "IST"
   },
