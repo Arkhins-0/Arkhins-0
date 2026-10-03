@@ -137,27 +137,23 @@ export function CertificationCard({ certification }: { certification: Certificat
 }
 
 export function WorkshopCard({ workshop }: { workshop: Workshop }) {
-  const { name, organizer, date, description, certificateUrl, certificate } = workshop
+  const { name, organizer, date, certificateUrl, certificate } = workshop
 
   return (
-    <article className={`${row} certificate-row py-5`}>
-      <div className="flex gap-x-4">
+    <article className={`${row} certificate-row py-4`}>
+      <div className="flex items-center gap-x-4">
         <LogoBox src={null} alt={organizer} fallback={PresentationIcon} />
-        <div className="space-y-1.5">
-          <div className="space-y-0.5">
-            <h3 className="font-body font-medium">{name}</h3>
-            <p className="text-sm text-muted">
-              {organizer}
-              {certificateUrl && (
-                <>
-                  {" · "}
-                  <VerifyLink href={certificateUrl} />
-                </>
-              )}
-            </p>
-          </div>
-          {/* Narrow enough that the hover card never covers it. */}
-          {description && <p className="max-w-[26rem] text-sm leading-relaxed text-pretty">{description}</p>}
+        <div className="space-y-0.5">
+          <h3 className="font-body font-medium">{name}</h3>
+          <p className="text-sm text-muted">
+            {organizer}
+            {certificateUrl && (
+              <>
+                {" · "}
+                <VerifyLink href={certificateUrl} />
+              </>
+            )}
+          </p>
         </div>
       </div>
       <p className={when}>{formatLooseDate(date)}</p>

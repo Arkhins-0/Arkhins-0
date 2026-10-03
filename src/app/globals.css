@@ -174,7 +174,7 @@
 .certificate-preview img {
   height: 100%;
   width: auto;
-  /* Tall rows (workshops, with their descriptions) would make wide certificates run into the text. */
+  /* Keeps a wide certificate from reaching the text if a row ever grows taller. */
   max-width: 10rem;
   object-fit: contain;
   border-radius: 2px;
