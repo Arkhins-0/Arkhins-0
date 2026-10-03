@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element -- hero art is swapped from the admin (bucket URL of unknown size) */
 import Link from 'next/link';
-import { ArrowRight, FileText } from 'lucide-react';
+import { ArrowRight, Download, FileText } from 'lucide-react';
 import type { Site } from '@/lib/site';
 import { fill } from '@/lib/utils';
 import { RoleCycler } from './RoleCycler';
@@ -107,6 +107,12 @@ export function Hero({ site }: { site: Site }) {
               <a href={profile.resumeUrl} target="_blank" rel="noopener noreferrer" className="ak-btn ak-btn-ghost">
                 <FileText size={18} />
                 {copy.secondaryAction}
+              </a>
+            )}
+            {copy.resumeDownloadUrl && (
+              <a href={copy.resumeDownloadUrl} className="ak-btn ak-btn-ghost">
+                <Download size={18} />
+                {copy.downloadAction}
               </a>
             )}
           </div>

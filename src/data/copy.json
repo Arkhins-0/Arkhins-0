@@ -9,7 +9,9 @@
     "blurb": "{tagline}. Building things that sit at the seam of interface, intelligence and hardware — from {city}, for anywhere.",
     "primaryAction": "See the work",
     "primaryHref": "/#work",
-    "secondaryAction": "Résumé"
+    "secondaryAction": "Résumé",
+    "downloadAction": "Download",
+    "resumeDownloadUrl": "https://raw.githubusercontent.com/Arkhins-0/Arkhins-0/assets/Krishna%20Vijay%20G.pdf"
   },
   "about": {
     "qr": {
