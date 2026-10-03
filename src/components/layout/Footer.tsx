@@ -8,8 +8,8 @@ import SlashList from "./SlashList"
 export default function Footer() {
   return (
     <footer className="mx-auto flex max-w-4xl items-center justify-between border-t px-4 py-12 lg:px-0">
-      <NextLink href="/" className="gap-x-3.5 no-underline">
-        <Logo size={18} />
+      <NextLink href="/" className="gap-x-4 no-underline">
+        <Logo size={36} />
         <span className="font-heading text-lg font-semibold tracking-tight">krishna vijay g</span>
       </NextLink>
 
