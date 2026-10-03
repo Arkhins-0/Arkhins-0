@@ -4,14 +4,33 @@ import fs from "node:fs"
 import path from "node:path"
 
 import certifications from "@/content/certifications.json"
+import documents from "@/content/documents.json"
 import education from "@/content/education.json"
 import experience from "@/content/experience.json"
 import languages from "@/content/languages.json"
 import projects from "@/content/projects.json"
+import workshops from "@/content/workshops.json"
 
-import type { Certification, Education, Experience, Language, Project } from "./types"
+import type { CertificateFile, Certification, Education, Experience, Language, Project, Workshop } from "./types"
 
 const bySortOrder = <T extends { sortOrder: number }>(a: T, b: T) => a.sortOrder - b.sortOrder
+
+/** Files on the repo's `assets` branch, through jsDelivr so PDFs open in the browser's viewer (as the résumé does). */
+export const assetUrl = (file: string) =>
+  `https://cdn.jsdelivr.net/gh/Arkhins-0/Arkhins-0@assets/${encodeURIComponent(file)}`
+
+/** Same rule as scripts/document-previews.mjs, which names the preview files. */
+const slug = (name: string) =>
+  name
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "")
+
+/** The certificate a row links to, from src/content/documents.json; null when there is no file for it. */
+function certificateFor(section: keyof typeof documents, name: string): CertificateFile | null {
+  const file = (documents[section] as Record<string, string>)[name]
+  return file ? { url: assetUrl(file), preview: `/${section}/previews/${slug(name)}.webp` } : null
+}
 
 /**
  * /public is laid out like the page (brand, projects, experience, education, certifications), but the JSON is
@@ -54,8 +73,13 @@ export const getEducation = (): Education[] =>
 
 export const getCertifications = (): Certification[] =>
   (certifications as Certification[])
-    .map((c) => ({ ...c, badge: asset(c.badge) }))
+    .map((c) => ({ ...c, badge: asset(c.badge), certificate: certificateFor("certifications", c.name) }))
     .sort((a, b) => toTime(b.date) - toTime(a.date))
+
+export const getWorkshops = (): Workshop[] =>
+  (workshops as Workshop[])
+    .map((w) => ({ ...w, certificate: certificateFor("workshops", w.name) }))
+    .sort(bySortOrder)
 
 export const getLanguages = (): Language[] => [...(languages as Language[])].sort(bySortOrder)
 

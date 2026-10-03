@@ -7,7 +7,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "previews": "node scripts/document-previews.mjs"
   },
   "dependencies": {
     "@shikijs/rehype": "^4.5.0",
@@ -25,11 +26,13 @@
     "shiki": "^4.5.0"
   },
   "devDependencies": {
+    "@napi-rs/canvas": "^1.0.10",
     "@tailwindcss/postcss": "^4.3.3",
     "@tailwindcss/typography": "^0.5.20",
     "@types/node": "^22.0.0",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
+    "pdfjs-dist": "^6.3.289",
     "tailwindcss": "^4.3.3",
     "typescript": "^5.9.3"
   }

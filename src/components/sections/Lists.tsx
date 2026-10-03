@@ -9,16 +9,30 @@ import {
   FolderGitIcon,
   GraduationCapIcon,
   LanguagesIcon,
+  PresentationIcon,
 } from "lucide-react"
 import NextLink from "next/link"
 
 import PostCard from "@/components/cards/PostCard"
 import ProjectCard from "@/components/cards/ProjectCard"
-import { CertificationCard, EducationCard, ExperienceCard, LanguageCard } from "@/components/cards/ResumeCards"
+import {
+  CertificationCard,
+  EducationCard,
+  ExperienceCard,
+  LanguageCard,
+  WorkshopCard,
+} from "@/components/cards/ResumeCards"
 import SectionHeading from "@/components/SectionHeading"
 import { resume } from "@/data/site"
 import { getRecentBlogPosts } from "@/lib/blog"
-import { getCertifications, getEducation, getExperiences, getLanguages, getProjects } from "@/lib/content"
+import {
+  getCertifications,
+  getEducation,
+  getExperiences,
+  getLanguages,
+  getProjects,
+  getWorkshops,
+} from "@/lib/content"
 
 export function Writing() {
   return (
@@ -83,6 +97,19 @@ export function Certifications() {
       <div>
         {getCertifications().map((item) => (
           <CertificationCard key={item.name} certification={item} />
+        ))}
+      </div>
+    </section>
+  )
+}
+
+export function Workshops() {
+  return (
+    <section id="workshops" className="space-y-6">
+      <SectionHeading icon={PresentationIcon}>workshops</SectionHeading>
+      <div>
+        {getWorkshops().map((item) => (
+          <WorkshopCard key={item.name} workshop={item} />
         ))}
       </div>
     </section>

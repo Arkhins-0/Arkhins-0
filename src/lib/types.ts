@@ -132,6 +132,12 @@ export interface Education {
   logo: string
 }
 
+/** A certificate file on the `assets` branch: where it opens, and the preview rendered from its first page. */
+export interface CertificateFile {
+  url: string
+  preview: string
+}
+
 export interface Certification {
   name: string
   issuer: string
@@ -139,6 +145,17 @@ export interface Certification {
   credentialUrl: string | null
   badge: string | null
   sortOrder: number
+  certificate?: CertificateFile | null
+}
+
+export interface Workshop {
+  name: string
+  organizer: string
+  date: string
+  description: string | null
+  certificateUrl: string | null
+  sortOrder: number
+  certificate?: CertificateFile | null
 }
 
 export interface Language {

@@ -10,6 +10,7 @@ import {
   LanguagesIcon,
   type LucideIcon,
   MailIcon,
+  PresentationIcon,
   UserIcon,
 } from "lucide-react"
 import { useEffect, useState } from "react"
@@ -22,6 +23,7 @@ const SECTIONS: { id: string; label: string; icon: LucideIcon }[] = [
   { id: "writing", label: "writing", icon: BookOpenIcon },
   { id: "education", label: "education", icon: GraduationCapIcon },
   { id: "certifications", label: "certifications", icon: AwardIcon },
+  { id: "workshops", label: "workshops", icon: PresentationIcon },
   { id: "languages", label: "languages", icon: LanguagesIcon },
   { id: "resume", label: "resume", icon: FileTextIcon },
   { id: "contact", label: "contact", icon: MailIcon },

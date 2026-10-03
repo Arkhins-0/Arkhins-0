@@ -9,6 +9,7 @@ import {
   Languages,
   Projects,
   Resume,
+  Workshops,
   Writing,
 } from "@/components/sections/Lists"
 import { personSchema } from "@/data/site"
@@ -26,6 +27,7 @@ export default function HomePage() {
         <Writing />
         <Education />
         <Certifications />
+        <Workshops />
         <Languages />
         <Resume />
         <Contact />

@@ -1,8 +1,17 @@
-import { AwardIcon, BookOpenIcon, BriefcaseIcon, GraduationCapIcon } from "lucide-react"
+import {
+  ArrowUpRightIcon,
+  AwardIcon,
+  BookOpenIcon,
+  BriefcaseIcon,
+  GraduationCapIcon,
+  PresentationIcon,
+} from "lucide-react"
+import Image from "next/image"
 
 import LogoBox from "@/components/LogoBox"
-import { formatMonthYear } from "@/lib/date"
-import type { Certification, Education, Experience, Language } from "@/lib/types"
+import { formatLooseDate, formatMonthYear } from "@/lib/date"
+import { imageSize } from "@/lib/images"
+import type { CertificateFile, Certification, Education, Experience, Language, Workshop } from "@/lib/types"
 
 const row =
   "flex flex-col gap-2 border-t first:border-t-0 first:pt-0 last:pb-0 sm:flex-row sm:items-start sm:justify-between sm:gap-4"
@@ -60,11 +69,53 @@ export function EducationCard({ education }: { education: Education }) {
   )
 }
 
-export function CertificationCard({ certification }: { certification: Certification }) {
-  const { name, issuer, date, credentialUrl, badge } = certification
+/** "verify" with an arrow pointing out of the page, which nudges right when hovered. */
+function VerifyLink({ href }: { href: string }) {
+  return (
+    <a href={href} target="_blank" rel="noopener noreferrer" className="group/verify gap-x-0.5">
+      verify
+      <ArrowUpRightIcon
+        size={13}
+        strokeWidth={1.75}
+        aria-hidden
+        className="transition-transform duration-200 ease-out group-hover/verify:translate-x-1"
+      />
+    </a>
+  )
+}
+
+/**
+ * The certificate itself, flipped in from its back when the row is hovered (styles in globals.css).
+ * Opens the file in the browser's PDF viewer, the way the résumé does. On touch screens it simply sits under the row.
+ */
+function CertificatePreview({ certificate, name }: { certificate: CertificateFile; name: string }) {
+  const { width, height } = imageSize(certificate.preview)
 
   return (
-    <article className={`${row} py-4`}>
+    <a
+      href={certificate.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={`Open the ${name} certificate`}
+      className="certificate-preview"
+    >
+      <Image
+        src={certificate.preview}
+        alt=""
+        width={width}
+        height={height}
+        sizes="160px"
+        className="aspect-[1.414] w-full object-contain"
+      />
+    </a>
+  )
+}
+
+export function CertificationCard({ certification }: { certification: Certification }) {
+  const { name, issuer, date, credentialUrl, badge, certificate } = certification
+
+  return (
+    <article className={`${row} certificate-row py-4`}>
       <div className="flex items-center gap-x-4">
         <LogoBox src={badge} alt={issuer} fallback={AwardIcon} />
         <div className="space-y-0.5">
@@ -74,15 +125,44 @@ export function CertificationCard({ certification }: { certification: Certificat
             {credentialUrl && (
               <>
                 {" · "}
-                <a href={credentialUrl} target="_blank" rel="noopener noreferrer">
-                  verify
-                </a>
+                <VerifyLink href={credentialUrl} />
               </>
             )}
           </p>
         </div>
       </div>
       <p className={when}>{formatMonthYear(date)}</p>
+      {certificate && <CertificatePreview certificate={certificate} name={name} />}
+    </article>
+  )
+}
+
+export function WorkshopCard({ workshop }: { workshop: Workshop }) {
+  const { name, organizer, date, description, certificateUrl, certificate } = workshop
+
+  return (
+    <article className={`${row} certificate-row py-5`}>
+      <div className="flex gap-x-4">
+        <LogoBox src={null} alt={organizer} fallback={PresentationIcon} />
+        <div className="space-y-1.5">
+          <div className="space-y-0.5">
+            <h3 className="font-body font-medium">{name}</h3>
+            <p className="text-sm text-muted">
+              {organizer}
+              {certificateUrl && (
+                <>
+                  {" · "}
+                  <VerifyLink href={certificateUrl} />
+                </>
+              )}
+            </p>
+          </div>
+          {/* Narrow enough that the hover card never covers it. */}
+          {description && <p className="max-w-[26rem] text-sm leading-relaxed text-pretty">{description}</p>}
+        </div>
+      </div>
+      <p className={when}>{formatLooseDate(date)}</p>
+      {certificate && <CertificatePreview certificate={certificate} name={name} />}
     </article>
   )
 }

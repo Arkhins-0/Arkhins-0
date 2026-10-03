@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Application of AI/ML Model",
+    "organizer": "IIRS-ISRO",
+    "date": "02 April 2025",
+    "description": "Participated in a workshop titled Application of AI/ML Model for Specific Crop Acreage Mapping conducted by ISRO IIRS Outreach Programme.",
+    "certificateUrl": "https://certificate.iirs.gov.in/checkstatus.php?uid=833c8d3c22aec6a3bd58db4aa0ca0e09&enm=202510462722739",
+    "sortOrder": 10
+  },
+  {
+    "name": "Space Exploration Technology",
+    "organizer": "IIRS-ISRO",
+    "date": "21–25 April 2025",
+    "description": "Attended the five-hour online course Space Exploration Technology: an Overview, conducted by the ISRO IIRS Outreach Programme.",
+    "certificateUrl": "https://certificate.iirs.gov.in/checkstatus.php?uid=0205a39ee4bf3f112b688f95a20591ac&enm=20251592737609",
+    "sortOrder": 20
+  },
+  {
+    "name": "Fundamentals of Laravel",
+    "organizer": "Techsmew",
+    "date": "11 June 2023",
+    "description": "Completion of Workshop about the Fundamentals of Laravel.",
+    "certificateUrl": null,
+    "sortOrder": 30
+  }
+]
