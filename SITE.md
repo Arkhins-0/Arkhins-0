@@ -27,8 +27,9 @@ npm run build      # every page is prerendered
 Hovering a certification or workshop row flips in a preview of the certificate; clicking it opens the file from the
 `assets` branch in the browser's viewer, as the résumé does. To add one:
 
-1. Put the PDF (or image) in the sibling `assets` folder, then commit and push the `assets` branch.
-2. Map the row's exact `name` to the file name in `src/content/documents.json`.
+1. Put the PDF (or image) in the sibling `assets` folder as `<section>/<slug>.pdf`, named like the row
+   (`certifications/jlpt-n3.pdf`, `workshops/fundamentals-of-laravel.pdf`), then commit and push the `assets` branch.
+2. Map the row's exact `name` to that path in `src/content/documents.json`.
 3. Run `npm run previews` to render `public/<section>/previews/<slug>.webp` from its first page.
 
 ## `public/`, laid out like the page

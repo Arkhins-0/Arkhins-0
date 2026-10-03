@@ -15,9 +15,12 @@ import type { CertificateFile, Certification, Education, Experience, Language, P
 
 const bySortOrder = <T extends { sortOrder: number }>(a: T, b: T) => a.sortOrder - b.sortOrder
 
-/** Files on the repo's `assets` branch, through jsDelivr so PDFs open in the browser's viewer (as the résumé does). */
+/**
+ * Files on the repo's `assets` branch, through jsDelivr so PDFs open in the browser's viewer (as the résumé does).
+ * Each path segment is encoded on its own, so folders like `certifications/` keep their slashes.
+ */
 export const assetUrl = (file: string) =>
-  `https://cdn.jsdelivr.net/gh/Arkhins-0/Arkhins-0@assets/${encodeURIComponent(file)}`
+  `https://cdn.jsdelivr.net/gh/Arkhins-0/Arkhins-0@assets/${file.split("/").map(encodeURIComponent).join("/")}`
 
 /** Same rule as scripts/document-previews.mjs, which names the preview files. */
 const slug = (name: string) =>

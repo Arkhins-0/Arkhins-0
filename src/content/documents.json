@@ -1,19 +1,20 @@
 {
   "certifications": {
-    "Android Developer": "EduSkills - Android Developer Virtual Internship - Krishna Vijay G.pdf",
-    "Quantum Computing": "CDAC - Quantum Computing - Krishna Vijay G.pdf",
-    "Foundations of AI": "EduNet - Foundations of AI - Krishna Vijay G.pdf",
-    "Introduction to IoT": "NPTEL - Introduction To Internet Of Things.pdf",
-    "Big Data Computing": "NPTEL - Big Data Computing.pdf",
-    "Google UX Design": "Google UIUX.pdf",
-    "Python Full Stack Development": "EduSkills - Krishna_Vijay_G_Course_Certificate_1359207.pdf",
-    "DotNet Full Stack": "N_250220038_Krishna Vijay G.pdf",
-    "Python": "GuviCertification - 497P918BJm712469oi.png",
-    "Artificial Intelligence Internship": "TEACHNOOK - Internship Completion Certificate _ Krishna Vijay.pdf",
-    "JLPT N3": "JLPT-N3 Certificate.pdf"
+    "Android Developer": "certifications/android-developer.pdf",
+    "Quantum Computing": "certifications/quantum-computing.pdf",
+    "Foundations of AI": "certifications/foundations-of-ai.pdf",
+    "Introduction to IoT": "certifications/introduction-to-iot.pdf",
+    "Big Data Computing": "certifications/big-data-computing.pdf",
+    "Google UX Design": "certifications/google-ux-design.pdf",
+    "Python Full Stack Development": "certifications/python-full-stack-development.pdf",
+    "DotNet Full Stack": "certifications/dotnet-full-stack.pdf",
+    "Python": "certifications/python.png",
+    "Artificial Intelligence Internship": "certifications/artificial-intelligence-internship.pdf",
+    "JLPT N3": "certifications/jlpt-n3.pdf"
   },
   "workshops": {
-    "Application of AI/ML Model": "IIRS - Application of AIML Model for Specific Crop Acreage Mapping - certificate_202510462722739.pdf",
-    "Space Exploration Technology": "IIRS - Space Exploration Technology an Overview - certificate_20251592737609.pdf"
+    "Application of AI/ML Model": "workshops/application-of-ai-ml-model.pdf",
+    "Space Exploration Technology": "workshops/space-exploration-technology.pdf",
+    "Fundamentals of Laravel": "workshops/fundamentals-of-laravel.pdf"
   }
 }
