@@ -1492,6 +1492,477 @@
     }
   },
   {
+    "slug": "arkhime",
+    "title": "Arkhime: AniList Tracker",
+    "tagline": "An AniList tracker for Android and the web",
+    "summary": "A native Android tracker for AniList with lists grouped by series, batch editing, and alerts for new anime, premieres and finales, plus a Next.js site with a web app, update feed and in-app updates from GitHub releases.",
+    "description": "Arkhime keeps an AniList collection in order. The Android app groups every season, movie and spin-off of a series into one row, edits many entries at once and saves them within AniList's rate limit, and alerts the moment something is announced, airs or finishes, with artwork and one-tap Planning, Watching or Completed. A Next.js site hosts the landing page, a web app for batch editing on a big screen, the OAuth redirect, and the update feed the app installs new versions from.",
+    "category": "Mobile",
+    "role": "Design · Android · Full-stack",
+    "year": "2026",
+    "date": "October 2026",
+    "status": "Live",
+    "featured": true,
+    "published": true,
+    "sortOrder": 25,
+    "tags": [
+      "Kotlin",
+      "Android",
+      "AniList GraphQL",
+      "Next.js 16",
+      "GitHub Actions"
+    ],
+    "thumbnail": "/projects/arkhime/thumbnail.png",
+    "cover": "/projects/arkhime/cover.png",
+    "images": [],
+    "githubUrl": "https://github.com/Arkhins-0/Arkhime",
+    "liveUrl": "https://arkhime.arkhins.com",
+    "markdownFile": null,
+    "themeColor": "#0a0a0c",
+    "content": {
+      "version": 1,
+      "theme": {
+        "look": "pitwall",
+        "accent": {
+          "hex": "#ff4f6d",
+          "rgb": "255 79 109"
+        },
+        "accent2": {
+          "hex": "#ffc768",
+          "rgb": "255 199 104"
+        },
+        "watermark": "/projects/arkhime/logo.svg",
+        "backdrop": "/projects/arkhime/banner.jpg"
+      },
+      "screens": {
+        "default": "light"
+      },
+      "hero": {
+        "eyebrow": "Android + Web · 2026",
+        "title": "Track every season,",
+        "accent": "never miss a release.",
+        "lede": "Arkhime is an AniList tracker that groups whole series together, edits a list in batches and pushes an alert the moment something is announced, airs or finishes. A native Android app does the tracking; a Next.js site handles sign-in, a web editor and the app's own updates.",
+        "badges": [
+          {
+            "label": "Android + web",
+            "tone": "accent"
+          },
+          {
+            "label": "Series grouping"
+          },
+          {
+            "label": "Batch editing"
+          },
+          {
+            "label": "Release alerts"
+          }
+        ],
+        "actions": [
+          {
+            "label": "Download for Android",
+            "href": "https://arkhime.arkhins.com/download",
+            "external": true
+          },
+          {
+            "label": "Website",
+            "href": "https://arkhime.arkhins.com",
+            "external": true,
+            "kind": "ghost"
+          },
+          {
+            "label": "Source",
+            "href": "https://github.com/Arkhins-0/Arkhime",
+            "external": true,
+            "kind": "ghost"
+          }
+        ],
+        "facts": [
+          {
+            "label": "Role",
+            "value": "Design, Android, full-stack"
+          },
+          {
+            "label": "App",
+            "value": "Kotlin · Material 3 · AniList GraphQL"
+          },
+          {
+            "label": "Site",
+            "value": "Next.js 16 · React 19 · Tailwind 4 · Vercel"
+          },
+          {
+            "label": "Status",
+            "value": "Live, v1.0.1 on GitHub Releases"
+          }
+        ],
+        "stage": {
+          "url": "arkhime.arkhins.com",
+          "center": {
+            "light": "/projects/arkhime/mock/desktop/landing.png",
+            "alt": "Arkhime's landing page: the headline, download button and a phone showing a series row"
+          }
+        }
+      },
+      "sections": [
+        {
+          "type": "stats",
+          "items": [
+            {
+              "value": "2",
+              "label": "Apps: Android and web"
+            },
+            {
+              "value": "9",
+              "label": "Kinds of release alert"
+            },
+            {
+              "value": "30/min",
+              "label": "AniList rate limit, respected"
+            },
+            {
+              "value": "1 tag",
+              "label": "From commit to installed update"
+            }
+          ]
+        },
+        {
+          "type": "overview",
+          "head": {
+            "index": "01",
+            "label": "Overview",
+            "title": "A list that",
+            "accentWord": "keeps up with you."
+          },
+          "paragraphs": [
+            "AniList lists every season, movie and OVA as its own title, so a long list turns into scattered entries. Arkhime joins them back into series using AniList's own relations, oldest first, and shows the related entries that are not on the list yet.",
+            "Keeping a list current means many small edits. The list screen has an edit mode: change progress, status and score on as many entries as needed, see each change outlined, and save them in one batch that paces itself to AniList's rate limit and retries anything rate-limited.",
+            "Tracking also means knowing when something happens. A background check reads AniList's airing schedule and newest titles for the whole site, plus the user's own media notifications, and turns them into an Updates feed and alerts with artwork and list buttons."
+          ],
+          "features": [
+            {
+              "icon": "Layers",
+              "title": "Series, not scattered titles",
+              "description": "Union-find over AniList relations groups sequels, prequels, side stories and spin-offs into one row with a completion bar."
+            },
+            {
+              "icon": "ListChecks",
+              "title": "Batch editing",
+              "description": "Pending changes are kept as minimal diffs with AniList's own rules: the first episode starts a show, the last one completes it."
+            },
+            {
+              "icon": "Bell",
+              "title": "Release alerts",
+              "description": "New anime and manga, premieres, episodes and finales, with cover art and Planning, Watching or Completed on the notification."
+            },
+            {
+              "icon": "Newspaper",
+              "title": "Updates feed",
+              "description": "Everything that happened, newest first, filterable by type: 100 at a time, then 50 more on demand."
+            },
+            {
+              "icon": "RefreshCw",
+              "title": "Updates itself",
+              "description": "A version tag builds signed APKs on GitHub Actions; the app finds the release, downloads the right APK and hands it to the installer."
+            },
+            {
+              "icon": "Smartphone",
+              "title": "Built for real phones",
+              "description": "Shortcuts to autostart and battery settings, so background checks survive Xiaomi, Oppo, Vivo and Huawei power managers."
+            }
+          ]
+        },
+        {
+          "type": "duo",
+          "head": {
+            "index": "02",
+            "label": "Two front doors",
+            "title": "One account,",
+            "accentWord": "two screens.",
+            "lede": "Both sign in with the same AniList client and write straight to AniList. The phone does the day-to-day tracking; the browser is for big clean-ups."
+          },
+          "sides": [
+            {
+              "eyebrow": "On the phone · Kotlin",
+              "title": "The full tracker",
+              "body": "Lists grouped by series with an edit mode, info pages, profiles, the Updates feed, widgets and alerts with artwork.",
+              "device": "phone",
+              "image": {
+                "light": "/projects/arkhime/mock/mobile/list.png",
+                "alt": "An anime list grouped by series, with progress per season"
+              },
+              "points": [
+                "Series grouping and batch edit on the list screen",
+                "Alerts with Planning, Watching and Completed buttons",
+                "Updates feed: 100 items, then 50 more",
+                "In-app updates from GitHub Releases"
+              ]
+            },
+            {
+              "eyebrow": "In the browser · Next.js 16",
+              "title": "The site and the web editor",
+              "body": "A black, high-contrast landing page with a link to the latest APK, and a web app for editing a whole collection on a big screen.",
+              "device": "browser",
+              "url": "arkhime.arkhins.com",
+              "image": {
+                "light": "/projects/arkhime/mock/desktop/landing.png",
+                "alt": "The Arkhime landing page"
+              },
+              "points": [
+                "/download redirects to the newest release APK",
+                "Web app: series rows, filters and mass edit",
+                "OAuth redirect for the Android app",
+                "Social preview image on every page"
+              ]
+            }
+          ],
+          "shared": {
+            "title": "Shared by both",
+            "items": [
+              "AniList client 36103 · implicit grant",
+              "graphql.anilist.co",
+              "SaveMediaListEntry",
+              "MediaListCollection",
+              "series grouping by relations",
+              "arkhime:// deep link",
+              "/api/updates/stable · beta",
+              "GitHub Releases"
+            ]
+          }
+        },
+        {
+          "type": "tabs",
+          "head": {
+            "index": "03",
+            "label": "Under the hood",
+            "title": "Three pipelines,",
+            "accentWord": "one list.",
+            "lede": "Group, save, alert. Each is a short chain of steps that keeps the list in step with AniList without fighting its limits."
+          },
+          "tabs": [
+            {
+              "id": "group",
+              "label": "Group",
+              "subtitle": "From scattered titles to series rows",
+              "steps": [
+                {
+                  "title": "Fetch the list with bare relation links",
+                  "description": "Only ids and relation types ride along with the collection, so a 1,600-entry list stays about the size of a plain one."
+                },
+                {
+                  "title": "Union-find over same-series relations",
+                  "description": "Sequels, prequels, side stories, spin-offs, summaries and parents join one set; adaptations and characters do not."
+                },
+                {
+                  "title": "Fill in what is missing",
+                  "description": "Related titles that are not on the list are fetched afterwards in pages of 50 and joined to their series."
+                },
+                {
+                  "title": "Order and measure",
+                  "description": "Each series is sorted by start date and gets a completion bar from progress across its entries."
+                }
+              ],
+              "detailsTitle": "Pieces",
+              "details": [
+                "AniList GraphQL",
+                "union-find",
+                "relations.edges",
+                "id_in batches of 50",
+                "kotlinx.serialization",
+                "RecyclerView"
+              ]
+            },
+            {
+              "id": "save",
+              "label": "Save",
+              "subtitle": "From pending edits to AniList",
+              "steps": [
+                {
+                  "title": "Record a minimal diff",
+                  "description": "Only changed fields are kept; nudging a value back drops the change."
+                },
+                {
+                  "title": "Apply AniList's rules",
+                  "description": "The first episode moves Planning to Watching, the last one completes the entry, and dates are stamped when missing."
+                },
+                {
+                  "title": "Save one entry at a time",
+                  "description": "Fast while AniList reports headroom, then about one save every two seconds."
+                },
+                {
+                  "title": "Wait out a rate limit",
+                  "description": "A 429 is waited out and retried; anything else stays pending for another try."
+                }
+              ],
+              "detailsTitle": "Details",
+              "details": [
+                "SaveMediaListEntry",
+                "X-RateLimit-Remaining",
+                "Retry-After",
+                "failed entries stay pending",
+                "discard guard on back"
+              ]
+            },
+            {
+              "id": "alert",
+              "label": "Alert",
+              "subtitle": "From AniList to a notification",
+              "steps": [
+                {
+                  "title": "Read the whole site",
+                  "description": "Every episode that aired since the last check, and the newest titles added to AniList, anime and manga."
+                },
+                {
+                  "title": "Read the user's changes",
+                  "description": "Related additions, data changes, merges and deletions come from the user's AniList notifications."
+                },
+                {
+                  "title": "Store, never duplicate",
+                  "description": "Each event has a stable key and lands once in an on-device feed capped at 3,000 entries."
+                },
+                {
+                  "title": "Push what was asked for",
+                  "description": "Nine switchable types, all of AniList or only the user's list, at most 15 per check with a summary for the rest."
+                }
+              ],
+              "detailsTitle": "Pieces",
+              "details": [
+                "WorkManager",
+                "AlarmManager fallback",
+                "airingSchedules",
+                "BigPictureStyle",
+                "BroadcastReceiver actions",
+                "Glide"
+              ]
+            }
+          ]
+        },
+        {
+          "type": "phones",
+          "head": {
+            "index": "04",
+            "label": "In the pocket",
+            "title": "Real screens,",
+            "accentWord": "real list.",
+            "lede": "Captured on a Redmi Note 10 Pro from a debug build, signed in to a 1,600-entry AniList account."
+          },
+          "items": [
+            {
+              "light": "/projects/arkhime/mock/mobile/home.png",
+              "alt": "Home: continue watching and reading"
+            },
+            {
+              "light": "/projects/arkhime/mock/mobile/list.png",
+              "alt": "Anime list grouped by series"
+            },
+            {
+              "light": "/projects/arkhime/mock/mobile/manga-list.png",
+              "alt": "Manga list grouped by series, with titles not on the list"
+            },
+            {
+              "light": "/projects/arkhime/mock/mobile/media.png",
+              "alt": "An anime's info page"
+            },
+            {
+              "light": "/projects/arkhime/mock/mobile/updates.png",
+              "alt": "The Updates feed with its type filters"
+            },
+            {
+              "light": "/projects/arkhime/mock/mobile/notification-settings.png",
+              "alt": "Notification settings: alerts, autostart and battery"
+            },
+            {
+              "light": "/projects/arkhime/mock/mobile/profile.png",
+              "alt": "Profile with AniList stats"
+            },
+            {
+              "light": "/projects/arkhime/mock/mobile/calendar.png",
+              "alt": "Airing calendar"
+            }
+          ]
+        },
+        {
+          "type": "columns",
+          "head": {
+            "index": "05",
+            "label": "Stack and operations",
+            "title": "What it runs on,",
+            "accentWord": "and how it ships."
+          },
+          "columns": [
+            {
+              "title": "Android",
+              "style": "chips",
+              "items": [
+                "Kotlin",
+                "Material 3",
+                "ViewBinding",
+                "Coroutines",
+                "WorkManager",
+                "OkHttp",
+                "kotlinx.serialization",
+                "Glide",
+                "R8"
+              ]
+            },
+            {
+              "title": "Web",
+              "style": "chips",
+              "items": [
+                "Next.js 16",
+                "React 19",
+                "TypeScript",
+                "Tailwind CSS 4",
+                "Vercel",
+                "Neon Postgres"
+              ]
+            },
+            {
+              "title": "Operations",
+              "style": "ticks",
+              "items": [
+                "A v*.*.* tag builds signed APKs per CPU and a universal one",
+                "GitHub Releases is the update feed; the site mirrors it",
+                "/download always serves the newest universal APK",
+                "Test builds post to Telegram with their commit log"
+              ]
+            },
+            {
+              "title": "Scope",
+              "style": "ticks",
+              "items": [
+                "A tracker: it hosts and streams no media",
+                "Data from the AniList API",
+                "Open source under the UPL (GPLv3)"
+              ]
+            }
+          ]
+        },
+        {
+          "type": "outro",
+          "title": "Keep your list",
+          "accentWord": "in order.",
+          "actions": [
+            {
+              "label": "Download for Android",
+              "href": "https://arkhime.arkhins.com/download",
+              "external": true
+            },
+            {
+              "label": "Repository",
+              "href": "https://github.com/Arkhins-0/Arkhime",
+              "external": true,
+              "kind": "ghost"
+            },
+            {
+              "label": "Back to portfolio",
+              "href": "/#work",
+              "kind": "ghost"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
     "slug": "scholar-track",
     "title": "Scholar Track: PhD Scholar Tracking Portal",
     "tagline": "PhD Scholar Tracking Portal",
