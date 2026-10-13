@@ -1,5 +1,16 @@
 [
   {
+    "name": "IBM Full Stack Software Developer",
+    "issuer": "IBM (Coursera)",
+    "date": "October 2026",
+    "category": "Development",
+    "description": "Fifteen-course IBM Professional Certificate across React, Node.js and Express, Python with Flask and Django, Docker, Kubernetes and OpenShift, microservices and serverless, closing with a cloud-native full stack capstone.",
+    "credentialId": "CO9DABXLU2FC",
+    "credentialUrl": "https://coursera.org/verify/professional-cert/CO9DABXLU2FC",
+    "badge": "C:/Program Files/Git/images/certifications/ibm.png",
+    "sortOrder": 5
+  },
+  {
     "name": "Android Developer",
     "issuer": "Eduskills (AICTE)",
     "date": "June 2025",
