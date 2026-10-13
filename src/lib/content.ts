@@ -52,6 +52,7 @@ const MOVED_ASSETS: Record<string, string> = {
   "/images/certifications/cdac.png": "/certifications/cdac-iit-roorkee.png",
   "/images/certifications/google-ux.png": "/certifications/google-ux.png",
   "/images/certifications/guvi.png": "/certifications/guvi.png",
+  "/images/certifications/ibm.png": "/certifications/ibm.png",
   "/images/certifications/iot.png": "/certifications/nptel-iot.png",
   "/images/certifications/japan.svg": "/certifications/jlpt.svg",
   "/images/certifications/teachnook.png": "/certifications/teachnook.png",
