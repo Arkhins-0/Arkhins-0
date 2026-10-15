@@ -1,6 +1,6 @@
-<!--
-<div align="center">
 
+<div align="center">
+<!--
 <img src=".github/background.webp" width="100%" alt="YoRHa No.2 Type B, blade drawn, in overgrown ruins" />
 
 <br />
