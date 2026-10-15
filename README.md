@@ -1,9 +1,10 @@
+<!--
 <div align="center">
 
 <img src=".github/background.webp" width="100%" alt="YoRHa No.2 Type B, blade drawn, in overgrown ruins" />
 
 <br />
-
+-->
 # ![Arkhins](.github/arkhins.svg)
 
 **YoRHa-class builder. Type: Full-stack. Model: Designer.**
@@ -94,12 +95,13 @@ Anime and manga, in quantities Command would not approve. Game and level design.
 [![Discord](https://img.shields.io/badge/DISCORD%20%C2%B7%20arkhins.-5865F2?style=for-the-badge&logo=discord&logoColor=white)](https://discord.com/users/arkhins.)
 
 Any channel reaches this unit. Response time: after the current episode.
-
+<!--
 <br clear="all" />
 
 ---
 
 <div align="center">
+-->
 
 <img src=".github/footer.webp" width="100%" alt="YoRHa No.2 Type B in a field of red flowers, swords planted in the ground" />
 
